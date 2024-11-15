@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 1f8a8582dc12c7b409794a8887a45926
-  m_SerializeEntries:
-  - m_GUID: 25530c29e02c8df41a7b8bdc2b040a0a
-    m_Address: Packages/com.agava.adsappview/Samples/Prefabs/PopupManager.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e9a2fcb6ef0617f49857581c95072f90, type: 2}
   m_SchemaSet:
