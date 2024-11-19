@@ -65,6 +65,7 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickableAgreementText.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WinkSignInHandlerUI.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\IInputFieldFormatting.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\IconsCarousel.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\EnterCodeShaking.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\DeleteAccountWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\IWinkAccessManager.cs" />
