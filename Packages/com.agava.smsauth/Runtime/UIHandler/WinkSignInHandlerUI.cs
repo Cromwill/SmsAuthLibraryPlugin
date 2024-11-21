@@ -22,6 +22,7 @@ namespace Agava.Wink
         [SerializeField] private TMP_InputField _numbersInputField;
         [Header("UI Buttons")]
         [SerializeField] private Button _signInButton;
+        [SerializeField] private Button _continueButton;
         [SerializeField] private Button _openSignInButton;
         [SerializeField] private Button _openSignInDemoButton;
         [SerializeField] private Button _unlinkButtonTemplate;
@@ -57,6 +58,7 @@ namespace Agava.Wink
         {
             if (_signInFuctionsUI == null) return;
 
+            _continueButton.onClick.RemoveAllListeners();
             _signInButton.onClick.RemoveAllListeners();
             _openSignInDemoButton.onClick.RemoveAllListeners();
 
@@ -101,6 +103,7 @@ namespace Agava.Wink
             _testSignInButton.gameObject.SetActive(false);
 #endif
             _winkAccessManager = winkAccessManager;
+            _continueButton.onClick.AddListener(OnContinueClicked);
             _signInButton.onClick.AddListener(OnSignInClicked);
             _openSignInButton.onClick.AddListener(OpenSignWindow);
             _openSignInDemoButton.onClick.AddListener(OpenSignWindow);
@@ -149,7 +152,6 @@ namespace Agava.Wink
             _notifyWindowHandler.OpenDeleteAccountWindow(
                 onDeleteAccount: () =>
                 {
-                    _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
                     _winkAccessManager.DeleteAccount(
                     onComplete: (resultSuccess) =>
                     {
@@ -210,6 +212,11 @@ namespace Agava.Wink
         }
 
         private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();
+
+        private void OnContinueClicked()
+        {
+            _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
+        }
 
         private async void OnSignInSuccessfully(bool hasAccess)
         {

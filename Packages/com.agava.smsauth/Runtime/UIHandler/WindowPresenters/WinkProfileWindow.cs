@@ -8,6 +8,7 @@ namespace Agava.Wink
     internal class WinkProfileWindow : WindowPresenter
     {
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _profileButton;
         [SerializeField] private Button _closeButton;
         [SerializeField] private string _url;
@@ -24,9 +25,17 @@ namespace Agava.Wink
             _profileButton.onClick.AddListener(OnProfileButtonClicked);
         }
 
-        public override void Enable() => EnableCanvasGroup(_canvasGroup);
+        public override void Enable()
+        {
+            _imagesCarousel.Enable();
+            EnableCanvasGroup(_canvasGroup);
+        }
 
-        public override void Disable() => DisableCanvasGroup(_canvasGroup);
+        public override void Disable()
+        {
+            DisableCanvasGroup(_canvasGroup);
+            _imagesCarousel.Disable();
+        }
 
         private void OnProfileButtonClicked()
         {

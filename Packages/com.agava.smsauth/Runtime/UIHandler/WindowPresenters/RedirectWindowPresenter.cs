@@ -9,6 +9,7 @@ namespace Agava.Wink
     internal class RedirectWindowPresenter : WindowPresenter
     {
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _yesButton;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _signInButton;
@@ -42,12 +43,17 @@ namespace Agava.Wink
             if (_closeButton != null)
                 _closeButton.gameObject.SetActive(closeButton);
 
+            _imagesCarousel.Enable();
             EnableCanvasGroup(_canvasGroup);
         }
 
         public override void Enable() => Enable(true);
 
-        public override void Disable() => DisableCanvasGroup(_canvasGroup);
+        public override void Disable()
+        {
+            DisableCanvasGroup(_canvasGroup);
+            _imagesCarousel.Disable();
+        }
 
         private void OnYesClicked()
         {

@@ -39,7 +39,6 @@ namespace Agava.Wink
 
         private void Update()
         {
-            _inputField.caretColor = new Color(0, 0, 0, 0);
             _inputField.caretPosition = _length;
         }
 

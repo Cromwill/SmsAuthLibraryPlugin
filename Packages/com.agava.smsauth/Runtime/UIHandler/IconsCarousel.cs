@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class IconsCarousel : MonoBehaviour
 {
-    public void Initialize()
-    {
-
-    }
-
+    [SerializeField] private Sprite[] _sprites;
 
     // Start is called before the first frame update
     void Start()

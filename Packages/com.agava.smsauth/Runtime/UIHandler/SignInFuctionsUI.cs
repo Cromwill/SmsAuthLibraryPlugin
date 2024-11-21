@@ -118,15 +118,7 @@ namespace Agava.Wink
 
         private void OnOtpCodeAccepted(bool accepted)
         {
-            if (accepted == false)
-            {
-                _notifyWindowHandler.ResetInputWindow();
-            }
-            else
-            {
-                _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
-                _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
-            }
+            _notifyWindowHandler.Response(accepted);
         }
 
         internal void OnSignInSuccesfully(bool hasAccess)

@@ -37,7 +37,7 @@ namespace Agava.Wink
         internal void OpenDemoExpiredWindow(bool closeButton) => _demoTimerExpiredWindow.Enable(closeButton);
         internal void OpenDeleteAccountWindow(Action onDeleteAccount) => _deleteAccountWindow.Enable(onDeleteAccount);
 
-        internal void ResetInputWindow() => _enterCodeWindow.ResetInputText();
+        internal void Response(bool accepted) => _enterCodeWindow.Response(accepted);
 
         internal void CloseAllWindows(Action onClosed)
         {
