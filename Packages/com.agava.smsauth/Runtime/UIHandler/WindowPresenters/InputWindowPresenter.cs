@@ -142,13 +142,16 @@ namespace Agava.Wink
 
         private void OnNewCodeTimerExpired()
         {
+            Clear();
             _sendRepeatCodeButton.gameObject.SetActive(true);
+            _inputField.interactable = false;
             _repeatCodeTimer.Disable();
         }
 
         private async void OnRepeatClicked()
         {
             _sendRepeatCodeButton.gameObject.SetActive(false);
+            _inputField.interactable = true;
             _repeatCodeTimer.SetCodeLifespanConfig();
             _repeatCodeTimer.Enable();
 

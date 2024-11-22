@@ -21,6 +21,7 @@ namespace Agava.Wink
             _codeLength = _textCells.Length;
             _inputField.resetOnDeActivation = false;
             _inputField.restoreOriginalTextOnEscape = false;
+            Clear();
         }
 
         private void Update()
@@ -39,6 +40,8 @@ namespace Agava.Wink
                 cell.SetActive(false);
                 cell.SetText(string.Empty);
             }
+
+            _textCells[0].SetActive(true);
         }
 
         private void OnValueChanged(string newValue)
@@ -54,7 +57,9 @@ namespace Agava.Wink
                 for (int i = 0; i < _codeLength; i++)
                 {
                     _textCells[i].SetText(i >= newValue.Length ? string.Empty : newValue[i].ToString());
-                    _textCells[i].SetActive(_textCells[i].Empty == false);
+
+                    if (i != _codeLength - 1)
+                        _textCells[i + 1].SetActive(_textCells[i].Empty == false);
                 }
             }
 
