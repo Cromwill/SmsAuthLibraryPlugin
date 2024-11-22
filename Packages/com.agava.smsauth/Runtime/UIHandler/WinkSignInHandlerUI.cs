@@ -152,6 +152,7 @@ namespace Agava.Wink
             _notifyWindowHandler.OpenDeleteAccountWindow(
                 onDeleteAccount: () =>
                 {
+                    _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
                     _winkAccessManager.DeleteAccount(
                     onComplete: (resultSuccess) =>
                     {
@@ -215,6 +216,7 @@ namespace Agava.Wink
 
         private void OnContinueClicked()
         {
+            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
             _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
         }
 

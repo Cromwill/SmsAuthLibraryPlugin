@@ -11,6 +11,8 @@ namespace Agava.Wink
         [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private TMP_Text _placeholder;
         [SerializeField] private TMP_Text _visibleText;
+        [SerializeField] private TMP_Text _hiddenText;
+        [SerializeField] private bool _usePlaceholder;
 
         private int _placeholderLength;
         private string _colorCode;
@@ -26,9 +28,12 @@ namespace Agava.Wink
             _inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
             _inputField.resetOnDeActivation = false;
             _inputField.restoreOriginalTextOnEscape = false;
-            _placeholder.text = PhoneNumber.PlaceholderText;
+
+            if (_usePlaceholder)
+                _placeholder.text = PhoneNumber.PlaceholderText;
+
             _placeholderLength = PhoneNumber.PlaceholderText.Length;
-            _colorCode = ColorUtility.ToHtmlStringRGB(_placeholder.color);
+            _colorCode = ColorUtility.ToHtmlStringRGB((_usePlaceholder ? _placeholder : _hiddenText).color);
             _maxNumbersCount = Regex.Replace(PhoneNumber.PlaceholderText, "[^0-9]", string.Empty).Length;
             _visibleText.text = ColorText(_colorCode, PhoneNumber.PlaceholderText);
         }
@@ -39,7 +44,10 @@ namespace Agava.Wink
 
         private void Update()
         {
-            _inputField.caretPosition = _length;
+            if (_usePlaceholder == false)
+                _visibleText.enabled = _visibleTextLength != 0;
+
+            _inputField.caretPosition = _visibleTextLength;
         }
 
         private void OnValueChanged(string newValue)
