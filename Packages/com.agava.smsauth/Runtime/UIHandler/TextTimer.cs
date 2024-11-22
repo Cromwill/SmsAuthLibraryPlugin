@@ -16,7 +16,6 @@ namespace Agava.Wink
         private const string SavedTime = nameof(SavedTime);
         private const int SmsDelayDefaultTime = 60;
         private const int CodeLifespanDefaultTime = 600;
-        private const int AdditiveTime = 10;
 
         [SerializeField] private TextPlaceholder _timePlaceholder;
 
@@ -130,13 +129,13 @@ namespace Agava.Wink
         private int ParseConfig(string timeStr, int defaultValue)
         {
             bool success = int.TryParse(timeStr, out int time);
-            return success ? time + AdditiveTime : defaultValue;
+            return success ? time : defaultValue;
         }
 
         private string TimeString(int seconds)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
-            return $"{timeSpan.Minutes}:{timeSpan.Seconds:00}";
+            return $"{timeSpan.Minutes:00}:{timeSpan.Seconds:00}";
         }
     }
 }

@@ -145,6 +145,7 @@ namespace Agava.Wink
             Clear();
             _sendRepeatCodeButton.gameObject.SetActive(true);
             _inputField.interactable = false;
+            _codeFormatter.SetInteractable(false);
             _repeatCodeTimer.Disable();
         }
 
@@ -152,6 +153,7 @@ namespace Agava.Wink
         {
             _sendRepeatCodeButton.gameObject.SetActive(false);
             _inputField.interactable = true;
+            _codeFormatter.SetInteractable(true);
             _repeatCodeTimer.SetCodeLifespanConfig();
             _repeatCodeTimer.Enable();
 

@@ -12,7 +12,6 @@ namespace Agava.Wink
         [SerializeField] private TextCell[] _textCells;
 
         private int _codeLength;
-        private int _length = 0;
 
         public bool InputDone { get; private set; } = false;
 
@@ -24,14 +23,14 @@ namespace Agava.Wink
             Clear();
         }
 
-        private void Update()
-        {
-            _inputField.caretPosition = _length;
-        }
-
         private void OnEnable() => _inputField.onValueChanged.AddListener(OnValueChanged);
 
         private void OnDisable() => _inputField.onValueChanged.RemoveListener(OnValueChanged);
+
+        public void SetInteractable(bool interactable)
+        {
+            _textCells[0].SetActive(interactable);
+        }
 
         public void Clear()
         {
@@ -52,8 +51,6 @@ namespace Agava.Wink
             }
             else
             {
-                _length = _inputField.text.Length;
-
                 for (int i = 0; i < _codeLength; i++)
                 {
                     _textCells[i].SetText(i >= newValue.Length ? string.Empty : newValue[i].ToString());
