@@ -23,16 +23,11 @@ namespace Agava.Wink
         [Header("UI Buttons")]
         [SerializeField] private Button _signInButton;
         [SerializeField] private Button _continueButton;
-        [SerializeField] private Button _openSignInButton;
         [SerializeField] private Button _openSignInDemoButton;
         [SerializeField] private Button _unlinkButtonTemplate;
         [Header("UI Test Buttons")]
         [SerializeField] private Button _testSignInButton;
         [SerializeField] private Button _testDeleteButton;
-        [Header("Phone Number Check Settings")]
-        [SerializeField] private int _maxNumberCount = 30;
-        [SerializeField] private int _minNumberCount = 5;
-        [SerializeField] private bool _additivePlusChar = false;
         [Header("Factory components")]
         [SerializeField] private Transform _containerButtons;
         [Header("Placeholders")]
@@ -48,10 +43,14 @@ namespace Agava.Wink
         public bool IsAnyWindowEnabled => _notifyWindowHandler.IsAnyWindowEnabled;
 
         public event Action AllWindowsClosed;
-        public event Action SignInWindowClosed;
-        public event Action HelloWindowsClosed;
+
+        private void Awake()
+        {
+            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+        }
 
         private void OnApplicationFocus(bool focus) => _signInFuctionsUI?.OnAppFocus(focus);
+
         private void Update() => _signInFuctionsUI?.Update();
 
         public void Dispose()
@@ -105,7 +104,6 @@ namespace Agava.Wink
             _winkAccessManager = winkAccessManager;
             _continueButton.onClick.AddListener(OnContinueClicked);
             _signInButton.onClick.AddListener(OnSignInClicked);
-            _openSignInButton.onClick.AddListener(OpenSignWindow);
             _openSignInDemoButton.onClick.AddListener(OpenSignWindow);
             CloseAllWindows();
 
@@ -119,7 +117,7 @@ namespace Agava.Wink
         public void OpenSignWindow()
         {
             _numbersInputField.text = string.Empty;
-            _notifyWindowHandler.OpenSignInWindow(() => SignInWindowClosed?.Invoke());
+            _notifyWindowHandler.OpenSignInWindow();
             AnalyticsWinkService.SendEnterPhoneWindow();
         }
 
@@ -152,17 +150,11 @@ namespace Agava.Wink
             _notifyWindowHandler.OpenDeleteAccountWindow(
                 onDeleteAccount: () =>
                 {
-                    _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
                     _winkAccessManager.DeleteAccount(
                     onComplete: (resultSuccess) =>
                     {
-                        if (resultSuccess)
+                        if (resultSuccess == false)
                         {
-                            _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
-                        }
-                        else
-                        {
-                            _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
                             _notifyWindowHandler.OpenWindow(WindowType.Fail);
                         }
                     });
@@ -171,7 +163,7 @@ namespace Agava.Wink
 
         private void OnSignInClicked()
         {
-            string number = WinkAcceessHelper.GetNumber(_numbersInputField.text, _minNumberCount, _maxNumberCount, _additivePlusChar);
+            string number = _numbersInputField.text;
             string formattedNumber = PhoneNumber.FormatNumber(number);
 
             foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)
@@ -216,14 +208,13 @@ namespace Agava.Wink
 
         private void OnContinueClicked()
         {
-            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
             _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
         }
 
         private async void OnSignInSuccessfully(bool hasAccess)
         {
+            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
             _signInFuctionsUI.OnSignInSuccesfully(hasAccess);
-            _openSignInButton.gameObject.SetActive(false);
             _signInButton.gameObject.SetActive(false);
 
             SetPhone();
@@ -248,8 +239,6 @@ namespace Agava.Wink
                         }
                     }
                 });
-
-                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
             }
         }
 

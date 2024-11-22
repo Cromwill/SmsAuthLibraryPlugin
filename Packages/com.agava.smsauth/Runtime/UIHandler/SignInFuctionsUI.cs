@@ -35,7 +35,9 @@ namespace Agava.Wink
 
         internal void OnSignInClicked(string phone)
         {
+            _notifyWindowHandler.CloseWindow(WindowType.SignIn);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+
             AnalyticsWinkService.SendOnEnteredPhoneWindow();
 
             _winkAccessManager.Regist(phoneNumber: phone,
@@ -51,8 +53,6 @@ namespace Agava.Wink
 
         internal void OnUnlinkClicked(string device)
         {
-            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
-
             _winkAccessManager.Unlink(device, () =>
             {
                 _notifyWindowHandler.CloseWindow(WindowType.Redirect);
@@ -94,9 +94,9 @@ namespace Agava.Wink
         {
             if (hasOtpCode)
             {
-                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
                 AnalyticsWinkService.SendEnterOtpCodeWindow();
 
+                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
                 _notifyWindowHandler.OpenInputOtpCodeWindow(phone,
                 onInputDone: (code) =>
                 {
@@ -111,7 +111,6 @@ namespace Agava.Wink
             }
             else
             {
-                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
                 _notifyWindowHandler.OpenWindow(WindowType.Fail);
             }
         }

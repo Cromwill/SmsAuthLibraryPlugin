@@ -12,7 +12,7 @@ namespace Agava.Wink
         [Header("UI Windows")]
         [SerializeField] private SignInWindowPresenter _signInWindow;
         [SerializeField] private NotifyWindowPresenter _failWindow;
-        [SerializeField] private NotifyWindowPresenter _proccesOnWindow;
+        [SerializeField] private ProcessWindowPresenter _proccesOnWindow;
         [SerializeField] private HelloWindowPresenter _helloWindow;
         [SerializeField] private NotifyWindowPresenter _unlinkWindow;
         [SerializeField] private RedirectWindowPresenter _demoTimerExpiredWindow;
@@ -24,7 +24,7 @@ namespace Agava.Wink
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
-        public bool IsAnyWindowEnabled => _windows.Any(window => window.HasOpened);
+        public bool IsAnyWindowEnabled => _windows.Any(window => window.Enabled);
         public bool HasCodeDelayExpired => _enterCodeWindow.HasExpired;
 
         internal void OpenSignInWindow(Action closeCallback = null) => _signInWindow.Enable(closeCallback);

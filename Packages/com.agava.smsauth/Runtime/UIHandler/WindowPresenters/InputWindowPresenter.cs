@@ -52,7 +52,7 @@ namespace Agava.Wink
 
         private void Update()
         {
-            if (HasOpened == false)
+            if (Enabled == false)
                 return;
 
             _scalerPresenter.Update();

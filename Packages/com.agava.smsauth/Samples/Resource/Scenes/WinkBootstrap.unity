@@ -573,29 +573,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3357559736251278273, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3357559736251278273, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3357559736251278273, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3357559736251278273, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4653795427995862268, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: _sceneLoader
       value: 
       objectReference: {fileID: 608073471}
     - target: {fileID: 4653795427995862268, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
-      propertyPath: _restartAfterAuth
-      value: 0
+      propertyPath: _bundlIdVersion
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4653795427995862268, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: _winkAccessManager
@@ -611,11 +595,11 @@ PrefabInstance:
       objectReference: {fileID: 255946703}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_AnchorMax.x
@@ -635,11 +619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_LocalPosition.x
@@ -671,11 +655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 960
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 8574913841638285888, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -691,7 +675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8946962578614644737, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: m_Name
-      value: Boot_Canvas
+      value: Boot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -827,7 +811,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d890572276aa4231b70bf3769184bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.6, g: 0.4, b: 0.13333334, a: 1}
+  m_EffectColor:
+    r: 0.6
+    g: 0.4
+    b: 0.13333334
+    a: 1
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1
   m_halfSampleCountX: 5
@@ -1138,7 +1126,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4777813591419693685}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -1162,9 +1150,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 289619834}
-  - {fileID: 1124556225}
-  - {fileID: 5289475148137461812}
-  - {fileID: 6744170679077865801}
   - {fileID: 104234248}
+  - {fileID: 1124556225}
+  - {fileID: 6744170679077865801}
+  - {fileID: 5289475148137461812}
   - {fileID: 255946702}
   - {fileID: 7596981082626321440}

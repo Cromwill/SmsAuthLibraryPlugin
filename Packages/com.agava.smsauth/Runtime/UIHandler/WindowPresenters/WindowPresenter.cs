@@ -8,7 +8,7 @@ namespace Agava.Wink
     {
         [field: SerializeField] public WindowType Type {  get; private set; }
 
-        public bool HasOpened { get; private set; } = false;
+        public bool Enabled { get; private set; } = false;
 
         public abstract void Enable();
         public abstract void Disable();
@@ -18,7 +18,7 @@ namespace Agava.Wink
             canvas.alpha = 1;
             canvas.interactable = true;
             canvas.blocksRaycasts = true;
-            HasOpened = true;
+            Enabled = true;
         }
 
         protected void DisableCanvasGroup(CanvasGroup canvas)
@@ -26,7 +26,7 @@ namespace Agava.Wink
             canvas.alpha = 0;
             canvas.interactable = false;
             canvas.blocksRaycasts = false;
-            HasOpened = false;
+            Enabled = false;
         }
     }
 }

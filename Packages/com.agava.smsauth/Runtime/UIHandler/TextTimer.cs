@@ -135,7 +135,7 @@ namespace Agava.Wink
         private string TimeString(int seconds)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
-            return $"{timeSpan.Minutes:00}:{timeSpan.Seconds:00}";
+            return $"{timeSpan.Minutes}:{timeSpan.Seconds:00}";
         }
     }
 }
