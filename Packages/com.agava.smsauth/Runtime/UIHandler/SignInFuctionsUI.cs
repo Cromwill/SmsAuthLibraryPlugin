@@ -89,7 +89,7 @@ namespace Agava.Wink
                 Debug.LogError("Fail to recieve remote config: " + response.statusCode);
             }
         }
-
+  
         private void OnOtpCodeRequested(string phone, bool hasOtpCode)
         {
             if (hasOtpCode)

@@ -19,7 +19,7 @@ namespace Agava.Wink
         [SerializeField] private DemoTimer _demoTimer;
         [SerializeField] private NotifyWindowHandler _notifyWindowHandler;
         [Header("UI Input")]
-        [SerializeField] private TMP_InputField _numbersInputField;
+        [SerializeField] private PhoneNumberFormatting _numbersInputField;
         [Header("UI Buttons")]
         [SerializeField] private Button _signInButton;
         [SerializeField] private Button _continueButton;
@@ -116,7 +116,7 @@ namespace Agava.Wink
 
         public void OpenSignWindow()
         {
-            _numbersInputField.text = string.Empty;
+            _numbersInputField.Clear();
             _notifyWindowHandler.OpenSignInWindow();
             AnalyticsWinkService.SendEnterPhoneWindow();
         }
@@ -163,7 +163,7 @@ namespace Agava.Wink
 
         private void OnSignInClicked()
         {
-            string number = _numbersInputField.text;
+            string number = _numbersInputField.Number;
             string formattedNumber = PhoneNumber.FormatNumber(number);
 
             foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)

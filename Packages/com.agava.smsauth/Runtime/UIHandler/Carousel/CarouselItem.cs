@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +12,11 @@ namespace Agava.Wink
 
         Coroutine _coroutine;
 
-        public Vector3 Position { get; private set; }
-        public Vector3 Scale { get; private set; }
+        public int Index { get; private set; }
 
-        private void Awake()
+        public void SetPositionIndex(int index)
         {
-            UpdatePositionAndScale();
+            Index = index;
         }
 
         public void SetSprite(Sprite sprite)
@@ -36,13 +36,16 @@ namespace Agava.Wink
             _mask.enabled = true;
         }
 
-        public void OneCycle(Vector3 targetPosition, Vector3 targetScale, float duration)
+        public void Stop()
         {
             if (_coroutine != null)
             {
                 StopCoroutine(_coroutine);
             }
+        }
 
+        public void OneCycle(Vector3 targetPosition, Vector3 targetScale, float duration, Action<CarouselItem> onEnd = null)
+        {
             _coroutine = StartCoroutine(Moving(targetPosition, targetScale, duration));
 
             IEnumerator Moving(Vector3 targetPosition, Vector3 targetScale, float duration)
@@ -50,29 +53,29 @@ namespace Agava.Wink
                 Vector3 startScale = transform.localScale;
                 Vector3 startPosition = transform.localPosition;
 
-                float elapsedTime = 0;
-                float delta;
-
-                while (elapsedTime < duration)
+                if (duration > 0)
                 {
-                    elapsedTime += Time.unscaledDeltaTime;
-                    delta = elapsedTime / duration;
+                    float elapsedTime = 0;
+                    float delta;
 
-                    transform.localPosition = Vector3.Lerp(startPosition, targetPosition, delta);
-                    transform.localScale = Vector3.Lerp(startScale, targetScale, delta);
+                    while (elapsedTime < duration)
+                    {
+                        elapsedTime += Time.unscaledDeltaTime;
+                        delta = elapsedTime / duration;
 
-                    yield return null;
+                        transform.localPosition = Vector3.Lerp(startPosition, targetPosition, delta);
+                        transform.localScale = Vector3.Lerp(startScale, targetScale, delta);
+
+                        yield return null;
+                    }
                 }
 
-                UpdatePositionAndScale();
+                transform.localPosition = targetPosition;
+                transform.localScale = targetScale;
+                onEnd?.Invoke(this);
+
                 _coroutine = null;
             }
-        }
-
-        private void UpdatePositionAndScale()
-        {
-            Position = transform.localPosition;
-            Scale = transform.localScale;
         }
     }
 }

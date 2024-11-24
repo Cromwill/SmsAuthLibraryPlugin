@@ -20,6 +20,7 @@ namespace Agava.Wink
         private int _visibleTextLength = 0;
         private int _length = 0;
 
+        public string Number { get; private set; }
         public bool InputDone { get; private set; } = false;
 
         private void Awake()
@@ -45,11 +46,20 @@ namespace Agava.Wink
         {
             if (_usePlaceholder == false)
                 _visibleText.enabled = _visibleTextLength != 0;
+
+            _inputField.caretPosition = _visibleTextLength;
+        }
+
+        public void Clear()
+        {
+            _inputField.text = string.Empty;
         }
 
         private void OnValueChanged(string newValue)
         {
             string numbers = Regex.Replace(newValue, "[^0-9]", string.Empty);
+
+            Number = numbers;
 
             _length = numbers.Length;
 
@@ -72,6 +82,8 @@ namespace Agava.Wink
                 numbers,
                 ColorText(_colorCode, coloredString)
                 );
+
+            _inputField.text = numbers;
         }
 
         private string ColorText(string colorCode, string text) => $"<color=#{colorCode}>{text}</color>";

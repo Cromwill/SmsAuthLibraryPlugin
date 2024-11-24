@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace Agava.Wink
@@ -12,14 +14,30 @@ namespace Agava.Wink
         [SerializeField] private List<CarouselItem> _items;
         [SerializeField] private CarouselItem _leftHiddenItem;
         [SerializeField] private CarouselItem _rightHiddenItem;
-        [SerializeField] private List<Sprite> _sprites;
+        [SerializeField] private List<CarouselItemAsset> _assets;
+        [SerializeField] private TMP_Text _description;
 
-        int _spriteIndex = 0;
+        int assetIndex = 0;
         private Coroutine _cycle;
+        private List<CarouselPosition> _carouselPositions = null;
+
+        private bool _enabled => _cycle != null;
 
         private void Awake()
         {
+            FillCarouselPositions();
             FillItems();
+        }
+
+        private void Update()
+        {
+            if (_enabled)
+            {
+                if (_description != null)
+                {
+                    _description.text = Lean.Localization.LeanLocalization.GetTranslationText(_assets[4].Description);
+                }
+            }
         }
 
         public void Enable()
@@ -32,6 +50,7 @@ namespace Agava.Wink
             if (_cycle != null)
             {
                 StopCoroutine(_cycle);
+                _cycle = null;
             }
         }
 
@@ -39,44 +58,47 @@ namespace Agava.Wink
         {
             while (true)
             {
-                yield return OneCycle();
+                OneCycle();
+                yield return new WaitForSeconds(OneCycleSeconds);
             }
         }
 
-        private IEnumerator OneCycle()
+        private void OneCycle()
         {
             CarouselItem item;
-            CarouselItem targetItem;
+            int targetPositionIndex;
+            Action<CarouselItem> onEnd;
 
             for (int i = 0; i < _items.Count; i++)
             {
                 item = _items[i];
 
-                if (i == 0)
+                if (item.Index == 0)
                 {
-                    targetItem = _rightHiddenItem;
+                    targetPositionIndex = _carouselPositions.Count - 1;
                     item.Hide();
+
+                    onEnd = (item) =>
+                    {
+                        item.Show();
+                        item.SetSprite(NextAsset().Sprite);
+                    };
                 }
                 else
                 {
-                    targetItem = _items[i - 1];
+                    targetPositionIndex = item.Index - 1;
+                    onEnd = null;
                 }
 
-                item.OneCycle(targetItem.Position, targetItem.Scale, OneCycleSeconds);
+
+                item.SetPositionIndex(targetPositionIndex);
+                item.OneCycle(_carouselPositions[targetPositionIndex].Position, _carouselPositions[targetPositionIndex].Scale, OneCycleSeconds, onEnd);
             }
-
-            yield return new WaitForSeconds(OneCycleSeconds);
-
-            _items.Add(_items[0]);
-            _items.RemoveAt(0);
-            _rightHiddenItem = _items.Last();
-            _rightHiddenItem.Show();
-            _rightHiddenItem.SetSprite(NextSprite());
         }
 
         private void FillItems()
         {
-            if (_sprites.Count == 0)
+            if (_assets.Count == 0)
             {
                 Debug.LogError("Fill sprites!");
                 return;
@@ -84,16 +106,41 @@ namespace Agava.Wink
 
             for (int i = 1; i < _items.Count; i++)
             {
-                _items[i].SetSprite(NextSprite());
+                _items[i].SetSprite(NextAsset().Sprite);
             }
         }
 
-        private Sprite NextSprite()
+        private void FillCarouselPositions()
         {
-            if (_spriteIndex == _sprites.Count)
-                _spriteIndex = 0;
+            CarouselItem item;
+            _carouselPositions = new();
 
-            return _sprites[_spriteIndex++];
+            for (int i = 0; i < _items.Count; i++)
+            {
+                item = _items[i];
+                item.SetPositionIndex(i);
+                _carouselPositions.Add(new CarouselPosition(item.transform.localPosition, item.transform.localScale));
+            }
+        }
+
+        private CarouselItemAsset NextAsset()
+        {
+            if (assetIndex == _assets.Count)
+                assetIndex = 0;
+
+            return _assets[assetIndex++];
+        }
+
+        private struct CarouselPosition
+        {
+            public Vector3 Position { get; private set; }
+            public Vector3 Scale { get; private set; }
+
+            public CarouselPosition(Vector3 position, Vector3 scale)
+            {
+                Position = position;
+                Scale = scale;
+            }
         }
     }
 }
