@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Lean.Localization;
 using TMPro;
 using UnityEngine;
 
@@ -12,32 +12,20 @@ namespace Agava.Wink
         private const float OneCycleSeconds = 1f;
 
         [SerializeField] private List<CarouselItem> _items;
-        [SerializeField] private CarouselItem _leftHiddenItem;
-        [SerializeField] private CarouselItem _rightHiddenItem;
         [SerializeField] private List<CarouselItemAsset> _assets;
-        [SerializeField] private TMP_Text _description;
+        [Header("Carousel header")]
+        [SerializeField] private CarouselItem _headerItem;
+        [SerializeField] private TMP_Text _header;
 
-        int assetIndex = 0;
+        int _assetIndex = 0;
         private Coroutine _cycle;
         private List<CarouselPosition> _carouselPositions = null;
-
-        private bool _enabled => _cycle != null;
+        private int _headerPositionIndex;
 
         private void Awake()
         {
             FillCarouselPositions();
             FillItems();
-        }
-
-        private void Update()
-        {
-            if (_enabled)
-            {
-                if (_description != null)
-                {
-                    _description.text = Lean.Localization.LeanLocalization.GetTranslationText(_assets[4].Description);
-                }
-            }
         }
 
         public void Enable()
@@ -81,7 +69,7 @@ namespace Agava.Wink
                     onEnd = (item) =>
                     {
                         item.Show();
-                        item.SetSprite(NextAsset().Sprite);
+                        item.Initialize(NextAsset());
                     };
                 }
                 else
@@ -90,6 +78,11 @@ namespace Agava.Wink
                     onEnd = null;
                 }
 
+                if (_headerPositionIndex == targetPositionIndex || _headerPositionIndex == targetPositionIndex + 1)
+                {
+                    if (_header != null)
+                        _header.text = LeanLocalization.GetTranslationText(item.Description);
+                }
 
                 item.SetPositionIndex(targetPositionIndex);
                 item.OneCycle(_carouselPositions[targetPositionIndex].Position, _carouselPositions[targetPositionIndex].Scale, OneCycleSeconds, onEnd);
@@ -106,7 +99,7 @@ namespace Agava.Wink
 
             for (int i = 1; i < _items.Count; i++)
             {
-                _items[i].SetSprite(NextAsset().Sprite);
+                _items[i].Initialize(NextAsset());
             }
         }
 
@@ -118,6 +111,10 @@ namespace Agava.Wink
             for (int i = 0; i < _items.Count; i++)
             {
                 item = _items[i];
+
+                if (item == _headerItem)
+                    _headerPositionIndex = i;
+
                 item.SetPositionIndex(i);
                 _carouselPositions.Add(new CarouselPosition(item.transform.localPosition, item.transform.localScale));
             }
@@ -125,10 +122,10 @@ namespace Agava.Wink
 
         private CarouselItemAsset NextAsset()
         {
-            if (assetIndex == _assets.Count)
-                assetIndex = 0;
+            if (_assetIndex == _assets.Count)
+                _assetIndex = 0;
 
-            return _assets[assetIndex++];
+            return _assets[_assetIndex++];
         }
 
         private struct CarouselPosition

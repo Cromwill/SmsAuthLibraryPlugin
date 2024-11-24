@@ -10,18 +10,20 @@ namespace Agava.Wink
         [SerializeField] private Image _image;
         [SerializeField] private Image _mask;
 
-        Coroutine _coroutine;
+        private Coroutine _coroutine;
 
         public int Index { get; private set; }
+        public string Description { get; private set; }
 
         public void SetPositionIndex(int index)
         {
             Index = index;
         }
 
-        public void SetSprite(Sprite sprite)
+        public void Initialize(CarouselItemAsset asset)
         {
-            _image.sprite = sprite;
+            _image.sprite = asset.Sprite;
+            Description = asset.Description;
         }
 
         public void Hide()

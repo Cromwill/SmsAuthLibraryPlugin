@@ -481,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8857614437488287748, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: m_Name
-      value: WinkAccessManager
+      value: WinkAccessManager_Horizontal
       objectReference: {fileID: 0}
     - target: {fileID: 9119929936194003686, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: m_AnchoredPosition.x
