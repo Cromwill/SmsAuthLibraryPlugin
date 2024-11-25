@@ -51,6 +51,11 @@ namespace Agava.Wink
                 _timespentService.OnStartedApp();
         }
 
+        private void OnDestroy()
+        {
+            _subscribeSearchSystem?.Stop();
+        }
+
         public void Initialize()
         {
             if (SmsAuthApi.Initialized == false)

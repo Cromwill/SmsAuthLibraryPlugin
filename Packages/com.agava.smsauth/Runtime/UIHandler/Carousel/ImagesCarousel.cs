@@ -9,7 +9,8 @@ namespace Agava.Wink
 {
     public class ImagesCarousel : MonoBehaviour
     {
-        private const float OneCycleSeconds = 1f;
+        private const float OneCycleSeconds = 2.5f;
+        private const float PauseSeconds = 1f;
 
         [SerializeField] private List<CarouselItem> _items;
         [SerializeField] private List<CarouselItemAsset> _assets;
@@ -44,10 +45,12 @@ namespace Agava.Wink
 
         private IEnumerator EndlessCycle()
         {
+            WaitForSeconds waitForCycleEnd = new WaitForSeconds(OneCycleSeconds + PauseSeconds);
+
             while (true)
             {
                 OneCycle();
-                yield return new WaitForSeconds(OneCycleSeconds);
+                yield return waitForCycleEnd;
             }
         }
 
@@ -78,7 +81,7 @@ namespace Agava.Wink
                     onEnd = null;
                 }
 
-                if (_headerPositionIndex == targetPositionIndex || _headerPositionIndex == targetPositionIndex + 1)
+                if (_headerPositionIndex == targetPositionIndex)
                 {
                     if (_header != null)
                         _header.text = LeanLocalization.GetTranslationText(item.Description);

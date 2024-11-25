@@ -228,6 +228,7 @@ namespace Agava.Wink
 
                 _notifyWindowHandler.OpenHelloWindow(onEnd: () =>
                 {
+                    _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
                     AnalyticsWinkService.SendHelloWindow();
 
                     if (hasAccess == false)
