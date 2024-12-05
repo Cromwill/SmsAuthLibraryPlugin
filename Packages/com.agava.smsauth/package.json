@@ -1,14 +1,12 @@
 {
   "name": "com.agava.smsauthvps",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "displayName": "Sms Auth VPS",
   "type": "library",
   "unity": "2022.3",
   "description": "Sms Authenfication for Wink access.",
   "license": "MIT",
   "dependencies": {
-    "com.google.external-dependency-manager": "1.2.177",
-    "io.appmetrica.analytics": "6.1.0",
     "com.agava.smsauthwebapi": "1.0.0",
     "com.unity.nuget.newtonsoft-json": "3.0.2",
     "com.unity.textmeshpro": "3.0.9"
