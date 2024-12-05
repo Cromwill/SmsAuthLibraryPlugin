@@ -10,7 +10,6 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private Button _closeButton;
-        [SerializeField] private WindowScalerPresenter _scalerPresenter;
 
         private Action Closed;
 
@@ -19,7 +18,6 @@ namespace Agava.Wink
         private void Awake()
         {
             _closeButton.onClick.AddListener(Disable);
-            _scalerPresenter.Construct();
         }
 
         public override void Enable() => EnableCanvasGroup(_canvasGroup);
@@ -28,8 +26,6 @@ namespace Agava.Wink
         {
             if (Enabled == false)
                 return;
-
-            _scalerPresenter.Update();
         }
 
         public void Enable(Action closeCallback)

@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
-using System.Threading.Tasks;
 
 namespace Agava.Wink
 {
@@ -24,7 +21,6 @@ namespace Agava.Wink
         [SerializeField] private Button _signInButton;
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _openSignInDemoButton;
-        [SerializeField] private Button _unlinkButtonTemplate;
         [Header("UI Test Buttons")]
         [SerializeField] private Button _testSignInButton;
         [SerializeField] private Button _testDeleteButton;
@@ -32,11 +28,12 @@ namespace Agava.Wink
         [SerializeField] private Transform _containerButtons;
         [Header("Placeholders")]
         [SerializeField] private TextPlaceholder[] _phoneNumberPlaceholders;
-        [SerializeField] private TextPlaceholder[] _idPlaceholders;
+        [Header("Templates")]
+        [SerializeField] private UnlinkDeviceView _unlinkDeviceViewTemplate;
 
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
-        private readonly List<Button> _devicesIdButtons = new();
+        private readonly List<UnlinkDeviceView> _unlinkDeviceViews = new();
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 
@@ -55,6 +52,8 @@ namespace Agava.Wink
 
         public void Dispose()
         {
+            _notifyWindowHandler.CloseAllWindows(null);
+
             if (_signInFuctionsUI == null) return;
 
             _continueButton.onClick.RemoveAllListeners();
@@ -92,7 +91,8 @@ namespace Agava.Wink
                 Instance = this;
 
             _signInFuctionsUI = new(_notifyWindowHandler, _demoTimer, winkAccessManager, this, this);
-#if UNITY_EDITOR || TEST
+
+#if TEST
             _testSignInButton.onClick.AddListener(OnTestSignInClicked);
             _testDeleteButton.onClick.AddListener(OnTestDeleteClicked);
             _testSignInButton.gameObject.SetActive(true);
@@ -101,6 +101,7 @@ namespace Agava.Wink
             _testDeleteButton.gameObject.SetActive(false);
             _testSignInButton.gameObject.SetActive(false);
 #endif
+
             _winkAccessManager = winkAccessManager;
             _continueButton.onClick.AddListener(OnContinueClicked);
             _signInButton.onClick.AddListener(OnSignInClicked);
@@ -114,9 +115,13 @@ namespace Agava.Wink
             _demoTimer.TimerExpired += OnTimerExpired;
         }
 
+        public void OpenStartWindow()
+        {
+            OpenSubscriptionWindow();
+        }
+
         public void OpenSignWindow()
         {
-            _numbersInputField.Clear();
             _notifyWindowHandler.OpenSignInWindow();
             AnalyticsWinkService.SendEnterPhoneWindow();
         }
@@ -124,6 +129,12 @@ namespace Agava.Wink
         public void OpenWindow(WindowType type) => _notifyWindowHandler.OpenWindow(type);
         public void CloseWindow(WindowType type) => _notifyWindowHandler.CloseWindow(type);
         public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);
+
+        public void OpenSubscriptionWindow()
+        {
+            AnalyticsWinkService.SendSubscribeProfileWindow();
+            _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+        }
 
         public void OnWinkButtonClick()
         {
@@ -180,28 +191,35 @@ namespace Agava.Wink
             CloseAllWindows();
             _notifyWindowHandler.OnLimitReached();
 
+            int deviceIndex = 1;
+
             foreach (string device in devicesList)
             {
-                Button button = Instantiate(_unlinkButtonTemplate, _containerButtons);
-                button.GetComponentInChildren<TMP_Text>().text = device;
-                button.onClick.AddListener(()
-                    => OnUnlinkClicked(button.GetComponentInChildren<TMP_Text>().text));
-                _devicesIdButtons.Add(button);
+                UnlinkDeviceView unlinkDeviceView = Instantiate(_unlinkDeviceViewTemplate, _containerButtons);
+
+                unlinkDeviceView.Initialize(deviceIndex, device);
+                unlinkDeviceView.Closed += OnUnlinkButtonClicked;
+
+                deviceIndex++;
             }
         }
 
         private void OnUnlinkClicked(string device)
         {
-            foreach (Button button in _devicesIdButtons)
+            foreach (UnlinkDeviceView unlinkDeviceView in _unlinkDeviceViews)
             {
-                button.onClick.RemoveListener(()
-                    => OnUnlinkClicked(button.GetComponentInChildren<TMP_Text>().text));
-
-                Destroy(button.gameObject);
+                unlinkDeviceView.Closed -= OnUnlinkButtonClicked;
+                Destroy(unlinkDeviceView.gameObject);
             }
 
-            _devicesIdButtons.Clear();
+            _unlinkDeviceViews.Clear();
             _signInFuctionsUI.OnUnlinkClicked(device);
+        }
+
+        void OnUnlinkButtonClicked(UnlinkDeviceView unlinkDeviceView)
+        {
+            OnUnlinkClicked(unlinkDeviceView.DeviceId);
+            _unlinkDeviceViews.Add(unlinkDeviceView);
         }
 
         private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();
@@ -211,36 +229,28 @@ namespace Agava.Wink
             _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
         }
 
-        private async void OnSignInSuccessfully(bool hasAccess)
+        private void OnSignInSuccessfully(bool hasAccess)
         {
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
             _signInFuctionsUI.OnSignInSuccesfully(hasAccess);
             _signInButton.gameObject.SetActive(false);
 
             SetPhone();
-            bool hasId = await SetId(hasAccess);
 
-            StartCoroutine(OpeningHelloWindow());
-
-            IEnumerator OpeningHelloWindow()
+            _notifyWindowHandler.OpenHelloWindow(onEnd: () =>
             {
-                yield return new WaitUntil(() => hasId);
+                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+                AnalyticsWinkService.SendHelloWindow();
 
-                _notifyWindowHandler.OpenHelloWindow(onEnd: () =>
+                if (hasAccess == false)
                 {
-                    _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
-                    AnalyticsWinkService.SendHelloWindow();
-
-                    if (hasAccess == false)
+                    if (_demoTimer.Expired == false)
                     {
-                        if (_demoTimer.Expired == false)
-                        {
-                            _notifyWindowHandler.OpenWindow(WindowType.Redirect);
-                            AnalyticsWinkService.SendPayWallWindow();
-                        }
+                        _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+                        AnalyticsWinkService.SendPayWallWindow();
                     }
-                });
-            }
+                }
+            });
         }
 
         private void SetPhone()
@@ -252,41 +262,6 @@ namespace Agava.Wink
 
             foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)
                 placeholder.ReplaceValue(number);
-        }
-
-        private async Task<bool> SetId(bool hasAccess)
-        {
-            string id = null;
-
-            if (hasAccess)
-                id = await TryGetId();
-
-            if (string.IsNullOrEmpty(id))
-                id = "N/A";
-
-            foreach (TextPlaceholder placeholder in _idPlaceholders)
-                placeholder.ReplaceValue(id);
-
-            return true;
-        }
-
-        private async Task<string> TryGetId()
-        {
-            string sanId = null;
-
-            if (UnityEngine.PlayerPrefs.HasKey(_winkAccessManager.SanId) == false && UnityEngine.PlayerPrefs.HasKey(_winkAccessManager.PhoneNumber))
-            {
-                var phone = UnityEngine.PlayerPrefs.GetString(_winkAccessManager.PhoneNumber);
-                var responseGetSanId = await SmsAuthApi.GetSanId(phone);
-
-                if (responseGetSanId.statusCode == UnityEngine.Networking.UnityWebRequest.Result.Success)
-                    UnityEngine.PlayerPrefs.SetString(_winkAccessManager.SanId, responseGetSanId.body);
-            }
-
-            if (UnityEngine.PlayerPrefs.HasKey(_winkAccessManager.SanId))
-                sanId = UnityEngine.PlayerPrefs.GetString(_winkAccessManager.SanId);
-
-            return sanId;
         }
 
         private void OnTimerExpired() => _notifyWindowHandler.OpenDemoExpiredWindow(false);

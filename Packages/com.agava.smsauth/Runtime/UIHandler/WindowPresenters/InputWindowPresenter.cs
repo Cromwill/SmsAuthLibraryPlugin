@@ -20,7 +20,6 @@ namespace Agava.Wink
         [SerializeField] private EnterCodeShaking _enterCodeShaking;
         [SerializeField] private CodeFormatter _codeFormatter;
         [SerializeField] private GameObject _wrongCodeText;
-        [SerializeField] private WindowScalerPresenter _scalerPresenter;
         [Header("Buttons")]
         [SerializeField] private Button _sendRepeatCodeButton;
         [SerializeField] private Button _backButton;
@@ -39,7 +38,6 @@ namespace Agava.Wink
             _sendRepeatCodeButton.onClick.AddListener(OnRepeatClicked);
             _backButton.onClick.AddListener(OnBackClicked);
             _repeatCodeTimer.TimerExpired += OnNewCodeTimerExpired;
-            _scalerPresenter.Construct();
         }
 
         private void OnDestroy()
@@ -54,8 +52,6 @@ namespace Agava.Wink
         {
             if (Enabled == false)
                 return;
-
-            _scalerPresenter.Update();
 
             if (_codeFormatter.InputDone)
             {

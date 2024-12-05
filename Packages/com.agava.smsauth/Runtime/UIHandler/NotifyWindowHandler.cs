@@ -14,7 +14,7 @@ namespace Agava.Wink
         [SerializeField] private NotifyWindowPresenter _failWindow;
         [SerializeField] private ProcessWindowPresenter _proccesOnWindow;
         [SerializeField] private HelloWindowPresenter _helloWindow;
-        [SerializeField] private NotifyWindowPresenter _unlinkWindow;
+        [SerializeField] private UnlinkWindowPresenter _unlinkWindow;
         [SerializeField] private RedirectWindowPresenter _demoTimerExpiredWindow;
         [SerializeField] private NotifyWindowPresenter _noEnternetWindow;
         [SerializeField] private RedirectWindowPresenter _redirectToWebsiteWindow;

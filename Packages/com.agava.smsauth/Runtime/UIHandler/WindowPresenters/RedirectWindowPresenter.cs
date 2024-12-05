@@ -13,7 +13,6 @@ namespace Agava.Wink
         [SerializeField] private Button _yesButton;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _signInButton;
-        [SerializeField] private string _url;
         [SerializeField] private bool _closeOnYesClicked = true;
 
         private void OnDestroy()
@@ -57,7 +56,7 @@ namespace Agava.Wink
 
         private void OnYesClicked()
         {
-            Application.OpenURL(_url);
+            Application.OpenURL(Links.Subscription);
             AnalyticsWinkService.SendPayWallRedirect();
 
             if (_closeOnYesClicked)
