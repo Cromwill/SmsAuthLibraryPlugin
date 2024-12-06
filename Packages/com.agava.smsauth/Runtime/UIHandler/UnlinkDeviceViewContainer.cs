@@ -7,21 +7,31 @@ namespace Agava.Wink
 {
     public class UnlinkDeviceViewContainer : MonoBehaviour
     {
+        private const int MaxCount = 5;
+
         [SerializeField] private UnlinkDeviceView _unlinkDeviceViewTemplate;
 
         private List<UnlinkDeviceView> _unlinkDeviceViews = new();
 
         public int Count => _unlinkDeviceViews.Count;
+        public bool HasFreePlaces => _unlinkDeviceViews.Any(view => view.Empty);
 
         public event Action<UnlinkDeviceView> Closed;
 
-        public void Add(string device)
+        public void Initialize(IReadOnlyList<string> devicesList)
         {
-            UnlinkDeviceView unlinkDeviceView = Instantiate(_unlinkDeviceViewTemplate, transform);
-            unlinkDeviceView.Initialize(device);
-            _unlinkDeviceViews.Add(unlinkDeviceView);
-            unlinkDeviceView.SetNumber(Count);
-            unlinkDeviceView.Closed += OnUnlinked;
+            for (int i = 0; i < MaxCount; i++)
+            {
+                UnlinkDeviceView unlinkDeviceView = Instantiate(_unlinkDeviceViewTemplate, transform);
+                _unlinkDeviceViews.Add(unlinkDeviceView);
+                unlinkDeviceView.SetNumber(i + 1);
+
+                if (i < devicesList.Count)
+                {
+                    unlinkDeviceView.Initialize(devicesList[i]);
+                    unlinkDeviceView.Closed += OnUnlinked;
+                }
+            }
         }
 
         public void Clear()
@@ -35,7 +45,7 @@ namespace Agava.Wink
         private void OnUnlinked(UnlinkDeviceView unlinkDeviceView)
         {
             Closed?.Invoke(unlinkDeviceView);
-            DestroyView(unlinkDeviceView);
+            unlinkDeviceView.SetFree();
         }
 
         private void DestroyView(UnlinkDeviceView unlinkDeviceView)
@@ -43,9 +53,6 @@ namespace Agava.Wink
             _unlinkDeviceViews.Remove(unlinkDeviceView);
             unlinkDeviceView.Closed -= OnUnlinked;
             Destroy(unlinkDeviceView.gameObject);
-
-            foreach (UnlinkDeviceView view in _unlinkDeviceViews)
-                view.SetNumber(view.Number - 1);
         }
     }
 }

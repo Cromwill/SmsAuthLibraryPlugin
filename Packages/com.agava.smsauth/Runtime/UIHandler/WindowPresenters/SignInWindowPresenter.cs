@@ -11,6 +11,7 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private TMP_InputField _inputField;
 
         private Action Closed;
 
@@ -30,6 +31,7 @@ namespace Agava.Wink
         {
             Enable();
             Closed = closeCallback;
+            _inputField.Select();
         }
 
         public override void Disable()

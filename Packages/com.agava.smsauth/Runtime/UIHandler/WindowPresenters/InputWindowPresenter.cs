@@ -74,6 +74,7 @@ namespace Agava.Wink
             _onInputDone = onInputDone;
             _onBackClicked = onBackClicked;
             EnableCanvasGroup(_canvasGroup);
+            _inputField.Select();
         }
 
         public void Enable(string phone)

@@ -202,11 +202,7 @@ namespace Agava.Wink
         {
             CloseAllWindows();
             _notifyWindowHandler.OpenWindow(WindowType.Unlink);
-
-            foreach (string device in devicesList)
-            {
-                _unlinkDeviceViewContainer.Add(device);
-            }
+            _unlinkDeviceViewContainer.Initialize(devicesList);
         }
 
         void OnUnlinkButtonClicked(UnlinkDeviceView unlinkDeviceView)

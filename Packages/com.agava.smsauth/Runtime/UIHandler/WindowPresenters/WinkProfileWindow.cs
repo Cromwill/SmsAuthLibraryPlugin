@@ -11,7 +11,6 @@ namespace Agava.Wink
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _profileButton;
         [SerializeField] private Button _closeButton;
-        [SerializeField] private string _url;
 
         private void OnDestroy()
         {
@@ -39,8 +38,7 @@ namespace Agava.Wink
 
         private void OnProfileButtonClicked()
         {
-            Application.OpenURL(_url);
-            AnalyticsWinkService.SendSubscribeProfileRemote();
+            Application.OpenURL(Links.Subscription);
             Disable();
         }
     }

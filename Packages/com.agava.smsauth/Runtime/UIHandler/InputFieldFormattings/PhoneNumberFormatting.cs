@@ -82,8 +82,6 @@ namespace Agava.Wink
                 numbers,
                 ColorText(_colorCode, coloredString)
                 );
-
-            _inputField.text = numbers;
         }
 
         private string ColorText(string colorCode, string text) => $"<color=#{colorCode}>{text}</color>";

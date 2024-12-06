@@ -5,8 +5,6 @@ namespace Agava.Wink
 {
     internal class UnlinkWindowPresenter : WindowPresenter
     {
-        private const int MaxDevices = 5;
-
         [SerializeField] private CanvasGroup _canvasGroup;
         [Header("First panel")]
         [SerializeField] private GameObject _firstPanel;
@@ -28,7 +26,7 @@ namespace Agava.Wink
 
         private void Update()
         {
-            bool deviceUnlinked = _unlinkDeviceViewsContainer.Count < MaxDevices;
+            bool deviceUnlinked = _unlinkDeviceViewsContainer.HasFreePlaces;
 
             _backButton.gameObject.SetActive(deviceUnlinked == false);
             _continueButton.gameObject.SetActive(deviceUnlinked);
