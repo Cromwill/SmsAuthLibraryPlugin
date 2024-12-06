@@ -21,19 +21,17 @@ namespace Agava.Wink
         [SerializeField] private Button _signInContinueButton;
         [SerializeField] private Button _enterCodeContinueButton;
         [SerializeField] private Button[] _signInButtons;
+        [SerializeField] private Button _unlinkContinueButton;
         [Header("UI Test Buttons")]
         [SerializeField] private Button _testSignInButton;
         [SerializeField] private Button _testDeleteButton;
         [Header("Factory components")]
-        [SerializeField] private Transform _containerButtons;
+        [SerializeField] private UnlinkDeviceViewContainer _unlinkDeviceViewContainer;
         [Header("Placeholders")]
         [SerializeField] private TextPlaceholder[] _phoneNumberPlaceholders;
-        [Header("Templates")]
-        [SerializeField] private UnlinkDeviceView _unlinkDeviceViewTemplate;
 
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
-        private readonly List<UnlinkDeviceView> _unlinkDeviceViews = new();
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 
@@ -52,14 +50,17 @@ namespace Agava.Wink
 
         public void Dispose()
         {
-            _notifyWindowHandler.CloseAllWindows(null);
-
             if (_signInFuctionsUI == null) return;
 
-            _enterCodeContinueButton.onClick.RemoveAllListeners();
+            _enterCodeContinueButton.onClick.RemoveListener(OnEnterCodeContinueClicked);
+            _signInContinueButton.onClick.RemoveListener(OnSignInContinueClicked);
 
             foreach (var button in _signInButtons)
                 button.onClick.RemoveAllListeners();
+
+            _unlinkContinueButton.onClick.RemoveListener(OnUnlinkContinueClicked);
+
+            _unlinkDeviceViewContainer.Closed -= OnUnlinkButtonClicked;
 
             if (_winkAccessManager == null) return;
 
@@ -110,6 +111,9 @@ namespace Agava.Wink
 
             foreach (var button in _signInButtons)
                 button.onClick.AddListener(OpenSignWindow);
+
+            _unlinkContinueButton.onClick.AddListener(OnUnlinkContinueClicked);
+            _unlinkDeviceViewContainer.Closed += OnUnlinkButtonClicked;
 
             CloseAllWindows();
 
@@ -197,37 +201,23 @@ namespace Agava.Wink
         private void OnLimitReached(IReadOnlyList<string> devicesList)
         {
             CloseAllWindows();
-            _notifyWindowHandler.OnLimitReached();
-
-            int deviceIndex = 1;
+            _notifyWindowHandler.OpenWindow(WindowType.Unlink);
 
             foreach (string device in devicesList)
             {
-                UnlinkDeviceView unlinkDeviceView = Instantiate(_unlinkDeviceViewTemplate, _containerButtons);
-
-                unlinkDeviceView.Initialize(deviceIndex, device);
-                unlinkDeviceView.Closed += OnUnlinkButtonClicked;
-
-                deviceIndex++;
+                _unlinkDeviceViewContainer.Add(device);
             }
-        }
-
-        private void OnUnlinkClicked(string device)
-        {
-            foreach (UnlinkDeviceView unlinkDeviceView in _unlinkDeviceViews)
-            {
-                unlinkDeviceView.Closed -= OnUnlinkButtonClicked;
-                Destroy(unlinkDeviceView.gameObject);
-            }
-
-            _unlinkDeviceViews.Clear();
-            _signInFuctionsUI.OnUnlinkClicked(device);
         }
 
         void OnUnlinkButtonClicked(UnlinkDeviceView unlinkDeviceView)
         {
-            OnUnlinkClicked(unlinkDeviceView.DeviceId);
-            _unlinkDeviceViews.Add(unlinkDeviceView);
+            _signInFuctionsUI.OnUnlinkClicked(unlinkDeviceView.DeviceId);
+        }
+
+        private void OnUnlinkContinueClicked()
+        {
+            _notifyWindowHandler.CloseWindow(WindowType.Unlink);
+            _winkAccessManager.Login();
         }
 
         private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();

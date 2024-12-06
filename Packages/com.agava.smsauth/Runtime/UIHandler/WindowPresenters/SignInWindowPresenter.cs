@@ -10,17 +10,13 @@ namespace Agava.Wink
     internal class SignInWindowPresenter : WindowPresenter
     {
         [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private Button _closeButton;
 
         private Action Closed;
 
         private void OnDestroy() => _closeButton.onClick.RemoveListener(Disable);
 
-        private void Awake()
-        {
-            _closeButton.onClick.AddListener(Disable);
-        }
+        private void Awake() => _closeButton.onClick.AddListener(Disable);
 
         public override void Enable() => EnableCanvasGroup(_canvasGroup);
 
@@ -28,11 +24,6 @@ namespace Agava.Wink
         {
             if (Enabled == false)
                 return;
-        }
-
-        public void Clear()
-        {
-            _inputField.text = string.Empty;
         }
 
         public void Enable(Action closeCallback)

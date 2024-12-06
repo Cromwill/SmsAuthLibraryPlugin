@@ -16,7 +16,7 @@ namespace Agava.Wink
         [SerializeField] private GameObject _secondPanel;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _continueButton;
-        [SerializeField] private Transform _unlinkDeviceViewsContainer;
+        [SerializeField] private UnlinkDeviceViewContainer _unlinkDeviceViewsContainer;
 
         private void Awake()
         {
@@ -28,13 +28,10 @@ namespace Agava.Wink
 
         private void Update()
         {
-            if (_secondPanel.activeSelf)
-            {
-                bool deviceUnlinked = _unlinkDeviceViewsContainer.childCount < MaxDevices;
+            bool deviceUnlinked = _unlinkDeviceViewsContainer.Count < MaxDevices;
 
-                _backButton.gameObject.SetActive(deviceUnlinked == false);
-                _backButton.gameObject.SetActive(deviceUnlinked);
-            }
+            _backButton.gameObject.SetActive(deviceUnlinked == false);
+            _continueButton.gameObject.SetActive(deviceUnlinked);
         }
 
         private void OnDestroy()
@@ -51,7 +48,11 @@ namespace Agava.Wink
             EnableCanvasGroup(_canvasGroup);
         }
 
-        public override void Disable() => DisableCanvasGroup(_canvasGroup);
+        public override void Disable()
+        {
+            DisableCanvasGroup(_canvasGroup);
+            _unlinkDeviceViewsContainer.Clear();
+        }
 
         private void OnUnlinkButtonClicked() => SetPanel(false);
         private void OnBackButtonClicked() => SetPanel(true);

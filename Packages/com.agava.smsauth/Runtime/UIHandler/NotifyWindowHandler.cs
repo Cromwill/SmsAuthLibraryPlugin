@@ -44,12 +44,6 @@ namespace Agava.Wink
             onClosed?.Invoke();
         }
 
-        internal void OnLimitReached()
-        {
-            _enterCodeWindow.Clear();
-            _unlinkWindow.Enable();
-        }
-
         internal bool HasOpenedWindow(WindowType type)
             => _windows.Any(window => window.Type == type && window.isActiveAndEnabled == true);
 

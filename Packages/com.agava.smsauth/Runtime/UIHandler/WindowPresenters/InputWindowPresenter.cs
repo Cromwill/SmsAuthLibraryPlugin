@@ -84,7 +84,11 @@ namespace Agava.Wink
 
         public override void Enable() { }
 
-        public override void Disable() => DisableCanvasGroup(_canvasGroup);
+        public override void Disable()
+        {
+            DisableCanvasGroup(_canvasGroup);
+            Clear();
+        }
 
         public void OnInputDone()
         {

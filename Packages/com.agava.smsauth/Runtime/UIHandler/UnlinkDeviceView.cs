@@ -14,6 +14,7 @@ namespace Agava.Wink
         public event Action<UnlinkDeviceView> Closed;
 
         public string DeviceId => _deviceId.text;
+        public int Number { get; private set; } = 0;
 
         private void OnEnable()
         {
@@ -25,10 +26,15 @@ namespace Agava.Wink
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         }
 
-        public void Initialize(int number, string deviceId)
+        public void Initialize(string deviceId)
         {
-            _number.text = number.ToString();
             _deviceId.text = deviceId;
+        }
+
+        public void SetNumber(int number)
+        {
+            Number = number;
+            _number.text = number.ToString();
         }
 
         private void OnCloseButtonClicked()

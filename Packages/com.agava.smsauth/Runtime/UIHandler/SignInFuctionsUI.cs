@@ -48,17 +48,18 @@ namespace Agava.Wink
             otpCodeAccepted: (accepted) =>
             {
                 OnOtpCodeAccepted(accepted);
-            });
+            },
+            onFail: () =>
+            {
+                _notifyWindowHandler.OpenWindow(WindowType.Fail);
+                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+            }
+            );
         }
 
         internal void OnUnlinkClicked(string device)
         {
-            _winkAccessManager.Unlink(device, () =>
-            {
-                _notifyWindowHandler.CloseWindow(WindowType.Redirect);
-                _notifyWindowHandler.CloseWindow(WindowType.Unlink);
-                _winkAccessManager.Login();
-            });
+            _winkAccessManager.Unlink(device);
         }
 
         internal async void SetRemoteConfig()
@@ -89,7 +90,7 @@ namespace Agava.Wink
                 Debug.LogError("Fail to recieve remote config: " + response.statusCode);
             }
         }
-  
+
         private void OnOtpCodeRequested(string phone, bool hasOtpCode)
         {
             if (hasOtpCode)

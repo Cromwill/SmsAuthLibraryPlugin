@@ -6867,7 +6867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5622677239117361076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7221,7 +7221,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 1
   _canvasGroup: {fileID: 3989151970030902438}
-  _inputField: {fileID: 0}
   _closeButton: {fileID: 8133352529479261381}
 --- !u!225 &3989151970030902438
 CanvasGroup:
@@ -11048,7 +11047,7 @@ MonoBehaviour:
   _secondPanel: {fileID: 6862419783733276331}
   _backButton: {fileID: 4948776978672045924}
   _continueButton: {fileID: 7451925099249756360}
-  _unlinkDeviceViewsContainer: {fileID: 7096038148321924997}
+  _unlinkDeviceViewsContainer: {fileID: 3904726843075320877}
 --- !u!225 &1175145749647582794
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -14612,6 +14611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7096038148321924997}
   - component: {fileID: 810293570887425805}
+  - component: {fileID: 3904726843075320877}
   - component: {fileID: 7992195629318311148}
   m_Layer: 5
   m_Name: Container
@@ -14647,6 +14647,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7701963659262658918}
   m_CullTransparentMesh: 1
+--- !u!114 &3904726843075320877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7701963659262658918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c36ff3e623ac22478b06627c7ea70d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unlinkDeviceViewTemplate: {fileID: 8805977714845050857, guid: 511c203ace4a85f4e9a439fa24b06566, type: 3}
 --- !u!114 &7992195629318311148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16500,7 +16513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ip: gamesrtkbd.tech
-  _additiveId: 
+  _additiveId: 1
 --- !u!114 &7069856064962767434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16546,12 +16559,12 @@ MonoBehaviour:
   - {fileID: 594317397132827229}
   - {fileID: 6325108296970379473}
   - {fileID: 7170691379942591322}
+  _unlinkContinueButton: {fileID: 7451925099249756360}
   _testSignInButton: {fileID: 58690097326686299}
   _testDeleteButton: {fileID: 50712573969216595}
-  _containerButtons: {fileID: 7096038148321924997}
+  _unlinkDeviceViewContainer: {fileID: 3904726843075320877}
   _phoneNumberPlaceholders:
   - {fileID: 1880988966042979568}
-  _unlinkDeviceViewTemplate: {fileID: 8805977714845050857, guid: 511c203ace4a85f4e9a439fa24b06566, type: 3}
 --- !u!1 &8858283425009660146
 GameObject:
   m_ObjectHideFlags: 0
