@@ -33,7 +33,6 @@ namespace Agava.Wink
         internal void OpenInputOtpCodeWindow(string phone, Action<string> onInputDone, Action onBackClicked)
             => _enterCodeWindow.Enable(phone, onInputDone, onBackClicked);
         internal void OpenInputOtpCodeWhileReapetWindow(string phone) => _enterCodeWindow.Enable(phone);
-        internal void OpenHelloWindow(Action onEnd) => _helloWindow.Enable(onEnd);
         internal void OpenDemoExpiredWindow(bool closeButton) => _demoTimerExpiredWindow.Enable(closeButton);
         internal void OpenDeleteAccountWindow(Action onDeleteAccount) => _deleteAccountWindow.Enable(onDeleteAccount);
 

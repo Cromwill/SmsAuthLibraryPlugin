@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using System;
 using UnityEngine.Scripting;
 using UnityEngine.UI;
 
@@ -13,17 +11,12 @@ namespace Agava.Wink
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _startButton;
 
-        private Action _onEnd;
-
-        public void Enable(Action onEnd = null)
+        public override void Enable()
         {
             _imagesCarousel.Enable();
-            EnableCanvasGroup(_canvasGroup);
-            _onEnd = onEnd;
             _startButton.onClick.AddListener(OnStartButtonClick);
+            EnableCanvasGroup(_canvasGroup);
         }
-
-        public override void Enable() { }
 
         public override void Disable()
         {
@@ -34,7 +27,6 @@ namespace Agava.Wink
 
         private void OnStartButtonClick()
         {
-            _onEnd?.Invoke();
             Disable();
         }
     }

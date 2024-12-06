@@ -14,7 +14,6 @@ namespace Agava.Wink
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _signInButton;
         [SerializeField] private bool _closeOnYesClicked = true;
-        [SerializeField] private TextPlaceholder _freeTrialText;
 
         private void Awake()
         {

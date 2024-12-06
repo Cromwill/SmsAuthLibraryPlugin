@@ -131,14 +131,15 @@ namespace Agava.Wink
             AnalyticsWinkService.SendEnterPhoneWindow();
         }
 
-        public void OpenWindow(WindowType type) => _notifyWindowHandler.OpenWindow(type);
-        public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);
-
         public void OpenSubscriptionWindow()
         {
-            AnalyticsWinkService.SendSubscribeProfileWindow();
             _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+            AnalyticsWinkService.SendSubscribeOfferWindow();
         }
+
+        public void OpenWindow(WindowType type) => _notifyWindowHandler.OpenWindow(type);
+
+        public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);
 
         public void OnWinkButtonClick()
         {
@@ -150,8 +151,7 @@ namespace Agava.Wink
                 }
                 else
                 {
-                    AnalyticsWinkService.SendSubscribeProfileWindow();
-                    _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+                    OpenSubscriptionWindow();
                 }
             }
             else
@@ -171,6 +171,10 @@ namespace Agava.Wink
                         if (resultSuccess == false)
                         {
                             _notifyWindowHandler.OpenWindow(WindowType.Fail);
+                        }
+                        else
+                        {
+                            AnalyticsWinkService.SendDeleteWindow();
                         }
                     });
                 });
@@ -242,21 +246,8 @@ namespace Agava.Wink
             if (hasAccess)
             {
                 SetPhone();
-
-                _notifyWindowHandler.OpenHelloWindow(onEnd: () =>
-                {
-                    AnalyticsWinkService.SendHelloWindow();
-
-                    if (hasAccess == false)
-                    {
-                        if (_demoTimer.Expired == false)
-                        {
-                            OpenWindow(WindowType.Redirect);
-                            AnalyticsWinkService.SendPayWallWindow();
-                        }
-                    }
-                });
-
+                AnalyticsWinkService.SendHelloWindow();
+                _notifyWindowHandler.OpenWindow(WindowType.Hello);
                 _notifyWindowHandler.CloseWindow(WindowType.Redirect);
             }
         }

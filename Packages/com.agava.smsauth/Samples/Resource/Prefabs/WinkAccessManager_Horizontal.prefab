@@ -3027,7 +3027,6 @@ MonoBehaviour:
   _closeButton: {fileID: 7312120933078508073}
   _signInButton: {fileID: 6325108296970379473}
   _closeOnYesClicked: 0
-  _freeTrialText: {fileID: 0}
 --- !u!1 &1900253458481762744
 GameObject:
   m_ObjectHideFlags: 0
@@ -6443,7 +6442,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3255982149130309388}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -7682,7 +7681,6 @@ MonoBehaviour:
   _closeButton: {fileID: 0}
   _signInButton: {fileID: 594317397132827229}
   _closeOnYesClicked: 0
-  _freeTrialText: {fileID: 0}
 --- !u!1 &4044484467897254840
 GameObject:
   m_ObjectHideFlags: 0
