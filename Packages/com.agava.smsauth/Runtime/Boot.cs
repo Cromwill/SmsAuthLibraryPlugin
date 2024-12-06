@@ -92,7 +92,7 @@ namespace Agava.Wink
             yield return new WaitWhile(() => SmsAuthApi.Initialized == false);
 
             if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.Authenficated == false)
-                _winkSignInHandlerUI.OpenSignWindow();
+                _winkSignInHandlerUI.OpenStartWindow();
 
             yield return new WaitUntil(() => (WinkAccessManager.Instance.HasAccess == true || _winkSignInHandlerUI.IsAnyWindowEnabled == false));
 

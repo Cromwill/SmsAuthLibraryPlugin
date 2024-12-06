@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Scripting;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ namespace Agava.Wink
     internal class SignInWindowPresenter : WindowPresenter
     {
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private Button _closeButton;
 
         private Action Closed;
@@ -28,8 +30,13 @@ namespace Agava.Wink
                 return;
         }
 
+        public void Clear()
+        {
+            _inputField.text = string.Empty;
+        }
+
         public void Enable(Action closeCallback)
-        {            
+        {
             Enable();
             Closed = closeCallback;
         }

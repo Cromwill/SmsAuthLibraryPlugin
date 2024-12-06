@@ -18,9 +18,9 @@ namespace Agava.Wink
         [Header("UI Input")]
         [SerializeField] private PhoneNumberFormatting _numbersInputField;
         [Header("UI Buttons")]
-        [SerializeField] private Button _signInButton;
-        [SerializeField] private Button _continueButton;
-        [SerializeField] private Button _openSignInDemoButton;
+        [SerializeField] private Button _signInContinueButton;
+        [SerializeField] private Button _enterCodeContinueButton;
+        [SerializeField] private Button[] _signInButtons;
         [Header("UI Test Buttons")]
         [SerializeField] private Button _testSignInButton;
         [SerializeField] private Button _testDeleteButton;
@@ -56,9 +56,10 @@ namespace Agava.Wink
 
             if (_signInFuctionsUI == null) return;
 
-            _continueButton.onClick.RemoveAllListeners();
-            _signInButton.onClick.RemoveAllListeners();
-            _openSignInDemoButton.onClick.RemoveAllListeners();
+            _enterCodeContinueButton.onClick.RemoveAllListeners();
+
+            foreach (var button in _signInButtons)
+                button.onClick.RemoveAllListeners();
 
             if (_winkAccessManager == null) return;
 
@@ -103,9 +104,13 @@ namespace Agava.Wink
 #endif
 
             _winkAccessManager = winkAccessManager;
-            _continueButton.onClick.AddListener(OnContinueClicked);
-            _signInButton.onClick.AddListener(OnSignInClicked);
-            _openSignInDemoButton.onClick.AddListener(OpenSignWindow);
+
+            _enterCodeContinueButton.onClick.AddListener(OnEnterCodeContinueClicked);
+            _signInContinueButton.onClick.AddListener(OnSignInContinueClicked);
+
+            foreach (var button in _signInButtons)
+                button.onClick.AddListener(OpenSignWindow);
+
             CloseAllWindows();
 
             _winkAccessManager.ResetLogin += OpenSignWindow;
@@ -127,7 +132,6 @@ namespace Agava.Wink
         }
 
         public void OpenWindow(WindowType type) => _notifyWindowHandler.OpenWindow(type);
-        public void CloseWindow(WindowType type) => _notifyWindowHandler.CloseWindow(type);
         public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);
 
         public void OpenSubscriptionWindow()
@@ -172,7 +176,7 @@ namespace Agava.Wink
                 });
         }
 
-        private void OnSignInClicked()
+        private void OnSignInContinueClicked()
         {
             string number = _numbersInputField.Number;
             string formattedNumber = PhoneNumber.FormatNumber(number);
@@ -224,33 +228,37 @@ namespace Agava.Wink
 
         private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();
 
-        private void OnContinueClicked()
+        private void OnEnterCodeContinueClicked()
         {
+            _notifyWindowHandler.CloseWindow(WindowType.Redirect);
             _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
         }
 
         private void OnSignInSuccessfully(bool hasAccess)
         {
-            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+            _numbersInputField.Clear();
             _signInFuctionsUI.OnSignInSuccesfully(hasAccess);
-            _signInButton.gameObject.SetActive(false);
 
-            SetPhone();
-
-            _notifyWindowHandler.OpenHelloWindow(onEnd: () =>
+            if (hasAccess)
             {
-                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
-                AnalyticsWinkService.SendHelloWindow();
+                SetPhone();
 
-                if (hasAccess == false)
+                _notifyWindowHandler.OpenHelloWindow(onEnd: () =>
                 {
-                    if (_demoTimer.Expired == false)
+                    AnalyticsWinkService.SendHelloWindow();
+
+                    if (hasAccess == false)
                     {
-                        _notifyWindowHandler.OpenWindow(WindowType.Redirect);
-                        AnalyticsWinkService.SendPayWallWindow();
+                        if (_demoTimer.Expired == false)
+                        {
+                            OpenWindow(WindowType.Redirect);
+                            AnalyticsWinkService.SendPayWallWindow();
+                        }
                     }
-                }
-            });
+                });
+
+                _notifyWindowHandler.CloseWindow(WindowType.Redirect);
+            }
         }
 
         private void SetPhone()

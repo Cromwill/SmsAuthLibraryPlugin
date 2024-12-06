@@ -14,12 +14,7 @@ namespace Agava.Wink
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _signInButton;
         [SerializeField] private bool _closeOnYesClicked = true;
-
-        private void OnDestroy()
-        {
-            _closeButton?.onClick.RemoveAllListeners();
-            _yesButton.onClick.RemoveAllListeners();
-        }
+        [SerializeField] private TextPlaceholder _freeTrialText;
 
         private void Awake()
         {
@@ -27,14 +22,10 @@ namespace Agava.Wink
             _yesButton.onClick.AddListener(OnYesClicked);
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            if (_signInButton != null)
-            {
-                bool authenticated = WinkAccessManager.Instance == null ? false : WinkAccessManager.Instance.Authenficated;
-                _signInButton.gameObject.SetActive(authenticated == false);
-                _yesButton.gameObject.SetActive(authenticated);
-            }
+            _closeButton?.onClick.RemoveAllListeners();
+            _yesButton.onClick.RemoveAllListeners();
         }
 
         public void Enable(bool closeButton)

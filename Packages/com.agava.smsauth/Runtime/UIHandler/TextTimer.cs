@@ -3,7 +3,6 @@ using System.Collections;
 using System.Threading.Tasks;
 using SmsAuthAPI.Program;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.Scripting;
 
 namespace Agava.Wink
@@ -99,37 +98,8 @@ namespace Agava.Wink
 
         private async Task SetRemoteConfigs()
         {
-            _smsDelaySeconds = await RemoteConfig(SmsDelay, SmsDelayDefaultTime);
-            _codeLifespan = await RemoteConfig(CodeLifespan, CodeLifespanDefaultTime);
-        }
-
-        private async Task<int> RemoteConfig(string configName, int defaultTime)
-        {
-            var response = await SmsAuthApi.GetRemoteConfig(configName);
-
-            if (response.statusCode == UnityWebRequest.Result.Success)
-            {
-                if (string.IsNullOrEmpty(response.body) == false)
-                {
-                    return ParseConfig(response.body, defaultTime);
-                }
-                else
-                {
-                    Debug.LogError($"Fail to recieve remote config '{configName}': value is NULL");
-                }
-            }
-            else
-            {
-                Debug.LogError($"Fail to recieve remote config '{configName}': BAD REQUEST");
-            }
-
-            return defaultTime;
-        }
-
-        private int ParseConfig(string timeStr, int defaultValue)
-        {
-            bool success = int.TryParse(timeStr, out int time);
-            return success ? time : defaultValue;
+            _smsDelaySeconds = await RemoteConfig.IntRemoteConfig(SmsDelay, SmsDelayDefaultTime);
+            _codeLifespan = await RemoteConfig.IntRemoteConfig(CodeLifespan, CodeLifespanDefaultTime);
         }
 
         private string TimeString(int seconds)

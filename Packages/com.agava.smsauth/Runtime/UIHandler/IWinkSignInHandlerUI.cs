@@ -12,7 +12,6 @@ namespace Agava.Wink
 
         void OpenSignWindow();
         void OpenWindow(WindowType type);
-        void CloseWindow(WindowType type);
         void CloseAllWindows();
     }
 }
