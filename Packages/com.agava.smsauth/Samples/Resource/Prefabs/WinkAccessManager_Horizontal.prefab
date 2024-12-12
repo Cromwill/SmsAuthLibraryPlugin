@@ -467,7 +467,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timePlaceholder: {fileID: 7440093493180260889}
-  Expired: 1
 --- !u!114 &7440093493180260889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11643,12 +11642,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 10
-  _failWindow: {fileID: 3498138657208232133}
   _canvasGroup: {fileID: 3681703183352658282}
-  _inputField: {fileID: 4853248176214446613}
-  _repeatCodeTimer: {fileID: 4204035108155648503}
-  _enterCodeShaking: {fileID: 6731679583337475962}
   _codeFormatter: {fileID: 3298989533593819320}
+  _enterCodeShaking: {fileID: 6731679583337475962}
+  _repeatCodeTimer: {fileID: 4204035108155648503}
   _wrongCodeText: {fileID: 9043375541859507661}
   _sendRepeatCodeButton: {fileID: 8492854087410776878}
   _backButton: {fileID: 7921147742857410303}

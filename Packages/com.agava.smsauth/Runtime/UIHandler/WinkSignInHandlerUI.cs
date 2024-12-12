@@ -32,12 +32,14 @@ namespace Agava.Wink
 
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
+        private bool _firstRegistation = true;
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 
         public bool IsAnyWindowEnabled => _notifyWindowHandler.IsAnyWindowEnabled;
 
         public event Action AllWindowsClosed;
+
 
         private void Awake()
         {
@@ -79,6 +81,8 @@ namespace Agava.Wink
             }
 
             _notifyWindowHandler.CloseWindow(WindowType.NoEnternet);
+
+            yield return new WaitUntil(() => _notifyWindowHandler.EnterCodeWindowInitialized);
         }
 
         public void Construct()
@@ -192,10 +196,15 @@ namespace Agava.Wink
             foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)
                 placeholder.ReplaceValue(formattedNumber);
 
-            if (_notifyWindowHandler.HasCodeDelayExpired == false)
-                _notifyWindowHandler.OpenInputOtpCodeWhileReapetWindow(number);
-            else
+            if (_firstRegistation || (_notifyWindowHandler.CodeExpired))
+            {
                 _signInFuctionsUI.OnSignInClicked(number);
+                _firstRegistation = false;
+            }
+            else
+            {
+                _notifyWindowHandler.OpenInputOtpCodeWindow(number);
+            }
         }
 
         private void OnLimitReached(IReadOnlyList<string> devicesList)

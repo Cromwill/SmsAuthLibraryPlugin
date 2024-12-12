@@ -89,7 +89,7 @@ namespace Agava.Wink
 
             if (response.statusCode != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("ValidationError : " + response.statusCode);
+                Debug.Log("ValidationError : " + response.statusCode);
                 otpCodeAccepted?.Invoke(false);
             }
             else

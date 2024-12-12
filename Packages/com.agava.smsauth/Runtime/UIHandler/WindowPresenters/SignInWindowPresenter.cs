@@ -21,6 +21,11 @@ namespace Agava.Wink
 
         public override void Enable() => EnableCanvasGroup(_canvasGroup);
 
+        public void Clear()
+        {
+            _inputField.text = string.Empty;
+        }
+
         private void Update()
         {
             if (Enabled == false)
@@ -38,6 +43,7 @@ namespace Agava.Wink
         {
             DisableCanvasGroup(_canvasGroup);
             Closed?.Invoke();
+            Clear();
         }
     }
 }

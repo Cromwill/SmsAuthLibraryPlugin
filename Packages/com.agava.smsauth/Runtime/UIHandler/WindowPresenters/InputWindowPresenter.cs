@@ -7,18 +7,19 @@ using SmsAuthAPI.Program;
 using SmsAuthAPI.DTO;
 using UnityEngine.Networking;
 using UnityEngine.Scripting;
+using System.Collections;
+using System.Runtime.ConstrainedExecution;
+using System.Threading.Tasks;
 
 namespace Agava.Wink
 {
     [Preserve]
     internal class InputWindowPresenter : WindowPresenter
     {
-        [SerializeField] private NotifyWindowPresenter _failWindow;
         [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private TMP_InputField _inputField;
-        [SerializeField] private TextTimer _repeatCodeTimer;
-        [SerializeField] private EnterCodeShaking _enterCodeShaking;
         [SerializeField] private CodeFormatter _codeFormatter;
+        [SerializeField] private EnterCodeShaking _enterCodeShaking;
+        [SerializeField] private TextTimer _repeatCodeTimer;
         [SerializeField] private GameObject _wrongCodeText;
         [Header("Buttons")]
         [SerializeField] private Button _sendRepeatCodeButton;
@@ -30,14 +31,14 @@ namespace Agava.Wink
         private string _phone;
         private bool _checkedInputDone = false;
 
-        public bool HasExpired => _repeatCodeTimer.Expired;
+        public bool CodeExpired => _repeatCodeTimer.Expired;
+        public bool Initialized => _repeatCodeTimer.Initialized;
 
         private void Awake()
         {
             _continueButton.onClick.AddListener(OnContinue);
             _sendRepeatCodeButton.onClick.AddListener(OnRepeatClicked);
             _backButton.onClick.AddListener(OnBackClicked);
-            _repeatCodeTimer.TimerExpired += OnNewCodeTimerExpired;
         }
 
         private void OnDestroy()
@@ -45,7 +46,6 @@ namespace Agava.Wink
             _continueButton.onClick.RemoveListener(OnContinue);
             _sendRepeatCodeButton.onClick.RemoveListener(OnRepeatClicked);
             _backButton.onClick.RemoveListener(OnBackClicked);
-            _repeatCodeTimer.TimerExpired -= OnNewCodeTimerExpired;
         }
 
         private void Update()
@@ -70,16 +70,16 @@ namespace Agava.Wink
         public void Enable(string phone, Action<string> onInputDone, Action onBackClicked)
         {
             _phone = phone;
-            _repeatCodeTimer.Enable();
-            _onInputDone = onInputDone;
-            _onBackClicked = onBackClicked;
-            EnableCanvasGroup(_canvasGroup);
-            _inputField.Select();
-        }
 
-        public void Enable(string phone)
-        {
-            _phone = phone;
+            if (onInputDone != null)
+                _onInputDone = onInputDone;
+
+            if (onBackClicked != null)
+                _onBackClicked = onBackClicked;
+
+            _repeatCodeTimer.TimerExpired += OnNewCodeTimerExpired;
+            _repeatCodeTimer.StartTimer();
+
             EnableCanvasGroup(_canvasGroup);
         }
 
@@ -89,24 +89,23 @@ namespace Agava.Wink
         {
             DisableCanvasGroup(_canvasGroup);
             Clear();
+            _repeatCodeTimer.TimerExpired -= OnNewCodeTimerExpired;
         }
 
         public void OnInputDone()
         {
-            if (string.IsNullOrEmpty(_inputField.text))
-                return;
+            string code = _codeFormatter.InputText;
 
-            string code = _inputField.text;
+            if (string.IsNullOrEmpty(code))
+                return;
 
             bool isCorrectCode = uint.TryParse(code, System.Globalization.NumberStyles.Integer, CultureInfo.InvariantCulture, out uint _);
 
-            if (isCorrectCode == false)
+            if (isCorrectCode)
             {
-                _failWindow.Enable();
-                return;
+                _onInputDone?.Invoke(code);
+                _codeFormatter.SetInteractable(false);
             }
-
-            _onInputDone?.Invoke(code);
         }
 
         public void Response(bool codeAccepted)
@@ -117,51 +116,67 @@ namespace Agava.Wink
             }
             else
             {
-                _repeatCodeTimer.Disable();
-                _repeatCodeTimer.SetSmsDelayConfig();
-                _repeatCodeTimer.Enable();
+                Clear();
                 _wrongCodeText.SetActive(true);
-                _inputField.text = string.Empty;
-                _codeFormatter.Clear();
                 _enterCodeShaking.StartAnimation();
+
+                StartCoroutine(WaitForAnimation());
+
+                IEnumerator WaitForAnimation()
+                {
+                    yield return new WaitWhile(() => _enterCodeShaking.Shaking);
+
+                    _codeFormatter.SetInteractable(true);
+                }
             }
         }
 
         public void Clear()
         {
-            _wrongCodeText.gameObject.SetActive(false);
             _sendRepeatCodeButton.gameObject.SetActive(false);
-            _inputField.text = string.Empty;
+            _wrongCodeText.gameObject.SetActive(false);
+            _continueButton.gameObject.SetActive(false);
             _codeFormatter.Clear();
         }
 
         private void OnBackClicked()
         {
-            Clear();
             _onBackClicked?.Invoke();
         }
 
         private void OnNewCodeTimerExpired()
         {
             Clear();
-            _sendRepeatCodeButton.gameObject.SetActive(true);
-            _inputField.interactable = false;
             _codeFormatter.SetInteractable(false);
-            _repeatCodeTimer.Disable();
+            _sendRepeatCodeButton.gameObject.SetActive(true);
+            _repeatCodeTimer.ResetTimer();
         }
 
-        private async void OnRepeatClicked()
+        private void OnRepeatClicked()
         {
             _sendRepeatCodeButton.gameObject.SetActive(false);
-            _inputField.interactable = true;
-            _codeFormatter.SetInteractable(true);
-            _repeatCodeTimer.SetCodeLifespanConfig();
-            _repeatCodeTimer.Enable();
 
-            Response response = await SmsAuthApi.Regist(_phone);
+            StartCoroutine(WaitForResponse());
 
-            if (response.statusCode != UnityWebRequest.Result.Success)
-                Debug.LogError("Repeat send sms Error : " + response.statusCode);
+            IEnumerator WaitForResponse()
+            {
+                Task<Response> task = SmsAuthApi.Regist(_phone);
+
+                yield return new WaitUntil(() => task.IsCompleted);
+
+                var statusCode = task.Result.statusCode;
+
+                if (statusCode != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Repeat send sms Error : " + statusCode);
+                    _sendRepeatCodeButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _codeFormatter.SetInteractable(true);
+                    _repeatCodeTimer.StartTimer();
+                }
+            }
         }
 
         private void OnContinue()
