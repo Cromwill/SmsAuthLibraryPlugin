@@ -17,13 +17,16 @@ namespace Agava.Wink
         [SerializeField] private TextPlaceholder _timePlaceholder;
 
         private int _smsDelaySeconds;
-        private Coroutine _coroutine;
+        private DateTime _expirationDate;
+        private int _seconds;
+        private bool _active = false;
 
         public event Action TimerExpired;
 
-        public bool Expired { get; private set; } = false;
+        private DateTime Now => DateTime.Now;
+
         public bool Initialized { get; private set; } = false;
-        public DateTime Now => DateTime.Now;
+        public bool ZeroSeconds => _seconds <= 0;
 
         private IEnumerator Start()
         {
@@ -33,66 +36,55 @@ namespace Agava.Wink
             yield return new WaitUntil(() => task.IsCompleted);
 
             Initialized = true;
+
+            _seconds = 0;
+
+            if (TryLoadSave())
+            {
+                _active = true;
+            }
+        }
+
+        private void Update()
+        {
+            if (_active)
+            {
+                if (_seconds > 0)
+                {
+                    _seconds = SubtractSeconds(_expirationDate);
+                    _timePlaceholder.ReplaceValue(TimeString(_seconds));
+                }
+                else
+                {
+                    TimerExpired?.Invoke();
+                    ResetTimer();
+                    StopTimer();
+                }
+            }
+
+            _timePlaceholder.gameObject.SetActive(_active);
         }
 
         internal void StartTimer()
         {
-            DateTime expirationDate = Now;
-            int startSeconds = 0;
+            TryLoadSave();
 
-            if (UnityEngine.PlayerPrefs.HasKey(ExpirationTime))
+            if (_seconds <= 0)
             {
-                if (DateTime.TryParse(UnityEngine.PlayerPrefs.GetString(ExpirationTime), out expirationDate))
-                    startSeconds = SubtractSeconds(expirationDate);
+                NewSave();
             }
 
-            if (startSeconds <= 0)
-            {
-                expirationDate = Now.AddSeconds(_smsDelaySeconds);
-                startSeconds = _smsDelaySeconds;
-                UnityEngine.PlayerPrefs.SetString(ExpirationTime, expirationDate.ToString());
-            }
+            _active = true;
+        }
 
-            //Debug.Log($"seconds: {seconds}");
-
-            _timePlaceholder.gameObject.SetActive(true);
-            _coroutine ??= StartCoroutine(Ticking(startSeconds));
-
-            IEnumerator Ticking(int seconds)
-            {
-                while (seconds > 0)
-                {
-                    seconds = SubtractSeconds(expirationDate);
-                    _timePlaceholder.ReplaceValue(TimeString(seconds));
-                    Expired = false;
-
-                    yield return new WaitForEndOfFrame();
-                }
-
-                if (seconds <= 0)
-                {
-                    TimerExpired?.Invoke();
-                    Expired = true;
-                    ResetTimer();
-                }
-            }
+        internal void StopTimer()
+        {
+            _active = false;
         }
 
         internal void ResetTimer()
         {
-            Expired = false;
-            Disable();
             UnityEngine.PlayerPrefs.DeleteKey(ExpirationTime);
-        }
-
-        public void Disable()
-        {
-            if (_coroutine != null)
-            {
-                StopCoroutine(_coroutine);
-                _coroutine = null;
-                _timePlaceholder.gameObject.SetActive(false);
-            }
         }
 
         private async Task SetRemoteConfigs()
@@ -104,6 +96,31 @@ namespace Agava.Wink
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
             return $"{timeSpan.Minutes}:{timeSpan.Seconds:00}";
+        }
+
+        private bool TryLoadSave()
+        {
+            if (UnityEngine.PlayerPrefs.HasKey(ExpirationTime))
+            {
+                if (DateTime.TryParse(UnityEngine.PlayerPrefs.GetString(ExpirationTime), out _expirationDate))
+                {
+                    _seconds = SubtractSeconds(_expirationDate);
+
+                    if (_seconds > _smsDelaySeconds)
+                        NewSave();
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void NewSave()
+        {
+            _expirationDate = Now.AddSeconds(_smsDelaySeconds);
+            _seconds = _smsDelaySeconds;
+            UnityEngine.PlayerPrefs.SetString(ExpirationTime, _expirationDate.ToString());
         }
 
         private int SubtractSeconds(DateTime expirationDate) => expirationDate.Subtract(Now).Seconds;

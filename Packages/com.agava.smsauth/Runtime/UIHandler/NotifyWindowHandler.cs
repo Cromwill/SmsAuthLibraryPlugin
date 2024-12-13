@@ -25,7 +25,7 @@ namespace Agava.Wink
         [SerializeField] private List<WindowPresenter> _windows;
 
         public bool IsAnyWindowEnabled => _windows.Any(window => window.Enabled);
-        public bool CodeExpired => _enterCodeWindow.CodeExpired;
+        public bool ZeroSecondsCodeTimer => _enterCodeWindow.ZeroSeconds;
         public bool EnterCodeWindowInitialized => _enterCodeWindow.Initialized;
 
         internal void OpenSignInWindow(Action closeCallback = null) => _signInWindow.Enable(closeCallback);

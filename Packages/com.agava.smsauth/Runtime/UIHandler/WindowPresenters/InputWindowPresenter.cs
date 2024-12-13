@@ -8,7 +8,6 @@ using SmsAuthAPI.DTO;
 using UnityEngine.Networking;
 using UnityEngine.Scripting;
 using System.Collections;
-using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 
 namespace Agava.Wink
@@ -16,22 +15,28 @@ namespace Agava.Wink
     [Preserve]
     internal class InputWindowPresenter : WindowPresenter
     {
+        private const string CodeExpirationDateKey = nameof(CodeExpirationDateKey);
+
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private CodeFormatter _codeFormatter;
         [SerializeField] private EnterCodeShaking _enterCodeShaking;
         [SerializeField] private TextTimer _repeatCodeTimer;
-        [SerializeField] private GameObject _wrongCodeText;
         [Header("Buttons")]
         [SerializeField] private Button _sendRepeatCodeButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _continueButton;
+        [Header("Wrong code texts")]
+        [SerializeField] private GameObject _wrongCodeTextTop;
+        [SerializeField] private GameObject _wrongCodeTextBottom;
 
         private Action<string> _onInputDone;
         private Action _onBackClicked;
         private string _phone;
         private bool _checkedInputDone = false;
+        private bool _wrongCodeTextActive = false;
+        private bool _repeatCodeButtonActive = false;
 
-        public bool CodeExpired => _repeatCodeTimer.Expired;
+        public bool ZeroSeconds => _repeatCodeTimer.ZeroSeconds;
         public bool Initialized => _repeatCodeTimer.Initialized;
 
         private void Awake()
@@ -65,6 +70,24 @@ namespace Agava.Wink
             {
                 _checkedInputDone = false;
             }
+
+            if (_wrongCodeTextActive)
+            {
+                if (_codeFormatter.InputText.Length > 0)
+                {
+                    SetWrongTextActive(false);
+                    _wrongCodeTextActive = false;
+                }
+            }
+
+            if (_repeatCodeButtonActive)
+            {
+                if (CodeExpired())
+                {
+                    Clear();
+                    _codeFormatter.SetInteractable(false);
+                }
+            }
         }
 
         public void Enable(string phone, Action<string> onInputDone, Action onBackClicked)
@@ -77,9 +100,10 @@ namespace Agava.Wink
             if (onBackClicked != null)
                 _onBackClicked = onBackClicked;
 
-            _repeatCodeTimer.TimerExpired += OnNewCodeTimerExpired;
+            _repeatCodeTimer.TimerExpired += OnRepeatCodeTimerExpired;
             _repeatCodeTimer.StartTimer();
 
+            _codeFormatter.SetInteractable(true);
             EnableCanvasGroup(_canvasGroup);
         }
 
@@ -89,7 +113,8 @@ namespace Agava.Wink
         {
             DisableCanvasGroup(_canvasGroup);
             Clear();
-            _repeatCodeTimer.TimerExpired -= OnNewCodeTimerExpired;
+            SetRepeatButtonActive(false);
+            _repeatCodeTimer.TimerExpired -= OnRepeatCodeTimerExpired;
         }
 
         public void OnInputDone()
@@ -99,9 +124,7 @@ namespace Agava.Wink
             if (string.IsNullOrEmpty(code))
                 return;
 
-            bool isCorrectCode = uint.TryParse(code, System.Globalization.NumberStyles.Integer, CultureInfo.InvariantCulture, out uint _);
-
-            if (isCorrectCode)
+            if (uint.TryParse(code, NumberStyles.Integer, CultureInfo.InvariantCulture, out uint _))
             {
                 _onInputDone?.Invoke(code);
                 _codeFormatter.SetInteractable(false);
@@ -117,7 +140,8 @@ namespace Agava.Wink
             else
             {
                 Clear();
-                _wrongCodeText.SetActive(true);
+                SetWrongTextActive(true);
+                _wrongCodeTextActive = true;
                 _enterCodeShaking.StartAnimation();
 
                 StartCoroutine(WaitForAnimation());
@@ -133,8 +157,7 @@ namespace Agava.Wink
 
         public void Clear()
         {
-            _sendRepeatCodeButton.gameObject.SetActive(false);
-            _wrongCodeText.gameObject.SetActive(false);
+            SetWrongTextActive(false);
             _continueButton.gameObject.SetActive(false);
             _codeFormatter.Clear();
         }
@@ -144,17 +167,15 @@ namespace Agava.Wink
             _onBackClicked?.Invoke();
         }
 
-        private void OnNewCodeTimerExpired()
+        private void OnRepeatCodeTimerExpired()
         {
-            Clear();
-            _codeFormatter.SetInteractable(false);
-            _sendRepeatCodeButton.gameObject.SetActive(true);
+            SetRepeatButtonActive(true);
             _repeatCodeTimer.ResetTimer();
         }
 
         private void OnRepeatClicked()
         {
-            _sendRepeatCodeButton.gameObject.SetActive(false);
+            SetRepeatButtonActive(false);
 
             StartCoroutine(WaitForResponse());
 
@@ -169,12 +190,12 @@ namespace Agava.Wink
                 if (statusCode != UnityWebRequest.Result.Success)
                 {
                     Debug.LogError("Repeat send sms Error : " + statusCode);
-                    _sendRepeatCodeButton.gameObject.SetActive(true);
+                    SetRepeatButtonActive(true);
                 }
                 else
                 {
-                    _codeFormatter.SetInteractable(true);
                     _repeatCodeTimer.StartTimer();
+                    _codeFormatter.SetInteractable(true);
                 }
             }
         }
@@ -182,6 +203,31 @@ namespace Agava.Wink
         private void OnContinue()
         {
             Disable();
+        }
+
+        private void SetWrongTextActive(bool active)
+        {
+            _wrongCodeTextTop.gameObject.SetActive(active && !_repeatCodeButtonActive);
+            _wrongCodeTextBottom.gameObject.SetActive(active && _repeatCodeButtonActive);
+        }
+
+        private bool CodeExpired()
+        {
+            if (UnityEngine.PlayerPrefs.HasKey(CodeExpirationDateKey))
+            {
+                if (DateTime.TryParse(UnityEngine.PlayerPrefs.GetString(CodeExpirationDateKey), out DateTime expirationDate))
+                {
+                    return expirationDate.Subtract(DateTime.Now).Seconds < 0;
+                }
+            }
+
+            return false;
+        }
+
+        private void SetRepeatButtonActive(bool active)
+        {
+            _sendRepeatCodeButton.gameObject.SetActive(active);
+            _repeatCodeButtonActive = active;
         }
     }
 }
