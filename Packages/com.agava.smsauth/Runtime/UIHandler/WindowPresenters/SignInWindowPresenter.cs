@@ -13,6 +13,8 @@ namespace Agava.Wink
         [SerializeField] private Button _closeButton;
         [SerializeField] private TMP_InputField _inputField;
 
+        private TouchScreenKeyboard _keyboard;
+
         private Action Closed;
 
         private void OnDestroy() => _closeButton.onClick.RemoveListener(Disable);
@@ -36,11 +38,16 @@ namespace Agava.Wink
         {
             Enable();
             Closed = closeCallback;
-            _inputField.Select();
+
+            _keyboard = TouchScreenKeyboard.Open(string.Empty, TouchScreenKeyboardType.NumberPad, false, false, false, false);
+            TouchScreenKeyboard.hideInput = true;
         }
 
         public override void Disable()
         {
+            if (_keyboard != null)
+                _keyboard.active = false;
+
             DisableCanvasGroup(_canvasGroup);
             Closed?.Invoke();
             Clear();
