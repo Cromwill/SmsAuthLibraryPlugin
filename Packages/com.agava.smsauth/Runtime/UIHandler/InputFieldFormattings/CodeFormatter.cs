@@ -30,7 +30,6 @@ namespace Agava.Wink
         public void SetInteractable(bool interactable)
         {
             _inputField.interactable = interactable;
-            _textCells[0].SetActive(interactable);
         }
 
         public void Clear()
