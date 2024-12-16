@@ -2,6 +2,7 @@ using Agava.Wink;
 using Newtonsoft.Json;
 using SmsAuthAPI.DTO;
 using SmsAuthAPI.Program;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,6 +17,8 @@ public class TestCloudHandler : MonoBehaviour
     [SerializeField] private TMP_InputField _input;
     [SerializeField] private Button _checkDevices;
     [SerializeField] private Image _indicator;
+    [Header("Popup test")]
+    [SerializeField] private Button _showPopup;
     [Header("Analytics test")]
     [SerializeField] private Button _sendAccTrue;
     [SerializeField] private Button _sendAccFalse;
@@ -36,14 +39,22 @@ public class TestCloudHandler : MonoBehaviour
 
         _ruButton.onClick.AddListener(OnRuClicked);
         _enButton.onClick.AddListener(OnEnClicked);
+
+        _showPopup.onClick.AddListener(OnShowPopupClicked);
     }
 
     private void SendAccTrue() => AnalyticsWinkService.SendHasActiveAccountUser(true);
     private void SendAccFalse() => AnalyticsWinkService.SendHasActiveAccountUser(false);
-
     private void OnEnClicked() => WinkLocalization.Instance.SetCurrentLang(SystemLanguage.English);
-
     private void OnRuClicked() => WinkLocalization.Instance.SetCurrentLang(SystemLanguage.Russian);
+
+    private void OnShowPopupClicked()
+    {
+        if (AdsAppView.Program.PopupManager.Instance == null)
+            Debug.LogError("PopupManager.Instance == null");
+        else
+            AdsAppView.Program.PopupManager.Instance.ShowPopupPayedApp();
+    }
 
     private void Update()
     {

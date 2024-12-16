@@ -108,7 +108,7 @@ namespace Agava.Wink
             Login(LoginData);
         }
 
-        public async void Regist(string phoneNumber, Action<bool> otpCodeRequest, Action<bool> otpCodeAccepted, Action onFail = null, bool skipRegistration =false)
+        public async void Regist(string phoneNumber, Action<bool> otpCodeRequest, Action<bool> otpCodeAccepted, Action onFail = null, bool skipRegistration = false)
         {
             _winkSubscriptionAccessRequest = OnSignInSuccessfully;
             _otpCodeAccepted = otpCodeAccepted;
