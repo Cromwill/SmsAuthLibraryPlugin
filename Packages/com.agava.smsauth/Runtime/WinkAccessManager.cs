@@ -5,6 +5,7 @@ using UnityEngine;
 using SmsAuthAPI.DTO;
 using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
+using System.Threading.Tasks;
 
 namespace Agava.Wink
 {
@@ -96,10 +97,17 @@ namespace Agava.Wink
             PlayerPrefs.SetString(StartDataSend, "send");
         }
 
-        public void TryQuickAccess()
+        public IEnumerator TryQuickAccess()
         {
             if (UnityEngine.PlayerPrefs.HasKey(TokenLifeHelper.Tokens))
-                QuickAccess();
+            {
+                Task task = _requestHandler.QuickAccess(LoginData.phone, ResetLogin, null, OnSignInSuccessfully);
+                yield return new WaitUntil(() => task.IsCompleted);
+            }
+            else
+            {
+                yield return null;
+            }
         }
 
         public void SendOtpCode(string enteredOtpCode)
@@ -146,9 +154,6 @@ namespace Agava.Wink
 #endif
 
         private void Login(LoginData data) => _requestHandler.Login(data, LimitReached, _winkSubscriptionAccessRequest, _otpCodeAccepted);
-
-        public void QuickAccess()
-            => _requestHandler.QuickAccess(LoginData.phone, ResetLogin, null, OnSignInSuccessfully);
 
         public void DeleteAccount(Action<bool> onComplete)
         {
