@@ -17,8 +17,7 @@
       "dependencies": {
         "com.agava.smsauthwebapi": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.textmeshpro": "3.0.9",
-        "com.agava.adsappview": "1.0.0"
+        "com.unity.textmeshpro": "3.0.9"
       }
     },
     "com.agava.smsauthwebapi": {
