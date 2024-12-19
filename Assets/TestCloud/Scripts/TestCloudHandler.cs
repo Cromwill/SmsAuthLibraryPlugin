@@ -53,7 +53,7 @@ public class TestCloudHandler : MonoBehaviour
         if (AdsAppView.Program.PopupManager.Instance == null)
             Debug.LogError("PopupManager.Instance == null");
         else
-            AdsAppView.Program.PopupManager.Instance.ShowPopupPayedApp();
+            AdsAppView.Program.PopupManager.ShowPopupPayedApp();
     }
 
     private void Update()
