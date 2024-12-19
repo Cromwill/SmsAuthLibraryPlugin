@@ -5,7 +5,6 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.unity.addressables": "1.21.21",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
         "com.unity.textmeshpro": "3.0.9"
       }

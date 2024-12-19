@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMetrica", "AppMetrica.csproj", "{99AEC0AA-DDCA-3E25-41AB-1F5D4C4910C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spine-unity-editor", "spine-unity-editor.csproj", "{E89D0F77-6E46-8908-F34B-21A18078F9C5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spine-unity", "spine-unity.csproj", "{4DE6FB4F-0ED1-ADA7-74C8-0128FF4576D3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agava.SmsAuth", "Agava.SmsAuth.csproj", "{E3DC1CDA-70D5-F267-0B10-FB621F43FC83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agava.AdsAppView", "Agava.AdsAppView.csproj", "{6D28AAAC-8892-B730-42DA-D8895A17D4A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spine-csharp", "spine-csharp.csproj", "{00ADFCFD-1BE8-BB5E-FA61-F6CD65B9AB2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeanLocalization", "LeanLocalization.csproj", "{6C3A2EB6-D28B-0905-048C-F5C39715CFED}"
 EndProject
@@ -39,14 +33,6 @@ Global
 		{99AEC0AA-DDCA-3E25-41AB-1F5D4C4910C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99AEC0AA-DDCA-3E25-41AB-1F5D4C4910C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99AEC0AA-DDCA-3E25-41AB-1F5D4C4910C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E89D0F77-6E46-8908-F34B-21A18078F9C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E89D0F77-6E46-8908-F34B-21A18078F9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E89D0F77-6E46-8908-F34B-21A18078F9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E89D0F77-6E46-8908-F34B-21A18078F9C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DE6FB4F-0ED1-ADA7-74C8-0128FF4576D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DE6FB4F-0ED1-ADA7-74C8-0128FF4576D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DE6FB4F-0ED1-ADA7-74C8-0128FF4576D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DE6FB4F-0ED1-ADA7-74C8-0128FF4576D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3DC1CDA-70D5-F267-0B10-FB621F43FC83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E3DC1CDA-70D5-F267-0B10-FB621F43FC83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3DC1CDA-70D5-F267-0B10-FB621F43FC83}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,10 +41,6 @@ Global
 		{6D28AAAC-8892-B730-42DA-D8895A17D4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D28AAAC-8892-B730-42DA-D8895A17D4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D28AAAC-8892-B730-42DA-D8895A17D4A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00ADFCFD-1BE8-BB5E-FA61-F6CD65B9AB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00ADFCFD-1BE8-BB5E-FA61-F6CD65B9AB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00ADFCFD-1BE8-BB5E-FA61-F6CD65B9AB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00ADFCFD-1BE8-BB5E-FA61-F6CD65B9AB2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C3A2EB6-D28B-0905-048C-F5C39715CFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C3A2EB6-D28B-0905-048C-F5C39715CFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C3A2EB6-D28B-0905-048C-F5C39715CFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
