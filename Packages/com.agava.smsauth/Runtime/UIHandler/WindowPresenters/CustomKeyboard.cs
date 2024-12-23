@@ -22,6 +22,7 @@ namespace Agava.Wink
 
         private void Awake()
         {
+            DisableCanvasGroup(_groupVertical);
             DisableCanvasGroup(_groupHorizontal);
 
             for (int i = 0; i < _buttons.Length; i++)
