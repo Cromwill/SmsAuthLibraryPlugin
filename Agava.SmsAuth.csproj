@@ -67,9 +67,11 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\UnlinkDeviceViewContainer.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\SettingsButtons\WinkButton.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WinkSignInHandlerUI.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\KeyboardButton.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\EnterCodeShaking.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\UnlinkDeviceView.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\RemoteConfig.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\CustomKeyMapping.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\IWinkAccessManager.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\InputWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\SubscriptionSearchSystem.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\SignInFuctionsUI.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\NotifyWindowHandler.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\RedirectWindowPresenter.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\CustomKeyboard.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\WinkAccessManager.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\TextPlaceholder.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\Utils\SlicedFilledImage.cs" />
