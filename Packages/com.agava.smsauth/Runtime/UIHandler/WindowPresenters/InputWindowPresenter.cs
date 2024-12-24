@@ -182,9 +182,7 @@ namespace Agava.Wink
             {
                 if (string.IsNullOrEmpty(CustomKeyMapping.GetKey(code)) == false)
                 {
-                    Debug.Log(_inputField.text);
                     string added = _inputField.text + CustomKeyMapping.GetKey(code);
-                    Debug.Log(added);
                     _inputField.text = added;
                 }
             }
