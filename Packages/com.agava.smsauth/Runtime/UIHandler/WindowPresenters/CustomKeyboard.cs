@@ -6,8 +6,7 @@ namespace Agava.Wink
     internal class CustomKeyboard : WindowPresenter
     {
         [SerializeField] private KeyboardButton[] _buttons;
-        [SerializeField] private CanvasGroup _groupHorizontal;
-        [SerializeField] private CanvasGroup _groupVertical;
+        [SerializeField] private CanvasGroup _groupKeysCanvas;
 
         public event Action<KeyCode> Clicked;
 
@@ -22,8 +21,7 @@ namespace Agava.Wink
 
         private void Awake()
         {
-            DisableCanvasGroup(_groupVertical);
-            DisableCanvasGroup(_groupHorizontal);
+            DisableCanvasGroup(_groupKeysCanvas);
 
             for (int i = 0; i < _buttons.Length; i++)
             {
@@ -32,19 +30,9 @@ namespace Agava.Wink
             }
         }
 
-        public override void Enable()
-        {
-            CanvasGroup group = (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
-                ? _groupVertical : _groupHorizontal;
+        public override void Enable() => EnableCanvasGroup(_groupKeysCanvas);
 
-            EnableCanvasGroup(group);
-        }
-
-        public override void Disable()
-        {
-            DisableCanvasGroup(_groupVertical);
-            DisableCanvasGroup(_groupHorizontal);
-        }
+        public override void Disable() => DisableCanvasGroup(_groupKeysCanvas);
 
         private void OnClicked(KeyCode code) => Clicked?.Invoke(code);
     }
