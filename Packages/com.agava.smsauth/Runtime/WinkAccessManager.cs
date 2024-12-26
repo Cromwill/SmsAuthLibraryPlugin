@@ -15,8 +15,16 @@ namespace Agava.Wink
     [Preserve]
     public class WinkAccessManager : MonoBehaviour, IWinkAccessManager, ICoroutine
     {
+        private const string Platform =
+#if UNITY_ANDROID
+            "android";
+#elif UNITY_IOS
+            "ios";
+#else
+            "editor";
+#endif
+
         private const string StartDataSend = nameof(StartDataSend);
-        private const string FirstAppOpen = nameof(FirstAppOpen);
         private const string FirstRegist = nameof(FirstRegist);
         private const string UniqueId = nameof(UniqueId);
 
@@ -29,13 +37,19 @@ namespace Agava.Wink
         private Action<bool> _winkSubscriptionAccessRequest;
         private Action<bool> _otpCodeAccepted;
         private string _uniqueId;
+        private string _sanId = null;
+        private DateTime _lastTimeSendAnalytics = DateTime.Now;
+        private Coroutine _sendEventCoroutine;
+        private bool _subscriptionEventSent = false;
 
         public readonly string PhoneNumber = nameof(PhoneNumber);
         public readonly string SanId = nameof(SanId);
+
         public LoginData LoginData { get; private set; }
         public bool Authenficated { get; private set; } = false;
         public bool HasAccess { get; private set; } = false;
         public string AppId => Application.identifier;
+
         public static WinkAccessManager Instance { get; private set; }
 
         public event Action<IReadOnlyList<string>> LimitReached;
@@ -205,12 +219,11 @@ namespace Agava.Wink
         private void OnSubscriptionExist()
         {
             _subscribeSearchSystem?.Stop();
+            SendEventSubscriberData();
+
             HasAccess = true;
             AuthorizationSuccessfully?.Invoke();
             SendStartData(LoginData.phone);
-
-            if (PlayerPrefs.HasKey(FirstAppOpen))
-                AnalyticsWinkService.SendHasActiveAccountUser(hasActiveAcc: true);
 
             Debug.Log("Wink access successfully");
         }
@@ -242,16 +255,15 @@ namespace Agava.Wink
 
                     if (responseGetSanId.statusCode == UnityEngine.Networking.UnityWebRequest.Result.Success)
                     {
-                        AnalyticsWinkService.SendSanId(responseGetSanId.body);
-                        AnalyticsWinkService.SendHasActiveAccountNewUser(hasActiveAcc: true);
-                        SmsAuthApi.OnUserAddApp(LoginData.phone, responseGetSanId.body, AppId);
+                        _sanId = responseGetSanId.body;
+
+                        AnalyticsWinkService.SendSanId(_sanId);
+                        SmsAuthApi.OnUserAddApp(LoginData.phone, _sanId, AppId);
 
                         PlayerPrefs.SetString(FirstRegist, "done");
                     }
                 }
             }
-
-            PlayerPrefs.SetString(FirstAppOpen, "done");
         }
 
         private void StartTimespentAnalytics()
@@ -269,16 +281,44 @@ namespace Agava.Wink
 
         private IEnumerator DelayedSendStatistic()
         {
-            yield return new WaitForSecondsRealtime(time: 60f);
+            yield return new WaitForEndOfFrame();
 
-            if (PlayerPrefs.HasKey(FirstAppOpen) == false && PlayerPrefs.HasKey(FirstRegist) == false && HasAccess == false)
+            if (_subscriptionEventSent && HasAccess && DateTime.Now.Day != _lastTimeSendAnalytics.Day && _sendEventCoroutine == null)
             {
-                AnalyticsWinkService.SendHasActiveAccountNewUser(hasActiveAcc: false);
-                PlayerPrefs.SetString(FirstAppOpen, "done");
+                SendEventSubscriberData();
             }
+        }
 
-            if (PlayerPrefs.HasKey(FirstAppOpen) && HasAccess == false)
-                AnalyticsWinkService.SendHasActiveAccountUser(hasActiveAcc: false);
+        private void SendEventSubscriberData()
+        {
+            if (_sendEventCoroutine == null)
+                _sendEventCoroutine = StartCoroutine(WaitForSanId());
+
+            IEnumerator WaitForSanId()
+            {
+                if (string.IsNullOrEmpty(_sanId))
+                {
+                    Task<Response> task = SmsAuthApi.GetSanId(LoginData.phone);
+
+                    yield return new WaitUntil(() => task.IsCompleted);
+
+                    if (task.Result.statusCode == UnityEngine.Networking.UnityWebRequest.Result.Success)
+                    {
+                        _sanId = task.Result.body;
+                    }
+                    else
+                    {
+                        Debug.Log("#WinkAccessManager# sanId is null!");
+                        _sendEventCoroutine = null;
+                        yield return null;
+                    }
+                }
+
+                _lastTimeSendAnalytics = DateTime.Now;
+                SmsAuthApi.SendEventSubscriberData(_sanId, LoginData.phone, DateTime.UtcNow.ToString(), AppId, Application.version, Platform);
+                _sendEventCoroutine = null;
+                _subscriptionEventSent = true;
+            }
         }
     }
 }

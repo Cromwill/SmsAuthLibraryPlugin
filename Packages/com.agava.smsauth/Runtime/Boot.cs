@@ -70,8 +70,9 @@ namespace Agava.Wink
                 var loadingScene = _sceneLoader.LoadGameScene();
                 SmsAuthApi.DownloadCloudSavesProgress -= OnDownloadCloudSavesProgress;
                 _loadingProgressBar.Enable();
+                _winkSignInHandlerUI.CloseProcessOnWindow();
 
-                yield return new WaitUntil(() => { _loadingProgressBar.SetProgress(loadingScene.progress, 0.5f, 1.0f); return loadingScene.isDone; });
+                yield return new WaitUntil(() => { _loadingProgressBar.SetProgress(loadingScene.progress, 0.0f, 1.0f); return loadingScene.isDone; });
 
                 _loadingProgressBar.Disable();
                 AnalyticsWinkService.SendStartApp(appId: Application.identifier);
@@ -108,10 +109,15 @@ namespace Agava.Wink
             Debug.Log($"Boot: App Started. Authenficated: {WinkAccessManager.Instance.Authenficated}");
             Debug.Log($"Boot: App Started. Authorized: {WinkAccessManager.Instance.HasAccess}");
 #endif
-            if (AdsAppView.Program.Boot.Instance != null)
-                yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess);
 
             yield return new WaitUntil(() => _winkSignInHandlerUI.IsAnyWindowEnabled == false);
+
+            if (AdsAppView.Program.Boot.Instance != null)
+            {
+                _winkSignInHandlerUI.OpenProcessOnWindow();
+                yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess);
+                _winkSignInHandlerUI.CloseProcessOnWindow();
+            }
 
             _signInProcess = null;
         }

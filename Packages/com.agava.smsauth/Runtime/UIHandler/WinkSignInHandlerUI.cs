@@ -83,6 +83,16 @@ namespace Agava.Wink
             yield return new WaitUntil(() => _notifyWindowHandler.EnterCodeWindowInitialized);
         }
 
+        public void OpenProcessOnWindow()
+        {
+            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+        }
+
+        public void CloseProcessOnWindow()
+        {
+            _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+        }
+
         public void Construct()
         {
             StartCoroutine(EnternetChecking());

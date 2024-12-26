@@ -19,9 +19,9 @@ public class TestCloudHandler : MonoBehaviour
     [SerializeField] private Image _indicator;
     [Header("Popup test")]
     [SerializeField] private Button _showPopup;
-    [Header("Analytics test")]
-    [SerializeField] private Button _sendAccTrue;
-    [SerializeField] private Button _sendAccFalse;
+    //[Header("Analytics test")]
+    //[SerializeField] private Button _sendAccTrue;
+    //[SerializeField] private Button _sendAccFalse;
     [Header("Lang buttons")]
     [SerializeField] private Button _ruButton;
     [SerializeField] private Button _enButton;
@@ -34,8 +34,8 @@ public class TestCloudHandler : MonoBehaviour
         _loadPrefs.onClick.AddListener(OnLoadPrefsClicked);
         _checkDevices.onClick.AddListener(ShowDevices);
 
-        _sendAccTrue.onClick.AddListener(SendAccTrue);
-        _sendAccFalse.onClick.AddListener(SendAccFalse);
+        //_sendAccTrue.onClick.AddListener(SendAccTrue);
+        //_sendAccFalse.onClick.AddListener(SendAccFalse);
 
         _ruButton.onClick.AddListener(OnRuClicked);
         _enButton.onClick.AddListener(OnEnClicked);
@@ -43,8 +43,8 @@ public class TestCloudHandler : MonoBehaviour
         _showPopup.onClick.AddListener(OnShowPopupClicked);
     }
 
-    private void SendAccTrue() => AnalyticsWinkService.SendHasActiveAccountUser(true);
-    private void SendAccFalse() => AnalyticsWinkService.SendHasActiveAccountUser(false);
+    //private void SendAccTrue() => AnalyticsWinkService.SendHasActiveAccountUser(true);
+    //private void SendAccFalse() => AnalyticsWinkService.SendHasActiveAccountUser(false);
     private void OnEnClicked() => WinkLocalization.Instance.SetCurrentLang(SystemLanguage.English);
     private void OnRuClicked() => WinkLocalization.Instance.SetCurrentLang(SystemLanguage.Russian);
 

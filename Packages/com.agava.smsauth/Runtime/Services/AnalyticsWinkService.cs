@@ -24,21 +24,6 @@ namespace Agava.Wink
         public static void SendAge(string age) => SendEvent($"Age {age}");//N/A
 
         /// <summary>
-        /// User data
-        /// </summary>
-        public static void SendHasActiveAccountNewUser(bool hasActiveAcc)
-        {
-            SendEvent("Has Active Account New User", GetJson("New Account", hasActiveAcc.ToString()));
-            Debug.LogWarning("Analytics: Has Active Account New User: " + hasActiveAcc);
-        }
-
-        public static void SendHasActiveAccountUser(bool hasActiveAcc)
-        {
-            SendEvent("Has Active Account Regular User", GetJson("Regular Account", hasActiveAcc.ToString()));
-            Debug.LogWarning("Analytics: Has Active Account Regular User: " + hasActiveAcc);
-        }
-
-        /// <summary>
         /// Retention
         /// </summary>
         public static void SendAverageSessionLength(int time) => SendEvent("Average Session Length", GetJson("New Account", time.ToString()));
