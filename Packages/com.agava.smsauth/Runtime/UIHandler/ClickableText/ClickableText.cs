@@ -13,7 +13,7 @@ namespace Agava.Wink
         private string _link;
         private Action _onClick;
 
-        protected void Initialize(string linkId, string link, Action onClick=null)
+        protected void Initialize(string linkId, string link, Action onClick = null)
         {
             _linkId = linkId;
             _link = link;
@@ -35,8 +35,7 @@ namespace Agava.Wink
 
             if (selectedLink == _linkId)
             {
-                Debug.LogFormat($"Open link {selectedLink}");
-                Application.OpenURL(_link);
+                WebViewPresenter.ShowWebView(_link);
                 _onClick?.Invoke();
             }
         }

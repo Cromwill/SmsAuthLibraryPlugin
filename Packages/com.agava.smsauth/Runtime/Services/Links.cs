@@ -6,15 +6,17 @@ using UnityEngine.Networking;
 
 public class Links : MonoBehaviour
 {
-    private const string SupportRmtKey = "support_bot";
-    private const string AgreementRmtKey = "agreement";
-    private const string PrivacyRmtKey = "privacy";
-    private const string SubscriptionRmtKey = "subscription";
+    public const string SupportRmtKey = "support_bot";
+    public const string AgreementRmtKey = "agreement";
+    public const string PrivacyRmtKey = "privacy";
+    public const string SubscriptionRmtKey = "subscription";
 
     public static string Support { get; private set; } = "https://t.me/MTgames_support_bot";
     public static string Agreement { get; private set; } = "https://mt.media/agreement/";
     public static string Privacy { get; private set; } = "https://mt.media/privacy/";
     public static string Subscription { get; private set; } = "https://wink.ru/services/winkkids";
+
+    public static bool Initialized { get; private set; } = false;
 
     private IEnumerator Start()
     {
@@ -48,6 +50,8 @@ public class Links : MonoBehaviour
 
         if (string.IsNullOrEmpty(linkSubscription) == false)
             Subscription = linkSubscription;
+
+        Initialized = true;
     }
 
     private async Task<string> GetLink(string key)

@@ -29,11 +29,10 @@
       }
     },
     "com.google.external-dependency-manager": {
-      "version": "https://github.com/google-unity/external-dependency-manager.git#1.2.177",
+      "version": "file:E:/com.google.external-dependency-manager-1.2.177.tgz",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "64445bb59f6d9d4d7f24be5eea45e7fdf2146546"
+      "source": "local-tarball",
+      "dependencies": {}
     },
     "com.unity.2d.animation": {
       "version": "9.1.0",
@@ -306,6 +305,13 @@
         "com.google.external-dependency-manager": "1.2.177"
       },
       "hash": "5897ff63840968413f90db943df32a212a6dd0e5"
+    },
+    "net.gree.unity-webview": {
+      "version": "https://github.com/gree/unity-webview.git?path=/dist/package-nofragment",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b1ee99f6dc91fbc36309839bc654c46edec622db"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

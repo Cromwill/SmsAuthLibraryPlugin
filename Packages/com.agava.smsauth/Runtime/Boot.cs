@@ -55,6 +55,7 @@ namespace Agava.Wink
             if (_preloadService.IsPluginAwailable)
             {
                 yield return _winkSignInHandlerUI.Initialize();
+
                 SmsAuthApi.DownloadCloudSavesProgress += OnDownloadCloudSavesProgress;
 
                 yield return _winkAccessManager.Construct();
