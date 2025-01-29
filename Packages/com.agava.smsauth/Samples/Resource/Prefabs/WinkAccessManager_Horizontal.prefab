@@ -691,7 +691,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2def3cdf794fc8e4292af5059a48043d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 4805699572144255494}
   _remoteConfigName: hello-window-text
   _fallbackText: "<line-height=48px>8000+ \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432,
     23 \u0434\u0435\u0442\u0441\u043A\u0438\u0445 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430,
@@ -1685,7 +1684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2def3cdf794fc8e4292af5059a48043d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 1744434992448188376}
   _remoteConfigName: wink-price-text
   _fallbackText: "\u0414\u0430\u043B\u0435\u0435 \u2014 199 \u20BD \u0432 \u043C\u0435\u0441\u044F\u0446"
 --- !u!1 &978313815550604145
@@ -3003,7 +3001,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2def3cdf794fc8e4292af5059a48043d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 328723166443109009}
   _remoteConfigName: trial-period-days-text
   _fallbackText: "7 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
 --- !u!1 &1946960583750742624
@@ -6551,7 +6548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2def3cdf794fc8e4292af5059a48043d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 328723166443109009}
   _remoteConfigName: trial-period-days-text
   _fallbackText: "7 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
 --- !u!1 &3585330637198225982
@@ -7030,7 +7026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2def3cdf794fc8e4292af5059a48043d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 1744434992448188376}
   _remoteConfigName: wink-price-text
   _fallbackText: "\u0414\u0430\u043B\u0435\u0435 \u2014 199 \u20BD \u0432 \u043C\u0435\u0441\u044F\u0446"
 --- !u!1 &4041766441090329190

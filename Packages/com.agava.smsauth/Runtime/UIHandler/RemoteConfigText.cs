@@ -5,11 +5,18 @@ using SmsAuthAPI.Program;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
 public class RemoteConfigText : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _text;
     [SerializeField] private string _remoteConfigName;
     [SerializeField] private string _fallbackText;
+
+    private TMP_Text _text;
+
+    private void Awake()
+    {
+        _text = GetComponent<TMP_Text>();
+    }
 
     private IEnumerator Start()
     {
