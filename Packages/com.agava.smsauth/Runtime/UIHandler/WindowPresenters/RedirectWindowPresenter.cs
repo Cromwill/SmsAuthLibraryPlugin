@@ -46,7 +46,7 @@ namespace Agava.Wink
 
         private void OnYesClicked()
         {
-            Application.OpenURL(Links.Subscription);
+            WebViewPresenter.ShowWebView(Links.Subscription);
             AnalyticsWinkService.SendPayWallRedirect();
 
             if (_closeOnYesClicked)
