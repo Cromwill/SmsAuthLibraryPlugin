@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WebView : MonoBehaviour
 {
     [SerializeField] private WebViewObject _webViewObject;
     [SerializeField] private RectTransform _container;
+    [SerializeField] private Image _loadingImage;
 
     public bool Initialized => _webViewObject.IsInitialized();
 
@@ -36,6 +38,7 @@ public class WebView : MonoBehaviour
             },
             ld: (msg) =>
             {
+                OnWebLoad();
                 Debug.Log(string.Format("CallOnLoaded[{0}]", msg));
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS
                 // NOTE: the following js definition is required only for UIWebView; if
@@ -75,8 +78,8 @@ public class WebView : MonoBehaviour
             },
             transparent: false,
             zoom: true,
-            ua: "custom user agent string",
-            radius: 0,
+            ua: "wink game player",
+            radius: 22,
             androidForceDarkMode: 0,
             enableWKWebView: true,
             wkContentMode: 0,
@@ -84,10 +87,10 @@ public class WebView : MonoBehaviour
             separated: false
             );
 
-        int left = (int)_container.offsetMin.x;
-        int right = (int)-_container.offsetMax.x;
-        int top = (int)-_container.offsetMax.y;
-        int bottom = (int)_container.offsetMin.y;
+        int left = Mathf.CeilToInt(_container.offsetMin.x);
+        int right = Mathf.CeilToInt(-_container.offsetMax.x);
+        int top = Mathf.CeilToInt(-_container.offsetMax.y);
+        int bottom = Mathf.CeilToInt(_container.offsetMin.y);
 
         _webViewObject.SetScrollbarsVisibility(false);
         _webViewObject.SetMargins(left, top, right, bottom);
@@ -95,20 +98,28 @@ public class WebView : MonoBehaviour
         _webViewObject.SetVisibility(false);
     }
 
+    private void Update()
+    {
+        _loadingImage.transform.localEulerAngles += new Vector3(0, 0, 2f);
+    }
+
     public void OpenURL(string url)
     {
-        _webViewObject.SetVisibility(true);
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
     }
 
     public void ShowPage(string cachePagePath)
     {
-        _webViewObject.SetVisibility(true);
         _webViewObject.LoadURL("file://" + cachePagePath);
     }
 
     public void Hide()
     {
         _webViewObject.SetVisibility(false);
+    }
+
+    private void OnWebLoad()
+    {
+        _webViewObject.SetVisibility(true);
     }
 }
