@@ -14,7 +14,7 @@ namespace Agava.Wink
     [Preserve]
     public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine
     {
-        private const float RedirectWindowDelay = 2.0f;
+        private const float RedirectWindowDelay = 1.0f;
 
         [SerializeField] private DemoTimer _demoTimer;
         [SerializeField] private NotifyWindowHandler _notifyWindowHandler;
