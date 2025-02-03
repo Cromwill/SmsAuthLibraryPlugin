@@ -56,7 +56,7 @@ namespace Agava.Wink
             //    _cacheUrlPages = new();
 
             //    yield return new WaitUntil(() => _webView.Initialized);
-            //    //yield return new WaitUntil(() => Links.Initialized);
+            yield return new WaitUntil(() => Links.Initialized);
             //    //yield return DownloadPage(Links.Support, Links.SupportRmtKey);
             //    //yield return DownloadPage(Links.Agreement, Links.AgreementRmtKey);
             //    //yield return DownloadPage(Links.Privacy, Links.PrivacyRmtKey);

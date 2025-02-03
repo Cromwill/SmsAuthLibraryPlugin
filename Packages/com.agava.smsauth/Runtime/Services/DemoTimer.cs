@@ -39,7 +39,7 @@ namespace Agava.Wink
 
             if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)
             {
-                _savedDemoTime = TimeSpan.FromSeconds(60);
+                _savedDemoTime = TimeSpan.FromSeconds(remoteCfgSeconds);
                 UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
             }
             else

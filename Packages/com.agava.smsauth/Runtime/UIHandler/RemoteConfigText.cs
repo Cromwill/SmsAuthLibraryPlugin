@@ -13,6 +13,8 @@ public class RemoteConfigText : MonoBehaviour
 
     private TMP_Text _text;
 
+    public bool Initialized { get; private set; } = false;
+
     private void Awake()
     {
         _text = GetComponent<TMP_Text>();
@@ -27,5 +29,7 @@ public class RemoteConfigText : MonoBehaviour
 
         string result = task.Result;
         _text.text = string.IsNullOrEmpty(result) ? _fallbackText : result;
+
+        Initialized = true;
     }
 }

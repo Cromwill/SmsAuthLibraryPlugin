@@ -3002,7 +3002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _remoteConfigName: trial-period-days-text
-  _fallbackText: "7 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  _fallbackText: "45 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
 --- !u!1 &1924749203471740984
 GameObject:
   m_ObjectHideFlags: 0
@@ -6962,7 +6962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _remoteConfigName: trial-period-days-text
-  _fallbackText: "7 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  _fallbackText: "45 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
 --- !u!1 &3585330637198225982
 GameObject:
   m_ObjectHideFlags: 0
@@ -16196,6 +16196,8 @@ MonoBehaviour:
   _signInButtons:
   - {fileID: 594317397132827229}
   - {fileID: 6325108296970379473}
+  _tryWinkButtons:
+  - {fileID: 8761505032640723908}
   - {fileID: 7170691379942591322}
   _unlinkContinueButton: {fileID: 7451925099249756360}
   _closeButton: {fileID: 7312120933078508073}

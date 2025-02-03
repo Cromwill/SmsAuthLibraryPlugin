@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Scripting;
+using System.Linq;
 
 namespace Agava.Wink
 {
@@ -13,6 +14,8 @@ namespace Agava.Wink
     [Preserve]
     public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine
     {
+        private const float RedirectWindowDelay = 2.0f;
+
         [SerializeField] private DemoTimer _demoTimer;
         [SerializeField] private NotifyWindowHandler _notifyWindowHandler;
         [Header("UI Input")]
@@ -21,6 +24,7 @@ namespace Agava.Wink
         [SerializeField] private Button _signInContinueButton;
         [SerializeField] private Button _enterCodeContinueButton;
         [SerializeField] private Button[] _signInButtons;
+        [SerializeField] private Button[] _tryWinkButtons;
         [SerializeField] private Button _unlinkContinueButton;
         [Header("Analytics buttons")]
         [SerializeField] private Button _closeButton;
@@ -56,7 +60,10 @@ namespace Agava.Wink
             _signInContinueButton.onClick.RemoveListener(OnSignInContinueClicked);
 
             foreach (var button in _signInButtons)
-                button.onClick.RemoveAllListeners();
+                button.onClick.RemoveListener(OpenSignWindow);
+
+            foreach (var button in _tryWinkButtons)
+                button.onClick.RemoveListener(OpenSignWindowWithDelay);
 
             _unlinkContinueButton.onClick.RemoveListener(OnUnlinkContinueClicked);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
@@ -84,6 +91,11 @@ namespace Agava.Wink
 
             yield return new WaitUntil(() => _notifyWindowHandler.EnterCodeWindowInitialized);
             yield return new WaitUntil(() => _webViewPresenter.Initialized);
+
+            var textConfigs = FindObjectsOfType<RemoteConfigText>();
+
+            while (textConfigs.Any(config => config.Initialized == false))
+                yield return null;
         }
 
         public void OpenProcessOnWindow()
@@ -116,6 +128,9 @@ namespace Agava.Wink
             foreach (var button in _signInButtons)
                 button.onClick.AddListener(OpenSignWindow);
 
+            foreach (var button in _tryWinkButtons)
+                button.onClick.AddListener(OpenSignWindowWithDelay);
+
             _unlinkContinueButton.onClick.AddListener(OnUnlinkContinueClicked);
             _closeButton.onClick.AddListener(OnCloseButtonClick);
             _haveWinkButton.onClick.AddListener(OnHaveWinkButtonClick);
@@ -137,6 +152,21 @@ namespace Agava.Wink
         {
             _notifyWindowHandler.OpenSignInWindow();
             AnalyticsWinkService.SendEnterPhoneWindow();
+        }
+
+        private void OpenSignWindowWithDelay()
+        {
+            StartCoroutine(Delay());
+
+            IEnumerator Delay()
+            {
+                _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+
+                yield return new WaitForSeconds(RedirectWindowDelay);
+
+                _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+                OpenSignWindow();
+            }
         }
 
         public void OpenSubscriptionWindow()
