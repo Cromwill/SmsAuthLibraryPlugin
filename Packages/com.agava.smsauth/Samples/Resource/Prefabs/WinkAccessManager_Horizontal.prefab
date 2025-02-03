@@ -7769,7 +7769,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -16502,8 +16502,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2077796153610004183}
-  - {fileID: 156138673849985565}
   - {fileID: 2246968439363171530}
+  - {fileID: 156138673849985565}
   - {fileID: 4445411541118177284}
   m_Father: {fileID: 7267543034003238314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

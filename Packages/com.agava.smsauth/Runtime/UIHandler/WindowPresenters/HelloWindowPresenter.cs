@@ -11,12 +11,14 @@ namespace Agava.Wink
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _startButton;
 
-        public override void Enable()
+        public void Enable(bool hasAccess)
         {
             _imagesCarousel.Enable();
             _startButton.onClick.AddListener(OnStartButtonClick);
             EnableCanvasGroup(_canvasGroup);
         }
+
+        public override void Enable() { }
 
         public override void Disable()
         {

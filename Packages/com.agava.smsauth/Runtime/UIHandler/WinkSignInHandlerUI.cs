@@ -233,9 +233,8 @@ namespace Agava.Wink
             if (hasAccess)
             {
                 SetPhone();
-                AnalyticsWinkService.SendHelloWindow();
-                _notifyWindowHandler.OpenWindow(WindowType.Hello);
                 _notifyWindowHandler.CloseWindow(WindowType.Redirect);
+                _notifyWindowHandler.OpenHelloWindow(hasAccess);
             }
         }
 

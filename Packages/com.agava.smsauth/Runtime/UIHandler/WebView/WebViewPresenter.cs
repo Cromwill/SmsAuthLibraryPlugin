@@ -47,27 +47,31 @@ namespace Agava.Wink
 
         private IEnumerator Initialize()
         {
-            if (_webView == null)
-            {
-                Debug.LogError("Web view is null!");
-            }
-            else
-            {
-                _cacheUrlPages = new();
+            //if (_webView == null)
+            //{
+            //    Debug.LogError("Web view is null!");
+            //}
+            //else
+            //{
+            //    _cacheUrlPages = new();
 
-                yield return new WaitUntil(() => _webView.Initialized);
-                //yield return new WaitUntil(() => Links.Initialized);
-                //yield return DownloadPage(Links.Support, Links.SupportRmtKey);
-                //yield return DownloadPage(Links.Agreement, Links.AgreementRmtKey);
-                //yield return DownloadPage(Links.Privacy, Links.PrivacyRmtKey);
-                //yield return DownloadPage(Links.Subscription, Links.SubscriptionRmtKey);
-            }
+            //    yield return new WaitUntil(() => _webView.Initialized);
+            //    //yield return new WaitUntil(() => Links.Initialized);
+            //    //yield return DownloadPage(Links.Support, Links.SupportRmtKey);
+            //    //yield return DownloadPage(Links.Agreement, Links.AgreementRmtKey);
+            //    //yield return DownloadPage(Links.Privacy, Links.PrivacyRmtKey);
+            //    //yield return DownloadPage(Links.Subscription, Links.SubscriptionRmtKey);
+            //}
 
             Initialized = true;
+            yield return null;
         }
 
         public static void ShowWebView(string url)
         {
+            Application.OpenURL(url);
+            return;
+
             if (instance == null)
             {
                 OpenURL(url);
@@ -104,43 +108,43 @@ namespace Agava.Wink
             instance.Disable();
         }
 
-        private IEnumerator DownloadPage(string url, string pageName)
-        {
-            byte[] bytes = null;
+        //private IEnumerator DownloadPage(string url, string pageName)
+        //{
+        //    byte[] bytes = null;
 
-            using (UnityWebRequest request = UnityWebRequest.Get(url))
-            {
-                yield return request.SendWebRequest();
-                bytes = request.downloadHandler.data;
-            }
+        //    using (UnityWebRequest request = UnityWebRequest.Get(url))
+        //    {
+        //        yield return request.SendWebRequest();
+        //        bytes = request.downloadHandler.data;
+        //    }
 
-            if (bytes != null)
-            {
-                if (TryCacheBytes(bytes, pageName, out string cachePagePath))
-                {
-                    _cacheUrlPages[url] = cachePagePath;
-                }
-            }
+        //    if (bytes != null)
+        //    {
+        //        if (TryCacheBytes(bytes, pageName, out string cachePagePath))
+        //        {
+        //            _cacheUrlPages[url] = cachePagePath;
+        //        }
+        //    }
 
-            yield return null;
-        }
+        //    yield return null;
+        //}
 
-        private bool TryCacheBytes(byte[] pageBytes, string pageName, out string cachePagePath)
-        {
-            cachePagePath = Path.Join(Application.temporaryCachePath, pageName + ".html");
-            Debug.Log($"Cache path for {pageName}: {cachePagePath}");
+        //private bool TryCacheBytes(byte[] pageBytes, string pageName, out string cachePagePath)
+        //{
+        //    cachePagePath = Path.Join(Application.temporaryCachePath, pageName + ".html");
+        //    Debug.Log($"Cache path for {pageName}: {cachePagePath}");
 
-            try
-            {
-                File.WriteAllBytes(cachePagePath, pageBytes);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
-                return false;
-            }
-        }
+        //    try
+        //    {
+        //        File.WriteAllBytes(cachePagePath, pageBytes);
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.Log(ex.Message);
+        //        return false;
+        //    }
+        //}
 
         private static void OpenURL(string url)
         {

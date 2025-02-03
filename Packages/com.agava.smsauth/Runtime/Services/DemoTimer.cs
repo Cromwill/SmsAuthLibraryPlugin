@@ -39,7 +39,7 @@ namespace Agava.Wink
 
             if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)
             {
-                _savedDemoTime = TimeSpan.FromSeconds(remoteCfgSeconds);
+                _savedDemoTime = TimeSpan.FromSeconds(60);
                 UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
             }
             else
@@ -89,14 +89,14 @@ namespace Agava.Wink
 
             if (_delay > 0)
             {
-                _delay -= Time.deltaTime;
+                _delay -= Time.unscaledDeltaTime;
                 return;
             }
 
             if (_winkSignInHandlerUI.IsAnyWindowEnabled || Expired || SmsAuthApi.Initialized == false)
                 return;
 
-            _second -= Time.deltaTime;
+            _second -= Time.unscaledDeltaTime;
 
             if (_second <= 0)
             {
