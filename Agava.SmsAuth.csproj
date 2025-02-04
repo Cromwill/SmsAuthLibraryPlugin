@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickableSubscriptionText.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WebView\WebViewPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\SceneLoader.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickableAgreementText.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\Carousel\ImagesCarousel.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\ProcessWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\IBoot.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\LoadingProgressBar.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WebView.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\SignInWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\AppMetricaInfo.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Boot.cs" />
@@ -491,7 +493,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Google.PackageManagerResolver">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@64445bb59f\ExternalDependencyManager\Editor\1.2.177\Google.PackageManagerResolver.dll</HintPath>
+      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1f9ea14d1e23\ExternalDependencyManager\Editor\1.2.177\Google.PackageManagerResolver.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
@@ -515,7 +517,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Google.IOSResolver">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@64445bb59f\ExternalDependencyManager\Editor\1.2.177\Google.IOSResolver.dll</HintPath>
+      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1f9ea14d1e23\ExternalDependencyManager\Editor\1.2.177\Google.IOSResolver.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
@@ -523,7 +525,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Google.VersionHandler">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@64445bb59f\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1f9ea14d1e23\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="log4netPlastic">
@@ -543,7 +545,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Google.VersionHandlerImpl">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@64445bb59f\ExternalDependencyManager\Editor\1.2.177\Google.VersionHandlerImpl.dll</HintPath>
+      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1f9ea14d1e23\ExternalDependencyManager\Editor\1.2.177\Google.VersionHandlerImpl.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt">
@@ -571,7 +573,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Google.JarResolver">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@64445bb59f\ExternalDependencyManager\Editor\1.2.177\Google.JarResolver.dll</HintPath>
+      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1f9ea14d1e23\ExternalDependencyManager\Editor\1.2.177\Google.JarResolver.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
@@ -1115,6 +1117,10 @@
     <ProjectReference Include="Agava.AdsAppView.csproj">
       <Project>{6D28AAAC-8892-B730-42DA-D8895A17D4A0}</Project>
       <Name>Agava.AdsAppView</Name>
+    </ProjectReference>
+    <ProjectReference Include="unity-webview.csproj">
+      <Project>{7712B54A-B42B-5B96-CB4D-35B386D39A4F}</Project>
+      <Name>unity-webview</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
