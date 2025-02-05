@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace Agava.Wink
@@ -12,11 +8,11 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private Button _button;
-        [SerializeField] private WebView _webView;
+        [SerializeField] private WebView _webViewPrefab;
 
         private static WebViewPresenter instance;
 
-        private Dictionary<string, string> _cacheUrlPages;
+        private WebView _webView;
 
         public bool Initialized { get; private set; } = false;
 
@@ -47,30 +43,28 @@ namespace Agava.Wink
 
         private IEnumerator Initialize()
         {
-            //if (_webView == null)
-            //{
-            //    Debug.LogError("Web view is null!");
-            //}
-            //else
-            //{
-            //    _cacheUrlPages = new();
+#if UNITY_ANDROID || UNITY_IOS
+            if (_webViewPrefab == null)
+            {
+                Debug.LogError("Web view prefab is null!");
+            }
+            else
+            {
+                _webView = Instantiate(_webViewPrefab, transform);
+                yield return new WaitUntil(() => _webView.Initialized);
+            }
+#endif
 
-            //    yield return new WaitUntil(() => _webView.Initialized);
             yield return new WaitUntil(() => Links.Initialized);
-            //    //yield return DownloadPage(Links.Support, Links.SupportRmtKey);
-            //    //yield return DownloadPage(Links.Agreement, Links.AgreementRmtKey);
-            //    //yield return DownloadPage(Links.Privacy, Links.PrivacyRmtKey);
-            //    //yield return DownloadPage(Links.Subscription, Links.SubscriptionRmtKey);
-            //}
 
             Initialized = true;
-            yield return null;
         }
 
         public static void ShowWebView(string url)
         {
+#if !UNITY_ANDROID && !UNITY_IOS
             Application.OpenURL(url);
-            return;
+#else
 
             if (instance == null)
             {
@@ -85,15 +79,8 @@ namespace Agava.Wink
             }
 
             instance.Enable();
-
-            if (instance._cacheUrlPages.TryGetValue(url, out string path))
-            {
-                instance._webView.ShowPage(path);
-            }
-            else
-            {
-                instance._webView.OpenURL(url);
-            }
+            instance._webView.OpenURL(url);
+#endif
         }
 
         public static void HideWebView()
@@ -107,44 +94,6 @@ namespace Agava.Wink
             instance._webView.Hide();
             instance.Disable();
         }
-
-        //private IEnumerator DownloadPage(string url, string pageName)
-        //{
-        //    byte[] bytes = null;
-
-        //    using (UnityWebRequest request = UnityWebRequest.Get(url))
-        //    {
-        //        yield return request.SendWebRequest();
-        //        bytes = request.downloadHandler.data;
-        //    }
-
-        //    if (bytes != null)
-        //    {
-        //        if (TryCacheBytes(bytes, pageName, out string cachePagePath))
-        //        {
-        //            _cacheUrlPages[url] = cachePagePath;
-        //        }
-        //    }
-
-        //    yield return null;
-        //}
-
-        //private bool TryCacheBytes(byte[] pageBytes, string pageName, out string cachePagePath)
-        //{
-        //    cachePagePath = Path.Join(Application.temporaryCachePath, pageName + ".html");
-        //    Debug.Log($"Cache path for {pageName}: {cachePagePath}");
-
-        //    try
-        //    {
-        //        File.WriteAllBytes(cachePagePath, pageBytes);
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.Log(ex.Message);
-        //        return false;
-        //    }
-        //}
 
         private static void OpenURL(string url)
         {

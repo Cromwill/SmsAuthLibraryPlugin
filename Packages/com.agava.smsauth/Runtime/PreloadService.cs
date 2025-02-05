@@ -13,12 +13,14 @@ namespace Agava.Wink
     {
         private const string True = "true";
         private const string On = "on";
-#if UNITY_STANDALONE
+#if UNITY_WEBGL
+        private const string Platform = "webgl";
+#elif UNITY_STANDALONE
         private const string Platform = "standalone";
 #elif UNITY_ANDROID
-        private const string Platform = "android";
+        private const string Platform = "Android";
 #elif UNITY_IOS
-        private const string Platform = "ios";
+        private const string Platform = "iOS";
 #endif
         private int _bundlIdVersion;
         private bool _isEndPrepare = false;

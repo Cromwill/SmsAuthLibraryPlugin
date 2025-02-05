@@ -20,6 +20,8 @@ namespace Agava.Wink
             "android";
 #elif UNITY_IOS
             "ios";
+#elif UNITY_WEBGL
+            "webgl";
 #else
             "editor";
 #endif
@@ -30,6 +32,11 @@ namespace Agava.Wink
 
         [SerializeField] private string _ip;
         [SerializeField] private string _additiveId;
+
+#if UNITY_WEBGL
+        [Header("WEBGL")]
+        [SerializeField] private string _appId;
+#endif
 
         private RequestHandler _requestHandler;
         private TimespentService _timespentService;
@@ -48,7 +55,12 @@ namespace Agava.Wink
         public LoginData LoginData { get; private set; }
         public bool Authenficated { get; private set; } = false;
         public bool HasAccess { get; private set; } = false;
+
+#if UNITY_ANDROID || UNITY_IOS
         public string AppId => Application.identifier;
+#elif UNITY_WEBGL
+        public string AppId => _appId;
+#endif
 
         public static WinkAccessManager Instance { get; private set; }
 
@@ -291,6 +303,10 @@ namespace Agava.Wink
 
         private void SendEventSubscriberData()
         {
+#if UNITY_EDITOR
+            return;
+#endif
+
             if (_sendEventCoroutine == null)
                 _sendEventCoroutine = StartCoroutine(WaitForSanId());
 

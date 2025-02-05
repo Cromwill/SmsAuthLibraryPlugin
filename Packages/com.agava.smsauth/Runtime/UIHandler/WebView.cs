@@ -9,6 +9,11 @@ public class WebView : MonoBehaviour
 
     public bool Initialized => _webViewObject.IsInitialized();
 
+    private void Awake()
+    {
+        
+    }
+
     private void Start()
     {
         _webViewObject.Init(
