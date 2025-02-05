@@ -43,7 +43,7 @@ namespace Agava.Wink
 
         private IEnumerator Initialize()
         {
-#if UNITY_ANDROID || UNITY_IOS
+#if (UNITY_ANDROID || UNITY_IOS) && WEBVIEW
             if (_webViewPrefab == null)
             {
                 Debug.LogError("Web view prefab is null!");
