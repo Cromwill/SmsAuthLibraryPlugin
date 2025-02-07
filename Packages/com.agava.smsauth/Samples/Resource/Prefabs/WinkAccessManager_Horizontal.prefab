@@ -15954,9 +15954,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ec58d84ed9e66418df474fc863b924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ip: gamesrtkbd.tech
+  _ip: 
   _additiveId: 
-  _appId: 
 --- !u!114 &7069856064962767434
 MonoBehaviour:
   m_ObjectHideFlags: 0
