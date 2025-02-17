@@ -95,7 +95,7 @@ namespace Agava.Wink
         public IEnumerator Construct()
         {
             _requestHandler = new();
-
+            DeeplinkHandler.Init();
             DontDestroyOnLoad(this);
 
             if (UnityEngine.PlayerPrefs.HasKey(UniqueId) == false)

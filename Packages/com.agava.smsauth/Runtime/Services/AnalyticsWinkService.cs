@@ -10,9 +10,13 @@ namespace Agava.Wink
     public static class AnalyticsWinkService
     {
         /// <summary>
-        /// Auditory
+        /// Auditory from deeplinks
         /// </summary>
+        public static void SendDeeplinkRedirected(string appId) => AppMetrica.ReportEvent("Deeplink event", GetJson("Deeplink open", appId));
 
+        /// <summary>
+        /// Auditory from user events
+        /// </summary>
         public static void SendStartApp(string appId) => SendEvent("App run", GetJson("App run", appId));
         public static void SendSanId(string sanId)
         {
