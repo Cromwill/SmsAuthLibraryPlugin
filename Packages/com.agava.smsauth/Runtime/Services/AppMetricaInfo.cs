@@ -1,7 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AppMetricaInfo", menuName = "Create AppMetricaInfo")]
-public class AppMetricaInfo : ScriptableObject
+namespace Agava.Wink
 {
-    [field: SerializeField] public string Key { get; private set; }
+    [CreateAssetMenu(fileName = "AppMetricaInfo", menuName = "Create AppMetricaInfo/SmsAuthVps")]
+    public class AppMetricaInfo : ScriptableObject
+    {
+        [field: SerializeField] public string Key { get; private set; }
+    }
 }
