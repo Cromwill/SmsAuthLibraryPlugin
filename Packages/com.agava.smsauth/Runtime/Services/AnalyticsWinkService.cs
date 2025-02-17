@@ -62,13 +62,13 @@ namespace Agava.Wink
             return JsonConvert.SerializeObject(data);
         }
 
-        private static string GetDataTrackingJson(string name, string value, string id)
+        private static string GetDataTrackingJson(string name, string app, string id)
         {
             DataTracking data = new()
             {
-                Name = name,
-                Value = value,
-                Id = "from: " + id
+                event_name = name,
+                app_id = app,
+                from = id
             };
 
             return JsonConvert.SerializeObject(data);
@@ -82,9 +82,9 @@ namespace Agava.Wink
 
         internal class DataTracking
         {
-            public string Name { get; set; }
-            public string Value { get; set; }
-            public string Id { get; set; }
+            public string event_name { get; set; }
+            public string app_id { get; set; }
+            public string from { get; set; }
         }
 
         private static void SendEvent(string eventName)

@@ -24,9 +24,9 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.google.external-dependency-manager": "1.2.183",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
         "com.unity.textmeshpro": "3.0.6",
+        "com.google.external-dependency-manager": "1.2.183",
         "io.appmetrica.analytics": "6.3.0"
       }
     },
