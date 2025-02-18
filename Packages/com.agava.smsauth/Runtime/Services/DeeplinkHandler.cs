@@ -55,16 +55,16 @@ namespace Agava.Wink
 
             string onbordingType = @"content=(\d+)";
             Match matchOnbording = Regex.Match(url, onbordingType);
-            string onbording;
+            string onbordingId;
 
             if (matchOnbording.Success)
-                onbording = matchOnbording.Groups[1].Value;
+                onbordingId = matchOnbording.Groups[1].Value;
             else
-                onbording = "default";
+                onbordingId = "default";
 
             Debug.LogWarning($"appmetrica_tracking_id={trackingId}");
-            Debug.LogWarning($"campaign={partner}");
-            Debug.LogWarning($"content={onbordingType}");
+            Debug.LogWarning($"campaign={partnerId}");
+            Debug.LogWarning($"content={onbordingId}");
             Debug.LogWarning($"Deeplink detected: {url}");
         }
 
