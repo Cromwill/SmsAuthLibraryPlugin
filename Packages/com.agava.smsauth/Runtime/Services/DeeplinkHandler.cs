@@ -23,8 +23,6 @@ namespace Agava.Wink
 
         private async void OnDeepLinkActivated(string url)
         {
-            Application.deepLinkActivated -= OnDeepLinkActivated;
-
             string pattern = @"appmetrica_tracking_id=(\d+)";
             Match matchTracking = Regex.Match(url, pattern);
             string trackingId;
@@ -45,6 +43,7 @@ namespace Agava.Wink
 
                 if (string.IsNullOrEmpty(name) == false && name == partnerId)
                 {
+                    Application.deepLinkActivated -= OnDeepLinkActivated;
                     AnalyticsWinkService.SendDeeplinkRedirected(Application.identifier, partnerId, trackingId);
                     Debug.LogWarning($"Deeplink detected '{url}' (campaing: {partnerId}), analytics send:, with campaing {name}");
                 }
