@@ -32,7 +32,7 @@ namespace Agava.Wink
             else
                 trackingId = "no id";
 
-            string partner = @"campaign=(\d+)";
+            string partner = @"campaign=([^&]+)";
             Match matchPartner = Regex.Match(url, partner);
             string partnerId;
 
@@ -53,7 +53,7 @@ namespace Agava.Wink
                 partnerId = "no partner name";
             }
 
-            string onbordingType = @"content=(\d+)";
+            string onbordingType = @"content=([^&]+)";
             Match matchOnbording = Regex.Match(url, onbordingType);
             string onbordingId;
 
