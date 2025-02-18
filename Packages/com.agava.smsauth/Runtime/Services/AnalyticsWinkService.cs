@@ -12,8 +12,8 @@ namespace Agava.Wink
         /// <summary>
         /// Auditory from deeplinks
         /// </summary>
-        public static void SendDeeplinkRedirected(string appId, string trackingId)
-            => AppMetrica.ReportEvent("Deeplink event", GetDataTrackingJson("Deeplink open", appId, trackingId));
+        public static void SendDeeplinkRedirected(string appId, string partnerId, string trackingId)
+            => AppMetrica.ReportEvent("Adv company event", GetDataTrackingJson("Deeplink open", appId, partnerId, trackingId));
 
         /// <summary>
         /// Auditory from user events
@@ -62,13 +62,14 @@ namespace Agava.Wink
             return JsonConvert.SerializeObject(data);
         }
 
-        private static string GetDataTrackingJson(string name, string app, string id)
+        private static string GetDataTrackingJson(string name, string app, string partnerId, string trackingId)
         {
             DataTracking data = new()
             {
                 event_name = name,
                 app_id = app,
-                from = id
+                from = trackingId,
+                partner = partnerId,
             };
 
             return JsonConvert.SerializeObject(data);
@@ -85,6 +86,7 @@ namespace Agava.Wink
             public string event_name { get; set; }
             public string app_id { get; set; }
             public string from { get; set; }
+            public string partner { get; set; }
         }
 
         private static void SendEvent(string eventName)
