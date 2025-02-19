@@ -31,8 +31,11 @@ namespace Agava.Wink
                 trackingId = matchTracking.Groups[1].Value;
             else
                 trackingId = "no id";
-
+#if UNITY_ANDROID
             string partner = @"campaign=([^&]+)";
+#elif UNITY_IOS
+            string partner = @"campaign=([^&]?)";
+#endif
             Match matchPartner = Regex.Match(url, partner);
             string partnerId;
 
@@ -53,7 +56,11 @@ namespace Agava.Wink
                 partnerId = "no partner name";
             }
 
+#if UNITY_ANDROID
             string onbordingType = @"content=([^&]+)";
+#elif UNITY_IOS
+            string onbordingType = @"content=([^&]?)";
+#endif
             Match matchOnbording = Regex.Match(url, onbordingType);
             string onbordingId;
 
