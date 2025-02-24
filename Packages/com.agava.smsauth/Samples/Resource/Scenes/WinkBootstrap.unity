@@ -392,6 +392,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 901343221781040448, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
+      propertyPath: _ip
+      value: gamesrtkbd.tech
+      objectReference: {fileID: 0}
+    - target: {fileID: 901343221781040448, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: _appId
       value: com.test
       objectReference: {fileID: 0}
@@ -721,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4041554953576809274, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 994.4125
       objectReference: {fileID: 0}
     - target: {fileID: 4041554953576809274, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1013,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6226865375690094183, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 331.91248
       objectReference: {fileID: 0}
     - target: {fileID: 6226865375690094183, guid: 9c403f81a96e0614aa478405fd9d1560, type: 3}
       propertyPath: m_AnchoredPosition.y
