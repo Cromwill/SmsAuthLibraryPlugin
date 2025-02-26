@@ -1,3 +1,4 @@
+using AdsAppView.Program;
 using Agava.Wink;
 using Newtonsoft.Json;
 using SmsAuthAPI.DTO;
@@ -117,6 +118,18 @@ public class TestCloudHandler : MonoBehaviour
                 Debug.Log(device);
             }
         }
+    }
+
+    [ContextMenu("Set pause on")]
+    private void SetPauseOn()
+    {
+        PopupManager.SetPause(true);
+    }
+
+    [ContextMenu("Set pause off")]
+    private void SetPauseOff()
+    {
+        PopupManager.SetPause(false);
     }
 }
 
