@@ -1,8 +1,8 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Scripting;
 using UnityEngine.UI;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
@@ -13,7 +13,10 @@ namespace Agava.Wink
         [SerializeField] private Button _closeButton;
         [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private CustomKeyboard _keyboard;
+        [SerializeField] private float _displayTime = .6f;
+        [SerializeField] private Image _cursorIcon;
 
+        private float _lastDisplayTime = 0;
         private Action Closed;
 
         private void OnDestroy() => _closeButton.onClick.RemoveListener(Disable);
@@ -37,6 +40,21 @@ namespace Agava.Wink
         {
             if (Enabled == false)
                 return;
+
+            if(_inputField.text.Length == 0)
+            {
+                _lastDisplayTime += Time.deltaTime;
+
+                if(_lastDisplayTime > _displayTime)
+                {
+                    _cursorIcon.enabled = !_cursorIcon.enabled;
+                    _lastDisplayTime = 0;
+                }
+            }
+            else if(_cursorIcon.enabled)
+            {
+                _cursorIcon.enabled = false;
+            }
         }
 
         public void Enable(Action closeCallback)
