@@ -12,50 +12,35 @@ namespace Agava.Wink
         [SerializeField] private TMP_Text _freePlaceText;
         [SerializeField] private Button _closeButton;
 
-        public event Action<UnlinkDeviceView> Closed;
+        public event Action<UnlinkDeviceView> DeviceRemoved;
 
-        public bool Empty { get; private set; } = true;
+        public bool IsEmpty { get; private set; } = true;
         public string DeviceId => _deviceId.text;
 
-        private void Awake()
-        {
-            SetFree();
-        }
+        private void OnEnable() => _closeButton.onClick.AddListener(OnRemoveDeviceBtnClicked);
 
-        private void OnEnable()
-        {
-            _closeButton.onClick.AddListener(OnCloseButtonClicked);
-        }
-
-        private void OnDisable()
-        {
-            _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
-        }
+        private void OnDisable() => _closeButton.onClick.RemoveListener(OnRemoveDeviceBtnClicked);
 
         public void Initialize(string deviceId)
         {
             _deviceId.text = deviceId;
+            SetEmpty(true);
+        }
+
+        public void SetNumber(int number) => _number.text = number.ToString();
+
+        private void OnRemoveDeviceBtnClicked()
+        {
+            DeviceRemoved?.Invoke(this);
             SetEmpty(false);
-        }
-
-        public void SetFree() => SetEmpty(true);
-
-        public void SetNumber(int number)
-        {
-            _number.text = number.ToString();
-        }
-
-        private void OnCloseButtonClicked()
-        {
-            Closed?.Invoke(this);
         }
 
         private void SetEmpty(bool empty)
         {
-            _deviceId.gameObject.SetActive(empty == false);
-            _closeButton.gameObject.SetActive(empty == false);
-            _freePlaceText.gameObject.SetActive(empty);
-            Empty = empty;
+            _deviceId.gameObject.SetActive(empty);
+            _closeButton.gameObject.SetActive(empty);
+            _freePlaceText.gameObject.SetActive(empty == false);
+            IsEmpty = empty;
         }
     }
 }

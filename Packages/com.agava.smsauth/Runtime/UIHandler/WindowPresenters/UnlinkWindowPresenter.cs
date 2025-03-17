@@ -54,7 +54,12 @@ namespace Agava.Wink
 
         private void OnUnlinkButtonClicked() => SetPanel(false);
         private void OnBackButtonClicked() => SetPanel(true);
-        private void OnContinueButtonClicked() => Debug.Log("r");
+
+        private void OnContinueButtonClicked()
+        {
+            Disable();
+            WinkAccessManager.Instance.Login();
+        }
 
         private void SetPanel(bool first)
         {

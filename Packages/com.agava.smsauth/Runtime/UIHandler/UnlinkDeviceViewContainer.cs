@@ -14,9 +14,9 @@ namespace Agava.Wink
         private List<UnlinkDeviceView> _unlinkDeviceViews = new();
 
         public int Count => _unlinkDeviceViews.Count;
-        public bool HasFreePlaces => _unlinkDeviceViews.Any(view => view.Empty);
+        public bool HasFreePlaces => _unlinkDeviceViews.Any(view => view.IsEmpty);
 
-        public event Action<UnlinkDeviceView> Closed;
+        public event Action<UnlinkDeviceView> DeviceRemoved;
 
         public void Initialize(IReadOnlyList<string> devicesList)
         {
@@ -29,7 +29,7 @@ namespace Agava.Wink
                 if (i < devicesList.Count)
                 {
                     unlinkDeviceView.Initialize(devicesList[i]);
-                    unlinkDeviceView.Closed += OnUnlinked;
+                    unlinkDeviceView.DeviceRemoved += OnUnlinked;
                 }
             }
         }
@@ -42,16 +42,12 @@ namespace Agava.Wink
             }
         }
 
-        private void OnUnlinked(UnlinkDeviceView unlinkDeviceView)
-        {
-            Closed?.Invoke(unlinkDeviceView);
-            unlinkDeviceView.SetFree();
-        }
+        private void OnUnlinked(UnlinkDeviceView unlinkDeviceView) => DeviceRemoved?.Invoke(unlinkDeviceView);
 
         private void DestroyView(UnlinkDeviceView unlinkDeviceView)
         {
             _unlinkDeviceViews.Remove(unlinkDeviceView);
-            unlinkDeviceView.Closed -= OnUnlinked;
+            unlinkDeviceView.DeviceRemoved -= OnUnlinked;
             Destroy(unlinkDeviceView.gameObject);
         }
     }

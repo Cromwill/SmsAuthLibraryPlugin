@@ -25,7 +25,6 @@ namespace Agava.Wink
         [SerializeField] private Button _enterCodeContinueButton;
         [SerializeField] private Button[] _signInButtons;
         [SerializeField] private Button[] _tryWinkButtons;
-        [SerializeField] private Button _unlinkContinueButton;
         [Header("Analytics buttons")]
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _haveWinkButton;
@@ -65,11 +64,10 @@ namespace Agava.Wink
             foreach (var button in _tryWinkButtons)
                 button.onClick.RemoveListener(OpenSignWindowWithDelay);
 
-            _unlinkContinueButton.onClick.RemoveListener(OnUnlinkContinueClicked);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
             _haveWinkButton.onClick.RemoveListener(OnHaveWinkButtonClick);
 
-            _unlinkDeviceViewContainer.Closed -= OnUnlinkButtonClicked;
+            _unlinkDeviceViewContainer.DeviceRemoved -= OnUnlinkButtonClicked;
 
             if (_winkAccessManager == null) return;
 
@@ -131,11 +129,10 @@ namespace Agava.Wink
             foreach (var button in _tryWinkButtons)
                 button.onClick.AddListener(OpenSignWindowWithDelay);
 
-            _unlinkContinueButton.onClick.AddListener(OnUnlinkContinueClicked);
             _closeButton.onClick.AddListener(OnCloseButtonClick);
             _haveWinkButton.onClick.AddListener(OnHaveWinkButtonClick);
 
-            _unlinkDeviceViewContainer.Closed += OnUnlinkButtonClicked;
+            _unlinkDeviceViewContainer.DeviceRemoved += OnUnlinkButtonClicked;
 
             CloseAllWindows();
 
@@ -232,20 +229,13 @@ namespace Agava.Wink
         private void OnLimitReached(IReadOnlyList<string> devicesList)
         {
             CloseAllWindows();
+
             _notifyWindowHandler.OpenWindow(WindowType.Unlink);
             _unlinkDeviceViewContainer.Initialize(devicesList);
         }
 
-        void OnUnlinkButtonClicked(UnlinkDeviceView unlinkDeviceView)
-        {
-            _signInFuctionsUI.OnUnlinkClicked(unlinkDeviceView.DeviceId);
-        }
-
-        private void OnUnlinkContinueClicked()
-        {
-            _notifyWindowHandler.CloseWindow(WindowType.Unlink);
-            _winkAccessManager.Login();
-        }
+        private void OnUnlinkButtonClicked(UnlinkDeviceView unlinkDeviceView)
+            => _signInFuctionsUI.OnUnlinkClicked(unlinkDeviceView.DeviceId);
 
         private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();
 
