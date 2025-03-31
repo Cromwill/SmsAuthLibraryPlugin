@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Scripting;
 using UnityEngine.UI;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
@@ -14,8 +14,8 @@ namespace Agava.Wink
 
         private void OnDestroy()
         {
-            _closeButton?.onClick.RemoveAllListeners();
-            _profileButton.onClick.RemoveAllListeners();
+            _closeButton?.onClick.RemoveListener(Disable);
+            _profileButton.onClick.RemoveListener(OnProfileButtonClicked);
         }
 
         private void Awake()

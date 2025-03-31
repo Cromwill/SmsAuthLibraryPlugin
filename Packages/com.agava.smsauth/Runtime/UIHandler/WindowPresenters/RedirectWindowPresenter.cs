@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Scripting;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
@@ -14,6 +13,8 @@ namespace Agava.Wink
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _signInButton;
         [SerializeField] private bool _closeOnYesClicked = true;
+
+        public bool TryFreeWink = false;
 
         private void Awake()
         {
@@ -29,9 +30,6 @@ namespace Agava.Wink
 
         public void Enable(bool closeButton)
         {
-            if (_closeButton != null)
-                _closeButton.gameObject.SetActive(closeButton);
-
             _imagesCarousel.Enable();
             EnableCanvasGroup(_canvasGroup);
         }
@@ -44,9 +42,12 @@ namespace Agava.Wink
             _imagesCarousel.Disable();
         }
 
+        public void TryShowCloseButton(bool enabled) => _closeButton.gameObject.SetActive(enabled);
+
         private void OnYesClicked()
         {
-            WebViewPresenter.ShowWebView(Links.Subscription);
+            TryFreeWink = true;
+            //WebViewPresenter.ShowWebView(Links.Subscription);     // TODO: remove after finish work with plugin
             AnalyticsWinkService.SendPayWallRedirect();
 
             if (_closeOnYesClicked)

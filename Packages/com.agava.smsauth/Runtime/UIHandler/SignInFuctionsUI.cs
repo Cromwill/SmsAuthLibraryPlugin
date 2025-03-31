@@ -79,6 +79,7 @@ namespace Agava.Wink
 
                 _demoTimer.Construct(_winkAccessManager, seconds, _winkSignInHandlerUI);
                 _demoTimer.Start();
+                _demoTimer.CheckOutTime();
 #if UNITY_EDITOR || TEST
                 Debug.Log("Remote setted: " + response.body);
 #endif
@@ -87,6 +88,7 @@ namespace Agava.Wink
             {
                 _demoTimer.Construct(_winkAccessManager, 0, _winkSignInHandlerUI);
                 _demoTimer.Start();
+                _demoTimer.CheckOutTime();
                 Debug.LogError("Fail to recieve remote config: " + response.statusCode);
             }
         }

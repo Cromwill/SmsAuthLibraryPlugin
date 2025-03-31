@@ -26,6 +26,7 @@ namespace Agava.Wink
         private float _delay = 5f;
 
         public event Action TimerExpired;
+        public event Action FirstChecked;
 
         public bool Expired { get; private set; }
 
@@ -110,6 +111,16 @@ namespace Agava.Wink
                 UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
                 _second = 1;
             }
+        }
+
+        internal void CheckOutTime()
+        {
+            if (_savedDemoTime <= TimeSpan.Zero && WinkAccessManager.Instance.HasAccess == false)
+                Expired = true;
+
+            _savedDemoTime = _savedDemoTime.Subtract(TimeSpan.FromSeconds(1f));
+            UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+            FirstChecked?.Invoke();
         }
     }
 }

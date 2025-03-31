@@ -38,6 +38,7 @@ namespace Agava.Wink
         /// </summary>
         public static void SendSubscribeOfferWindow() => SendEvent("Subscribe Offer Window (Unsigned user)");
         public static void SendHelloWindow() => SendEvent("Hello Window (Signed user)");
+        public static void SendHelloWOAccessWindow() => SendEvent("Hello Window Without Subscription (Signed user)");
         public static void SendEnterPhoneWindow() => SendEvent("Enter Phone Window");
         public static void SendOnEnteredPhoneWindow() => SendEvent("On Entered Phone");
         public static void SendEnterOtpCodeWindow() => SendEvent("Enter Otp Code Window");

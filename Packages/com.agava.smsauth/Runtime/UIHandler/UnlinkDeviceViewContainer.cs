@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Agava.Wink
 {
@@ -28,7 +28,7 @@ namespace Agava.Wink
 
                 if (i < devicesList.Count)
                 {
-                    unlinkDeviceView.Initialize(devicesList[i]);
+                    unlinkDeviceView.Initialize(devicesList[i], i + 1);
                     unlinkDeviceView.DeviceRemoved += OnUnlinked;
                 }
             }
@@ -37,9 +37,7 @@ namespace Agava.Wink
         public void Clear()
         {
             while (Count > 0)
-            {
                 DestroyView(_unlinkDeviceViews.First());
-            }
         }
 
         private void OnUnlinked(UnlinkDeviceView unlinkDeviceView) => DeviceRemoved?.Invoke(unlinkDeviceView);

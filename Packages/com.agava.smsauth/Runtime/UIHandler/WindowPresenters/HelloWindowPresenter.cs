@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Scripting;
 using UnityEngine.UI;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {

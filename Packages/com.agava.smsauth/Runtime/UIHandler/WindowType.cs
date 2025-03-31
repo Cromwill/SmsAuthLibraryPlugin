@@ -22,5 +22,7 @@ namespace Agava.Wink
         Keyboard,
         OrientationСhange,
         SubscriptionCheck,
+        HelloWOAccess,
+        WinkInfo,
     }
 }
