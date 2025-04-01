@@ -28,7 +28,12 @@ namespace Agava.Wink
             _freeTrialButtons.ForEach(b => b.onClick.RemoveListener(FreeTrialPlay));
         }
 
-        public override void Enable() => EnableCanvasGroup(_canvasGroup);
+        public override void Enable()
+        {
+            EnableCanvasGroup(_canvasGroup);
+            AnalyticsWinkService.SendShowOfferWinkKidsWindow();
+        }
+
         public override void Disable() => DisableCanvasGroup(_canvasGroup);
 
         private void CloseButtonClick()

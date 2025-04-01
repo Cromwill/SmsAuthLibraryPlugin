@@ -37,6 +37,7 @@ namespace Agava.Wink
         {
             EnableCanvasGroup(_canvasGroup);
             _orientationСhangeAnimation.StartAnimation();
+            AnalyticsWinkService.SendChangeOrientationWindow();
 
             _waitPhoneRotateCoroutine = StartCoroutine(WaitRotatePhone());
         }
@@ -44,6 +45,7 @@ namespace Agava.Wink
         public override void Disable()
         {
             DisableCanvasGroup(_canvasGroup);
+            AnalyticsWinkService.SendPlayerRotateDevice();
 
             if (_waitPhoneRotateCoroutine != null)
             {

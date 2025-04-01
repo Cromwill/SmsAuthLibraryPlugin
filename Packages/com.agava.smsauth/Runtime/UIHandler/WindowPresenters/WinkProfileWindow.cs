@@ -28,6 +28,7 @@ namespace Agava.Wink
         {
             _imagesCarousel.Enable();
             EnableCanvasGroup(_canvasGroup);
+            AnalyticsWinkService.SendSubscriptionManagementWindow();
         }
 
         public override void Disable()

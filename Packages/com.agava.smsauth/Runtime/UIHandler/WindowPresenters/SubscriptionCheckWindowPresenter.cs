@@ -32,6 +32,8 @@ namespace Agava.Wink
         {
             _lastLoadTime = _loadImage.fillAmount = 0;
             EnableCanvasGroup(_canvasGroup);
+            AnalyticsWinkService.SendShowRedirectWindow();
+
             _coroutine = StartCoroutine(Loading());
         }
 

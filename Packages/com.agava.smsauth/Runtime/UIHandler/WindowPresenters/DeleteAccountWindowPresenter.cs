@@ -34,6 +34,7 @@ namespace Agava.Wink
         public void Enable(Action onDeleteAccount)
         {
             EnableCanvasGroup(_canvasGroup);
+            AnalyticsWinkService.SendAccountDeletionWindow();
             _onDeleteAccount = onDeleteAccount;
         }
 

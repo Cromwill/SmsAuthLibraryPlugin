@@ -1,6 +1,7 @@
 ﻿using System;
 using Io.AppMetrica;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -37,8 +38,8 @@ namespace Agava.Wink
         /// First time events
         /// </summary>
         public static void SendSubscribeOfferWindow() => SendEvent("Subscribe Offer Window (Unsigned user)");
-        public static void SendHelloWindow() => SendEvent("Hello Window (Signed user)");
-        public static void SendHelloWOAccessWindow() => SendEvent("Hello Window Without Subscription (Signed user)");
+        public static void SendHelloWindow() => SendEvent("Subscribe Profile Window With Subscribe");
+        public static void SendHelloWOAccessWindow() => SendEvent("Subscribe Profile Window Without Subscribe");
         public static void SendEnterPhoneWindow() => SendEvent("Enter Phone Window");
         public static void SendOnEnteredPhoneWindow() => SendEvent("On Entered Phone");
         public static void SendEnterOtpCodeWindow() => SendEvent("Enter Otp Code Window");
@@ -51,6 +52,17 @@ namespace Agava.Wink
         public static void SendDeleteWindow() => SendEvent("Delete Window");
         public static void SendCloseStartWindow() => SendEvent("Close Start Window");
         public static void SendHaveWinkButtonClick() => SendEvent("Click Have Wink Button");
+        public static void SendOfferWinkKidsButtonClick() => SendEvent("Clicked Offer Wink Kids");
+        public static void SendSubscribeWinkButtonClick() => SendEvent("Subscribe Wink");
+        public static void SendDeleteAccountButtonClick() => SendEvent("Delete Account Button");
+        public static void SendShowOfferWinkKidsWindow() => SendEvent("Show Offer Wink Kids");
+        public static void SendShowRedirectWindow() => SendEvent("Show Redirect Screen");
+        public static void SendChangeOrientationWindow() => SendEvent("Change Orientation Window");
+        public static void SendPlayerRotateDevice() => SendEvent("Player Rotate Device");
+        public static void SendAccountDeletionWindow() => SendEvent("Account Deletion Window");
+        public static void SendSubscriptionManagementWindow() => SendEvent("Subscription Management");
+        public static void SendSubscribeButtonClickOnSettings() => SendEvent("Subscribe Button On Settings");
+        public static void SendDeleteAccountButtonClickOnSetting() => SendEvent("Support Button On Settings");
 
         private static string GetJson(string name, string value)
         {

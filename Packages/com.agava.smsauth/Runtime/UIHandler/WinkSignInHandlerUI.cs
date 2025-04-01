@@ -31,8 +31,7 @@ namespace Agava.Wink
         [SerializeField] private Button[] _closeButtonsFromSettings;
         [SerializeField] private Button _closeWinkInfoButton;
         [Header("Analytics buttons")]
-        [SerializeField] private Button _closeButton;
-        [SerializeField] private Button _haveWinkButton;
+        [SerializeField] private AnalyticsSender _analyticsSender;
         [Header("Factory components")]
         [SerializeField] private UnlinkDeviceViewContainer _unlinkDeviceViewContainer;
         [Header("Placeholders")]
@@ -84,8 +83,6 @@ namespace Agava.Wink
             foreach (var button in _closeButtonsFromSettings)
                 button.onClick.RemoveListener(ContinueGame);
 
-            _closeButton.onClick.RemoveListener(OnCloseButtonClick);
-            _haveWinkButton.onClick.RemoveListener(OnHaveWinkButtonClick);
             _closeWinkInfoButton.onClick.RemoveListener(OnCloseWinkInfoButtonClick);
 
             _unlinkDeviceViewContainer.DeviceRemoved -= OnUnlinkButtonClicked;
@@ -163,8 +160,6 @@ namespace Agava.Wink
             foreach (var button in _closeButtonsFromSettings)
                 button.onClick.AddListener(ContinueGame);
 
-            _closeButton.onClick.AddListener(OnCloseButtonClick);
-            _haveWinkButton.onClick.AddListener(OnHaveWinkButtonClick);
             _closeWinkInfoButton.onClick.AddListener(OnCloseWinkInfoButtonClick);
 
             _unlinkDeviceViewContainer.DeviceRemoved += OnUnlinkButtonClicked;
@@ -211,6 +206,8 @@ namespace Agava.Wink
 
             if (_winkAccessManager.Authenficated)
             {
+                AnalyticsWinkService.SendSubscribeButtonClickOnSettings();
+
                 if (_winkAccessManager.HasAccess)
                     action = () => _notifyWindowHandler.OpenWindow(WindowType.WinkProfile);
                 else
@@ -246,6 +243,7 @@ namespace Agava.Wink
         {
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
+            AnalyticsWinkService.SendDeleteAccountButtonClickOnSetting();
 
             StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () =>
                 _notifyWindowHandler.OpenDeleteAccountWindow(onDeleteAccount: () =>
@@ -373,10 +371,6 @@ namespace Agava.Wink
         }
 
         private void OnTimerFirstChecked() => _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
-
-        private void OnCloseButtonClick() => AnalyticsWinkService.SendCloseStartWindow();
-
-        private void OnHaveWinkButtonClick() => AnalyticsWinkService.SendHaveWinkButtonClick();
 
         private void OnWebViewRedirected() => _notifyWindowHandler.OpenHelloWindow(_winkAccessManager.HasAccess);
 

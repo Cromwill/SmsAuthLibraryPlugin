@@ -2738,6 +2738,19 @@ MonoBehaviour:
   - {fileID: 6322452533329927605}
   - {fileID: 136720942150084642}
   _closeWinkInfoButton: {fileID: 2298335379617437546}
+  _analyticsSender:
+    _haveSubscriptionButtons:
+    - {fileID: 9137600746122601137}
+    - {fileID: 2393517562942920765}
+    _tryFreeTrialButtons:
+    - {fileID: 1109901570550285096}
+    - {fileID: 1545682590252118966}
+    _offerWinkKidsButtons:
+    - {fileID: 4307984748545197508}
+    - {fileID: 1757336133402805117}
+    - {fileID: 608002849347359697}
+    _subscribeWinkButton: {fileID: 5261758039096890516}
+    _deleteAccountButton: {fileID: 3314399902633102057}
   _closeButton: {fileID: 1407912331647851205}
   _haveWinkButton: {fileID: 2393517562942920765}
   _unlinkDeviceViewContainer: {fileID: 4665825494682002625}
