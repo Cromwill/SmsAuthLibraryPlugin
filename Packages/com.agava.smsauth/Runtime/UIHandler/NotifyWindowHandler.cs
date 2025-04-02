@@ -80,14 +80,9 @@ namespace Agava.Wink
             else
             {
                 if(_choosedFreeTrial)
-                {
-                    Debug.Log($"WINK PLUGIN: try wink with free trial");
                     _winkInfoWindow.Enable();
-                }
                 else
-                {
                     OpenHelloWindowWOAccess();
-                }
             }
         }
 
@@ -109,6 +104,14 @@ namespace Agava.Wink
         {
             _windows.ForEach(window => window.Disable());
             onClosed?.Invoke();
+        }
+
+        internal void FillTextFields()
+        {
+            _winkInfoWindow.FillRemoteTexts();
+            _helloWOAccessWindow.FillRemoteTexts();
+            _redirectToWebsiteWindow.FillRemoteTexts();
+            _demoTimerExpiredWindow.FillRemoteTexts();
         }
 
         internal bool HasOpenedWindow(WindowType type)

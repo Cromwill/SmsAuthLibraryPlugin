@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Scripting;
+using System.Collections.Generic;
 
 namespace Agava.Wink
 {
@@ -13,6 +14,7 @@ namespace Agava.Wink
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _signInButton;
         [SerializeField] private bool _closeOnYesClicked = true;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         public bool TryFreeWink = false;
 
@@ -41,6 +43,8 @@ namespace Agava.Wink
             DisableCanvasGroup(_canvasGroup);
             _imagesCarousel.Disable();
         }
+
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
 
         public void TryShowCloseButton(bool enabled) => _closeButton.gameObject.SetActive(enabled);
 

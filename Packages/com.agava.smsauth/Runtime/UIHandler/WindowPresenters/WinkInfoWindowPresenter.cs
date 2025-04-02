@@ -13,6 +13,7 @@ namespace Agava.Wink
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private List<Button> _freeTrialButtons;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         public event Action CloseButtonClicked;
         public event Action FreeTrialButtonClicked;
@@ -29,17 +30,12 @@ namespace Agava.Wink
             _freeTrialButtons.ForEach(b => b.onClick.RemoveListener(FreeTrialPlay));
         }
 
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
+
         public override void Enable()
         {
             EnableCanvasGroup(_canvasGroup);
             AnalyticsWinkService.SendShowOfferWinkKidsWindow();
-
-            if (SheetRemoteConfigs.Texts != null)
-            {
-                Dictionary<string, string> data = SheetRemoteConfigs.Texts.Data["subs_open"]; //Key raw
-                string text = data["Value1"]; //Key column
-                Debug.LogError("Test text - " + text);
-            }
         }
 
         public override void Disable() => DisableCanvasGroup(_canvasGroup);

@@ -196,7 +196,6 @@ namespace Agava.Wink
 
         public void OpenSubscriptionWindow()
         {
-            ScreenshotProtector.DisableScreenshots();
             _notifyWindowHandler.OpenWindow(WindowType.Redirect);
             AnalyticsWinkService.SendSubscribeOfferWindow();
         }
@@ -207,7 +206,6 @@ namespace Agava.Wink
 
         public void OnWinkButtonClick()
         {
-            ScreenshotProtector.DisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
 
@@ -234,8 +232,6 @@ namespace Agava.Wink
 
         private void ContinueGame()
         {
-            ScreenshotProtector.EnableScreenshots();
-
             if (_logInFromSettings)
             {
                 _logInFromSettings = false;
@@ -250,7 +246,6 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
-            ScreenshotProtector.DisableScreenshots();
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
             AnalyticsWinkService.SendDeleteAccountButtonClickOnSetting();
@@ -291,6 +286,11 @@ namespace Agava.Wink
                         }
                     });
                 });*/
+        }
+
+        public void SetRemoteTexts()
+        {
+            _notifyWindowHandler.FillTextFields();
         }
 
         private void OnSignInContinueClicked()
@@ -366,7 +366,6 @@ namespace Agava.Wink
         {
             Debug.Log($"WINK PLUGIN: Timer Expired");
             //_notifyWindowHandler.OpenDemoExpiredWindow(false);
-            ScreenshotProtector.DisableScreenshots();
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
 
             if (_winkAccessManager.Authenficated)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Scripting;
+using System.Collections.Generic;
 
 namespace Agava.Wink
 {
@@ -11,6 +12,7 @@ namespace Agava.Wink
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _subscribeButton;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         public override void Enable()
         {
@@ -27,6 +29,8 @@ namespace Agava.Wink
             _subscribeButton.onClick.RemoveListener(OnSubscribeButtonClick);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
         }
+
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
 
         public void TryShowCloseButton(bool enabled) => _closeButton.gameObject.SetActive(enabled);
 
