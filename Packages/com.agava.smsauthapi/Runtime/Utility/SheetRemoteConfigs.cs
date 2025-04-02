@@ -9,7 +9,7 @@ namespace SmsAuthAPI.Utility
 {
     public static class SheetRemoteConfigs
     {
-        private const char CellSeporator = ',';
+        private const char CellSeporator = '|';
 
         public static RemoteDataItems Texts { get; private set; }
 
