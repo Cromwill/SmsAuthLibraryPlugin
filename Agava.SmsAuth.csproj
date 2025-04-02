@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>UNITY_2022_3_20;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_ANDROID;TEXTCORE_1_0_OR_NEWER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;ENABLE_ETC_COMPRESSION;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;TEST;UNITYWEBVIEW_ANDROID_USES_CLEARTEXT_TRAFFIC;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2022_3_20;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_ANDROID;TEXTCORE_1_0_OR_NEWER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;ENABLE_ETC_COMPRESSION;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;TEST;UNITYWEBVIEW_ANDROID_USES_CLEARTEXT_TRAFFIC;DOTWEEN;WEBVIEW;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
@@ -64,46 +64,58 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WebView\WebViewPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\SceneLoader.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickableAgreementText.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\StickyScrollView\StickyScrollView.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\Carousel\ImagesCarousel.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\UnlinkDeviceViewContainer.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\SettingsButtons\WinkButton.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WinkSignInHandlerUI.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\KeyboardButton.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\EnterCodeShaking.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\IInternetChecker.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\UnlinkDeviceView.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\RemoteConfig.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\CustomKeyMapping.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\IWinkAccessManager.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\InputWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\SubscriptionSearchSystem.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\GameOrientation.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\CarouselItemAsset.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\WinkProfileWindow.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\DemoTimer.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\TweenAnimation\OrientationСhangeAnimation.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\DeleteAccountWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickableText.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\PhoneNumber.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\StickyScrollView\StickySystem.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\RemoteConfigText.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\TimespentService.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\InputFieldFormattings\CodeFormatter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\SubmitInputButton.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\IWebViewLoader.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\Utils\RaycastTarget.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\RequestHandler.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\HelloWOAccessWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowType.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\OrientationСhangeWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\DeeplinkHandler.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\InputFieldFormattings\PhoneNumberFormatting.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\AppMetricaActivator.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\XmlConfigText.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\ProcessWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\IBoot.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\LoadingProgressBar.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WebView.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\SignInWindowPresenter.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\Services\AnalyticsSender.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\AppMetricaInfo.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Boot.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\UnlinkWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\SettingsButtons\DeleteAccountButton.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\InputFieldFormattings\IInputFieldFormatting.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickablePrivacyText.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\StickyScrollView\StickyElement.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ClickableText\ClickableSupportText.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\URL\AppAuthenticator.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\ICoroutine.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\SignInFuctionsUI.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\NotifyWindowHandler.cs" />
@@ -117,6 +129,7 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\AnalyticsWinkService.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\WinkLocalization.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\HelloWindowPresenter.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\SubscriptionCheckWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\Utils\ListPool.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\IWinkSignInHandlerUI.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\Services\WinkAcceessHelper.cs" />
@@ -125,10 +138,12 @@
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\TextCell.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\WindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\TextTimer.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\URL\WinkWebViewURLHandler.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\PreloadService.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\NotifyWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\TouchKeyboardPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\LockedObject.cs" />
+    <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\WindowPresenters\WinkInfoWindowPresenter.cs" />
     <Compile Include="Packages\com.agava.smsauth\Runtime\UIHandler\ButtonTextSwap.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -517,6 +532,10 @@
       <HintPath>Packages\com.agava.adsappview\Runtime\Dlls\System.Text.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -543,6 +562,10 @@
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Packages\com.agava.smsauthapi\Runtime\Dlls\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IdentityModel.Tokens.Jwt">
