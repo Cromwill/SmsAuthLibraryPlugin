@@ -36,8 +36,8 @@ namespace Agava.Wink
 
             if (SheetRemoteConfigs.Texts != null)
             {
-                Dictionary<string, string> data = SheetRemoteConfigs.Texts.Data["Hiking"]; //Key raw
-                string text = data["Value"]; //Key column
+                Dictionary<string, string> data = SheetRemoteConfigs.Texts.Data["subs_open"]; //Key raw
+                string text = data["Value1"]; //Key column
                 Debug.LogError("Test text - " + text);
             }
         }
