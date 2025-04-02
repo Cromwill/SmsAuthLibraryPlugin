@@ -18,11 +18,6 @@ public class WebView : MonoBehaviour
         _loadingImage.gameObject.SetActive(false);
     }
 
-    public void Construct(IWebViewLoader webViewLoader)
-    {
-        _webViewLoader = webViewLoader;
-    }
-
     private void Start()
     {
         _webViewObject.Init(
@@ -117,8 +112,9 @@ public class WebView : MonoBehaviour
         _loadingImage.transform.localEulerAngles += new Vector3(0, 0, 2f);
     }*/
 
-    public void OpenURL(string url)
+    public void OpenURL(string url, IWebViewLoader webViewLoader)
     {
+        _webViewLoader = webViewLoader;
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
     }
 

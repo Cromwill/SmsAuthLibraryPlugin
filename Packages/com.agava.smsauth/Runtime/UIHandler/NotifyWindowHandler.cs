@@ -25,6 +25,7 @@ namespace Agava.Wink
         [SerializeField] private SubscriptionCheckWindowPresenter _subscriptionCheckWindow;
         [SerializeField] private HelloWOAccessWindowPresenter _helloWOAccessWindow;
         [SerializeField] private OrientationСhangeWindowPresenter _orientationСhangeWindow;
+        [SerializeField] private WebViewPresenter _webViewPresenter;
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
@@ -46,7 +47,7 @@ namespace Agava.Wink
 
             _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
-            WebViewPresenter.Construct(this);
+            _webViewPresenter.Construct(this);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;

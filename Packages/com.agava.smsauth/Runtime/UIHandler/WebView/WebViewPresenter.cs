@@ -32,7 +32,7 @@ namespace Agava.Wink
             StartCoroutine(Initialize());
         }
 
-        public static void Construct(IWebViewLoader webViewLoader)
+        public void Construct(IWebViewLoader webViewLoader)
         {
             _webViewLoader = webViewLoader;
         }
@@ -57,7 +57,6 @@ namespace Agava.Wink
             else
             {
                 _webView = Instantiate(_webViewPrefab, transform);
-                _webView.Construct(_webViewLoader);
                 yield return new WaitUntil(() => _webView.Initialized);
             }
 #endif
@@ -86,7 +85,7 @@ namespace Agava.Wink
             }
 
             instance.Enable();
-            instance._webView.OpenURL(url);
+            instance._webView.OpenURL(url, _webViewLoader);
 #endif
         }
 
