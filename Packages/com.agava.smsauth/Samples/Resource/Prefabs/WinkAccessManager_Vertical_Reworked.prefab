@@ -2696,6 +2696,7 @@ MonoBehaviour:
     _subscriptionCheckWindow: {fileID: 80946910351918556}
     _helloWOAccessWindow: {fileID: 7073644282065015737}
     "_orientation\u0421hangeWindow": {fileID: 6394307031704653822}
+    _webViewPresenter: {fileID: 1055951554191058541}
     _windows:
     - {fileID: 3912776194863699134}
     - {fileID: 72168045003755775}
@@ -2734,6 +2735,7 @@ MonoBehaviour:
   - {fileID: 5261758039096890516}
   _closeButtonsFromSettings:
   - {fileID: 445661722451534889}
+  - {fileID: 3170610624087232288}
   - {fileID: 3529987684697177626}
   - {fileID: 6322452533329927605}
   - {fileID: 136720942150084642}
@@ -2751,8 +2753,6 @@ MonoBehaviour:
     - {fileID: 608002849347359697}
     _subscribeWinkButton: {fileID: 5261758039096890516}
     _deleteAccountButton: {fileID: 3314399902633102057}
-  _closeButton: {fileID: 1407912331647851205}
-  _haveWinkButton: {fileID: 2393517562942920765}
   _unlinkDeviceViewContainer: {fileID: 4665825494682002625}
   _phoneNumberPlaceholders:
   - {fileID: 7848272830117409820}
@@ -12621,7 +12621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5687978093471766797
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12662,7 +12662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -18738,7 +18738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5755157220501863556
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23490,7 +23490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8898544866961219214
 RectTransform:
   m_ObjectHideFlags: 0

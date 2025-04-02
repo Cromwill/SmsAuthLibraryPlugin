@@ -39,7 +39,7 @@ namespace Agava.Wink
 
         private void OnProfileButtonClicked()
         {
-            WebViewPresenter.ShowWebView(Links.Subscription);
+            Application.OpenURL(Links.Subscription);
             Disable();
         }
     }

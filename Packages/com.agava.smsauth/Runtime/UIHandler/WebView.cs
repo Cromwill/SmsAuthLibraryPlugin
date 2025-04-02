@@ -1,3 +1,5 @@
+using System.Collections;
+using Agava.Wink;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +9,18 @@ public class WebView : MonoBehaviour
     [SerializeField] private RectTransform _container;
     [SerializeField] private Image _loadingImage;
 
+    private IWebViewLoader _webViewLoader;
+
     public bool Initialized => _webViewObject.IsInitialized();
 
     private void Awake()
     {
-        
+        _loadingImage.gameObject.SetActive(false);
+    }
+
+    public void Construct(IWebViewLoader webViewLoader)
+    {
+        _webViewLoader = webViewLoader;
     }
 
     private void Start()
@@ -103,10 +112,10 @@ public class WebView : MonoBehaviour
         _webViewObject.SetVisibility(false);
     }
 
-    private void Update()
+    /*private void Update()
     {
         _loadingImage.transform.localEulerAngles += new Vector3(0, 0, 2f);
-    }
+    }*/
 
     public void OpenURL(string url)
     {
@@ -125,6 +134,13 @@ public class WebView : MonoBehaviour
 
     private void OnWebLoad()
     {
-        _webViewObject.SetVisibility(true);
+        StartCoroutine(Open());
+
+        IEnumerator Open()
+        {
+            yield return new WaitUntil(() => _webViewLoader.Loaded);
+
+            _webViewObject.SetVisibility(true);
+        }
     }
 }

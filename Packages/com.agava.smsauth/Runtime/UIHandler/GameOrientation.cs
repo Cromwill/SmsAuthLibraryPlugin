@@ -14,6 +14,9 @@ namespace Agava.Wink
 
         public bool NeedChangeOrientation => PluginOrientation != _appOrientation;
         public bool ChangedToLandscape => Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight;
+        public float DeltaToLandscapeLeft { get; private set; } = -0.5f;
+        public float DeltaToLandscapeRight { get; private set; } = 0.5f;
+        public float CheckTime { get; private set; } = 0.1f;
 
         public void SetLandscapeOrientation()
         {
@@ -24,9 +27,10 @@ namespace Agava.Wink
 
         public void SetPortraitOrientation()
         {
-            Screen.orientation = ScreenOrientation.AutoRotation;
+            Screen.orientation = ScreenOrientation.Portrait;
             Screen.autorotateToPortrait = Screen.autorotateToPortraitUpsideDown = true;
             Screen.autorotateToLandscapeLeft = Screen.autorotateToLandscapeRight = false;
+            Screen.orientation = ScreenOrientation.AutoRotation;
         }
 
         public void SaveGameOrientation() => _screenOrientation = Screen.orientation;

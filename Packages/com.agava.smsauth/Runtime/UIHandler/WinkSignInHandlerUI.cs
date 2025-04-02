@@ -15,10 +15,12 @@ namespace Agava.Wink
     public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine
     {
         private const float RedirectWindowDelay = 1.0f;
-        private const float ChangeOrientationDelay = 0.5f;
+        private const float ChangeOrientationDelay = 1.0f;
 
         [SerializeField] private DemoTimer _demoTimer;
         [SerializeField] private NotifyWindowHandler _notifyWindowHandler;
+        [Header("App name")]
+        [SerializeField] private WinkWebViewURLHandler _webViewURLHandler;
         [Header("UI Input")]
         [SerializeField] private PhoneNumberFormatting _numbersInputField;
         [Header("UI Buttons")]
@@ -53,7 +55,10 @@ namespace Agava.Wink
 
         private void Awake()
         {
-            _notifyWindowHandler.Construct(_gameOrientation);
+            if (string.IsNullOrEmpty(_webViewURLHandler.CheckAvailabilityURL()))
+                throw new Exception("There is no link URL for the app!");
+
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -316,12 +321,11 @@ namespace Agava.Wink
 
         private void OnSignInSuccessfully(bool hasAccess)
         {
-            Debug.Log($"WINK PLUGIN: open OnSignInSuccessfully with hasAcces = {hasAccess}");
-
             _numbersInputField.Clear();
             _signInFuctionsUI.OnSignInSuccesfully(hasAccess);
 
             SetPhone();
+            _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
             _notifyWindowHandler.OpenHelloWindow(hasAccess);
 

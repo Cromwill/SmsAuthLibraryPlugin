@@ -35,7 +35,7 @@ namespace Agava.Wink
 
             if (selectedLink == _linkId)
             {
-                WebViewPresenter.ShowWebView(_link);
+                WebViewPresenter.OpenURL(_link);
                 _onClick?.Invoke();
             }
         }

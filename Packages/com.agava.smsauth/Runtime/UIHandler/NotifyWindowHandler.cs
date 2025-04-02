@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Agava.Wink
 {
     [Serializable, Preserve]
-    internal class NotifyWindowHandler
+    internal class NotifyWindowHandler : IWebViewLoader
     {
         [Header("UI Windows")]
         [SerializeField] private SignInWindowPresenter _signInWindow;
@@ -28,6 +28,7 @@ namespace Agava.Wink
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
+        private WinkWebViewURLHandler _winkWebViewURLHandler;
         private bool _subscriptionChecked = false;
 
         private bool _choosedFreeTrial => (_redirectToWebsiteWindow.TryFreeWink || _demoTimerExpiredWindow.TryFreeWink) && _subscriptionChecked == false;
@@ -35,19 +36,25 @@ namespace Agava.Wink
         public bool IsAnyWindowEnabled => _windows.Any(window => window.Enabled);
         public bool ZeroSecondsCodeTimer => _enterCodeWindow.ZeroSeconds;
         public bool EnterCodeWindowInitialized => _enterCodeWindow.Initialized;
+        public bool Loaded { get; private set; } = false;
 
         public event Action WebViewRedirected;
 
-        internal void Construct(GameOrientation gameOrientation)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler)
         {
+            _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
+
             _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
+            WebViewPresenter.Construct(this);
 
+            _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;
         }
 
         internal void Dispose()
         {
+            _subscriptionCheckWindow.LoadingStarted -= OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted -= OnLoadingCompleted;
         }
 
@@ -109,12 +116,19 @@ namespace Agava.Wink
         private WindowPresenter GetWindowByType(WindowType type)
             => _windows.FirstOrDefault(window => window.Type == type);
 
+        private void OnLoadingStarted()
+        {
+            Loaded = false;
+            WebViewPresenter.ShowWebView(_winkWebViewURLHandler.GetURL());
+        }
+
         private void OnLoadingCompleted()
         {
-            WebViewPresenter.ShowWebView(Links.Subscription);
+            //WebViewPresenter.ShowWebView(Links.Subscription);
             _subscriptionChecked = true;
-            WebViewRedirected?.Invoke();
-            _subscriptionCheckWindow.Disable();
+            Loaded = true;
+            /*WebViewRedirected?.Invoke();
+            _subscriptionCheckWindow.Disable();*/
         }
     }
 }

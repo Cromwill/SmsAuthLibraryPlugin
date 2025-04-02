@@ -21,6 +21,7 @@ namespace Agava.Wink
         private float _lastLoadTime = 0;
         private Coroutine _coroutine = null;
 
+        public event Action LoadingStarted;
         public event Action LoadingCompleted;
 
         public void Construct(IInternetChecker internetChecker)
@@ -30,6 +31,7 @@ namespace Agava.Wink
 
         public override void Enable()
         {
+            LoadingStarted?.Invoke();
             _lastLoadTime = _loadImage.fillAmount = 0;
             EnableCanvasGroup(_canvasGroup);
             AnalyticsWinkService.SendShowRedirectWindow();
