@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.Scripting;
-using System.Collections.Generic;
 using SmsAuthAPI.Program;
-using System.Threading.Tasks;
 using System.Collections;
+using UnityEngine.Scripting;
+using System.Threading.Tasks;
 
 namespace Agava.Wink
 {
@@ -20,6 +19,7 @@ namespace Agava.Wink
 
         private string _phoneNumber = string.Empty;
         private string _correctLink = string.Empty;
+        private bool _inited = false;
 
         public IEnumerator Construct()
         {
@@ -34,6 +34,8 @@ namespace Agava.Wink
                 _correctLink = result.Replace($"{{{AppAuthenticatorPattern}}}", _appAuthenticator.ToString());
             else
                 _correctLink = DefaultLink.Replace($"{{{AppAuthenticatorPattern}}}", _appAuthenticator.ToString());
+
+            _inited = true;
         }
 
         public void SetPhone(string phoneNumber) => _phoneNumber = phoneNumber;
@@ -46,6 +48,12 @@ namespace Agava.Wink
 
         public string GetURL()
         {
+            if(_inited == false)
+            {
+                _inited = true;
+                _correctLink = DefaultLink.Replace($"{{{AppAuthenticatorPattern}}}", _appAuthenticator.ToString());
+            }
+
             string url = _correctLink.Replace($"{{{PlayerPhonePattern}}}", _phoneNumber);
 
             return url;
