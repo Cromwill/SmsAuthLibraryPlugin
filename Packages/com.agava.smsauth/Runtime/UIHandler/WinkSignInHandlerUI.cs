@@ -55,9 +55,9 @@ namespace Agava.Wink
 
         private void Awake()
         {
-            if (string.IsNullOrEmpty(_webViewURLHandler.CheckAvailabilityURL()))
-                throw new Exception("There is no link URL for the app!");
+            StartCoroutine(_webViewURLHandler.Construct());
 
+            _webViewURLHandler.CheckAvailabilityURL();
             _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
