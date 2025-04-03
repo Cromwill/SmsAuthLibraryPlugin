@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Agava.Wink;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class WebView : MonoBehaviour
 
     public bool Initialized => _webViewObject.IsInitialized();
 
+    public event Action<string> WebPageEventReceived;
+
     private void Awake()
     {
         _loadingImage.gameObject.SetActive(false);
@@ -23,7 +26,7 @@ public class WebView : MonoBehaviour
         _webViewObject.Init(
             cb: (msg) =>
             {
-                Debug.Log(string.Format("CallFromJS[{0}]", msg));
+                WebPageEventReceived?.Invoke(msg);
             },
             err: (msg) =>
             {
@@ -48,7 +51,7 @@ public class WebView : MonoBehaviour
             ld: (msg) =>
             {
                 OnWebLoad();
-                Debug.Log(string.Format("CallOnLoaded[{0}]", msg));
+
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS
                 // NOTE: the following js definition is required only for UIWebView; if
                 // enabledWKWebView is true and runtime has WKWebView, Unity.call is defined
@@ -83,12 +86,12 @@ public class WebView : MonoBehaviour
 #else
                 var js = "";
 #endif
-                _webViewObject.EvaluateJS(js + @"Unity.call('ua=' + navigator.userAgent)");
+                _webViewObject.EvaluateJS(js + "window.addEventListener(\"testevent\", (e) => Unity.call(e.type));");
             },
             transparent: false,
             zoom: true,
             ua: "wink game player",
-            radius: 22,
+            radius: 0,
             androidForceDarkMode: 0,
             enableWKWebView: true,
             wkContentMode: 0,
@@ -116,6 +119,7 @@ public class WebView : MonoBehaviour
     {
         _webViewLoader = webViewLoader;
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
+        _webViewObject.EvaluateJS("window.send(\"testevent\");");
     }
 
     public void ShowPage(string cachePagePath)

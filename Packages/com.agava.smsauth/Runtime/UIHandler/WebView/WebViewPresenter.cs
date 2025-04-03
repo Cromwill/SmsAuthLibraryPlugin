@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 namespace Agava.Wink
 {
@@ -14,6 +15,7 @@ namespace Agava.Wink
         private static IWebViewLoader _webViewLoader;
 
         private WebView _webView;
+        private Action<string> _onEventReceived;
 
         public bool Initialized { get; private set; } = false;
 
@@ -32,9 +34,10 @@ namespace Agava.Wink
             StartCoroutine(Initialize());
         }
 
-        public void Construct(IWebViewLoader webViewLoader)
+        public void Construct(IWebViewLoader webViewLoader, Action<string> onEventReceived)
         {
             _webViewLoader = webViewLoader;
+            _onEventReceived = onEventReceived;
         }
 
         private void OnEnable()
@@ -47,6 +50,11 @@ namespace Agava.Wink
             _button.onClick.RemoveListener(OnBackButtonClick);
         }
 
+        private void OnDestroy()
+        {
+            _webView.WebPageEventReceived -= _onEventReceived;
+        }
+
         private IEnumerator Initialize()
         {
 #if (UNITY_ANDROID || UNITY_IOS) && WEBVIEW
@@ -57,6 +65,7 @@ namespace Agava.Wink
             else
             {
                 _webView = Instantiate(_webViewPrefab, transform);
+                _webView.WebPageEventReceived += _onEventReceived;
                 yield return new WaitUntil(() => _webView.Initialized);
             }
 #endif
