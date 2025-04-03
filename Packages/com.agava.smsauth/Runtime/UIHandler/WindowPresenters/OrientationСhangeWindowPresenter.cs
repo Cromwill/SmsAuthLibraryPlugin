@@ -53,20 +53,20 @@ namespace Agava.Wink
             yield return new WaitForSeconds(2);
 #else
             while(_gameOrientation.ChangedToLandscape == false)
-        {
-            if(Input.acceleration.x < _gameOrientation.DeltaToLandscapeLeft)
             {
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-                Screen.orientation = ScreenOrientation.AutoRotation;
-            }
-            else if(Input.acceleration.x > _gameOrientation.DeltaToLandscapeRight)
-            {
-                Screen.orientation = ScreenOrientation.LandscapeRight;
-                Screen.orientation = ScreenOrientation.AutoRotation;
-            }
+                if(Input.acceleration.x < _gameOrientation.DeltaToLandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    Screen.orientation = ScreenOrientation.AutoRotation;
+                }
+                else if(Input.acceleration.x > _gameOrientation.DeltaToLandscapeRight)
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeRight;
+                    Screen.orientation = ScreenOrientation.AutoRotation;
+                }
 
-            yield return new WaitForSeconds(_gameOrientation.CheckTime);
-        }
+                yield return new WaitForSeconds(_gameOrientation.CheckTime);
+            }
 #endif
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 

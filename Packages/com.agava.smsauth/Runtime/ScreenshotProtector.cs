@@ -22,6 +22,7 @@ namespace Agava.Wink
 
         private static void SetSecureFlag(bool protectScreen)
         {
+#if UNITY_EDITOR
             Locked = protectScreen;
             AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
@@ -34,6 +35,7 @@ namespace Agava.Wink
                 window.Call("setFlags", flagSecure, flagSecure);
             else
                 window.Call("clearFlags", flagSecure);
+#endif
         }
     }
 }
