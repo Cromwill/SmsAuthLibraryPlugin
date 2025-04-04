@@ -41,11 +41,11 @@ namespace Agava.Wink
 
         public event Action WebViewRedirected;
 
-        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, ScreenshotProtector screenshotProtector)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler)
         {
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
 
-            _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow, screenshotProtector);
+            _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this);
 

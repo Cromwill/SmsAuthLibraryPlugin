@@ -11,16 +11,14 @@ namespace Agava.Wink
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private OrientationСhangeAnimation _orientationСhangeAnimation;
 
-        private ScreenshotProtector _screenshotProtector;
         private IInternetChecker _internetChecker;
         private GameOrientation _gameOrientation;
         private Coroutine _waitPhoneRotateCoroutine;
 
-        public void Construct(GameOrientation gameOrientation, IInternetChecker internetChecker, ScreenshotProtector screenshotProtector)
+        public void Construct(GameOrientation gameOrientation, IInternetChecker internetChecker)
         {
             _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
             _internetChecker = internetChecker ?? throw new ArgumentNullException(nameof(internetChecker));
-            _screenshotProtector = screenshotProtector ?? throw new ArgumentNullException(nameof(screenshotProtector));
 
             _orientationСhangeAnimation.Construct();
         }
@@ -46,7 +44,6 @@ namespace Agava.Wink
             }
 
             _orientationСhangeAnimation.StopAnimation();
-            _screenshotProtector.EnableScreenshots();
         }
 
         private IEnumerator WaitRotatePhone()

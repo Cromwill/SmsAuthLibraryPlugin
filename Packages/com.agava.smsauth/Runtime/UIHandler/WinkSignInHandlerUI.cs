@@ -59,7 +59,7 @@ namespace Agava.Wink
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _screenshotProtector);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -191,7 +191,9 @@ namespace Agava.Wink
 
         private void OpenChangeOrientationWindow()
         {
-            if(_gameOrientation.NeedChangeOrientation)
+            _screenshotProtector.EnableScreenshots();
+
+            if (_gameOrientation.NeedChangeOrientation)
                 _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
         }
 
