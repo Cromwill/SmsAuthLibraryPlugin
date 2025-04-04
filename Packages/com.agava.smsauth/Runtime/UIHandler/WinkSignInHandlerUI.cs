@@ -252,6 +252,7 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
+            _screenshotProtector.DisableScreenshots();
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
             AnalyticsWinkService.SendDeleteAccountButtonClickOnSetting();
