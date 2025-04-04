@@ -46,6 +46,7 @@ namespace Agava.Wink
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
         private bool _logInFromSettings = false;
+        private ScreenshotProtector _screenshotProtector = new ScreenshotProtector();
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 
@@ -58,7 +59,7 @@ namespace Agava.Wink
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _screenshotProtector);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -196,6 +197,7 @@ namespace Agava.Wink
 
         public void OpenSubscriptionWindow()
         {
+            _screenshotProtector.DisableScreenshots();
             _notifyWindowHandler.OpenWindow(WindowType.Redirect);
             AnalyticsWinkService.SendSubscribeOfferWindow();
         }
@@ -206,6 +208,7 @@ namespace Agava.Wink
 
         public void OnWinkButtonClick()
         {
+            _screenshotProtector.DisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
 
@@ -234,6 +237,7 @@ namespace Agava.Wink
         {
             if (_logInFromSettings)
             {
+                _screenshotProtector.EnableScreenshots();
                 _logInFromSettings = false;
 
                 if (_gameOrientation.NeedChangeOrientation)
@@ -377,6 +381,7 @@ namespace Agava.Wink
             {
                 _notifyWindowHandler.OpenDemoExpiredWindow(false);
             }
+            _screenshotProtector.DisableScreenshots();
         }
 
         private void OnTimerFirstChecked() => _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
