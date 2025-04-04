@@ -62,7 +62,8 @@ namespace Agava.Wink
         public static void SendAccountDeletionWindow() => SendEvent("Account Deletion Window");
         public static void SendSubscriptionManagementWindow() => SendEvent("Subscription Management");
         public static void SendSubscribeButtonClickOnSettings() => SendEvent("Subscribe Button On Settings");
-        public static void SendDeleteAccountButtonClickOnSetting() => SendEvent("Support Button On Settings");
+        public static void SendDeleteAccountButtonClickOnSetting() => SendEvent("Delete Account Button On Settings");
+        public static void SendSupportButtonClickOnSetting() => SendEvent("Support Button On Settings");
 
         private static string GetJson(string name, string value)
         {
