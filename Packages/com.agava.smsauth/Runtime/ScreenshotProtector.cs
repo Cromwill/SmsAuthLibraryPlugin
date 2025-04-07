@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -7,6 +8,15 @@ namespace Agava.Wink
     public class ScreenshotProtector
     {
         private bool _screenshotsDisabled = false;
+
+#if UNITY_IOS && !UNITY_EDITOR
+ [DllImport("__Internal")]
+    private static extern void disableScreenshots();
+
+    [DllImport("__Internal")]
+    private static extern void enableScreenshots();
+#endif
+
 
         public void TryDisableScreenshots()
         {
@@ -24,6 +34,8 @@ namespace Agava.Wink
                 AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
                 myActivityHelper.CallStatic("SetSecureFlag", currentActivity);
             }
+#elif UNITY_IOS
+            disableScreenshots();
 #endif
         }
 
@@ -43,6 +55,8 @@ namespace Agava.Wink
                 AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
                 myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
             }
+#elif UNITY_IOS
+    enableScreenshots();
 #endif
         }
     }
