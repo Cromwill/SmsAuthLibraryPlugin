@@ -10,12 +10,13 @@ namespace AdsAppView.Program
 
         private void OnValidate()
         {
+#if UNITY_EDITOR
             PlayerSettings.bundleVersion = Version;
-
 #if UNITY_ANDROID
             PlayerSettings.Android.bundleVersionCode = BundleId;
 #elif UNITY_IOS
             PlayerSettings.iOS.buildNumber = BundleId.ToString();
+#endif
 #endif
         }
     }
