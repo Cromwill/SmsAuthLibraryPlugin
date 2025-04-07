@@ -27,7 +27,7 @@ namespace Agava.Wink
 
 #if UNITY_EDITOR
             Debug.Log("SCREEN PROTECTOR: disable screenshots possibility!");
-#elif UNITY_EDITOR == false && UNITY_ANDROID
+#elif UNITY_ANDROID
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
                 AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
@@ -35,8 +35,11 @@ namespace Agava.Wink
                 myActivityHelper.CallStatic("SetSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
-            disableScreenshots();
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+                disableScreenshots();
 #endif
+
+
         }
 
         public void TryEnableScreenshots()
@@ -48,7 +51,7 @@ namespace Agava.Wink
 
 #if UNITY_EDITOR
             Debug.Log("SCREEN PROTECTOR: enable screenshots possibility!");
-#elif UNITY_EDITOR == false && UNITY_ANDROID
+#elif UNITY_ANDROID
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
                 AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
@@ -56,7 +59,8 @@ namespace Agava.Wink
                 myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
-    enableScreenshots();
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+                enableScreenshots();
 #endif
         }
     }
