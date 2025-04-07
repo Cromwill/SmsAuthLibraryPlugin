@@ -6,10 +6,17 @@ namespace Agava.Wink
     [Preserve]
     public class ScreenshotProtector
     {
-        public void DisableScreenshots()
+        private bool _screenshotsDisabled = false;
+
+        public void TryDisableScreenshots()
         {
+            if (_screenshotsDisabled)
+                return;
+
+            _screenshotsDisabled = true;
+
 #if UNITY_EDITOR
-            Debug.Log("WINK PLUGIN: disable screenshots possibility!");
+            Debug.Log("SCREEN PROTECTOR: disable screenshots possibility!");
 #elif UNITY_EDITOR == false && UNITY_ANDROID
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
@@ -20,10 +27,15 @@ namespace Agava.Wink
 #endif
         }
 
-        public void EnableScreenshots()
+        public void TryEnableScreenshots()
         {
+            if (_screenshotsDisabled == false)
+                return;
+
+            _screenshotsDisabled = false;
+
 #if UNITY_EDITOR
-            Debug.Log("WINK PLUGIN: enable screenshots possibility!");
+            Debug.Log("SCREEN PROTECTOR: enable screenshots possibility!");
 #elif UNITY_EDITOR == false && UNITY_ANDROID
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {

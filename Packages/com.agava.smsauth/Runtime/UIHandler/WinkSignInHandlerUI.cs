@@ -191,7 +191,7 @@ namespace Agava.Wink
 
         private void OpenChangeOrientationWindow()
         {
-            _screenshotProtector.EnableScreenshots();
+            _screenshotProtector.TryEnableScreenshots();
 
             if (_gameOrientation.NeedChangeOrientation)
                 _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
@@ -199,7 +199,7 @@ namespace Agava.Wink
 
         public void OpenSubscriptionWindow()
         {
-            _screenshotProtector.DisableScreenshots();
+            _screenshotProtector.TryDisableScreenshots();
             _notifyWindowHandler.OpenWindow(WindowType.Redirect);
             AnalyticsWinkService.SendSubscribeOfferWindow();
         }
@@ -210,7 +210,7 @@ namespace Agava.Wink
 
         public void OnWinkButtonClick()
         {
-            _screenshotProtector.DisableScreenshots();
+            _screenshotProtector.TryDisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
 
@@ -239,7 +239,7 @@ namespace Agava.Wink
         {
             if (_logInFromSettings)
             {
-                _screenshotProtector.EnableScreenshots();
+                _screenshotProtector.TryEnableScreenshots();
                 _logInFromSettings = false;
 
                 if (_gameOrientation.NeedChangeOrientation)
@@ -252,7 +252,7 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
-            _screenshotProtector.DisableScreenshots();
+            _screenshotProtector.TryDisableScreenshots();
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
             AnalyticsWinkService.SendDeleteAccountButtonClickOnSetting();
@@ -326,13 +326,13 @@ namespace Agava.Wink
 
         private void OnEnterCodeContinueClicked()
         {
-            Debug.Log($"WINK PLUGIN: code continue button clicked");
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
             _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
         }
 
         private void OnSignInSuccessfully(bool hasAccess)
         {
+            _screenshotProtector.TryDisableScreenshots();
             _numbersInputField.Clear();
             _signInFuctionsUI.OnSignInSuccesfully(hasAccess);
 
@@ -384,7 +384,8 @@ namespace Agava.Wink
             {
                 _notifyWindowHandler.OpenDemoExpiredWindow(false);
             }
-            _screenshotProtector.DisableScreenshots();
+
+            _screenshotProtector.TryDisableScreenshots();
         }
 
         private void OnTimerFirstChecked() => _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
