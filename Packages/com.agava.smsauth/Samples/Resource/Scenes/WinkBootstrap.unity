@@ -485,6 +485,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 886438528}
     - target: {fileID: 4653795427995862268, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
+      propertyPath: _buildVersionHolder
+      value: 
+      objectReference: {fileID: 1586208944}
+    - target: {fileID: 4653795427995862268, guid: 280c640260c192445a69d7a6fe1d6930, type: 3}
       propertyPath: _loadingProgressBar
       value: 
       objectReference: {fileID: 9019019678692207284}
@@ -718,6 +722,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translationName: Loading...
   FallbackText: Loading...
+--- !u!1 &1586208943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586208945}
+  - component: {fileID: 1586208944}
+  m_Layer: 0
+  m_Name: BuildVersionHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &1586208944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586208943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24019c1c870fb4b45aafee328255dbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Version>k__BackingField: 1.0
+  <BundleId>k__BackingField: 1
+--- !u!4 &1586208945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586208943}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1849560778
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +853,10 @@ PrefabInstance:
       propertyPath: _storeName
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5260555599139361273, guid: 4b8dd4b63bb66ac4fac6ef3d72ea96a3, type: 3}
+      propertyPath: _buildVersionHolder
+      value: 
+      objectReference: {fileID: 1586208944}
     - target: {fileID: 7275052375419752052, guid: 4b8dd4b63bb66ac4fac6ef3d72ea96a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2421,3 +2475,4 @@ SceneRoots:
   - {fileID: 3139859059218235926}
   - {fileID: 7596981082626321440}
   - {fileID: 2145202748757455806}
+  - {fileID: 1586208945}
