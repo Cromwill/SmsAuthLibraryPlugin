@@ -102,6 +102,7 @@ namespace Agava.Wink
             _demoTimer.Dispose();
             _notifyWindowHandler.WebViewRedirected -= OnWebViewRedirected;
             _notifyWindowHandler.Dispose();
+            _analyticsSender.Dispose();
         }
 
         public IEnumerator Initialize()
@@ -146,6 +147,7 @@ namespace Agava.Wink
 
             _signInFuctionsUI = new(_notifyWindowHandler, _demoTimer, winkAccessManager, this, this);
             _winkAccessManager = winkAccessManager;
+            _analyticsSender.Construct();
 
             _enterCodeContinueButton.onClick.AddListener(OnEnterCodeContinueClicked);
             _signInContinueButton.onClick.AddListener(OnSignInContinueClicked);

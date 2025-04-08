@@ -52,7 +52,6 @@ namespace Agava.Wink
         {
             TryFreeWink = true;
             //WebViewPresenter.ShowWebView(Links.Subscription);     // TODO: remove after finish work with plugin
-            AnalyticsWinkService.SendPayWallRedirect();
 
             if (_closeOnYesClicked)
                 Disable();
