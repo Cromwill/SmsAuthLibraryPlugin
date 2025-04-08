@@ -8,7 +8,6 @@ namespace Agava.Wink
 {
     public class UnlinkDeviceViewContainer : MonoBehaviour
     {
-        private const string NoEmptyDevices = "Свободных мест нет";
         private const int MaxCount = 5;
 
         [SerializeField] private UnlinkDeviceView _unlinkDeviceViewTemplate;

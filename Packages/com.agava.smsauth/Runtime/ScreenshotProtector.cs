@@ -38,8 +38,6 @@ namespace Agava.Wink
             if (Application.platform == RuntimePlatform.IPhonePlayer)
                 disableScreenshots();
 #endif
-
-
         }
 
         public void TryEnableScreenshots()
