@@ -34,8 +34,10 @@ namespace Agava.Wink
 
         public override void Disable()
         {
+            if(Enabled)
+                AnalyticsWinkService.SendPlayerRotateDevice();
+
             DisableCanvasGroup(_canvasGroup);
-            AnalyticsWinkService.SendPlayerRotateDevice();
 
             if (_waitPhoneRotateCoroutine != null)
             {

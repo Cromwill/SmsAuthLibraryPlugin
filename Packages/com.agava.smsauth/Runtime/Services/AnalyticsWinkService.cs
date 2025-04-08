@@ -61,6 +61,7 @@ namespace Agava.Wink
         public static void SendPlayerRotateDevice() => SendEvent("Player Rotate Device");
         public static void SendAccountDeletionWindow() => SendEvent("Account Deletion Window");
         public static void SendSubscriptionManagementWindow() => SendEvent("Subscription Management");
+        public static void SendSubscriptionManagementButtonClick() => SendEvent("Click Subscription Management Button");
         public static void SendSubscribeButtonClickOnSettings() => SendEvent("Subscribe Button On Settings");
         public static void SendDeleteAccountButtonClickOnSetting() => SendEvent("Delete Account Button On Settings");
         public static void SendSupportButtonClickOnSetting() => SendEvent("Support Button On Settings");
@@ -107,6 +108,7 @@ namespace Agava.Wink
 
         private static void SendEvent(string eventName)
         {
+            Debug.Log($"ANALYTICS: event - {eventName}");
             AppMetrica.ReportEvent(eventName);
         }
 
