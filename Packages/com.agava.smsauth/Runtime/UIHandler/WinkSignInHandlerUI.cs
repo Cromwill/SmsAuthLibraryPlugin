@@ -259,6 +259,9 @@ namespace Agava.Wink
             _gameOrientation.SaveGameOrientation();
             AnalyticsWinkService.SendDeleteAccountButtonClickOnSetting();
 
+            if (_gameOrientation.NeedChangeOrientation)
+                _gameOrientation.SetPortraitOrientation();
+
             StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () =>
                 _notifyWindowHandler.OpenDeleteAccountWindow(onDeleteAccount: () =>
                     {
@@ -273,9 +276,6 @@ namespace Agava.Wink
                                 ContinueGame();
                         });
                     })));
-
-            if (_gameOrientation.NeedChangeOrientation)
-                _gameOrientation.SetPortraitOrientation();
 
             /*_notifyWindowHandler.OpenDeleteAccountWindow(onDeleteAccount: () =>
                 {
@@ -370,6 +370,9 @@ namespace Agava.Wink
 
         private void OnTimerExpired()
         {
+            if (_gameOrientation.NeedChangeOrientation)
+                _gameOrientation.SetPortraitOrientation();
+
             Debug.Log($"WINK PLUGIN: Timer Expired");
             //_notifyWindowHandler.OpenDemoExpiredWindow(false);
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
@@ -377,7 +380,7 @@ namespace Agava.Wink
             if (_winkAccessManager.Authenficated)
             {
                 SetPhone();
-                _notifyWindowHandler.OpenHelloWindow(hasAccess: false);
+                _notifyWindowHandler.OpenHelloWindowWOAccess();
             }
             else
             {
