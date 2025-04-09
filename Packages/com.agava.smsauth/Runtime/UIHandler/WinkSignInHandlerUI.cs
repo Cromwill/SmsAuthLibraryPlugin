@@ -265,15 +265,12 @@ namespace Agava.Wink
                         _winkAccessManager.DeleteAccount(
                         onComplete: (resultSuccess) =>
                         {
+                            AnalyticsWinkService.SendDeleteWindow();
+
                             if (resultSuccess == false)
-                            {
                                 _notifyWindowHandler.OpenWindow(WindowType.Fail);
-                            }
                             else
-                            {
-                                AnalyticsWinkService.SendDeleteWindow();
                                 ContinueGame();
-                            }
                         });
                     })));
 
