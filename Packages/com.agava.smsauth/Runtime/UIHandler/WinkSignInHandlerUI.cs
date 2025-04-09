@@ -381,6 +381,7 @@ namespace Agava.Wink
             }
             else
             {
+                AnalyticsWinkService.SendSubscribeOfferWindow();
                 _notifyWindowHandler.OpenDemoExpiredWindow(false);
             }
 
