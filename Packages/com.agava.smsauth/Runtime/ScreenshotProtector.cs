@@ -10,7 +10,7 @@ namespace Agava.Wink
     public class ScreenshotProtector
     {
         [SerializeField] private GameObject _webView;
-        [SerializeField] private GameObject _screnshotProtectorWindow;
+        [SerializeField] private GameObject _screenshotProtectorWindow;
 
         private ICoroutine _coroutineRoot;
         private bool _screenshotsDisabled = false;
@@ -57,7 +57,7 @@ namespace Agava.Wink
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
                 AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-                AndroidJavaObject myActivity               Helper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
+                AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
                 myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
@@ -66,17 +66,17 @@ namespace Agava.Wink
         }
 
 #if UNITY_IOS
-        private void OnScreenshotTaken()
+        private void OnScreenshotTaken(string _)
         {
             _webView.SetActive(false);
-            _screnshotProtectorWindow.SetActive(true);
+            _screenshotProtectorWindow.SetActive(true);
 
             _coroutineRoot.StartCoroutine(WaitTwoSeconds());
             IEnumerator WaitTwoSeconds()
             {
                 yield return new WaitForSeconds(2);
                 _webView.SetActive(true);
-                _screnshotProtectorWindow.SetActive(false);
+                _screenshotProtectorWindow.SetActive(false);
             }
         }
 #endif
