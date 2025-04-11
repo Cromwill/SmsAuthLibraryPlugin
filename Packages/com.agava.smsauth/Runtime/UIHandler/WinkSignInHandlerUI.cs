@@ -17,7 +17,7 @@ namespace Agava.Wink
         private const float RedirectWindowDelay = 1.0f;
         private const float ChangeOrientationDelay = 1.0f;
 
-        [SerializeField] private ScreenshotProtector _screenshotProtector = new();
+        [SerializeField] private ScreenshotProtector _screenshotProtector;
         [SerializeField] private DemoTimer _demoTimer;
         [SerializeField] private NotifyWindowHandler _notifyWindowHandler;
         [Header("App name")]

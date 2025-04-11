@@ -10,7 +10,6 @@ import UIKit
             forName: UIApplication.userDidTakeScreenshotNotification,
             object: nil,
             queue: OperationQueue.main) { notification in
-                // Trigger Unity method when screenshot is detected
                 UnitySendMessage("ScreenshotProtector", "OnScreenshotTaken", "")
         }
     }

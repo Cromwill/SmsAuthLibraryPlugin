@@ -6,13 +6,12 @@ using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
-    [Serializable, Preserve]
-    public class ScreenshotProtector
+    [Preserve]
+    public class ScreenshotProtector : MonoBehaviour
     {
         [SerializeField] private GameObject _webView;
         [SerializeField] private GameObject _screenshotProtectorWindow;
 
-        private ICoroutine _coroutineRoot;
         private bool _screenshotsDisabled = false;
 
         [DllImport("__Internal")]
@@ -20,8 +19,6 @@ namespace Agava.Wink
 
         [DllImport("__Internal")]
         private static extern void stopScreenshotDetection();
-
-        public void Construct(ICoroutine coroutineRoot) => _coroutineRoot = coroutineRoot;
 
         public void TryDisableScreenshots()
         {
@@ -68,16 +65,20 @@ namespace Agava.Wink
 #if UNITY_IOS
         private void OnScreenshotTaken(string _)
         {
+            EnableWarningMessage();
+            Invoke(nameof(DisableWarningMessage), 2);
+        }
+
+        private void EnableWarningMessage()
+        {
             _webView.SetActive(false);
             _screenshotProtectorWindow.SetActive(true);
+        }
 
-            _coroutineRoot.StartCoroutine(WaitTwoSeconds());
-            IEnumerator WaitTwoSeconds()
-            {
-                yield return new WaitForSeconds(2);
-                _webView.SetActive(true);
-                _screenshotProtectorWindow.SetActive(false);
-            }
+        private void DisableWarningMessage()
+        {
+            _webView.SetActive(true);
+            _screenshotProtectorWindow.SetActive(false);
         }
 #endif
 
