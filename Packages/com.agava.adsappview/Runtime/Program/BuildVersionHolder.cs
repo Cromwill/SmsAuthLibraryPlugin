@@ -8,7 +8,7 @@ namespace AdsAppView.Program
         [field: SerializeField] public string Version { get; private set; }
         [field: SerializeField] public int BundleId { get; private set; }
 
-        private void OnValidate()
+        public void ApplyToProjectSettings()
         {
 #if UNITY_EDITOR
             PlayerSettings.bundleVersion = Version;
