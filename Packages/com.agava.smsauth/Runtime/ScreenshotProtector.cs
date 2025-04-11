@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -9,8 +7,8 @@ namespace Agava.Wink
     [Preserve]
     public class ScreenshotProtector : MonoBehaviour
     {
-        [SerializeField] private GameObject _webView;
-        [SerializeField] private GameObject _screenshotProtectorWindow;
+        [SerializeField] private WebViewPresenter _webViewPresenter;
+        [SerializeField] private GameObject _warningMessage;
 
         private bool _screenshotsDisabled = false;
 
@@ -37,7 +35,7 @@ namespace Agava.Wink
                 myActivityHelper.CallStatic("SetSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
-                startScreenshotDetection();   
+            startScreenshotDetection();
 #endif
         }
 
@@ -58,7 +56,7 @@ namespace Agava.Wink
                 myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
-                stopScreenshotDetection(); 
+            stopScreenshotDetection();
 #endif
         }
 
@@ -71,14 +69,14 @@ namespace Agava.Wink
 
         private void EnableWarningMessage()
         {
-            _webView.SetActive(false);
-            _screenshotProtectorWindow.SetActive(true);
+            _webViewPresenter.Hide();
+            _warningMessage.SetActive(true);
         }
 
         private void DisableWarningMessage()
         {
-            _webView.SetActive(true);
-            _screenshotProtectorWindow.SetActive(false);
+            _webViewPresenter.Show();
+            _warningMessage.SetActive(false);
         }
 #endif
 

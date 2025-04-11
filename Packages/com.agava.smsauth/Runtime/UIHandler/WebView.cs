@@ -88,7 +88,7 @@ public class WebView : MonoBehaviour
             transparent: false,
             zoom: true,
             ua: "wink game player",
-            radius: 22,
+            radius: 0,
             androidForceDarkMode: 0,
             enableWKWebView: true,
             wkContentMode: 0,
@@ -121,6 +121,11 @@ public class WebView : MonoBehaviour
     public void ShowPage(string cachePagePath)
     {
         _webViewObject.LoadURL("file://" + cachePagePath);
+    }
+
+    public void ShowLastPage()
+    {
+        _webViewObject.SetVisibility(true);
     }
 
     public void Hide()
