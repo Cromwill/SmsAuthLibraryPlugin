@@ -50,7 +50,7 @@ namespace Agava.Wink
 
         private IEnumerator WaitRotatePhone()
         {
-            _gameOrientation.SetLandscapeOrientation();
+            _gameOrientation.SetLandscapeOrientationPosibility();
 #if UNITY_EDITOR && TEST_CHANGE_ORIENTATION
             yield return new WaitForSeconds(2);
 #else

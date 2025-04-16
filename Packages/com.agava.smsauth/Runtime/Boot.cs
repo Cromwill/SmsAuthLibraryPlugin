@@ -84,6 +84,7 @@ namespace Agava.Wink
             }
             else
             {
+                _winkSignInHandlerUI.TrySetCorrectOrientation();
                 yield return _winkSignInHandlerUI.Initialize();
                 _loadingProgressBar.Disable();
                 _sceneLoader.LoadGameScene();
