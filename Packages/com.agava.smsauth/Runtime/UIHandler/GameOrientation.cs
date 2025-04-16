@@ -35,7 +35,7 @@ namespace Agava.Wink
 
         public void SetLandscapeOrientation()
         {
-            Screen.orientation = ScreenOrientation.LandscapeRight;
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             Screen.autorotateToLandscapeLeft = Screen.autorotateToLandscapeRight = true;
             Screen.autorotateToPortrait = Screen.autorotateToPortraitUpsideDown = false;
             Screen.orientation = ScreenOrientation.AutoRotation;
