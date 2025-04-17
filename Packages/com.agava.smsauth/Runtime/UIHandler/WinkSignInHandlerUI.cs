@@ -17,6 +17,7 @@ namespace Agava.Wink
         private const float RedirectWindowDelay = 1.0f;
         private const float ChangeOrientationDelay = 1.0f;
 
+        [SerializeField] private ScreenshotProtector _screenshotProtector;
         [SerializeField] private DemoTimer _demoTimer;
         [SerializeField] private NotifyWindowHandler _notifyWindowHandler;
         [Header("App name (for WebView)")]
@@ -46,7 +47,6 @@ namespace Agava.Wink
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
         private bool _logInFromSettings = false;
-        private ScreenshotProtector _screenshotProtector = new ScreenshotProtector();
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 

@@ -47,6 +47,18 @@ namespace Agava.Wink
             _button.onClick.RemoveListener(OnBackButtonClick);
         }
 
+        public void Show()
+        {
+            if (_webView != null && _webView.Initialized)
+                _webView.ShowLastPage();
+        }
+
+        public void Hide()
+        {
+            if (_webView != null && _webView.Initialized)
+                _webView.Hide();
+        }
+
         private IEnumerator Initialize()
         {
 #if (UNITY_ANDROID || UNITY_IOS) && WEBVIEW
