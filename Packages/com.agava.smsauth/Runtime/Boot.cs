@@ -15,6 +15,7 @@ namespace Agava.Wink
         private const float TimeOutTime = 60f;
 
         [SerializeField] private int _bundlIdVersion = 1;
+        [SerializeField] private Store _storeName = Store.test;
         [SerializeField] private WinkAccessManager _winkAccessManager;
         [SerializeField] private WinkSignInHandlerUI _winkSignInHandlerUI;
         [SerializeField] private SceneLoader _sceneLoader;
@@ -47,7 +48,7 @@ namespace Agava.Wink
             if (Instance == null)
                 Instance = this;
 
-            _preloadService = new(_winkSignInHandlerUI, _bundlIdVersion);
+            _preloadService = new(_winkSignInHandlerUI, _bundlIdVersion, _storeName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return _preloadService.Preparing();
@@ -170,5 +171,14 @@ namespace Agava.Wink
             Debug.Log($"Boot: Time Out!");
 #endif
         }
+    }
+
+    public enum Store
+    {
+        AppStore,
+        Google,
+        Huawei,
+        RuStore,
+        test
     }
 }
