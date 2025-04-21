@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
+using AdsAppView.Utility;
 
 namespace Agava.Wink
 {
@@ -14,7 +15,7 @@ namespace Agava.Wink
     {
         private const float TimeOutTime = 60f;
 
-        [SerializeField] private int _bundlIdVersion = 1;
+        [SerializeField] private BuildVersionHolder _buildVersionHolder;
         [SerializeField] private Store _storeName = Store.test;
         [SerializeField] private WinkAccessManager _winkAccessManager;
         [SerializeField] private WinkSignInHandlerUI _winkSignInHandlerUI;
@@ -42,13 +43,13 @@ namespace Agava.Wink
 
             DontDestroyOnLoad(this);
 
-            if (_winkSignInHandlerUI == null || _winkAccessManager == null)
+            if (_winkSignInHandlerUI == null || _winkAccessManager == null || _buildVersionHolder)
                 throw new NullReferenceException("#Boot# : Some Auth Component is Missing On Boot!");
 
             if (Instance == null)
                 Instance = this;
 
-            _preloadService = new(_winkSignInHandlerUI, _bundlIdVersion, _storeName);
+            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _storeName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return _preloadService.Preparing();
