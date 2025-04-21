@@ -25,7 +25,7 @@ namespace AdsAppView.Program
         [SerializeField] private ViewPresenterConfigs _viewPresenterConfigs;
         [Header("Web settings")]
         [Tooltip("Bund for plugin settings")]
-        [SerializeField] private BuildVersionHolder _buildVersionHolder;
+        [SerializeField] private Utility.BuildVersionHolder _buildVersionHolder;
         [Tooltip("Server name remote data")]
         [SerializeField] private string _serverPath;
         [Tooltip("Assets settings")]
