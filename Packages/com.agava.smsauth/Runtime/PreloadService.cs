@@ -5,6 +5,7 @@ using UnityEngine.Scripting;
 using SmsAuthAPI.Program;
 using Newtonsoft.Json;
 using SmsAuthAPI.DTO;
+using AdsAppView.Utility;
 
 namespace Agava.Wink
 {

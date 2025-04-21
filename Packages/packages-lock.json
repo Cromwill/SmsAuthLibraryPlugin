@@ -6,7 +6,8 @@
       "source": "embedded",
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.textmeshpro": "3.0.9"
+        "com.unity.textmeshpro": "3.0.9",
+        "io.appmetrica.analytics": "6.3.0"
       }
     },
     "com.agava.smsauthvps": {
