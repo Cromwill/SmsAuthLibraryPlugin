@@ -3,8 +3,7 @@ using System.Collections;
 using UnityEngine;
 using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
-using SmsAuthAPI.Utility;
-using AdsAppView.Program;
+using AdsAppView.Utility;
 
 namespace Agava.Wink
 {
@@ -49,7 +48,7 @@ namespace Agava.Wink
             if (Instance == null)
                 Instance = this;
 
-            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.Store);
+            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return _preloadService.Preparing();
@@ -63,9 +62,7 @@ namespace Agava.Wink
                 yield return _winkAccessManager.Construct();
                 _winkSignInHandlerUI.StartService(_winkAccessManager);
                 _winkSignInHandlerUI.Construct();
-                yield return SheetRemoteConfigs.Initialize();
                 yield return _winkAccessManager.TryQuickAccess();
-                _winkSignInHandlerUI.SetRemoteTexts();
 
                 _signInProcess = StartCoroutine(OnStarted());
                 yield return _signInProcess;
@@ -84,7 +81,6 @@ namespace Agava.Wink
             }
             else
             {
-                _winkSignInHandlerUI.TrySetCorrectOrientation();
                 yield return _winkSignInHandlerUI.Initialize();
                 _loadingProgressBar.Disable();
                 _sceneLoader.LoadGameScene();
