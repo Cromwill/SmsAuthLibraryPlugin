@@ -16,7 +16,6 @@ namespace Agava.Wink
         private const float TimeOutTime = 60f;
 
         [SerializeField] private BuildVersionHolder _buildVersionHolder;
-        [SerializeField] private Store _storeName = Store.test;
         [SerializeField] private WinkAccessManager _winkAccessManager;
         [SerializeField] private WinkSignInHandlerUI _winkSignInHandlerUI;
         [SerializeField] private SceneLoader _sceneLoader;
@@ -43,13 +42,13 @@ namespace Agava.Wink
 
             DontDestroyOnLoad(this);
 
-            if (_winkSignInHandlerUI == null || _winkAccessManager == null || _buildVersionHolder)
+            if (_winkSignInHandlerUI == null || _winkAccessManager == null || _buildVersionHolder == null)
                 throw new NullReferenceException("#Boot# : Some Auth Component is Missing On Boot!");
 
             if (Instance == null)
                 Instance = this;
 
-            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _storeName);
+            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return _preloadService.Preparing();
@@ -172,14 +171,5 @@ namespace Agava.Wink
             Debug.Log($"Boot: Time Out!");
 #endif
         }
-    }
-
-    public enum Store
-    {
-        AppStore,
-        Google,
-        Huawei,
-        RuStore,
-        test
     }
 }
