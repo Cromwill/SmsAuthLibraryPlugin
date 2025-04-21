@@ -9,6 +9,8 @@ namespace Agava.Wink
     [Preserve]
     internal class SignInWindowPresenter : WindowPresenter
     {
+        private const int GuaranteedNineIndex = 1;
+
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private Button _closeButton;
         [SerializeField] private TMP_InputField _inputField;
@@ -80,6 +82,11 @@ namespace Agava.Wink
                     if (string.IsNullOrEmpty(_inputField.text))
                     {
                         _inputField.text = "7";
+                    }
+                    else if(_inputField.text.Length == GuaranteedNineIndex)
+                    {
+                        string added = _inputField.text + CustomKeyMapping.GetKey(KeyCode.Keypad9);
+                        _inputField.text = added;
                     }
                     else
                     {

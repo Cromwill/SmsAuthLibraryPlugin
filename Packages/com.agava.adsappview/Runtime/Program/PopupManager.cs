@@ -77,7 +77,7 @@ namespace AdsAppView.Program
                 yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
 
             Task task = StartView(freeApp);
-            yield return new WaitUntil(() => task.IsCompleted);
+            //yield return new WaitUntil(() => task.IsCompleted);
         }
 
         public void OnSubscribeDetected() => _vip = true;
@@ -372,23 +372,26 @@ namespace AdsAppView.Program
                         string popupCacheFilePath = FileUtils.ConstructCacheFilePath(_adsFilePathsData.file_path);
                         PopupData popupData = null;
 
-                        if (TryLoadBytes(creds, _adsFilePathsData.file_path, popupCacheFilePath, out byte[] body))
+                        byte[] bytes = await TryLoadBytes(creds, _adsFilePathsData.file_path, popupCacheFilePath);
+
+                        if (bytes != null)
                         {
                             string sourceLink = JsonConvert.DeserializeObject<string>(sourceLinkResponse.body);
                             string link = _adsFilePathsData.app_link + sourceLink;
                             Debug.Log($"#PopupManager# Source link created: {link}");
-                            popupData = new PopupData() { body = body, link = link, name = _adsFilePathsData.ads_app_id, path = popupCacheFilePath };
+                            popupData = new PopupData() { body = bytes, link = link, name = _adsFilePathsData.ads_app_id, path = popupCacheFilePath };
                             string directory = Path.GetDirectoryName(_adsFilePathsData.file_path);
                             string fileName = Path.GetFileNameWithoutExtension(_adsFilePathsData.file_path);
 
-                            if (TryLoadSprite(creds, FullFilePath(fileName, directory, PlayButtonFileName), out Sprite playButtonSprite))
-                                popupData.play_button = playButtonSprite;
+                            Sprite buttonSprite = await TryLoadSprite(creds, FullFilePath(fileName, directory, PlayButtonFileName));
 
-                            if (_viewPresenter.Background)
-                            {
-                                if (TryLoadSprite(creds, FullFilePath(fileName, directory, BackgroundFileName), out Sprite backgroundSprite))
-                                    popupData.background = backgroundSprite;
-                            }
+                            if(buttonSprite != null)
+                                popupData.play_button = buttonSprite;
+
+                            Sprite backgroundSprite = await TryLoadSprite(creds, FullFilePath(fileName, directory, BackgroundFileName));
+
+                            if (backgroundSprite != null)
+                                popupData.background = backgroundSprite;
                         }
 
                         return popupData;
@@ -412,18 +415,18 @@ namespace AdsAppView.Program
             }
         }
 
-        private bool TryLoadBytes(FtpCreds creds, string serverFilePath, string cacheFilePath, out byte[] bytes)
+        private async Task<byte[]> TryLoadBytes(FtpCreds creds, string serverFilePath, string cacheFilePath)
         {
-            bytes = null;
+            byte[] bytes = null;
 
             if ((_caching && FileUtils.TryLoadFile(cacheFilePath, out bytes)) == false)
             {
-                Response textureResponse = AdsAppAPI.Instance.GetBytesData(creds.host, serverFilePath, creds.login, creds.password);
+                Response textureResponse = await AdsAppAPI.Instance.GetBytesData(creds.host, serverFilePath, creds.login, creds.password);
 
                 if (textureResponse.statusCode == UnityWebRequest.Result.Success)
                 {
                     bytes = textureResponse.bytes;
-                    FileUtils.TrySaveFile(cacheFilePath, bytes);
+                    await FileUtils.TrySaveFile(cacheFilePath, bytes);
                 }
                 else
                 {
@@ -431,18 +434,20 @@ namespace AdsAppView.Program
                 }
             }
 
-            return bytes != null;
+            return bytes;
         }
 
-        private bool TryLoadSprite(FtpCreds creds, string serverFilePath, out Sprite sprite)
+        private async Task<Sprite> TryLoadSprite(FtpCreds creds, string serverFilePath)
         {
-            sprite = null;
+            Sprite sprite = null;
             string cacheFilePath = FileUtils.ConstructCacheFilePath(serverFilePath);
 
-            if (TryLoadBytes(creds, serverFilePath, cacheFilePath, out byte[] bytes))
+            byte[] bytes = await TryLoadBytes(creds, serverFilePath, cacheFilePath);
+
+            if (bytes != null)
                 sprite = FileUtils.LoadSprite(bytes);
 
-            return sprite != null;
+            return sprite;
         }
 
         private async Task SetCachingConfig()

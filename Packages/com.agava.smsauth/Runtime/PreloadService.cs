@@ -22,15 +22,17 @@ namespace Agava.Wink
 #elif UNITY_IOS
         private const string Platform = "iOS";
 #endif
+        private readonly WinkSignInHandlerUI _winkSignInHandlerUI;
+        private readonly Store _storeName;
         private int _bundlIdVersion;
         private bool _isEndPrepare = false;
-        private readonly WinkSignInHandlerUI _winkSignInHandlerUI;
 
-        public PreloadService(WinkSignInHandlerUI winkSignInHandlerUI, int bundlIdVersion)
+        public PreloadService(WinkSignInHandlerUI winkSignInHandlerUI, int bundlIdVersion, Store storeName)
         {
             Instance ??= this;
             _bundlIdVersion = bundlIdVersion;
             _winkSignInHandlerUI = winkSignInHandlerUI;
+            _storeName = storeName;
         }
 
         public static PreloadService Instance { get; private set; }
@@ -51,7 +53,7 @@ namespace Agava.Wink
 
         private async void SetPluginAwailable()
         {
-            string remoteName = $"{Application.identifier}/{Platform}";
+            string remoteName = $"{Application.identifier}/{Platform}/{_storeName}";
             var response = await SmsAuthApi.GetPluginSettings(remoteName);
 
             if (response.statusCode == UnityWebRequest.Result.Success)
