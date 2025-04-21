@@ -5,6 +5,7 @@ namespace AdsAppView.Program
 {
     public class BuildVersionHolder : MonoBehaviour
     {
+        [field: SerializeField] public Store Store { get; private set; }
         [field: SerializeField] public string Version { get; private set; }
         [field: SerializeField] public int BundleId { get; private set; }
 

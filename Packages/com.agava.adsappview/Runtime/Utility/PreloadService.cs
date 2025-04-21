@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using AdsAppView.DTO;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-using static AdsAppView.Program.Boot;
+using AdsAppView.Program;
 
 namespace AdsAppView.Utility
 {

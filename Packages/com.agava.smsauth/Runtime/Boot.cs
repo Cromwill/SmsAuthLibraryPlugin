@@ -49,7 +49,7 @@ namespace Agava.Wink
             if (Instance == null)
                 Instance = this;
 
-            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId);
+            _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.Store);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return _preloadService.Preparing();
