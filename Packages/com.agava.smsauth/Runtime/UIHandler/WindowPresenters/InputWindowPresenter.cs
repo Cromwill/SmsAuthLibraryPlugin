@@ -1,14 +1,14 @@
-﻿using System;
-using System.Globalization;
+﻿using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using SmsAuthAPI.Program;
 using SmsAuthAPI.DTO;
-using UnityEngine.Networking;
-using UnityEngine.Scripting;
+using SmsAuthAPI.Program;
 using System.Collections;
+using System.Globalization;
+using UnityEngine.Scripting;
 using System.Threading.Tasks;
+using UnityEngine.Networking;
 
 namespace Agava.Wink
 {
@@ -107,6 +107,7 @@ namespace Agava.Wink
             if (onBackClicked != null)
                 _onBackClicked = onBackClicked;
 
+            _backButton.gameObject.SetActive(true);
             _repeatCodeTimer.TimerExpired += OnRepeatCodeTimerExpired;
             _repeatCodeTimer.StartTimer();
             _codeFormatter.SetInteractable(true);
@@ -145,6 +146,9 @@ namespace Agava.Wink
         {
             if (codeAccepted)
             {
+                _repeatCodeTimer.StopTimer();
+                _repeatCodeTimer.ResetTimer();
+                _backButton.gameObject.SetActive(false);
                 _continueButton.gameObject.SetActive(true);
             }
             else
