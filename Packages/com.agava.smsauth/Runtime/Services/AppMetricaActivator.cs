@@ -7,6 +7,7 @@ namespace Agava.Wink
     {
         private const string FirtsAppMetricaLaunch = nameof(FirtsAppMetricaLaunch);
         private const string TestKey = "e8883556-3e2e-4706-a0a5-a7eb677fe077";
+
 #if !WINK_POPUP
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Activate()
@@ -20,6 +21,7 @@ namespace Agava.Wink
             AppMetrica.Activate(new AppMetricaConfig(key)
             {
                 FirstActivationAsUpdate = !IsFirstLaunch(),
+                LocationTracking = false,
             });
 #if UNITY_EDITOR || TEST
             Debug.Log($"AppMetrica start: {key}");

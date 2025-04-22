@@ -18,7 +18,7 @@ namespace Agava.Wink
         public float DeltaToLandscapeRight { get; private set; } = 0.5f;
         public float CheckTime { get; private set; } = 0.1f;
 
-        public void SetLandscapeOrientation()
+        public void SetLandscapeOrientationPosibility()
         {
             Screen.orientation = ScreenOrientation.AutoRotation;
             Screen.autorotateToLandscapeLeft = Screen.autorotateToLandscapeRight = true;
@@ -30,6 +30,14 @@ namespace Agava.Wink
             Screen.orientation = ScreenOrientation.Portrait;
             Screen.autorotateToPortrait = Screen.autorotateToPortraitUpsideDown = true;
             Screen.autorotateToLandscapeLeft = Screen.autorotateToLandscapeRight = false;
+            Screen.orientation = ScreenOrientation.AutoRotation;
+        }
+
+        public void SetLandscapeOrientation()
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            Screen.autorotateToLandscapeLeft = Screen.autorotateToLandscapeRight = true;
+            Screen.autorotateToPortrait = Screen.autorotateToPortraitUpsideDown = false;
             Screen.orientation = ScreenOrientation.AutoRotation;
         }
 

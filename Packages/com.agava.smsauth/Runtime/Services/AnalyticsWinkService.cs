@@ -38,8 +38,8 @@ namespace Agava.Wink
         /// First time events
         /// </summary>
         public static void SendSubscribeOfferWindow() => SendEvent("Subscribe Offer Window (Unsigned user)");
-        public static void SendHelloWindow() => SendEvent("Subscribe Profile Window With Subscribe");
-        public static void SendHelloWOAccessWindow() => SendEvent("Subscribe Profile Window Without Subscribe");
+        public static void SendHelloWindow() => SendEvent("Subscribe Profile Window", GetJson(true));
+        public static void SendHelloWOAccessWindow() => SendEvent("Subscribe Profile Window", GetJson(false));
         public static void SendEnterPhoneWindow() => SendEvent("Enter Phone Window");
         public static void SendOnEnteredPhoneWindow() => SendEvent("On Entered Phone");
         public static void SendEnterOtpCodeWindow() => SendEvent("Enter Otp Code Window");
@@ -61,8 +61,12 @@ namespace Agava.Wink
         public static void SendPlayerRotateDevice() => SendEvent("Player Rotate Device");
         public static void SendAccountDeletionWindow() => SendEvent("Account Deletion Window");
         public static void SendSubscriptionManagementWindow() => SendEvent("Subscription Management");
+        public static void SendSubscriptionManagementButtonClick() => SendEvent("Click Subscription Management Button");
         public static void SendSubscribeButtonClickOnSettings() => SendEvent("Subscribe Button On Settings");
-        public static void SendDeleteAccountButtonClickOnSetting() => SendEvent("Support Button On Settings");
+        public static void SendDeleteAccountButtonClickOnSetting() => SendEvent("Delete Account Button On Settings");
+        public static void SendSupportButtonClickOnSetting() => SendEvent("Support Button On Settings");
+        public static void SendSubscriptionPurchaseWasSuccessful() => SendEvent("Subscription Purchase Was Successful");
+        public static void SendCancelSubscriptionPurchase() => SendEvent("Cancel Subscription Purchase");
 
         private static string GetJson(string name, string value)
         {
@@ -70,6 +74,16 @@ namespace Agava.Wink
             {
                 Name = name,
                 Value = value
+            };
+
+            return JsonConvert.SerializeObject(data);
+        }
+
+        private static string GetJson(bool value)
+        {
+            SubscribeData data = new SubscribeData()
+            {
+                Subscribe = value
             };
 
             return JsonConvert.SerializeObject(data);
@@ -94,6 +108,11 @@ namespace Agava.Wink
             public string Value { get; set; }
         }
 
+        internal class SubscribeData
+        {
+            public bool Subscribe { get; set; }
+        }
+
         internal class DataTracking
         {
             public string event_name { get; set; }
@@ -104,6 +123,7 @@ namespace Agava.Wink
 
         private static void SendEvent(string eventName)
         {
+            Debug.Log($"ANALYTICS: event - {eventName}");
             AppMetrica.ReportEvent(eventName);
         }
 

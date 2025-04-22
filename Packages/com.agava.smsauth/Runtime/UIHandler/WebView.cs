@@ -127,6 +127,11 @@ public class WebView : MonoBehaviour
         _webViewObject.LoadURL("file://" + cachePagePath);
     }
 
+    public void ShowLastPage()
+    {
+        _webViewObject.SetVisibility(true);
+    }
+
     public void Hide()
     {
         _webViewObject.SetVisibility(false);

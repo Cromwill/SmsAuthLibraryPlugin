@@ -34,8 +34,10 @@ namespace Agava.Wink
 
         public override void Disable()
         {
+            if(Enabled)
+                AnalyticsWinkService.SendPlayerRotateDevice();
+
             DisableCanvasGroup(_canvasGroup);
-            AnalyticsWinkService.SendPlayerRotateDevice();
 
             if (_waitPhoneRotateCoroutine != null)
             {
@@ -48,25 +50,25 @@ namespace Agava.Wink
 
         private IEnumerator WaitRotatePhone()
         {
-            _gameOrientation.SetLandscapeOrientation();
+            _gameOrientation.SetLandscapeOrientationPosibility();
 #if UNITY_EDITOR && TEST_CHANGE_ORIENTATION
             yield return new WaitForSeconds(2);
 #else
             while(_gameOrientation.ChangedToLandscape == false)
-        {
-            if(Input.acceleration.x < _gameOrientation.DeltaToLandscapeLeft)
             {
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-                Screen.orientation = ScreenOrientation.AutoRotation;
-            }
-            else if(Input.acceleration.x > _gameOrientation.DeltaToLandscapeRight)
-            {
-                Screen.orientation = ScreenOrientation.LandscapeRight;
-                Screen.orientation = ScreenOrientation.AutoRotation;
-            }
+                if(Input.acceleration.x < _gameOrientation.DeltaToLandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    Screen.orientation = ScreenOrientation.AutoRotation;
+                }
+                else if(Input.acceleration.x > _gameOrientation.DeltaToLandscapeRight)
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeRight;
+                    Screen.orientation = ScreenOrientation.AutoRotation;
+                }
 
-            yield return new WaitForSeconds(_gameOrientation.CheckTime);
-        }
+                yield return new WaitForSeconds(_gameOrientation.CheckTime);
+            }
 #endif
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 

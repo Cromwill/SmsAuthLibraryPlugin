@@ -16,7 +16,7 @@ namespace Agava.Wink
         [SerializeField] private bool _closeOnYesClicked = true;
         [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
-        public bool TryFreeWink = false;
+        public bool TryFreeWink { get; private set; } = false;
 
         private void Awake()
         {
@@ -32,6 +32,7 @@ namespace Agava.Wink
 
         public void Enable(bool closeButton)
         {
+            TryFreeWink = false;
             _imagesCarousel.Enable();
             EnableCanvasGroup(_canvasGroup);
         }
@@ -51,8 +52,6 @@ namespace Agava.Wink
         private void OnYesClicked()
         {
             TryFreeWink = true;
-            //WebViewPresenter.ShowWebView(Links.Subscription);     // TODO: remove after finish work with plugin
-            AnalyticsWinkService.SendPayWallRedirect();
 
             if (_closeOnYesClicked)
                 Disable();

@@ -1,39 +1,84 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
     [Preserve]
-    public static class ScreenshotProtector
+    public class ScreenshotProtector : MonoBehaviour
     {
-        public static bool Locked { get; private set; } = false;
+        [SerializeField] private WebViewPresenter _webViewPresenter;
+        [SerializeField] private GameObject _warningMessage;
 
-        public static void DisableScreenshots()
+        private bool _screenshotsDisabled = false;
+
+        [DllImport("__Internal")]
+        private static extern void startScreenshotDetection();
+
+        [DllImport("__Internal")]
+        private static extern void stopScreenshotDetection();
+
+        public void TryDisableScreenshots()
         {
-            if(Locked == false)
-                SetSecureFlag(true);
+            if (_screenshotsDisabled)
+                return;
+
+            _screenshotsDisabled = true;
+
+#if UNITY_EDITOR
+            Debug.Log("SCREEN PROTECTOR: disable screenshots possibility!");
+#elif UNITY_ANDROID
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            {
+                AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
+                myActivityHelper.CallStatic("SetSecureFlag", currentActivity);
+            }
+#elif UNITY_IOS
+            startScreenshotDetection();
+#endif
         }
 
-        public static void EnableScreenshots()
+        public void TryEnableScreenshots()
         {
-            if (Locked)
-                SetSecureFlag(false);
+            if (_screenshotsDisabled == false)
+                return;
+
+            _screenshotsDisabled = false;
+
+#if UNITY_EDITOR
+            Debug.Log("SCREEN PROTECTOR: enable screenshots possibility!");
+#elif UNITY_ANDROID
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            {
+                AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
+                myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
+            }
+#elif UNITY_IOS
+            stopScreenshotDetection();
+#endif
         }
 
-        private static void SetSecureFlag(bool protectScreen)
+#if UNITY_IOS
+        private void OnScreenshotTaken(string _)
         {
-            Locked = protectScreen;
-            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaObject window = activity.Call<AndroidJavaObject>("getWindow");
-
-            AndroidJavaClass layoutParamsClass = new AndroidJavaClass("android.view.WindowManager$LayoutParams");
-            int flagSecure = layoutParamsClass.GetStatic<int>("FLAG_SECURE");
-
-            if (protectScreen)
-                window.Call("setFlags", flagSecure, flagSecure);
-            else
-                window.Call("clearFlags", flagSecure);
+            EnableWarningMessage();
+            Invoke(nameof(DisableWarningMessage), 2);
         }
+
+        private void EnableWarningMessage()
+        {
+            _webViewPresenter.Hide();
+            _warningMessage.SetActive(true);
+        }
+
+        private void DisableWarningMessage()
+        {
+            _webViewPresenter.Show();
+            _warningMessage.SetActive(false);
+        }
+#endif
+
     }
 }
