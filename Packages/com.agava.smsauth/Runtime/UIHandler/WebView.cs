@@ -1,7 +1,8 @@
-using System.Collections;
+using System;
 using Agava.Wink;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class WebView : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class WebView : MonoBehaviour
 
     public bool Initialized => _webViewObject.IsInitialized();
 
+    public event Action<string> WebPageEventReceived;
+
     private void Awake()
     {
         _loadingImage.gameObject.SetActive(false);
@@ -23,7 +26,7 @@ public class WebView : MonoBehaviour
         _webViewObject.Init(
             cb: (msg) =>
             {
-                Debug.Log(string.Format("CallFromJS[{0}]", msg));
+                WebPageEventReceived?.Invoke(msg);
             },
             err: (msg) =>
             {
@@ -48,13 +51,13 @@ public class WebView : MonoBehaviour
             ld: (msg) =>
             {
                 OnWebLoad();
-                Debug.Log(string.Format("CallOnLoaded[{0}]", msg));
+                string js;
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS
                 // NOTE: the following js definition is required only for UIWebView; if
                 // enabledWKWebView is true and runtime has WKWebView, Unity.call is defined
                 // directly by the native plugin.
 #if true
-                var js = @"
+                js = @"
                     if (!(window.webkit && window.webkit.messageHandlers)) {
                         window.Unity = {
                             call: function(msg) {
@@ -66,7 +69,7 @@ public class WebView : MonoBehaviour
 #else
                 // NOTE: depending on the situation, you might prefer this 'iframe' approach.
                 // cf. https://github.com/gree/unity-webview/issues/189
-                var js = @"
+                js = @"
                     if (!(window.webkit && window.webkit.messageHandlers)) {
                         window.Unity = {
                             call: function(msg) {
@@ -81,9 +84,22 @@ public class WebView : MonoBehaviour
                 ";
 #endif
 #else
-                var js = "";
+                js = @"";
 #endif
-                _webViewObject.EvaluateJS(js + @"Unity.call('ua=' + navigator.userAgent)");
+#if UNITY_ANDROID
+                js = @"";
+                _webViewObject.EvaluateJS(js + "window.AndroidBridge = Unity;");
+
+                var jss = @"
+                    window.AndroidBridge = {
+                            sendMessage: function(message) {
+                               window.Unity.call(message);
+                               }
+                        }
+                ";
+
+                _webViewObject.EvaluateJS(jss);
+#endif
             },
             transparent: false,
             zoom: true,

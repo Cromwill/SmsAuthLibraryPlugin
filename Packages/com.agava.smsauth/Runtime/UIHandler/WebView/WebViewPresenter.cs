@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using static UnityEditor.UIElements.ToolbarMenu;
+using Newtonsoft.Json;
 
 namespace Agava.Wink
 {
@@ -98,6 +100,7 @@ namespace Agava.Wink
 
             instance.Enable();
             instance._webView.OpenURL(url, _webViewLoader);
+            instance._webView.WebPageEventReceived += OnEventReceived;
 #endif
         }
 
@@ -111,6 +114,7 @@ namespace Agava.Wink
 
             instance._webView.Hide();
             instance.Disable();
+            instance._webView.WebPageEventReceived -= OnEventReceived;
         }
 
         public static void OpenURL(string url)
@@ -136,5 +140,45 @@ namespace Agava.Wink
         {
             HideWebView();
         }
+
+        private static void OnEventReceived(string eventName)
+        {
+            Debug.Log("TRY JSON: " + eventName + "received!!!");
+            Variants variants = JsonConvert.DeserializeObject<Variants>(eventName);
+
+            if (variants != null)
+            {
+                Debug.Log($"TRY JSON: variants name = {variants.Name}, variants type = {variants.Data.Type}");
+
+                if (variants.CheckSubscription())
+                {
+                    Debug.Log($"TRY JSON: subscription buyed!");
+                }
+                else if (variants.CheckCloseWebView())
+                {
+                    Debug.Log($"TRY JSON: webview window close!");
+                }
+
+                HideWebView();
+            }
+        }
+    }
+
+    internal class Variants
+    {
+        private const string EventName = "variants";
+        private const string WebViewCloseEvent = "close";
+        private const string SubscriptionSuccessEvent = "success";
+
+        public string Name { get; set; }
+        public Data Data { get; set; }
+
+        public bool CheckSubscription() => Name == EventName && Data.Type == SubscriptionSuccessEvent;
+        public bool CheckCloseWebView() => Name == EventName && Data.Type == WebViewCloseEvent;
+    }
+
+    internal class Data
+    {
+        public string Type { get; set; }
     }
 }
