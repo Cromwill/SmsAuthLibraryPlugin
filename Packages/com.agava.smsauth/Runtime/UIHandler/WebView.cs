@@ -35,13 +35,13 @@ public class WebView : MonoBehaviour
             ld: (msg) =>
             {
                 OnWebLoad();
-
+                string js;
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS
                 // NOTE: the following js definition is required only for UIWebView; if
                 // enabledWKWebView is true and runtime has WKWebView, Unity.call is defined
                 // directly by the native plugin.
 #if true
-                var js = @"
+                js = @"
                     if (!(window.webkit && window.webkit.messageHandlers)) {
                         window.Unity = {
                             call: function(msg) {
@@ -53,7 +53,7 @@ public class WebView : MonoBehaviour
 #else
                 // NOTE: depending on the situation, you might prefer this 'iframe' approach.
                 // cf. https://github.com/gree/unity-webview/issues/189
-                var js = @"
+                js = @"
                     if (!(window.webkit && window.webkit.messageHandlers)) {
                         window.Unity = {
                             call: function(msg) {
@@ -68,14 +68,22 @@ public class WebView : MonoBehaviour
                 ";
 #endif
 #else
-                var js = @"";
+                js = @"";
 #endif
+#if UNITY_ANDROID
+                js = @"";
                 _webViewObject.EvaluateJS(js + "window.AndroidBridge = Unity;");
-                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"close\", (e) => Unity.call(e.data));");
-                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"success\", (e) => Unity.call(e.data));");
-                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"buy\", (e) => Unity.call(e.data));");
-                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"variants\", (e) => Unity.call(e.data));");
 
+                var jss = @"
+                    window.AndroidBridge = {
+                            sendMessage: function(message) {
+                               window.Unity.call(message);
+                               }
+                        }
+                ";
+
+                _webViewObject.EvaluateJS(jss);
+#endif
             },
             transparent: false,
             zoom: true,
