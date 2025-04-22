@@ -86,7 +86,7 @@ public class WebView : MonoBehaviour
 #else
                 var js = "";
 #endif
-                _webViewObject.EvaluateJS(js + "window.addEventListener(\"testevent\", (e) => Unity.call(e.type));");
+                _webViewObject.EvaluateJS(js + "window.addEventListener(\"variants\", (e) => Unity.call(e.type));");
             },
             transparent: false,
             zoom: true,
@@ -119,7 +119,6 @@ public class WebView : MonoBehaviour
     {
         _webViewLoader = webViewLoader;
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
-        _webViewObject.EvaluateJS("window.send(\"testevent\");");
     }
 
     public void ShowPage(string cachePagePath)
