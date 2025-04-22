@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
@@ -13,6 +14,8 @@ namespace Agava.Wink
 
         private static WebViewPresenter instance;
         private static IWebViewLoader _webViewLoader;
+        public static Action _webViewClosedAction;
+        public static Action _subscriptionPurchasedAction;
 
         private WebView _webView;
 
@@ -33,9 +36,11 @@ namespace Agava.Wink
             StartCoroutine(Initialize());
         }
 
-        public void Construct(IWebViewLoader webViewLoader)
+        public void Construct(IWebViewLoader webViewLoader, Action webViewClosedAction, Action subscriptionPurchasedAction)
         {
             _webViewLoader = webViewLoader;
+            _webViewClosedAction = webViewClosedAction;
+            _subscriptionPurchasedAction = subscriptionPurchasedAction;
         }
 
         private void OnEnable()
@@ -152,10 +157,12 @@ namespace Agava.Wink
                 if (variants.CheckSubscription())
                 {
                     Debug.Log($"TRY JSON: subscription buyed!");
+                    _subscriptionPurchasedAction?.Invoke();
                 }
                 else if (variants.CheckCloseWebView())
                 {
                     Debug.Log($"TRY JSON: webview window close!");
+                    _webViewClosedAction?.Invoke();
                 }
 
                 HideWebView();

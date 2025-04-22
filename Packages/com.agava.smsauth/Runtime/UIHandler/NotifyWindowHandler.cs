@@ -47,7 +47,7 @@ namespace Agava.Wink
 
             _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
-            _webViewPresenter.Construct(this);
+            _webViewPresenter.Construct(this, () => OpenHelloWindow(hasAccess: true), () => OpenHelloWindowWOAccess());
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;
@@ -128,11 +128,9 @@ namespace Agava.Wink
 
         private void OnLoadingCompleted()
         {
-            //WebViewPresenter.ShowWebView(Links.Subscription);
             _subscriptionChecked = true;
             Loaded = true;
-            /*WebViewRedirected?.Invoke();
-            _subscriptionCheckWindow.Disable();*/
+            _subscriptionCheckWindow.Disable();
         }
     }
 }
