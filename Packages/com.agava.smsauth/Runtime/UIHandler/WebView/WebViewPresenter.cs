@@ -98,6 +98,7 @@ namespace Agava.Wink
 
             instance.Enable();
             instance._webView.OpenURL(url, _webViewLoader);
+            instance._webView.WebPageEventReceived += OnEventReceived;
 #endif
         }
 
@@ -111,6 +112,7 @@ namespace Agava.Wink
 
             instance._webView.Hide();
             instance.Disable();
+            instance._webView.WebPageEventReceived -= OnEventReceived;
         }
 
         public static void OpenURL(string url)
@@ -134,6 +136,12 @@ namespace Agava.Wink
 
         private void OnBackButtonClick()
         {
+            HideWebView();
+        }
+
+        private static void OnEventReceived(string eventName)
+        {
+            Debug.Log(eventName + "received!!!");
             HideWebView();
         }
     }

@@ -30,23 +30,7 @@ public class WebView : MonoBehaviour
             },
             err: (msg) =>
             {
-                Debug.Log(string.Format("CallOnError[{0}]", msg));
-            },
-            httpErr: (msg) =>
-            {
-                Debug.Log(string.Format("CallOnHttpError[{0}]", msg));
-            },
-            started: (msg) =>
-            {
-                Debug.Log(string.Format("CallOnStarted[{0}]", msg));
-            },
-            hooked: (msg) =>
-            {
-                Debug.Log(string.Format("CallOnHooked[{0}]", msg));
-            },
-            cookies: (msg) =>
-            {
-                Debug.Log(string.Format("CallOnCookies[{0}]", msg));
+                Debug.Log(msg);
             },
             ld: (msg) =>
             {
@@ -84,9 +68,14 @@ public class WebView : MonoBehaviour
                 ";
 #endif
 #else
-                var js = "";
+                var js = @"";
 #endif
-                _webViewObject.EvaluateJS(js + "window.addEventListener(\"variants\", (e) => Unity.call(e.type));");
+                _webViewObject.EvaluateJS(js + "window.AndroidBridge = Unity;");
+                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"close\", (e) => Unity.call(e.data));");
+                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"success\", (e) => Unity.call(e.data));");
+                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"buy\", (e) => Unity.call(e.data));");
+                _webViewObject.EvaluateJS(js + "window.AndroidBridge.addEventListener(\"variants\", (e) => Unity.call(e.data));");
+
             },
             transparent: false,
             zoom: true,
@@ -143,7 +132,6 @@ public class WebView : MonoBehaviour
         IEnumerator Open()
         {
             yield return new WaitUntil(() => _webViewLoader.Loaded);
-
             _webViewObject.SetVisibility(true);
         }
     }
