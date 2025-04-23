@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 namespace Agava.Wink
 {
@@ -115,6 +116,13 @@ namespace Agava.Wink
 
             if (instance._webView == null)
                 return;
+
+            if (TouchScreenKeyboard.visible)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                TouchScreenKeyboard.hideInput = true;
+                EventSystem.current.SetSelectedGameObject(null);
+            }
 
             instance._webView.Hide();
             instance.Disable();

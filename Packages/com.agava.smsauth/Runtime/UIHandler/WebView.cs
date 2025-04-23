@@ -24,6 +24,49 @@ public class WebView : MonoBehaviour
 
     private void Start()
     {
+        //Init();
+    }
+
+    /*private void Update()
+    {
+        _loadingImage.transform.localEulerAngles += new Vector3(0, 0, 2f);
+    }*/
+
+    public void OpenURL(string url, IWebViewLoader webViewLoader)
+    {
+        Init();
+        _webViewLoader = webViewLoader;
+        _webViewObject.LoadURL(url.Replace(" ", "%20"));
+    }
+
+    public void ShowPage(string cachePagePath)
+    {
+        _webViewObject.LoadURL("file://" + cachePagePath);
+    }
+
+    public void ShowLastPage()
+    {
+        _webViewObject.SetVisibility(true);
+    }
+
+    public void Hide()
+    {
+        _webViewObject.SetVisibility(false);
+    }
+
+    private void OnWebLoad()
+    {
+        StartCoroutine(Open());
+
+        IEnumerator Open()
+        {
+            yield return new WaitUntil(() => _webViewLoader.Loaded);
+            _webViewObject.SetVisibility(true);
+        }
+    }
+
+    private void Init()
+    {
         _webViewObject.Init(
             cb: (msg) =>
             {
@@ -86,42 +129,5 @@ public class WebView : MonoBehaviour
         _webViewObject.SetMargins(left, top, right, bottom);
         _webViewObject.SetTextZoom(100);
         _webViewObject.SetVisibility(false);
-    }
-
-    /*private void Update()
-    {
-        _loadingImage.transform.localEulerAngles += new Vector3(0, 0, 2f);
-    }*/
-
-    public void OpenURL(string url, IWebViewLoader webViewLoader)
-    {
-        _webViewLoader = webViewLoader;
-        _webViewObject.LoadURL(url.Replace(" ", "%20"));
-    }
-
-    public void ShowPage(string cachePagePath)
-    {
-        _webViewObject.LoadURL("file://" + cachePagePath);
-    }
-
-    public void ShowLastPage()
-    {
-        _webViewObject.SetVisibility(true);
-    }
-
-    public void Hide()
-    {
-        _webViewObject.SetVisibility(false);
-    }
-
-    private void OnWebLoad()
-    {
-        StartCoroutine(Open());
-
-        IEnumerator Open()
-        {
-            yield return new WaitUntil(() => _webViewLoader.Loaded);
-            _webViewObject.SetVisibility(true);
-        }
     }
 }
