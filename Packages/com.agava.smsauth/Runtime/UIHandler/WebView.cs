@@ -24,7 +24,7 @@ public class WebView : MonoBehaviour
 
     private void Start()
     {
-        //Init();
+        Init();
     }
 
     /*private void Update()
