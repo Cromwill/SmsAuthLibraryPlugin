@@ -12,6 +12,7 @@ public class WebView : MonoBehaviour
     [SerializeField] private Image _loadingImage;
 
     private IWebViewLoader _webViewLoader;
+    private bool _isLoaded;
 
     public bool Initialized => _webViewObject.IsInitialized();
 
@@ -34,7 +35,9 @@ public class WebView : MonoBehaviour
 
     public void OpenURL(string url, IWebViewLoader webViewLoader)
     {
-        Init();
+        if(_isLoaded == false)
+            Init();
+
         _webViewLoader = webViewLoader;
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
     }
@@ -52,6 +55,7 @@ public class WebView : MonoBehaviour
     public void Hide()
     {
         _webViewObject.SetVisibility(false);
+        _isLoaded = false;
     }
 
     private void OnWebLoad()
@@ -70,7 +74,9 @@ public class WebView : MonoBehaviour
         _webViewObject.Init(
             cb: (msg) =>
             {
+                Debug.Log($"TRY JSON: webview callback - {msg}!");
                 WebPageEventReceived?.Invoke(msg);
+                //_webViewObject.EvaluateJS("document.activeElement.blur();");
             },
             err: (msg) =>
             {
@@ -78,6 +84,7 @@ public class WebView : MonoBehaviour
             },
             ld: (msg) =>
             {
+                Debug.Log($"TRY JSON: webview load - {msg}!");
                 OnWebLoad();
 
                 StringBuilder stringBuilder = new StringBuilder();
@@ -129,5 +136,6 @@ public class WebView : MonoBehaviour
         _webViewObject.SetMargins(left, top, right, bottom);
         _webViewObject.SetTextZoom(100);
         _webViewObject.SetVisibility(false);
+        _isLoaded = true;
     }
 }
