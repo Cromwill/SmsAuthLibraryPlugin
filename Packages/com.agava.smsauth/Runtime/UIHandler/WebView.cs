@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Text;
 using Agava.Wink;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,59 +36,38 @@ public class WebView : MonoBehaviour
             ld: (msg) =>
             {
                 OnWebLoad();
-                string js;
-#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS
-                // NOTE: the following js definition is required only for UIWebView; if
-                // enabledWKWebView is true and runtime has WKWebView, Unity.call is defined
-                // directly by the native plugin.
-#if true
-                js = @"
-                    if (!(window.webkit && window.webkit.messageHandlers)) {
+                StringBuilder stringBuilder = new();
+
+#if UNITY_IOS
+                stringBuilder.Append(@"
                         window.Unity = {
                             call: function(msg) {
-                                window.location = 'unity:' + msg;
-                            }
-                        };
-                    }
-                ";
-#else
-                // NOTE: depending on the situation, you might prefer this 'iframe' approach.
-                // cf. https://github.com/gree/unity-webview/issues/189
-                js = @"
-                    if (!(window.webkit && window.webkit.messageHandlers)) {
-                        window.Unity = {
-                            call: function(msg) {
-                                var iframe = document.createElement('IFRAME');
+                                var iframe = document.createElement('iframe');
                                 iframe.setAttribute('src', 'unity:' + msg);
                                 document.documentElement.appendChild(iframe);
                                 iframe.parentNode.removeChild(iframe);
                                 iframe = null;
                             }
-                        };
-                    }
-                ";
-#endif
-#else
-                js = @"";
-#endif
-#if UNITY_ANDROID
-                js = @"";
-                _webViewObject.EvaluateJS(js + "window.AndroidBridge = Unity;");
+                        };");
 
-                var jss = @"
+                stringBuilder.Append(@"window.parent = Unity;");
+                stringBuilder.Append(@"window.parent = { postMessage: function (message) { window.Unity.call(message); } };");
+#elif UNITY_ANDROID
+                stringBuilder.Append("window.AndroidBridge = Unity;");
+
+                stringBuilder.Append(@"
                     window.AndroidBridge = {
                             sendMessage: function(message) {
                                window.Unity.call(message);
                                }
                         }
-                ";
-
-                _webViewObject.EvaluateJS(jss);
+                ");
 #endif
+
+                _webViewObject.EvaluateJS(stringBuilder.ToString());
             },
             transparent: false,
             zoom: true,
-            ua: "wink game player",
             radius: 0,
             androidForceDarkMode: 0,
             enableWKWebView: true,
