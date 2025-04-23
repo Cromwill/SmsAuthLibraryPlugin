@@ -117,13 +117,6 @@ namespace Agava.Wink
             if (instance._webView == null)
                 return;
 
-            if (TouchScreenKeyboard.visible)
-            {
-                EventSystem.current.SetSelectedGameObject(null);
-                TouchScreenKeyboard.hideInput = true;
-                EventSystem.current.SetSelectedGameObject(null);
-            }
-
             instance._webView.Hide();
             instance.Disable();
             instance._webView.WebPageEventReceived -= OnEventReceived;
@@ -180,15 +173,16 @@ namespace Agava.Wink
 
     internal class Variants
     {
-        private const string EventName = "variants";
+        private const string VariantsEvent = "variants";
+        private const string BuyEvent = "buy";
         private const string WebViewCloseEvent = "close";
         private const string SubscriptionSuccessEvent = "success";
 
         public string Name { get; set; }
         public Data Data { get; set; }
 
-        public bool CheckSubscription() => Name == EventName && Data.Type == SubscriptionSuccessEvent;
-        public bool CheckCloseWebView() => Name == EventName && Data.Type == WebViewCloseEvent;
+        public bool CheckSubscription() => Name == BuyEvent && Data.Type == SubscriptionSuccessEvent;
+        public bool CheckCloseWebView() => Data.Type == WebViewCloseEvent;
     }
 
     internal class Data
