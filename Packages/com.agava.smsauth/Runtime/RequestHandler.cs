@@ -177,7 +177,16 @@ namespace Agava.Wink
 
             if (response.statusCode == UnityWebRequest.Result.Success)
             {
-                onSignInSuccessfully?.Invoke(hasSubsc);
+                if (hasSubsc)
+                {
+                    onSignInSuccessfully?.Invoke(hasSubsc);
+                }
+                else
+                {
+                    var hasTempSubs = await RequestTempWinkDataBase(phoneNumber, onWinkSubscriptionAccessRequest, currentToken);
+
+                    onSignInSuccessfully?.Invoke(hasTempSubs);
+                }
             }
             else
             {
@@ -190,6 +199,37 @@ namespace Agava.Wink
                 TokenLifeHelper.ClearTokens();
                 onResetLogin?.Invoke();
             }
+        }
+
+        internal async Task ActivateTempSubscription(string phoneNumber)
+        {
+            Tokens tokens = TokenLifeHelper.GetTokens();
+
+            if (tokens == null)
+            {
+                Debug.LogError("Tokens don't exist. Quick access is unavailable");
+                return;
+            }
+
+            string currentToken = string.Empty;
+
+            if (TokenLifeHelper.IsTokenAlive(tokens.access))
+            {
+                currentToken = tokens.access;
+            }
+            else if (TokenLifeHelper.IsTokenAlive(tokens.refresh))
+            {
+                currentToken = await TokenLifeHelper.GetRefreshedToken(tokens.refresh);
+
+                if (string.IsNullOrEmpty(currentToken))
+                    return;
+            }
+            else
+            {
+                return;
+            }
+
+            await SmsAuthApi.SendTempActiveAccountData(phoneNumber, currentToken);
         }
 
         internal async void DeleteAccount(Action onDeleteAccount)
@@ -274,6 +314,24 @@ namespace Agava.Wink
             {
                 onWinkSubscriptionAccessRequest?.Invoke(true);
                 return true;
+            }
+            else
+            {
+                onWinkSubscriptionAccessRequest?.Invoke(false);
+                return false;
+            }
+        }
+
+        private async Task<bool> RequestTempWinkDataBase(string phoneNumber, Action<bool> onWinkSubscriptionAccessRequest, string accessToken)
+        {
+            Response response = await SmsAuthApi.HasTempActiveAccount(phoneNumber, accessToken);
+
+            bool result;
+
+            if (bool.TryParse(response.body, out result))
+            {
+                onWinkSubscriptionAccessRequest?.Invoke(result);
+                return result;
             }
             else
             {

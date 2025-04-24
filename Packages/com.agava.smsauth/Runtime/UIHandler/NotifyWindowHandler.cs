@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
+using SmsAuthAPI.Program;
 
 namespace Agava.Wink
 {
@@ -39,7 +40,7 @@ namespace Agava.Wink
         public bool EnterCodeWindowInitialized => _enterCodeWindow.Initialized;
         public bool Loaded { get; private set; } = false;
 
-        public event Action WebViewRedirected;
+        public event Action SunbscriptionBuyed;
 
         internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler)
         {
@@ -47,7 +48,7 @@ namespace Agava.Wink
 
             _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
-            _webViewPresenter.Construct(this, () => OpenHelloWindowWOAccess(), () => OpenHelloWindow(hasAccess: true));
+            _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;
@@ -130,6 +131,18 @@ namespace Agava.Wink
         {
             _subscriptionChecked = true;
             Loaded = true;
+        }
+
+        private void OpenHelloAfterCloseWebView()
+        {
+            OpenHelloWindowWOAccess();
+            _subscriptionCheckWindow.Disable();
+        }
+
+        private void ConfirmPurchaseSubscriptionOnWebView()
+        {
+            OpenHelloWindow(hasAccess: true);
+            SunbscriptionBuyed?.Invoke();
             _subscriptionCheckWindow.Disable();
         }
     }

@@ -101,7 +101,7 @@ namespace Agava.Wink
             _demoTimer.TimerExpired -= OnTimerExpired;
             _demoTimer.FirstChecked -= OnTimerFirstChecked;
             _demoTimer.Dispose();
-            _notifyWindowHandler.WebViewRedirected -= OnWebViewRedirected;
+            _notifyWindowHandler.SunbscriptionBuyed -= OnSunbscriptionBuyed;
             _notifyWindowHandler.Dispose();
             _analyticsSender.Dispose();
         }
@@ -180,7 +180,7 @@ namespace Agava.Wink
             _winkAccessManager.AuthorizationSuccessfully += OnAuthorizationSuccessfully;
             _demoTimer.TimerExpired += OnTimerExpired;
             _demoTimer.FirstChecked += OnTimerFirstChecked;
-            _notifyWindowHandler.WebViewRedirected += OnWebViewRedirected;
+            _notifyWindowHandler.SunbscriptionBuyed += OnSunbscriptionBuyed;
         }
 
         public void OpenStartWindow() => OpenSubscriptionWindow();
@@ -399,7 +399,11 @@ namespace Agava.Wink
 
         private void OnTimerFirstChecked() => _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
 
-        private void OnWebViewRedirected() => _notifyWindowHandler.OpenHelloWindow(_winkAccessManager.HasAccess);
+        private void OnSunbscriptionBuyed()
+        {
+            _demoTimer.Stop();
+            _winkAccessManager.ActivateTempSubscription();
+        }
 
         private IEnumerator EnternetChecking()
         {

@@ -181,6 +181,11 @@ namespace Agava.Wink
         }
 #endif
 
+        public async void ActivateTempSubscription()
+        {
+             await _requestHandler.ActivateTempSubscription(LoginData.phone);
+        }
+
         private void Login(LoginData data) => _requestHandler.Login(data, LimitReached, _winkSubscriptionAccessRequest, _otpCodeAccepted);
 
         public void DeleteAccount(Action<bool> onComplete)
