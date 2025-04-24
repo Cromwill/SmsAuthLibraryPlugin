@@ -71,6 +71,8 @@ public class WebView : MonoBehaviour
 
     private void Init()
     {
+        Debug.Log($"TRY JSON: init webview!");
+
         _webViewObject.Init(
             cb: (msg) =>
             {

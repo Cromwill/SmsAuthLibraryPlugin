@@ -68,6 +68,8 @@ namespace Agava.Wink
 
         private IEnumerator Initialize()
         {
+            Debug.Log($"TRY JSON: Initialize in WebView presenter!");
+
 #if (UNITY_ANDROID || UNITY_IOS) && WEBVIEW
             if (_webViewPrefab == null)
             {
@@ -87,6 +89,8 @@ namespace Agava.Wink
 
         public static void ShowWebView(string url)
         {
+            Debug.Log($"TRY JSON: try ShowWebView in WebView presenter!");
+
 #if !UNITY_ANDROID && !UNITY_IOS
             Application.OpenURL(url);
 #else
