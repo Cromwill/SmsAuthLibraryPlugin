@@ -1,9 +1,9 @@
 using System;
-using System.Collections;
-using System.Text;
 using Agava.Wink;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class WebView : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class WebView : MonoBehaviour
 
     private IWebViewLoader _webViewLoader;
     private bool _isLoaded;
+    private bool _isOpened;
 
     public bool Initialized => _webViewObject.IsInitialized();
 
@@ -26,6 +27,7 @@ public class WebView : MonoBehaviour
     private void Start()
     {
         Init();
+        _webViewObject.SetVisibility(false);
     }
 
     /*private void Update()
@@ -36,7 +38,10 @@ public class WebView : MonoBehaviour
     public void OpenURL(string url, IWebViewLoader webViewLoader)
     {
         if(_isLoaded == false)
+        {
+            _webViewObject.Reload();
             Init();
+        }
 
         _webViewLoader = webViewLoader;
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
@@ -55,7 +60,9 @@ public class WebView : MonoBehaviour
     public void Hide()
     {
         _webViewObject.SetVisibility(false);
+        _webViewObject.Pause();
         _isLoaded = false;
+        _isOpened = false;
     }
 
     private void OnWebLoad()
@@ -71,24 +78,26 @@ public class WebView : MonoBehaviour
 
     private void Init()
     {
-        Debug.Log($"TRY JSON: init webview!");
-
         _webViewObject.Init(
             cb: (msg) =>
             {
-                Debug.Log($"TRY JSON: webview callback - {msg}!");
+                Debug.Log($"WebView: webview message callback - {msg}!");
                 WebPageEventReceived?.Invoke(msg);
-                //_webViewObject.EvaluateJS("document.activeElement.blur();");
             },
-            err: (msg) =>
+            started: (msg) =>
             {
-                Debug.Log(msg);
+                Debug.Log($"WebView: webview message started - {msg}!");
+                _webViewObject.Resume();
             },
             ld: (msg) =>
             {
-                Debug.Log($"TRY JSON: webview load - {msg}!");
-                OnWebLoad();
+                if (_isOpened)
+                    return;
 
+                _isOpened = true;
+
+                Debug.Log($"WebView: webview message load - {msg}!");
+                OnWebLoad();
                 StringBuilder stringBuilder = new StringBuilder();
 
 #if UNITY_IOS
@@ -129,6 +138,12 @@ public class WebView : MonoBehaviour
             separated: false
             );
 
+        Setsettings();
+        _isLoaded = true;
+    }
+
+    private void Setsettings()
+    {
         int left = Mathf.CeilToInt(_container.offsetMin.x);
         int right = Mathf.CeilToInt(-_container.offsetMax.x);
         int top = Mathf.CeilToInt(-_container.offsetMax.y);
@@ -137,7 +152,5 @@ public class WebView : MonoBehaviour
         _webViewObject.SetScrollbarsVisibility(false);
         _webViewObject.SetMargins(left, top, right, bottom);
         _webViewObject.SetTextZoom(100);
-        _webViewObject.SetVisibility(false);
-        _isLoaded = true;
     }
 }

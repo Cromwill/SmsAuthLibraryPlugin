@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using System.Collections;
-using UnityEngine.EventSystems;
 
 namespace Agava.Wink
 {
@@ -68,8 +67,6 @@ namespace Agava.Wink
 
         private IEnumerator Initialize()
         {
-            Debug.Log($"TRY JSON: Initialize in WebView presenter!");
-
 #if (UNITY_ANDROID || UNITY_IOS) && WEBVIEW
             if (_webViewPrefab == null)
             {
@@ -89,8 +86,6 @@ namespace Agava.Wink
 
         public static void ShowWebView(string url)
         {
-            Debug.Log($"TRY JSON: try ShowWebView in WebView presenter!");
-
 #if !UNITY_ANDROID && !UNITY_IOS
             Application.OpenURL(url);
 #else
@@ -152,21 +147,21 @@ namespace Agava.Wink
 
         private static void OnEventReceived(string eventName)
         {
-            Debug.Log("TRY JSON: " + eventName + "received!!!");
+            Debug.Log("WebView: " + eventName + "received!!!");
             Variants variants = JsonConvert.DeserializeObject<Variants>(eventName);
 
             if (variants != null)
             {
-                Debug.Log($"TRY JSON: variants name = {variants.Name}, variants type = {variants.Data.Type}");
+                Debug.Log($"WebView: variants name = {variants.Name}, variants type = {variants.Data.Type}");
 
                 if (variants.CheckSubscription())
                 {
-                    Debug.Log($"TRY JSON: subscription buyed!");
+                    Debug.Log($"WebView: subscription buyed!");
                     _subscriptionPurchasedAction?.Invoke();
                 }
                 else if (variants.CheckCloseWebView())
                 {
-                    Debug.Log($"TRY JSON: webview window close!");
+                    Debug.Log($"WebView: webview window close!");
                     _webViewClosedAction?.Invoke();
                 }
 
