@@ -158,14 +158,14 @@ namespace Agava.Wink
                 {
                     Debug.Log($"WebView: subscription buyed!");
                     _subscriptionPurchasedAction?.Invoke();
+                    HideWebView();
                 }
                 else if (variants.CheckCloseWebView())
                 {
                     Debug.Log($"WebView: webview window close!");
                     _webViewClosedAction?.Invoke();
+                    HideWebView();
                 }
-
-                HideWebView();
             }
         }
     }
