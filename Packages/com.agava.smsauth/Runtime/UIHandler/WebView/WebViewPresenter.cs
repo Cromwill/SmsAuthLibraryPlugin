@@ -154,11 +154,13 @@ namespace Agava.Wink
                 if (variants.CheckSubscription())
                 {
                     _subscriptionPurchasedAction?.Invoke();
+                    AnalyticsWinkService.SendSubscriptionPurchaseWasSuccessful();
                     HideWebView();
                 }
                 else if (variants.CheckCloseWebView())
                 {
                     _webViewClosedAction?.Invoke();
+                    AnalyticsWinkService.SendCancelSubscriptionPurchase();
                     HideWebView();
                 }
             }

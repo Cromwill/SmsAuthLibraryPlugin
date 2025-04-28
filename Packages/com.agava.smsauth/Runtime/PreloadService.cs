@@ -54,6 +54,7 @@ namespace Agava.Wink
 
         private async void SetPluginAwailable()
         {
+            Debug.Log($"#PreloadService in Agava.Wink# Used bundle id version = {_bundlIdVersion}, in set plugin awailable method.");
             string remoteName = $"{Application.identifier}/{Platform}/{_storeName}";
             var response = await SmsAuthApi.GetPluginSettings(remoteName);
 

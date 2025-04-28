@@ -68,9 +68,8 @@ namespace Agava.Wink
         {
             Expired = false;
             _stoped = false;
-#if UNITY_EDITOR || TEST
-                Debug.Log("Demo activated");
-#endif
+
+            Debug.Log("Demo activated");
         }
 
         internal void Stop()
@@ -78,9 +77,7 @@ namespace Agava.Wink
             Expired = false;
             _stoped = true;
 
-#if UNITY_EDITOR || TEST
             Debug.Log("Demo Stoped");
-#endif
         }
 
         internal void Update()
@@ -96,6 +93,8 @@ namespace Agava.Wink
 
             if (_winkSignInHandlerUI.IsAnyWindowEnabled || Expired || SmsAuthApi.Initialized == false)
                 return;
+
+            Debug.Log($"WebView: demo timer updated!");
 
             _second -= Time.unscaledDeltaTime;
 
