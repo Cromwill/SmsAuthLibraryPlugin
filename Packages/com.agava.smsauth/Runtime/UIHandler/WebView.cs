@@ -113,7 +113,7 @@ public class WebView : MonoBehaviour
                         };");
 
                 stringBuilder.Append(@"window.parent = Unity;");
-                stringBuilder.Append(@"window.parent = { postMessage: function (message) { window.Unity.call(message); } };");
+                stringBuilder.Append(@"window.parent = { postMessage: function (message) { window.Unity.call(JSON.stringify(message)); } };");
 #elif UNITY_ANDROID
                 stringBuilder.Append("window.AndroidBridge = Unity;");
 
