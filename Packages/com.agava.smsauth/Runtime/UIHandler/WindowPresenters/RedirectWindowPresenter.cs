@@ -22,12 +22,14 @@ namespace Agava.Wink
         {
             _closeButton?.onClick.AddListener(Disable);
             _yesButton.onClick.AddListener(OnYesClicked);
+            _signInButton.onClick.AddListener(ResetFreeChoise);
         }
 
         private void OnDestroy()
         {
-            _closeButton?.onClick.RemoveAllListeners();
-            _yesButton.onClick.RemoveAllListeners();
+            _closeButton?.onClick.RemoveListener(Disable);
+            _yesButton.onClick.RemoveListener(OnYesClicked);
+            _signInButton.onClick.RemoveListener(ResetFreeChoise);
         }
 
         public void Enable(bool closeButton)
@@ -43,6 +45,7 @@ namespace Agava.Wink
         {
             DisableCanvasGroup(_canvasGroup);
             _imagesCarousel.Disable();
+            ResetFreeChoise();
         }
 
         public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
@@ -56,5 +59,7 @@ namespace Agava.Wink
             if (_closeOnYesClicked)
                 Disable();
         }
+
+        private void ResetFreeChoise() => TryFreeWink = false;
     }
 }
