@@ -167,6 +167,7 @@ namespace Agava.Wink
         }
     }
 
+    [Serializable]
     internal class Variants
     {
         private const string VariantsEvent = "variants";
@@ -174,15 +175,16 @@ namespace Agava.Wink
         private const string WebViewCloseEvent = "close";
         private const string SubscriptionSuccessEvent = "success";
 
-        public string Name { get; set; }
-        public Data Data { get; set; }
+        public string Name;
+        public Data Data;
 
         public bool CheckSubscription() => Name == BuyEvent && Data.Type == SubscriptionSuccessEvent;
         public bool CheckCloseWebView() => Data.Type == WebViewCloseEvent;
     }
 
+    [Serializable]
     internal class Data
     {
-        public string Type { get; set; }
+        public string Type;
     }
 }
