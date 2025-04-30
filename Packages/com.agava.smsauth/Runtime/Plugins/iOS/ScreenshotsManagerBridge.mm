@@ -1,6 +1,6 @@
 #import <UnityFramework/UnityFramework-Swift.h>
 #import "UnityInterface.h"
-#import "UnityAppController.h”
+#import "UnityAppController.h"
 
 extern "C"
 {
