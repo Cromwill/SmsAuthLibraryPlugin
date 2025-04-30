@@ -2824,6 +2824,8 @@ MonoBehaviour:
   _webViewURLHandler:
     _appAuthenticator: 9
     _remoteConfigName: wink-website-subs
+  _gameOrientation:
+    _appOrientation: 2
   _numbersInputField: {fileID: 5060942497361184118}
   _signInContinueButton: {fileID: 8482900657367419168}
   _enterCodeContinueButton: {fileID: 5251672201487640413}
@@ -2871,8 +2873,6 @@ MonoBehaviour:
   - {fileID: 1656392231747053308}
   - {fileID: 6177164924590513980}
   _webViewPresenter: {fileID: 1055951554191058541}
-  _gameOrientation:
-    _appOrientation: 2
 --- !u!1 &873353247278680094
 GameObject:
   m_ObjectHideFlags: 0
@@ -15663,7 +15663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _remoteConfigName: trial-period-days-text
-  _fallbackText: "45 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  _fallbackText: "30 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
 --- !u!1 &5165277286394309431
 GameObject:
   m_ObjectHideFlags: 0
@@ -24652,7 +24652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _remoteConfigName: trial-period-days-text
-  _fallbackText: "45 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  _fallbackText: "30 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
 --- !u!1 &7862624044098740075
 GameObject:
   m_ObjectHideFlags: 0

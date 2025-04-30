@@ -80,9 +80,8 @@ namespace Agava.Wink
                 _demoTimer.Construct(_winkAccessManager, seconds, _winkSignInHandlerUI);
                 _demoTimer.Start();
                 _demoTimer.CheckOutTime();
-#if UNITY_EDITOR || TEST
+
                 Debug.Log("Remote setted: " + response.body);
-#endif
             }
             else
             {
