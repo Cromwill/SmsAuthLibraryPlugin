@@ -45,7 +45,6 @@ namespace Agava.Wink
         {
             DisableCanvasGroup(_canvasGroup);
             _imagesCarousel.Disable();
-            ResetFreeChoise();
         }
 
         public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
