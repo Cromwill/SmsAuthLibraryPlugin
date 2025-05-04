@@ -14,7 +14,6 @@ namespace Agava.Wink
     [Preserve]
     public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine
     {
-        private const float RedirectWindowDelay = 1.0f;
         private const float ChangeOrientationDelay = 1.0f;
 
         [SerializeField] private ScreenshotProtector _screenshotProtector;
@@ -276,22 +275,6 @@ namespace Agava.Wink
                                 ContinueGame();
                         });
                     })));
-
-            /*_notifyWindowHandler.OpenDeleteAccountWindow(onDeleteAccount: () =>
-                {
-                    _winkAccessManager.DeleteAccount(
-                    onComplete: (resultSuccess) =>
-                    {
-                        if (resultSuccess == false)
-                        {
-                            _notifyWindowHandler.OpenWindow(WindowType.Fail);
-                        }
-                        else
-                        {
-                            AnalyticsWinkService.SendDeleteWindow();
-                        }
-                    });
-                });*/
         }
 
         public void SetRemoteTexts()
@@ -345,19 +328,6 @@ namespace Agava.Wink
             _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
             _notifyWindowHandler.OpenHelloWindow(hasAccess);
-
-            /*if (hasAccess)
-            {
-                SetPhone();
-                _notifyWindowHandler.CloseWindow(WindowType.Redirect);
-                _notifyWindowHandler.OpenHelloWindow(hasAccess);
-            }
-            else
-            {
-                SetPhone();
-                _notifyWindowHandler.CloseWindow(WindowType.Redirect);
-                _notifyWindowHandler.OpenHelloWOAccessWindow();
-            }*/
         }
 
         private void SetPhone()
@@ -374,13 +344,28 @@ namespace Agava.Wink
         private void OnCloseWinkInfoButtonClick() => _notifyWindowHandler.OpenHelloWindowWOAccess();
         private void CheckSubscription() => _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
 
-        private void OnTimerExpired()
+        private async void OnTimerExpired()
         {
+            Debug.Log($"WINK PLUGIN: Timer Expired");
+
+            if(_winkAccessManager.Authenficated)
+            {
+                Debug.Log($"WINK PLUGIN: authenficated user!");
+
+                bool hasSubsc = await _winkAccessManager.CheckSubscription();
+
+                if (hasSubsc)
+                {
+                    Debug.Log($"WINK PLUGIN: find subscription!");
+                    return;
+                }
+            }
+
+            Debug.Log($"WINK PLUGIN: show subscription offer window!");
+
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
 
-            Debug.Log($"WINK PLUGIN: Timer Expired");
-            //_notifyWindowHandler.OpenDemoExpiredWindow(false);
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
 
             if (_winkAccessManager.Authenficated)
@@ -401,7 +386,7 @@ namespace Agava.Wink
 
         private void OnSunbscriptionBuyed()
         {
-            _demoTimer.Stop();
+            _demoTimer.AddDemoTime();
             _winkAccessManager.ActivateTempSubscription();
         }
 

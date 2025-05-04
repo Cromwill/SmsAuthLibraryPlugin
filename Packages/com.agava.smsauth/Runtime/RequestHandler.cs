@@ -127,8 +127,20 @@ namespace Agava.Wink
                     return;
                 }
 
-                await RequestWinkDataBase(data.phone, onWinkSubscriptionAccessRequest);
+                var hasSubsc = await RequestWinkDataBase(data.phone, null);
+                var hasTempSubs = await RequestTempWinkDataBase(data.phone, null, tokens.access);
+
+                Debug.Log($"WINK PLUGIN: try login, hasSubsc = {hasSubsc}, hasTempSubs = {hasTempSubs}");
+
+                onWinkSubscriptionAccessRequest?.Invoke(hasSubsc || hasTempSubs);
             }
+        }
+
+        internal async Task<bool> CheckSubscription(string phoneNumber)
+        {
+            var hasSubsc = await RequestWinkDataBase(phoneNumber, null);
+
+            return hasSubsc;
         }
 
         internal async Task QuickAccess(string phoneNumber, Action onResetLogin, Action<bool> onWinkSubscriptionAccessRequest, Action<bool> onSignInSuccessfully)

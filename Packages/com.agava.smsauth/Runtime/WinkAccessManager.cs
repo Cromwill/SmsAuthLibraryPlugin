@@ -181,6 +181,16 @@ namespace Agava.Wink
         }
 #endif
 
+        public async Task<bool> CheckSubscription()
+        {
+            bool hasSubs = await _requestHandler.CheckSubscription(LoginData.phone);
+
+            if (hasSubs)
+                OnSubscriptionExist();
+
+            return hasSubs;
+        }
+
         public async void ActivateTempSubscription()
         {
              await _requestHandler.ActivateTempSubscription(LoginData.phone);
