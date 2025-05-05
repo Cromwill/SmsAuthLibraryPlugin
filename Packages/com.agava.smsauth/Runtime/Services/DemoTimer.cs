@@ -41,9 +41,6 @@ namespace Agava.Wink
 
             _remoteTempCfgSeconds = remoteTempCfgSeconds <= 0 ? _defaultTimerSeconds : remoteTempCfgSeconds;
 
-            remoteCfgSeconds = 30;
-            _remoteTempCfgSeconds = 40;
-
             if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)
             {
                 _savedDemoTime = TimeSpan.FromSeconds(remoteCfgSeconds);

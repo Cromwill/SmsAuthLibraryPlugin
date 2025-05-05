@@ -73,7 +73,7 @@ public class TestCloudHandler : MonoBehaviour
     {
         Debug.Log("Wink: " + WinkAccessManager.Instance.HasAccess);
 
-        if (WinkAccessManager.Instance.HasAccess == false)
+        if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false)
             throw new System.Exception("Wink not authorizated!");
 
         SmsAuthAPI.Utility.PlayerPrefs.SetString("key", _input.text);
@@ -84,7 +84,7 @@ public class TestCloudHandler : MonoBehaviour
     {
         Debug.Log("Wink: " + WinkAccessManager.Instance.HasAccess);
 
-        if (WinkAccessManager.Instance.HasAccess == false)
+        if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false)
             throw new System.Exception("Wink not authorizated!");
 
         var data = SmsAuthAPI.Utility.PlayerPrefs.GetString("key");
