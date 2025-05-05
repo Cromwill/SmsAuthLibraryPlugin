@@ -35,7 +35,7 @@ namespace Agava.Wink
                 myActivityHelper.CallStatic("SetSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
-            startScreenshotDetection();
+            //startScreenshotDetection();
 #endif
         }
 
@@ -56,7 +56,7 @@ namespace Agava.Wink
                 myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
             }
 #elif UNITY_IOS
-            stopScreenshotDetection();
+            //stopScreenshotDetection();
 #endif
         }
 
