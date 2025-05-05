@@ -24,7 +24,7 @@ namespace Agava.Wink
             if (WinkAccessManager.Instance == null)
                 throw new NullReferenceException(this.name);
 
-            if (WinkAccessManager.Instance.HasAccess)
+            if (WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess)
                 SetLock(isLocked: false);
             else
                 SetLock(isLocked: true);

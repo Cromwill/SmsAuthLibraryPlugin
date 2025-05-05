@@ -8,6 +8,7 @@ namespace Agava.Wink
     public interface IWinkAccessManager
     {
         bool HasAccess { get; }
+        bool HasTempAccess { get; }
 
         event Action AuthorizationSuccessfully;
         event Action ResetLogin;

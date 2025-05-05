@@ -94,16 +94,16 @@ namespace Agava.Wink
         {
             yield return new WaitWhile(() => SmsAuthApi.Initialized == false);
 
-            if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.Authenficated == false)
+            if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false && WinkAccessManager.Instance.Authenficated == false)
                 _winkSignInHandlerUI.OpenStartWindow();
 
-            yield return new WaitUntil(() => (WinkAccessManager.Instance.HasAccess == true || _winkSignInHandlerUI.IsAnyWindowEnabled == false));
+            yield return new WaitUntil(() => (WinkAccessManager.Instance.HasAccess == true || WinkAccessManager.Instance.HasTempAccess == true || _winkSignInHandlerUI.IsAnyWindowEnabled == false));
 
             if (UnityEngine.PlayerPrefs.HasKey(SmsAuthAPI.DTO.TokenLifeHelper.Tokens))
             {
                 yield return new WaitUntil(() => WinkAccessManager.Instance.Authenficated == true);
 
-                if (WinkAccessManager.Instance.HasAccess)
+                if (WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess)
                     yield return CloudSavesLoading();
             }
 
@@ -117,7 +117,7 @@ namespace Agava.Wink
             if (AdsAppView.Program.Boot.Instance != null)
             {
                 _winkSignInHandlerUI.OpenProcessOnWindow();
-                yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess);
+                yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess);
                 _winkSignInHandlerUI.CloseProcessOnWindow();
             }
 
