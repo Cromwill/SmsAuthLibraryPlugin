@@ -186,7 +186,10 @@ namespace Agava.Wink
             bool hasSubs = await _requestHandler.CheckSubscription(LoginData.phone);
 
             if (hasSubs)
+            {
+                TrySendAnalyticsDataByNewUser(LoginData.phone);
                 OnSubscriptionExist();
+            }
 
             return hasSubs;
         }
