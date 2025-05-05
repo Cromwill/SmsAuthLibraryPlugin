@@ -219,7 +219,7 @@ namespace Agava.Wink
             {
                 AnalyticsWinkService.SendSubscribeButtonClickOnSettings();
 
-                if (_winkAccessManager.HasAccess)
+                if (_winkAccessManager.HasAccess || _winkAccessManager.HasTempAccess)
                     action = () => _notifyWindowHandler.OpenWindow(WindowType.WinkProfile);
                 else
                     action = () => _notifyWindowHandler.OpenHelloWindowWOAccess();
