@@ -318,7 +318,7 @@ namespace Agava.Wink
             _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
         }
 
-        private void OnSignInSuccessfully(bool hasAccess)
+        private void OnSignInSuccessfully(bool hasAccess, bool hasTempAccess)
         {
             _screenshotProtector.TryDisableScreenshots();
             _numbersInputField.Clear();
@@ -327,7 +327,7 @@ namespace Agava.Wink
             SetPhone();
             _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
-            _notifyWindowHandler.OpenHelloWindow(hasAccess);
+            _notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
         }
 
         private void SetPhone()
@@ -341,7 +341,15 @@ namespace Agava.Wink
                 placeholder.ReplaceValue(number);
         }
 
-        private void OnCloseWinkInfoButtonClick() => _notifyWindowHandler.OpenHelloWindowWOAccess();
+        private void OnCloseWinkInfoButtonClick()
+        {
+#if TEST_TEMP_SUBSCRIPTION
+            _notifyWindowHandler.ConfirmPurchaseSubscriptionOnWebView();
+#else
+            _notifyWindowHandler.OpenHelloWindowWOAccess();
+#endif
+        }
+
         private void CheckSubscription() => _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
 
         private async void OnTimerExpired()
@@ -387,6 +395,7 @@ namespace Agava.Wink
         private void OnSunbscriptionBuyed()
         {
             _demoTimer.AddDemoTime();
+            _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
             _winkAccessManager.ActivateTempSubscription();
         }
 

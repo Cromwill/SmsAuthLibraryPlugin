@@ -120,9 +120,8 @@ namespace Agava.Wink
 
         internal void AddDemoTime()
         {
-            Expired = false;
-
             _savedDemoTime += TimeSpan.FromSeconds(_remoteTempCfgSeconds);
+            Expired = false;
             Debug.Log($"WebView: add demo time = {_savedDemoTime}!");
             UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }

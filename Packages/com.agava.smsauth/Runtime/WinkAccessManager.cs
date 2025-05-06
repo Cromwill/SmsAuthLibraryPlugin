@@ -41,7 +41,7 @@ namespace Agava.Wink
         private RequestHandler _requestHandler;
         private TimespentService _timespentService;
         private SubscriptionSearchSystem _subscribeSearchSystem;
-        private Action<bool> _winkSubscriptionAccessRequest;
+        private Action<bool, bool> _winkSubscriptionAccessRequest;
         private Action<bool> _otpCodeAccepted;
         private string _uniqueId;
         private string _sanId = null;
@@ -67,7 +67,7 @@ namespace Agava.Wink
 
         public event Action<IReadOnlyList<string>> LimitReached;
         public event Action ResetLogin;
-        public event Action<bool> SignInSuccessfully;
+        public event Action<bool, bool> SignInSuccessfully;
         public event Action AuthorizationSuccessfully;
         public event Action AccountDeleted;
 
@@ -238,10 +238,10 @@ namespace Agava.Wink
             }
         }
 
-        private void OnSignInSuccessfully(bool hasAccess)
+        private void OnSignInSuccessfully(bool hasAccess, bool hasTempAccess)
         {
             Authenficated = true;
-            SignInSuccessfully?.Invoke(hasAccess);
+            SignInSuccessfully?.Invoke(hasAccess, hasTempAccess);
             SearchSubscription(LoginData.phone);
             Debug.Log("Authentication successfully");
 
@@ -249,6 +249,14 @@ namespace Agava.Wink
             {
                 TrySendAnalyticsDataByNewUser(LoginData.phone);
                 OnSubscriptionExist();
+            }
+            else
+            {
+                if (hasTempAccess)
+                {
+                    HasTempAccess = true;
+                    AdsAppView.Program.PopupManager.Instance.OnSubscribeDetected();
+                }
             }
         }
 

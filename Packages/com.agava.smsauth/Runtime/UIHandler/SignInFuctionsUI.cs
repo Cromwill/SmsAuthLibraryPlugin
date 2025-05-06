@@ -135,8 +135,9 @@ namespace Agava.Wink
         internal void OnSignInSuccesfully(bool hasAccess)
         {
             if (hasAccess)
-                OnAuthorizationSuccessfully();
+                _demoTimer.Stop();
 
+            _notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
             _notifyWindowHandler.CloseWindow(WindowType.SignIn);
         }
 

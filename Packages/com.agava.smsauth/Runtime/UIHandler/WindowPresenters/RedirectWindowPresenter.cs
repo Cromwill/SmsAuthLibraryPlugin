@@ -20,14 +20,14 @@ namespace Agava.Wink
 
         private void Awake()
         {
-            _closeButton?.onClick.AddListener(Disable);
+            _closeButton?.onClick.AddListener(OnCloseButtonClick);
             _yesButton.onClick.AddListener(OnYesClicked);
             _signInButton.onClick.AddListener(ResetFreeChoise);
         }
 
         private void OnDestroy()
         {
-            _closeButton?.onClick.RemoveListener(Disable);
+            _closeButton?.onClick.RemoveListener(OnCloseButtonClick);
             _yesButton.onClick.RemoveListener(OnYesClicked);
             _signInButton.onClick.RemoveListener(ResetFreeChoise);
         }
@@ -57,6 +57,12 @@ namespace Agava.Wink
 
             if (_closeOnYesClicked)
                 Disable();
+        }
+
+        private void OnCloseButtonClick()
+        {
+            TryFreeWink = false;
+            Disable();
         }
 
         private void ResetFreeChoise() => TryFreeWink = false;

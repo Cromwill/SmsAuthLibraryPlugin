@@ -13,7 +13,6 @@ namespace Agava.Wink
 
         public void Enable(bool hasAccess)
         {
-            Debug.Log($"WINK PLUGIN: open HelloWindowPresenter with hasAcces = {hasAccess}");
             _imagesCarousel.Enable();
             _startButton.onClick.AddListener(OnStartButtonClick);
             EnableCanvasGroup(_canvasGroup);
