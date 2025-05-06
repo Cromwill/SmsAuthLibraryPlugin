@@ -1,4 +1,6 @@
+#if UNITY_IOS
 using System.Runtime.InteropServices;
+#endif
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -11,13 +13,13 @@ namespace Agava.Wink
         [SerializeField] private GameObject _warningMessage;
 
         private bool _screenshotsDisabled = false;
-
+#if UNITY_IOS
         [DllImport("__Internal")]
         private static extern void startScreenshotDetection();
 
         [DllImport("__Internal")]
         private static extern void stopScreenshotDetection();
-
+#endif
         public void TryDisableScreenshots()
         {
             if (_screenshotsDisabled)

@@ -100,8 +100,6 @@ namespace Agava.Wink
             if (_winkSignInHandlerUI.IsAnyWindowEnabled || Expired || SmsAuthApi.Initialized == false)
                 return;
 
-            Debug.Log($"WebView: demo timer updated = {_savedDemoTime}!");
-
             _second -= Time.unscaledDeltaTime;
 
             if (_second <= 0)
@@ -122,7 +120,6 @@ namespace Agava.Wink
         {
             _savedDemoTime += TimeSpan.FromSeconds(_remoteTempCfgSeconds);
             Expired = false;
-            Debug.Log($"WebView: add demo time = {_savedDemoTime}!");
             UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }
 

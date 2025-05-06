@@ -510,6 +510,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 1
+--- !u!1 &142744776126362287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5181412285461982604}
+  - component: {fileID: 4235149800656808712}
+  m_Layer: 5
+  m_Name: ScreenshotProtector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5181412285461982604
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142744776126362287}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7717092136396739014}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4235149800656808712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142744776126362287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1a8be522250bc46a4b966ef6721806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _webViewPresenter: {fileID: 1055951554191058541}
+  _warningMessage: {fileID: 3106236394066047383}
 --- !u!1 &166917061804732126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2688,6 +2738,7 @@ RectTransform:
   - {fileID: 2435692890748979846}
   - {fileID: 412186426666259362}
   - {fileID: 6401813144849018038}
+  - {fileID: 5181412285461982604}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2784,7 +2835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c37bc4639284b34a9b1f6e365b2be81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _screenshotProtector: {fileID: 0}
+  _screenshotProtector: {fileID: 4235149800656808712}
   _demoTimer:
     _defaultTimerSeconds: 1800
   _notifyWindowHandler:
