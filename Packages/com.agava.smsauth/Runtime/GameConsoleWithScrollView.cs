@@ -17,7 +17,7 @@ public class GameConsoleWithScrollView : MonoBehaviour
 
     void Awake()
     {
-#if CONSOLE_OUTPUT
+#if DEVELOPMENT_BUILD
         Instance = this;
         _stringInfo.AppendLine("CONSOLE:");
 #else

@@ -354,22 +354,13 @@ namespace Agava.Wink
 
         private async void OnTimerExpired()
         {
-            Debug.Log($"WINK PLUGIN: Timer Expired");
-
             if(_winkAccessManager.Authenficated)
             {
-                Debug.Log($"WINK PLUGIN: authenficated user!");
-
                 bool hasSubsc = await _winkAccessManager.CheckSubscription();
 
                 if (hasSubsc)
-                {
-                    Debug.Log($"WINK PLUGIN: find subscription!");
                     return;
-                }
             }
-
-            Debug.Log($"WINK PLUGIN: show subscription offer window!");
 
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
