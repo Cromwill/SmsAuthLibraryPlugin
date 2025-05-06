@@ -118,6 +118,13 @@ namespace Agava.Wink
         internal bool HasOpenedWindow(WindowType type)
             => _windows.Any(window => window.Type == type && window.isActiveAndEnabled == true);
 
+        internal void ConfirmPurchaseSubscriptionOnWebView()
+        {
+            OpenHelloWindow(hasAccess: true);
+            SunbscriptionBuyed?.Invoke();
+            _subscriptionCheckWindow.Disable();
+        }
+
         private WindowPresenter GetWindowByType(WindowType type)
             => _windows.FirstOrDefault(window => window.Type == type);
 
@@ -136,13 +143,6 @@ namespace Agava.Wink
         private void OpenHelloAfterCloseWebView()
         {
             OpenHelloWindowWOAccess();
-            _subscriptionCheckWindow.Disable();
-        }
-
-        private void ConfirmPurchaseSubscriptionOnWebView()
-        {
-            OpenHelloWindow(hasAccess: true);
-            SunbscriptionBuyed?.Invoke();
             _subscriptionCheckWindow.Disable();
         }
     }
