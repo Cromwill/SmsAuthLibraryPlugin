@@ -1,27 +1,27 @@
 {
-    "author": "github.com/doCent90",
-    "dependencies": {
-        "com.agava.smsauthwebapi": "1.0.0",
-        "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.textmeshpro": "3.0.9"
+  "author": "github.com/doCent90",
+  "dependencies": {
+    "com.agava.smsauthwebapi": "1.0.0",
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "com.unity.textmeshpro": "3.0.9"
+  },
+  "description": "Sms Authenfication for Wink access.",
+  "displayName": "Sms Auth VPS",
+  "license": "MIT",
+  "name": "com.agava.smsauthvps",
+  "samples": [
+    {
+      "description": "Contains UI prefab the SDK.",
+      "displayName": "Resource",
+      "path": "Samples~/Resource"
     },
-    "description": "Sms Authenfication for Wink access.",
-    "displayName": "Sms Auth VPS",
-    "license": "MIT",
-    "name": "com.agava.smsauthvps",
-    "samples": [
-        {
-            "description": "Contains UI prefab the SDK.",
-            "displayName": "Resource",
-            "path": "Samples~/Resource"
-        },
-        {
-            "description": "Place in Assets/Plugins/iOS",
-            "displayName": "ScreenProtector",
-            "path": "Samples~/ScreenProtector"
-        }
-    ],
-    "type": "library",
-    "unity": "2022.3",
-    "version": "1.2.0"
+    {
+      "description": "Place in Assets/Plugins/iOS",
+      "displayName": "ScreenProtector",
+      "path": "Samples~/ScreenProtector"
+    }
+  ],
+  "type": "library",
+  "unity": "2022.3",
+  "version": "1.3.0"
 }
