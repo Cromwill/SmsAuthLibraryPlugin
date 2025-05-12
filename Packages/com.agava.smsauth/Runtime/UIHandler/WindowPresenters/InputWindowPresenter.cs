@@ -146,8 +146,7 @@ namespace Agava.Wink
         {
             if (codeAccepted)
             {
-                _repeatCodeTimer.StopTimer();
-                _repeatCodeTimer.ResetTimer();
+                ResetCodeTimer();
                 _backButton.gameObject.SetActive(false);
                 _continueButton.gameObject.SetActive(true);
             }
@@ -174,6 +173,13 @@ namespace Agava.Wink
             SetWrongTextActive(false);
             _continueButton.gameObject.SetActive(false);
             _codeFormatter.Clear();
+        }
+
+        public void ResetCodeTimer()
+        {
+            _repeatCodeTimer.StopTimer();
+            _repeatCodeTimer.ResetTimer();
+            _repeatCodeTimer.ResetSeconds();
         }
 
         private void OnClicked(KeyCode code)

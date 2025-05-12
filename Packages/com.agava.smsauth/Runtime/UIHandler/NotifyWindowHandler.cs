@@ -68,7 +68,13 @@ namespace Agava.Wink
             _enterCodeWindow.Enable(phone, onInputDone, onBackClicked);
             _signInWindow.Clear();
         }
-        internal void OpenDemoExpiredWindow(bool closeButton) => _demoTimerExpiredWindow.Enable(closeButton);
+        internal void OpenDemoExpiredWindow(bool closeButton)
+        {
+            _enterCodeWindow.ResetCodeTimer();
+            _redirectToWebsiteWindow.ResetFreeChoise();
+            _demoTimerExpiredWindow.Enable(closeButton);
+        }
+
         internal void OpenDeleteAccountWindow(Action onDeleteAccount) => _deleteAccountWindow.Enable(onDeleteAccount);
 
         internal void OpenHelloWindow(bool hasAccess)

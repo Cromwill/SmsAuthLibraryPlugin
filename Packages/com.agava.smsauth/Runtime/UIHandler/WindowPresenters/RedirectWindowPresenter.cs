@@ -48,8 +48,8 @@ namespace Agava.Wink
         }
 
         public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
-
         public void TryShowCloseButton(bool enabled) => _closeButton.gameObject.SetActive(enabled);
+        public void ResetFreeChoise() => TryFreeWink = false;
 
         private void OnYesClicked()
         {
@@ -64,7 +64,5 @@ namespace Agava.Wink
             TryFreeWink = false;
             Disable();
         }
-
-        private void ResetFreeChoise() => TryFreeWink = false;
     }
 }

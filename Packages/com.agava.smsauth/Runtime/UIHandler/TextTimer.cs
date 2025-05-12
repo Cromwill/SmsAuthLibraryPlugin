@@ -77,15 +77,9 @@ namespace Agava.Wink
             _active = true;
         }
 
-        internal void StopTimer()
-        {
-            _active = false;
-        }
-
-        internal void ResetTimer()
-        {
-            UnityEngine.PlayerPrefs.DeleteKey(ExpirationTime);
-        }
+        internal void StopTimer() => _active = false;
+        internal void ResetTimer() => UnityEngine.PlayerPrefs.DeleteKey(ExpirationTime);
+        internal void ResetSeconds() => _seconds = 0;
 
         private async Task SetRemoteConfigs()
         {
