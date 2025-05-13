@@ -75,9 +75,9 @@ namespace Agava.Wink
 #endif
             _gameOrientation.LockPortraitOrientation();
 
-//#if UNITY_IOS
+#if UNITY_IOS
             yield return new WaitForSeconds(_iosDelay);
-//#endif
+#endif
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 
             Disable();
