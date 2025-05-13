@@ -10,6 +10,7 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private OrientationСhangeAnimation _orientationСhangeAnimation;
+        [SerializeField] private float _iosDelay = 1f;
 
         private IInternetChecker _internetChecker;
         private GameOrientation _gameOrientation;
@@ -73,6 +74,10 @@ namespace Agava.Wink
             }
 #endif
             _gameOrientation.LockPortraitOrientation();
+
+//#if UNITY_IOS
+            yield return new WaitForSeconds(_iosDelay);
+//#endif
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 
             Disable();
