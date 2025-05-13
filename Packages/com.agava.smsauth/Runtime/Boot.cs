@@ -64,6 +64,8 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.Construct();
                 yield return _winkAccessManager.TryQuickAccess();
 
+                _winkSignInHandlerUI.SetRemoteTexts();
+
                 _signInProcess = StartCoroutine(OnStarted());
                 yield return _signInProcess;
 

@@ -269,7 +269,7 @@ namespace Agava.Wink
             HasTempAccess = true;
             AuthorizationSuccessfully?.Invoke();
             SendStartData(LoginData.phone);
-            AdsAppView.Program.PopupManager.Instance.OnSubscribeDetected();
+            AdsAppView.Program.PopupManager.Instance?.OnSubscribeDetected();
 
             Debug.Log("Wink access successfully");
         }

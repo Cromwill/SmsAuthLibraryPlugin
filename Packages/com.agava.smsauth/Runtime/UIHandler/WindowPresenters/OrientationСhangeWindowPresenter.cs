@@ -50,7 +50,7 @@ namespace Agava.Wink
 
         private IEnumerator WaitRotatePhone()
         {
-            _gameOrientation.SetLandscapeOrientationPosibility();
+            _gameOrientation.UnlockAutoOrientation();
 #if UNITY_EDITOR && TEST_CHANGE_ORIENTATION
             yield return new WaitForSeconds(2);
 #else
@@ -59,17 +59,20 @@ namespace Agava.Wink
                 if(Input.acceleration.x < _gameOrientation.DeltaToLandscapeLeft)
                 {
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    _gameOrientation.LockPortraitOrientation();
                     Screen.orientation = ScreenOrientation.AutoRotation;
                 }
                 else if(Input.acceleration.x > _gameOrientation.DeltaToLandscapeRight)
                 {
                     Screen.orientation = ScreenOrientation.LandscapeRight;
+                    _gameOrientation.LockPortraitOrientation();
                     Screen.orientation = ScreenOrientation.AutoRotation;
                 }
 
                 yield return new WaitForSeconds(_gameOrientation.CheckTime);
             }
 #endif
+            _gameOrientation.LockPortraitOrientation();
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 
             Disable();
