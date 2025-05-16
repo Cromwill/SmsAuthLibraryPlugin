@@ -302,6 +302,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.yandex.varioqub": {
+      "version": "https://github.com/appmetrica/varioqub-unity-plugin.git#v0.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.177"
+      },
+      "hash": "c3df9f1aa94779f64d8cb613c4d8872949c48e67"
+    },
     "io.appmetrica.analytics": {
       "version": "https://github.com/appmetrica/appmetrica-unity-plugin.git#v6.1.0",
       "depth": 0,

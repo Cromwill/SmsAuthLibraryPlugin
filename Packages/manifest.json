@@ -10,6 +10,7 @@
         }
     ],
   "dependencies": {
+    "com.yandex.varioqub": "https://github.com/appmetrica/varioqub-unity-plugin.git#v0.1.0",
     "com.unity.addressables": "1.21.21",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.2d": "2.0.0",

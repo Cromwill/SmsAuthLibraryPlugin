@@ -1,6 +1,8 @@
 <dependencies>
   <packages>
     <package>androidx.annotation:annotation:1.7.1</package>
+    <package>com.yandex.varioqub:appmetrica-adapter:0.7.0</package>
+    <package>com.yandex.varioqub:config:0.7.0</package>
     <package>io.appmetrica.analytics:analytics:6.5.0</package>
   </packages>
   <files />
