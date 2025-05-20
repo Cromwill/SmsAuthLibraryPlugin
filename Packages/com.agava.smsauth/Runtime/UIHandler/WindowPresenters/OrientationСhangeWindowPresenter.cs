@@ -70,7 +70,8 @@ namespace Agava.Wink
                     Screen.orientation = ScreenOrientation.AutoRotation;
                 }
 
-                yield return new WaitForSeconds(_gameOrientation.CheckTime);
+                if(_gameOrientation.ChangedToLandscape == false)
+                    yield return new WaitForSeconds(_gameOrientation.CheckTime);
             }
 #endif
             _gameOrientation.LockPortraitOrientation();
