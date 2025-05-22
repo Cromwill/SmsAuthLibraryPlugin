@@ -27,6 +27,7 @@ namespace Agava.Wink
         [SerializeField] private HelloWOAccessWindowPresenter _helloWOAccessWindow;
         [SerializeField] private OrientationСhangeWindowPresenter _orientationСhangeWindow;
         [SerializeField] private WebViewPresenter _webViewPresenter;
+        [SerializeField] private RewardContinueWindowPresenter _rewardContinueWindowPresenter;
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
@@ -42,13 +43,14 @@ namespace Agava.Wink
 
         public event Action SunbscriptionBuyed;
 
-        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer)
         {
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
 
             _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
+            _rewardContinueWindowPresenter.Construct(_subscriptionCheckWindow, demoTimer);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;
