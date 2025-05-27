@@ -24,6 +24,7 @@ namespace Agava.Wink
             }
             else
             {
+                Debug.Log("XML TEXT: download remote failed, used prepared texts.");
                 _text.text = _fallbackText.Replace($"{{{LineTransitionPattern}}}", "\n");
             }
         }
