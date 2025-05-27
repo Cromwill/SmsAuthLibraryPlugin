@@ -116,11 +116,9 @@ namespace Agava.Wink
             }
         }
 
-        internal void AddTempSubsDemoTime() => AddDemoTime(_remoteTempCfgSeconds);
-
-        internal void AddDemoTime(float time)
+        internal void AddDemoTime()
         {
-            _savedDemoTime += TimeSpan.FromSeconds(time);
+            _savedDemoTime += TimeSpan.FromSeconds(_remoteTempCfgSeconds);
             Expired = false;
             UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }

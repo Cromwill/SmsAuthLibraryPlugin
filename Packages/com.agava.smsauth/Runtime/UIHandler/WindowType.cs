@@ -24,6 +24,5 @@ namespace Agava.Wink
         SubscriptionCheck,
         HelloWOAccess,
         WinkInfo,
-        RewardContinue,
     }
 }
