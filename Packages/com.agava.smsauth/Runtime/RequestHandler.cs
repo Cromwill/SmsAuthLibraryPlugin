@@ -93,7 +93,7 @@ namespace Agava.Wink
         }
 
         internal async void Login(LoginData data, Action<IReadOnlyList<string>> onLimitReached,
-            Action<bool, bool> onWinkSubscriptionAccessRequest, Action<bool> otpCodeAccepted)
+            Action<bool, bool, bool> onWinkSubscriptionAccessRequest, Action<bool> otpCodeAccepted)
         {
             var response = await SmsAuthApi.Login(data);
 
@@ -130,7 +130,7 @@ namespace Agava.Wink
                 var hasSubsc = await RequestWinkDataBase(data.phone, null);
                 var hasTempSubs = await RequestTempWinkDataBase(data.phone, null, tokens.access);
 
-                onWinkSubscriptionAccessRequest?.Invoke(hasSubsc, hasTempSubs);
+                onWinkSubscriptionAccessRequest?.Invoke(hasSubsc, hasTempSubs, false);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Agava.Wink
             return hasSubsc;
         }
 
-        internal async Task QuickAccess(string phoneNumber, Action onResetLogin, Action<bool> onWinkSubscriptionAccessRequest, Action<bool, bool> onSignInSuccessfully)
+        internal async Task QuickAccess(string phoneNumber, Action onResetLogin, Action<bool> onWinkSubscriptionAccessRequest, Action<bool, bool, bool> onSignInSuccessfully)
         {
             if (UnityEngine.PlayerPrefs.HasKey(UnlinkProcess))
             {
@@ -189,7 +189,7 @@ namespace Agava.Wink
             {
                 var hasTempSubs = await RequestTempWinkDataBase(phoneNumber, onWinkSubscriptionAccessRequest, currentToken);
 
-                onSignInSuccessfully?.Invoke(hasSubsc, hasTempSubs);
+                onSignInSuccessfully?.Invoke(hasSubsc, hasTempSubs, true);
 
                 /*if (hasSubsc)
                 {

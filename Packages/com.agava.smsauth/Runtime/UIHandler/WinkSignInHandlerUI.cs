@@ -232,7 +232,7 @@ namespace Agava.Wink
                 action = OpenSignWindow;
             }
             
-            StartCoroutine(ActionWithDelay(ChangeOrientationDelay, action));
+            StartCoroutine(ActionWithDelay(WindowType.ProccessOn, ChangeOrientationDelay, action));
         }
 
         private void ContinueGame()
@@ -260,7 +260,7 @@ namespace Agava.Wink
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
 
-            StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () =>
+            StartCoroutine(ActionWithDelay(WindowType.ProccessOn, ChangeOrientationDelay, () =>
                 _notifyWindowHandler.OpenDeleteAccountWindow(onDeleteAccount: () =>
                     {
                         _winkAccessManager.DeleteAccount(
@@ -313,7 +313,7 @@ namespace Agava.Wink
 
         private void OnEnterCodeContinueClicked() => _notifyWindowHandler.CloseWindow(WindowType.Redirect);
 
-        private void OnSignInSuccessfully(bool hasAccess, bool hasTempAccess)
+        private void OnSignInSuccessfully(bool hasAccess, bool hasTempAccess, bool loginFromStartApp)
         {
             _screenshotProtector.TryDisableScreenshots();
             _numbersInputField.Clear();
@@ -321,14 +321,30 @@ namespace Agava.Wink
 
             SetPhone();
             _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
-            _notifyWindowHandler.CloseWindow(WindowType.Redirect);
 
             if (_gameOrientation.NeedChangeOrientation)
             {
                 _gameOrientation.SaveGameOrientation();
-                _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+
+                if(loginFromStartApp)
+                {
+                    _gameOrientation.SetPortraitOrientation();
+
+                    StartCoroutine(ActionWithDelay(WindowType.BlankWindow, ChangeOrientationDelay, () =>
+                    {
+                        _notifyWindowHandler.CloseWindow(WindowType.Redirect);
+                        _notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
+                    }));
+
+                    return;
+                }
+                else
+                {
+                    _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+                }
             }
 
+            _notifyWindowHandler.CloseWindow(WindowType.Redirect);
             _notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
         }
 
@@ -413,14 +429,14 @@ namespace Agava.Wink
             }
         }
 
-        private IEnumerator ActionWithDelay(float delay, Action action = null)
+        private IEnumerator ActionWithDelay(WindowType windowType, float delay, Action action = null)
         {
-            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+            _notifyWindowHandler.OpenWindow(windowType);
 
             yield return new WaitForSeconds(delay);
 
             action?.Invoke();
-            _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+            _notifyWindowHandler.CloseWindow(windowType);
         }
     }
 }
