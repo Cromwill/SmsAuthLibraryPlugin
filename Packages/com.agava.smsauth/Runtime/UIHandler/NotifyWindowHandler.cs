@@ -30,6 +30,7 @@ namespace Agava.Wink
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
+        private GameOrientation _gameOrientation;
         private WinkWebViewURLHandler _winkWebViewURLHandler;
         private bool _subscriptionChecked = false;
 
@@ -44,9 +45,10 @@ namespace Agava.Wink
 
         internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler)
         {
+            _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
 
-            _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
+            _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow, _unlinkWindow, _enterCodeWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
 

@@ -2876,7 +2876,7 @@ MonoBehaviour:
     _appAuthenticator: 9
     _remoteConfigName: wink-website-subs
   _gameOrientation:
-    _appOrientation: 2
+    _appOrientation: 1
   _numbersInputField: {fileID: 5060942497361184118}
   _signInContinueButton: {fileID: 8482900657367419168}
   _enterCodeContinueButton: {fileID: 5251672201487640413}
@@ -9130,6 +9130,7 @@ MonoBehaviour:
     _arrowsRT: {fileID: 6680519355342237400}
     _leftArrowRT: {fileID: 5358901825994674597}
     _rightArrowRT: {fileID: 1982326162101050701}
+  _delay: 0.5
 --- !u!225 &7326384691294832866
 CanvasGroup:
   m_ObjectHideFlags: 0

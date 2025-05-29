@@ -7,6 +7,7 @@ namespace Agava.Wink
     public class GameOrientation
     {
         private const GameScreenOrientation PluginOrientation = GameScreenOrientation.Portrait;
+        private float RotateDelta = 0.5f;
 
         [SerializeField] private GameScreenOrientation _appOrientation;
 
@@ -14,9 +15,12 @@ namespace Agava.Wink
 
         public bool NeedChangeOrientation => PluginOrientation != _appOrientation;
         public bool ChangedToLandscape => Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight;
-        public float DeltaToLandscapeLeft { get; private set; } = -0.5f;
-        public float DeltaToLandscapeRight { get; private set; } = 0.5f;
-        public float CheckTime { get; private set; } = 0.1f;
+        public bool IsLandscapeRight => Input.acceleration.x > RotateDelta;
+        public bool IsLandscapeLeft => Input.acceleration.x < -RotateDelta;
+        public bool ChangedToPortrait => Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown;
+        public bool IsPortrait => Input.acceleration.x > RotateDelta;
+        public bool IsPortraitUpsideDown => Input.acceleration.x < -RotateDelta;
+        public float CheckTime { get; private set; } = 0.2f;
 
         public void UnlockAutoOrientation()
         {
@@ -26,6 +30,7 @@ namespace Agava.Wink
         }
 
         public void LockPortraitOrientation() => Screen.autorotateToPortrait = Screen.autorotateToPortraitUpsideDown = false;
+        public void LockLandscapeOrientation() => Screen.autorotateToLandscapeLeft = Screen.autorotateToLandscapeRight = false;
 
         public void SetLandscapeOrientationPosibility()
         {

@@ -10,16 +10,19 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private OrientationСhangeAnimation _orientationСhangeAnimation;
-        [SerializeField] private float _iosDelay = 1f;
 
         private IInternetChecker _internetChecker;
         private GameOrientation _gameOrientation;
         private Coroutine _waitPhoneRotateCoroutine;
+        private UnlinkWindowPresenter _unlinkWindowPresenter;
+        private InputWindowPresenter _inputWindowPresenter;
 
-        public void Construct(GameOrientation gameOrientation, IInternetChecker internetChecker)
+        public void Construct(GameOrientation gameOrientation, IInternetChecker internetChecker, UnlinkWindowPresenter unlinkWindowPresenter, InputWindowPresenter inputWindowPresenter)
         {
             _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
             _internetChecker = internetChecker ?? throw new ArgumentNullException(nameof(internetChecker));
+            _unlinkWindowPresenter = unlinkWindowPresenter ?? throw new ArgumentNullException(nameof(unlinkWindowPresenter));
+            _inputWindowPresenter = inputWindowPresenter ?? throw new ArgumentNullException(nameof(inputWindowPresenter));
 
             _orientationСhangeAnimation.Construct();
         }
@@ -51,34 +54,33 @@ namespace Agava.Wink
 
         private IEnumerator WaitRotatePhone()
         {
+            yield return new WaitUntil(() => _unlinkWindowPresenter.Enabled == false && _inputWindowPresenter.Enabled == false);
+
             _gameOrientation.UnlockAutoOrientation();
 #if UNITY_EDITOR && TEST_CHANGE_ORIENTATION
             yield return new WaitForSeconds(2);
 #else
-            while(_gameOrientation.ChangedToLandscape == false)
+            while (_gameOrientation.ChangedToPortrait == false)
             {
-                if(Input.acceleration.x < _gameOrientation.DeltaToLandscapeLeft)
+                if (_gameOrientation.IsPortrait)
                 {
-                    Screen.orientation = ScreenOrientation.LandscapeLeft;
-                    _gameOrientation.LockPortraitOrientation();
+                    Screen.orientation = ScreenOrientation.Portrait;
+                    _gameOrientation.LockLandscapeOrientation();
                     Screen.orientation = ScreenOrientation.AutoRotation;
                 }
-                else if(Input.acceleration.x > _gameOrientation.DeltaToLandscapeRight)
+                else if (_gameOrientation.IsPortraitUpsideDown)
                 {
-                    Screen.orientation = ScreenOrientation.LandscapeRight;
-                    _gameOrientation.LockPortraitOrientation();
+                    Screen.orientation = ScreenOrientation.PortraitUpsideDown;
+                    _gameOrientation.LockLandscapeOrientation();
                     Screen.orientation = ScreenOrientation.AutoRotation;
                 }
 
-                if(_gameOrientation.ChangedToLandscape == false)
+                if (_gameOrientation.ChangedToPortrait == false)
                     yield return new WaitForSeconds(_gameOrientation.CheckTime);
             }
 #endif
-            _gameOrientation.LockPortraitOrientation();
+            _gameOrientation.LockLandscapeOrientation();
 
-#if UNITY_IOS
-            yield return new WaitForSeconds(_iosDelay);
-#endif
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 
             Disable();

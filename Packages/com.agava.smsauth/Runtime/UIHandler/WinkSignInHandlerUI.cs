@@ -194,8 +194,7 @@ namespace Agava.Wink
         {
             _screenshotProtector.TryEnableScreenshots();
 
-            if (_gameOrientation.NeedChangeOrientation)
-                _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+            TrySetCorrectOrientation();
         }
 
         public void OpenSubscriptionWindow()
@@ -214,10 +213,14 @@ namespace Agava.Wink
             _screenshotProtector.TryDisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
+            _gameOrientation.SaveGameOrientation();
 
             if (_winkAccessManager.Authenficated)
             {
                 AnalyticsWinkService.SendSubscribeButtonClickOnSettings();
+
+                if (_gameOrientation.NeedChangeOrientation)
+                    _gameOrientation.SetPortraitOrientation();
 
                 if (_winkAccessManager.HasAccess || _winkAccessManager.HasTempAccess)
                     action = () => _notifyWindowHandler.OpenWindow(WindowType.WinkProfile);
@@ -228,12 +231,8 @@ namespace Agava.Wink
             {
                 action = OpenSignWindow;
             }
-
-            _gameOrientation.SaveGameOrientation();
+            
             StartCoroutine(ActionWithDelay(ChangeOrientationDelay, action));
-
-            if (_gameOrientation.NeedChangeOrientation)
-                _gameOrientation.SetPortraitOrientation();
         }
 
         private void ContinueGame()
@@ -312,11 +311,7 @@ namespace Agava.Wink
 
         private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();
 
-        private void OnEnterCodeContinueClicked()
-        {
-            _notifyWindowHandler.CloseWindow(WindowType.Redirect);
-            _notifyWindowHandler.CloseWindow(WindowType.EnterOtpCode);
-        }
+        private void OnEnterCodeContinueClicked() => _notifyWindowHandler.CloseWindow(WindowType.Redirect);
 
         private void OnSignInSuccessfully(bool hasAccess, bool hasTempAccess)
         {
@@ -327,6 +322,13 @@ namespace Agava.Wink
             SetPhone();
             _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
+
+            if (_gameOrientation.NeedChangeOrientation)
+            {
+                _gameOrientation.SaveGameOrientation();
+                _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+            }
+
             _notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
         }
 
