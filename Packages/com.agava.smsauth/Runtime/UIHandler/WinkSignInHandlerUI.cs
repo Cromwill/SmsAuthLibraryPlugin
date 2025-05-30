@@ -58,7 +58,7 @@ namespace Agava.Wink
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -385,7 +385,7 @@ namespace Agava.Wink
 
         private void OnSunbscriptionBuyed()
         {
-            _demoTimer.AddDemoTime();
+            _demoTimer.AddTempSubsDemoTime();
             _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
             _winkAccessManager.ActivateTempSubscription();
         }
