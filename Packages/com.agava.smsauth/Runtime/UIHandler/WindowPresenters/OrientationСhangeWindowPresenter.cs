@@ -10,6 +10,7 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private OrientationСhangeAnimation _orientationСhangeAnimation;
+        [SerializeField] private float _delayAfterSwitchOrientation = .5f;
 
         private IInternetChecker _internetChecker;
         private GameOrientation _gameOrientation;
@@ -81,6 +82,7 @@ namespace Agava.Wink
 #endif
             _gameOrientation.LockLandscapeOrientation();
 
+            yield return new WaitForSeconds(_delayAfterSwitchOrientation);
             yield return new WaitWhile(() => _internetChecker.HasInternet);
 
             Disable();

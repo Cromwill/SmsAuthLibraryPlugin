@@ -12900,6 +12900,7 @@ MonoBehaviour:
     _arrowsRT: {fileID: 4253291744791479405}
     _leftArrowRT: {fileID: 7539787696174809891}
     _rightArrowRT: {fileID: 6869452313791475565}
+  _delayAfterSwitchOrientation: 0.5
 --- !u!225 &3190854641078791242
 CanvasGroup:
   m_ObjectHideFlags: 0
