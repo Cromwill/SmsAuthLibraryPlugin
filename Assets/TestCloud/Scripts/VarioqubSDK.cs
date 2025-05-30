@@ -7,18 +7,20 @@ using UnityEngine.UI;
 public class VarioqubSDK : MonoBehaviour
 {
     [SerializeField] private Button _btn;
+    [SerializeField] private Text _log;
+    [SerializeField] private Text _idPreset;
+    [SerializeField] private Text _presetInfo1;
+    [SerializeField] private Text _presetInfo2;
 
     private IEnumerator Start()
     {
+        string id = "appmetrica.4230628";
         _btn.onClick.AddListener(GetFlags);
-        Debug.Log("AB Started!");
-        var settings = new VarioqubSettings("appmetrica.4230628");
-#if UNITY_EDITOR
+        _log.text = $"AB Started! [{id}]";
+
+        var settings = new VarioqubSettings(id);
         settings.Logs = true;
-        settings.ThrottleInterval = 2;
-#elif !UNITY_EDITOR
         settings.ThrottleInterval = 60;
-#endif
 
         var defaultConfig = new Dictionary<string, object>(){
             {"version", "-1"}
@@ -26,7 +28,6 @@ public class VarioqubSDK : MonoBehaviour
 
         Varioqub.InitVarioqubWithAppMetricaAdapter(settings);
         ActivateConfig();
-        //Varioqub.SetDefaults(defaultConfig);
 
         yield return RepeatFetch();
     }
@@ -34,35 +35,38 @@ public class VarioqubSDK : MonoBehaviour
     private IEnumerator RepeatFetch()
     {
         bool success = false;
-        Debug.Log("Fetch started!");
+        yield return new WaitForSeconds(2f);
+        _log.text = "Fetch started!";
+
         while (success == false)
         {
             Varioqub.Fetch(
                 onSuccessDelegate: () =>
                 {
-                    Debug.Log("Fetch successed!");
+                    _log.text = "Fetch successed!";
                     success = true;
                 },
                 onErrorDelegate: error =>
                 {
-                    Debug.Log($"Error: {error}!");
+                    _log.text = $"Error: {error}!";
                 }
             );
-            yield return new WaitForSeconds(3f);
-            Debug.Log("Fetch restarted!");
+            yield return new WaitForSeconds(5f);
+
+            if (success == false)
+                _log.text = "Fetch restarted!";
         }
     }
 
-    [ContextMenu("Get flags")]
     private void GetFlags()
     {
-        Debug.Log($"id [{Varioqub.GetId()}]");
-
+        _idPreset.text = $"GetId: [{Varioqub.GetId()}]";
         var flags = Varioqub.GetString("version", "-1");
-        Debug.Log($"flag  [version:{flags}]");
+        var flag2s = Varioqub.GetString("text", "default text");
+        _presetInfo1.text = $"[version:{flags}]";
+        _presetInfo2.text = $"[text:{flag2s}]";
     }
 
-    [ContextMenu("Activate Config")]
     private void ActivateConfig()
     {
         Debug.Log($"Activate configs");

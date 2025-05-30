@@ -48,13 +48,13 @@ Library: E:\UnityProjects\SmsAuthLibraryPlugin\Temp\BurstOutput\tempburstlibs\ar
 --assembly-defines=System.Text.Json;
 --assembly-defines=Microsoft.IdentityModel.Logging;
 --assembly-defines=System.Runtime.CompilerServices.Unsafe;
---assembly-defines=DOTween;
 --assembly-defines=System.IdentityModel.Tokens.Jwt;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=Newtonsoft.Json;
 --assembly-defines=Microsoft.IdentityModel.JsonWebTokens;
 --assembly-defines=Microsoft.IdentityModel.Tokens;
+--assembly-defines=DOTween;
 --assembly-defines=System.Buffers;
 --assembly-defines=System.Memory;
 --assembly-defines=System.Runtime;
