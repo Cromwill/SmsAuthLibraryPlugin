@@ -9,7 +9,7 @@ namespace Agava.Wink
     public class XmlConfigText : MonoBehaviour
     {
         private const string LineTransitionPattern = "end";
-        private const string LinkPattern = "<link=\"{0}\"> {1} </link>";
+        private const string LinkPattern = "<link=\"{0}\">{1}</link>";
 
         [SerializeField] private TMP_Text _text;
         [SerializeField] private XMLKeys _xMLKey;
