@@ -153,6 +153,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C
     \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \u043D\u0430 30 \u0434\u043D\u0435\u0439"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &17822193542527510
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +391,8 @@ MonoBehaviour:
     \u0433\u0435\u0440\u043E\u044F\u043C\u0438 \u041B\u0435\u043E \u0438 \u0422\u0438\u0433,
     {end}\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u0435\u043A, \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u043E\u0433\u043E
     \u043F\u0430\u0442\u0440\u0443\u043B\u044F"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &36069417119373465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,6 +1967,8 @@ MonoBehaviour:
   _xMLKey: 9
   _xMLValue: 2
   _fallbackText: "3-7 \u043B\u0435\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &674850779794608068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,7 +2150,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: support@wink.ru
+  m_text: <link="support"> support@wink.ru </link>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 702a1e5c8da998f46865331968bbc158, type: 2}
   m_sharedMaterial: {fileID: -6208455463659856418, guid: 702a1e5c8da998f46865331968bbc158, type: 2}
@@ -2229,6 +2235,8 @@ MonoBehaviour:
   _xMLKey: 13
   _xMLValue: 0
   _fallbackText: support@wink.ru
+  _isLink: 1
+  _linkName: support
 --- !u!114 &6303756205170403801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2590,6 +2598,8 @@ MonoBehaviour:
   _xMLKey: 8
   _xMLValue: 2
   _fallbackText: "4-9 \u043B\u0435\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &797330996047540534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,6 +3164,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u0445
     \u0438\u0433\u0440"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &888061810617909682
 GameObject:
   m_ObjectHideFlags: 0
@@ -3311,6 +3323,8 @@ MonoBehaviour:
     \u0434\u043E\u0441\u0442\u0443\u043F {end}\u043A \u043C\u0443\u043B\u044C\u0442\u0444\u0438\u043B\u044C\u043C\u0430\u043C,
     \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430\u043C \u0434\u043B\u044F \u0434\u0435\u0442\u0435\u0439,
     {end}12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u043C \u0438\u0433\u0440\u0430\u043C"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &900735061734910742
 GameObject:
   m_ObjectHideFlags: 0
@@ -3709,6 +3723,8 @@ MonoBehaviour:
   _xMLValue: 1
   _fallbackText: "2018-2025 \u0412\u0438\u0434\u0435\u043E\u0441\u0435\u0440\u0432\u0438\u0441
     Wink. {end}\u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043D\u044B"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &1028778837404397090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,6 +4245,8 @@ MonoBehaviour:
   _fallbackText: "\u0421\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u044B\u0439
     \u043A\u043E\u043D\u0442\u0435\u043D\u0442 {end}\u043F\u043E \u0432\u043E\u0437\u0440\u0430\u0441\u0442\u0443
     \u0438 \u043D\u0438\u043A\u0430\u043A\u043E\u0439 \u0440\u0435\u043A\u043B\u0430\u043C\u044B!"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &1099229861433936398
 GameObject:
   m_ObjectHideFlags: 0
@@ -5201,6 +5219,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u0422\u0435\u0445\u043D\u0438\u0447\u0435\u0441\u043A\u0430\u044F
     \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &1385960122875221170
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,6 +5931,8 @@ MonoBehaviour:
   _xMLKey: 14
   _xMLValue: 1
   _fallbackText: "\u0434\u0430\u043B\u0435\u0435 \u2013 199 \u20BD/\u043C\u0435\u0441\u044F\u0446"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &1526954553056162480
 GameObject:
   m_ObjectHideFlags: 0
@@ -7532,6 +7554,8 @@ MonoBehaviour:
   _xMLKey: 6
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2146486604241307420
 GameObject:
   m_ObjectHideFlags: 0
@@ -8022,6 +8046,8 @@ MonoBehaviour:
   _fallbackText: "\u041C\u044B \u0441 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u0435\u043C
     \u043E\u0442\u0432\u0435\u0442\u0438\u043C {end}\u043D\u0430 \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u0443\u044E\u0449\u0438\u0435
     \u0442\u0435\u0431\u044F \u0432\u043E\u043F\u0440\u043E\u0441\u044B"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2300965013730574233
 GameObject:
   m_ObjectHideFlags: 0
@@ -8425,6 +8451,8 @@ MonoBehaviour:
   _xMLKey: 14
   _xMLValue: 1
   _fallbackText: "\u0434\u0430\u043B\u0435\u0435 \u2013 199 \u20BD/\u043C\u0435\u0441\u044F\u0446"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2418222132983305151
 GameObject:
   m_ObjectHideFlags: 0
@@ -9282,6 +9310,7 @@ MonoBehaviour:
     _arrowsRT: {fileID: 6680519355342237400}
     _leftArrowRT: {fileID: 5358901825994674597}
     _rightArrowRT: {fileID: 1982326162101050701}
+  _iosDelay: 1
 --- !u!225 &7326384691294832866
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -9451,6 +9480,8 @@ MonoBehaviour:
     \u0446\u0438\u0444\u0440\u044B, \u0447\u0438\u0442\u0430\u0439\u0442\u0435 {end}\u043F\u043E
     \u0441\u043B\u043E\u0433\u0430\u043C - \u0433\u043E\u0442\u043E\u0432\u044C\u0442\u0435\u0441\u044C
     \u043A \u0448\u043A\u043E\u043B\u0435 {end}\u0438\u0433\u0440\u0430\u044F!"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2842431361723298690
 GameObject:
   m_ObjectHideFlags: 0
@@ -9604,6 +9635,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "23 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430 {end}\u0434\u043B\u044F
     \u0434\u0435\u0442\u0435\u0439"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2847247471774486848
 GameObject:
   m_ObjectHideFlags: 0
@@ -9964,6 +9997,8 @@ MonoBehaviour:
   _xMLKey: 10
   _xMLValue: 0
   _fallbackText: "\u041B\u043E\u0433\u0438\u043A\u041B\u0430\u0439\u043A"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2971635474921348073
 GameObject:
   m_ObjectHideFlags: 0
@@ -10548,6 +10583,8 @@ MonoBehaviour:
   _xMLKey: 9
   _xMLValue: 0
   _fallbackText: "\u041A\u0443\u0431\u043E\u043A\u043E\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &3050979825469390246
 GameObject:
   m_ObjectHideFlags: 0
@@ -12190,6 +12227,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u0420\u0430\u0437\u0432\u0438\u0432\u0430\u0439\u0442\u0435\u0441\u044C
     \u0441 \u041A\u0443\u0431\u043E\u043A\u043E\u0442 \u0438 \u041B\u043E\u0433\u0438\u043A\u041B\u0430\u0439\u043A"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &3681682018436533482
 GameObject:
   m_ObjectHideFlags: 0
@@ -12343,6 +12382,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "8000+ \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432 {end}\u0438
     \u0444\u0438\u043B\u044C\u043C\u043E\u0432 \u0434\u043B\u044F \u0434\u0435\u0442\u0435\u0439"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &3710490831630736419
 GameObject:
   m_ObjectHideFlags: 0
@@ -12793,6 +12834,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439
     \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044C"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &3934619212470917277
 GameObject:
   m_ObjectHideFlags: 0
@@ -14761,6 +14804,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u0418\u0433\u0440\u0430\u0439\u0442\u0435 \u0441 \u0433\u0435\u0440\u043E\u044F\u043C\u0438
     \u043B\u044E\u0431\u0438\u043C\u044B\u0445 \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &4689650265117699092
 GameObject:
   m_ObjectHideFlags: 0
@@ -15104,6 +15149,8 @@ MonoBehaviour:
   _fallbackText: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F
     \u0434\u043B\u044F \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0438 \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u043E\u0435
     \u0432\u0440\u0435\u043C\u044F \u0434\u043B\u044F \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u0435\u0439!"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &4747391473733371422
 GameObject:
   m_ObjectHideFlags: 0
@@ -17732,6 +17779,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u0445
     \u0438\u0433\u0440"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &5685524980802785930
 GameObject:
   m_ObjectHideFlags: 0
@@ -18814,6 +18863,8 @@ MonoBehaviour:
   _xMLKey: 5
   _xMLValue: 0
   _fallbackText: "\u0412\u0445\u043E\u0434\u0438\u0442 \u0432 \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0443"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &6040706705884503140
 GameObject:
   m_ObjectHideFlags: 0
@@ -19887,6 +19938,8 @@ MonoBehaviour:
   _xMLKey: 7
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &6392606000493815999
 GameObject:
   m_ObjectHideFlags: 0
@@ -21239,6 +21292,8 @@ MonoBehaviour:
   _xMLKey: 11
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &6837250123256932721
 GameObject:
   m_ObjectHideFlags: 0
@@ -22115,6 +22170,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439\u0442\u0435
     \u0432\u0440\u0435\u043C\u044F \u0443 \u044D\u043A\u0440\u0430\u043D\u0430"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &7091379172280313096
 GameObject:
   m_ObjectHideFlags: 0
@@ -23097,6 +23154,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u0421\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u0438
     \u0438 \u0434\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &7442041196560506643
 GameObject:
   m_ObjectHideFlags: 0
@@ -23250,6 +23309,8 @@ MonoBehaviour:
   _xMLValue: 0
   _fallbackText: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C
     \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \u043D\u0430 30 \u0434\u043D\u0435\u0439"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &7472468526006152722
 GameObject:
   m_ObjectHideFlags: 0
@@ -23458,6 +23519,8 @@ MonoBehaviour:
     \u043F\u0440\u043E\u043A\u0430\u0447\u0438\u0432\u0430\u0439\u0442\u0435 {end}\u043C\u044B\u0448\u043B\u0435\u043D\u0438\u0435,
     \u0443\u043B\u0443\u0447\u0448\u0430\u0439\u0442\u0435 \u0448\u043A\u043E\u043B\u044C\u043D\u044B\u0435
     {end}\u043E\u0446\u0435\u043D\u043A\u0438"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &7521271891985208115
 GameObject:
   m_ObjectHideFlags: 0
@@ -25480,6 +25543,8 @@ MonoBehaviour:
   _xMLKey: 17
   _xMLValue: 0
   _fallbackText: "30 \u0414\u041D\u0415\u0419 \u0411\u0415\u0421\u041F\u041B\u0410\u0422\u041D\u041E"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &8102032677860063041
 GameObject:
   m_ObjectHideFlags: 0
@@ -26461,6 +26526,8 @@ MonoBehaviour:
   _xMLValue: 1
   _fallbackText: "\u0412\u043A\u043B\u044E\u0447\u0430\u0439\u0442\u0435 \u043B\u044E\u0431\u0438\u043C\u044B\u0435
     {end}\u0434\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &8495655740001684109
 GameObject:
   m_ObjectHideFlags: 0
@@ -26757,6 +26824,8 @@ MonoBehaviour:
     \u0441\u0432\u043E\u0435\u0433\u043E {end}\u043C\u0430\u043B\u044B\u0448\u0430
     \u043E\u0442 \u0442\u043E\u0433\u043E, \u0447\u0442\u043E \u0435\u043C\u0443
     \u043F\u043E\u043A\u0430 \u0440\u0430\u043D\u043E"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &8551022775790806235
 GameObject:
   m_ObjectHideFlags: 0
@@ -26908,6 +26977,8 @@ MonoBehaviour:
   _xMLKey: 10
   _xMLValue: 2
   _fallbackText: "4-12 \u043B\u0435\u0442"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &8567068880988003200
 GameObject:
   m_ObjectHideFlags: 0
@@ -27799,6 +27870,8 @@ MonoBehaviour:
   _xMLKey: 8
   _xMLValue: 0
   _fallbackText: "12 \u0438\u0433\u0440\u043E\u0432\u044B\u0445 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0439"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &8891122482616241053
 GameObject:
   m_ObjectHideFlags: 0
