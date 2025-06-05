@@ -11,12 +11,14 @@ public class VarioqubSDK : MonoBehaviour
     [SerializeField] private Text _idPreset;
     [SerializeField] private Text _presetInfo1;
     [SerializeField] private Text _presetInfo2;
+    [SerializeField] private InputField _inpFieldId;
 
     private IEnumerator Start()
     {
         string id = "appmetrica.4230628";
         _btn.onClick.AddListener(GetFlags);
         _log.text = $"AB Started! [{id}]";
+        _btn.interactable = false;
 
         var settings = new VarioqubSettings(id);
         settings.Logs = true;
@@ -43,6 +45,7 @@ public class VarioqubSDK : MonoBehaviour
             Varioqub.Fetch(
                 onSuccessDelegate: () =>
                 {
+                    _btn.interactable = true;
                     _log.text = "Fetch successed!";
                     success = true;
                 },
@@ -61,6 +64,7 @@ public class VarioqubSDK : MonoBehaviour
     private void GetFlags()
     {
         _idPreset.text = $"GetId: [{Varioqub.GetId()}]";
+        _inpFieldId.text = _idPreset.text;
         var flags = Varioqub.GetString("version", "-1");
         var flag2s = Varioqub.GetString("text", "default text");
         _presetInfo1.text = $"[version:{flags}]";
