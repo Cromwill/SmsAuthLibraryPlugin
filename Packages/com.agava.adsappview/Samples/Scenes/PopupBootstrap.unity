@@ -131,10 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1857867198623743883, guid: f3c4214cec0b8aa4682d0783b718e21a, type: 3}
-      propertyPath: <BundleId>k__BackingField
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 4413820536709679428, guid: f3c4214cec0b8aa4682d0783b718e21a, type: 3}
       propertyPath: m_Name
       value: BuildVersionHolder
@@ -539,6 +535,10 @@ PrefabInstance:
     - target: {fileID: 7580106813393124463, guid: 4b8dd4b63bb66ac4fac6ef3d72ea96a3, type: 3}
       propertyPath: m_Name
       value: BootPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271188048729121863, guid: 4b8dd4b63bb66ac4fac6ef3d72ea96a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20.157715
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
