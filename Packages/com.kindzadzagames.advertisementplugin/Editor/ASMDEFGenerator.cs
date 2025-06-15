@@ -18,11 +18,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
             GUILayout.Label("Set the desired advertisement defines in the project settings", EditorStyles.boldLabel);
 #elif YABBI_AD
         GUILayout.Label("Create a new ASMDEF files for YABBI", EditorStyles.boldLabel);
-#elif YANDEX_AD
-        GUILayout.Label("Create a new ASMDEF files for YANDEX", EditorStyles.boldLabel);
-#endif
 
-            if (GUILayout.Button("Create ASMDEF"))
+        if (GUILayout.Button("Create ASMDEF"))
                 CreateYabbiASMDEFs();
 
             if (GUILayout.Button("Edit ASMDEF"))
@@ -30,6 +27,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
             if (GUILayout.Button("Check plugin ASMDEF"))
                 CheckASMDEF();
+#elif YANDEX_AD
+        GUILayout.Label("Create a new ASMDEF files for YANDEX", EditorStyles.boldLabel);
+#endif
         }
 
         private void CreateYabbiASMDEFs()
