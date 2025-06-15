@@ -49,7 +49,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void Awake()
         {
-            StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
+            //StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
         }
 
 
