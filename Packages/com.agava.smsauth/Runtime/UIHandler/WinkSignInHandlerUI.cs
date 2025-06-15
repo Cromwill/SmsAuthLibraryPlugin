@@ -33,6 +33,8 @@ namespace Agava.Wink
         [SerializeField] private Button[] _switchOrientationButtons;
         [SerializeField] private Button[] _subscriptionCheckButtons;
         [SerializeField] private Button[] _closeButtonsFromSettings;
+        [SerializeField] private Button[] _rewardButtons;
+        [SerializeField] private Button _subscribeButtonRewardWindow;
         [SerializeField] private Button _closeWinkInfoButton;
         [Header("Analytics buttons")]
         [SerializeField] private AnalyticsSender _analyticsSender;
@@ -88,6 +90,10 @@ namespace Agava.Wink
             foreach (var button in _closeButtonsFromSettings)
                 button.onClick.RemoveListener(ContinueGame);
 
+            foreach (var button in _rewardButtons)
+                button.onClick.RemoveListener(OpenRewardWindow);
+
+            _subscribeButtonRewardWindow.onClick.RemoveListener(RedirectToSubscribe);
             _closeWinkInfoButton.onClick.RemoveListener(OnCloseWinkInfoButtonClick);
 
             _unlinkDeviceViewContainer.DeviceRemoved -= OnUnlinkButtonClicked;
@@ -167,6 +173,10 @@ namespace Agava.Wink
             foreach (var button in _closeButtonsFromSettings)
                 button.onClick.AddListener(ContinueGame);
 
+            foreach (var button in _rewardButtons)
+                button.onClick.AddListener(OpenRewardWindow);
+
+            _subscribeButtonRewardWindow.onClick.AddListener(RedirectToSubscribe);
             _closeWinkInfoButton.onClick.AddListener(OnCloseWinkInfoButtonClick);
 
             _unlinkDeviceViewContainer.DeviceRemoved += OnUnlinkButtonClicked;
@@ -249,6 +259,27 @@ namespace Agava.Wink
                     _gameOrientation.SetSavedOrientation();
                 }
             }
+        }
+
+        private void OpenRewardWindow()
+        {
+            _notifyWindowHandler.OpenRewardWindow();
+            _notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
+        }
+
+        private void RedirectToSubscribe()
+        {
+            if (_winkAccessManager.Authenficated)
+            {
+                _notifyWindowHandler.OpenHelloWindowWOAccess();
+            }
+            else
+            {
+                _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+                OpenSignWindow();
+            }
+
+            _notifyWindowHandler.CloseWindow(WindowType.RewardContinue);
         }
 
         public void OnDeleteAccountButtonClick()

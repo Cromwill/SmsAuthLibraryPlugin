@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
+using KinDzaDzaGames.AdvertisementPlugin;
 
 namespace Agava.Wink
 {
@@ -12,6 +13,7 @@ namespace Agava.Wink
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _yesButton;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _rewardButton;
         [SerializeField] private Button _signInButton;
         [SerializeField] private bool _closeOnYesClicked = true;
         [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
@@ -48,7 +50,23 @@ namespace Agava.Wink
         }
 
         public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
-        public void TryShowCloseButton(bool enabled) => _closeButton.gameObject.SetActive(enabled);
+
+        public void TryShowCloseButton(bool enabled)
+        {
+            _closeButton.gameObject.SetActive(enabled);
+        }
+
+        public void TryShowRewardButton(bool enabled)
+        {
+#if UNITY_EDITOR
+            if (enabled == false)
+                _rewardButton.gameObject.SetActive(true);
+#else
+            if (enabled == false && AdvertisementController.Instance != null)
+                _rewardButton.gameObject.SetActive(AdvertisementController.Instance.CanShowReward());
+#endif
+        }
+
         public void ResetFreeChoise() => TryFreeWink = false;
 
         private void OnYesClicked()

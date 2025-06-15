@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
-using SmsAuthAPI.Program;
 
 namespace Agava.Wink
 {
@@ -77,6 +76,13 @@ namespace Agava.Wink
             _demoTimerExpiredWindow.Enable(closeButton);
         }
 
+        internal void OpenRewardWindow()
+        {
+            _rewardContinueWindowPresenter.Enable();
+            _redirectToWebsiteWindow.Disable();
+            _helloWOAccessWindow.Disable();
+        }
+
         internal void OpenDeleteAccountWindow(Action onDeleteAccount) => _deleteAccountWindow.Enable(onDeleteAccount);
 
         internal void OpenHelloWindow(bool hasAccess)
@@ -104,6 +110,8 @@ namespace Agava.Wink
         internal void ChangeDemoModeOption(bool enabled)
         {
             _redirectToWebsiteWindow.TryShowCloseButton(enabled: enabled);
+            _redirectToWebsiteWindow.TryShowRewardButton(enabled: enabled);
+            _demoTimerExpiredWindow.TryShowRewardButton(enabled: enabled);
             _helloWOAccessWindow.TryShowCloseButton(enabled: enabled);
         }
 

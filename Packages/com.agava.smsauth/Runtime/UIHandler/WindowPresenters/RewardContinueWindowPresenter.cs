@@ -11,7 +11,6 @@ namespace Agava.Wink
         [SerializeField, Min(0)] private int _defaultTimerGiftSeconds = 600;
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private ImagesCarousel _imagesCarousel;
-        [SerializeField] private Button _subscriptionButton;
         [SerializeField] private Button _rewardDemoTimeButton;
 
         private SubscriptionCheckWindowPresenter _subscriptionCheckWindow;
@@ -26,7 +25,6 @@ namespace Agava.Wink
         public override void Enable()
         {
             _imagesCarousel.Enable();
-            _subscriptionButton.onClick.AddListener(OpenSubscriptionWindow);
             _rewardDemoTimeButton.onClick.AddListener(AddDemoTime);
             EnableCanvasGroup(_canvasGroup);
         }
@@ -34,15 +32,8 @@ namespace Agava.Wink
         public override void Disable()
         {
             DisableCanvasGroup(_canvasGroup);
-            _subscriptionButton.onClick.RemoveListener(OpenSubscriptionWindow);
             _rewardDemoTimeButton.onClick.RemoveListener(AddDemoTime);
             _imagesCarousel.Disable();
-        }
-
-        private void OpenSubscriptionWindow()
-        {
-            _subscriptionCheckWindow.Enable();
-            Disable();
         }
 
         private void AddDemoTime()
