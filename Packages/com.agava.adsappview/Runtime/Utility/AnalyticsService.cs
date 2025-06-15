@@ -10,7 +10,8 @@ namespace AdsAppView.Utility
     {
         public static void SendStartApp(string appId) => AppMetrica.ReportEvent("App run", GetDataJson("App run", appId));
         public static void SendPopupView(string popupId) => AppMetrica.ReportEvent("Popup view", GetDataJson("Popup view", popupId));
-        public static void SendPopupClosed() => AppMetrica.ReportEvent("Popup closed", GetDataJson($"Popup closed", "Close"));
+        public static void SendPopupClosed(string popupId) => AppMetrica.ReportEvent("Popup closed", GetDataJson($"Popup closed", popupId));
+        public static void SendGamePushCliсked(string push) => AppMetrica.ReportEvent("Game push cliсked", GetDataJson($"Game push cliсked", push));
         public static void SendPopupRedirectClick(string popupId, int count)
         {
             AppMetrica.ReportEvent("Popup redirect click", GetCountedDataJson("Popup redirect click", popupId, count));

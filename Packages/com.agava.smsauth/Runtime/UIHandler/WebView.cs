@@ -37,11 +37,13 @@ public class WebView : MonoBehaviour
 
     public void OpenURL(string url, IWebViewLoader webViewLoader)
     {
-        if(_isLoaded == false)
+#if UNITY_ANDROID
+        if (_isLoaded == false)
         {
             _webViewObject.Reload();
             Init();
         }
+#endif
 
         _webViewLoader = webViewLoader;
         _webViewObject.LoadURL(url.Replace(" ", "%20"));
@@ -87,12 +89,16 @@ public class WebView : MonoBehaviour
             started: (msg) =>
             {
                 Debug.Log($"WebView: webview message started - {msg}!");
+#if UNITY_ANDROID
                 _webViewObject.Resume();
+#endif
             },
             ld: (msg) =>
             {
+#if UNITY_ANDROID
                 if (_isOpened)
                     return;
+#endif
 
                 _isOpened = true;
 

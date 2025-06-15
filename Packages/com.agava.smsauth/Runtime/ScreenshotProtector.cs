@@ -1,6 +1,3 @@
-#if UNITY_IOS
-using System.Runtime.InteropServices;
-#endif
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -9,17 +6,8 @@ namespace Agava.Wink
     [Preserve]
     public class ScreenshotProtector : MonoBehaviour
     {
-        [SerializeField] private WebViewPresenter _webViewPresenter;
-        [SerializeField] private GameObject _warningMessage;
-
         private bool _screenshotsDisabled = false;
-#if UNITY_IOS
-        [DllImport("__Internal")]
-        private static extern void startScreenshotDetection();
 
-        [DllImport("__Internal")]
-        private static extern void stopScreenshotDetection();
-#endif
         public void TryDisableScreenshots()
         {
             if (_screenshotsDisabled)
@@ -36,8 +24,6 @@ namespace Agava.Wink
                 AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
                 myActivityHelper.CallStatic("SetSecureFlag", currentActivity);
             }
-#elif UNITY_IOS
-            //startScreenshotDetection();
 #endif
         }
 
@@ -57,30 +43,7 @@ namespace Agava.Wink
                 AndroidJavaObject myActivityHelper = new AndroidJavaObject("com.kindzadza.screenprotect.ScreenshotProtect");
                 myActivityHelper.CallStatic("ClearSecureFlag", currentActivity);
             }
-#elif UNITY_IOS
-            //stopScreenshotDetection();
 #endif
         }
-
-#if UNITY_IOS
-        private void OnScreenshotTaken(string _)
-        {
-            EnableWarningMessage();
-            Invoke(nameof(DisableWarningMessage), 2);
-        }
-
-        private void EnableWarningMessage()
-        {
-            _webViewPresenter.Hide();
-            _warningMessage.SetActive(true);
-        }
-
-        private void DisableWarningMessage()
-        {
-            _webViewPresenter.Show();
-            _warningMessage.SetActive(false);
-        }
-#endif
-
     }
 }
