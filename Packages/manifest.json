@@ -1,15 +1,16 @@
 {
-	"scopedRegistries": [
-        {
-            "name": "package.openupm.com",
-            "scopes": [
-                "com.google.external-dependency-manager",
-                "io.appmetrica.analytics"
-            ],
-            "url": "https://package.openupm.com"
-        }
-    ],
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "scopes": [
+        "com.google.external-dependency-manager",
+        "io.appmetrica.analytics"
+      ],
+      "url": "https://package.openupm.com"
+    }
+  ],
   "dependencies": {
+    "com.kindzadzagames.advertisementplugin": "https://github.com/JustCool1990/com.kindzadzagames.advertisementplugin.git#1.0.0",
     "com.unity.addressables": "1.21.21",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.2d": "2.0.0",

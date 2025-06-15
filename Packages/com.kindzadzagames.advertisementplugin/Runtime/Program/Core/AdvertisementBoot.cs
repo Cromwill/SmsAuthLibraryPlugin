@@ -1,0 +1,111 @@
+using UnityEngine;
+using Newtonsoft.Json;
+using System.Collections;
+using UnityEngine.Scripting;
+using System.Threading.Tasks;
+using KinDzaDzaGames.AdvertisementPlugin.DTO;
+using KinDzaDzaGames.AdvertisementPlugin.Utility;
+
+namespace KinDzaDzaGames.AdvertisementPlugin
+{
+    [Preserve]
+    public class AdvertisementBoot : MonoBehaviour
+    {
+#if UNITY_WEBGL
+        private const string Platform = "webgl";
+#elif UNITY_STANDALONE
+        private const string Platform = "standalone";
+#elif UNITY_ANDROID
+        private const string Platform = "Android";
+#elif UNITY_IOS
+        private const string Platform = "iOS";
+#endif
+
+        [SerializeField] private AdvertisementController _advertisementController;
+        [SerializeField] private InterstitialPlayer _interstitialPlayer;
+        [Tooltip("Remote reward data")]
+        [SerializeField] private RewardSettings _rewardSettings;
+        [Tooltip("Server name remote data")]
+        [SerializeField] private string _serverPath;
+        [SerializeField] private Store _storeName;
+        [SerializeField] private int _bundleId;
+
+        private AdvertisementAPI _api;
+        private AppData _appData;
+        private PreloadService _preloadService;
+
+#if UNITY_WEBGL
+        [Header("WEBGL")]
+        [SerializeField] private string _appId;
+#endif
+#if UNITY_ANDROID || UNITY_IOS
+        private string _appId => Application.identifier;
+#endif
+
+        private void OnEnable()
+        {
+            _advertisementController.InitializationFailed += OnInitializationFailed;
+        }
+
+        private void Awake()
+        {
+            StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
+        }
+
+
+        public IEnumerator Construct(bool vip, int bundleId, string storeName, string appId, string platform)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+                yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
+
+            _api = new(_serverPath, appId);
+            _appData = new() { app_id = appId, store_id = storeName, platform = platform };
+            _preloadService = new(_api, bundleId, vip, _appData);
+            Debug.Log("#Boot# " + JsonConvert.SerializeObject(_appData));
+
+            yield return _preloadService.Preparing();
+
+            if(_preloadService.IsPluginAvailable)
+            {
+                yield return GetRewardRemote();
+
+                _advertisementController.Construct(vip, _rewardSettings);
+                _interstitialPlayer.Construct(_advertisementController.InterstitialHandler);
+
+                yield return new WaitUntil(() => _advertisementController.Initialized);
+            }
+            else
+            {
+                _rewardSettings.Contruct(_rewardSettings.DefaultRewardCount, _rewardSettings.DefaultRewardAvailable, _rewardSettings.DefaultWinkPrice, _rewardSettings.DefaultTrialPeriodDays);
+            }
+        }
+
+        private IEnumerator GetRewardRemote()
+        {
+            Task<int> countTask = RemoteConfig.IntRemoteConfig(_rewardSettings.RewardCountKey, _rewardSettings.DefaultRewardCount);
+            yield return new WaitUntil(() => countTask.IsCompleted);
+
+            Task<bool> availableTask = RemoteConfig.BoolRemoteConfig(_rewardSettings.RewardAvailableKey, _rewardSettings.DefaultRewardAvailable);
+            yield return new WaitUntil(() => availableTask.IsCompleted);
+
+            Task<string> priceTask = RemoteConfig.StringRemoteConfig(_rewardSettings.WinkPriceKey, _rewardSettings.DefaultWinkPrice);
+            yield return new WaitUntil(() => priceTask.IsCompleted);
+
+            Task<string> trialTask = RemoteConfig.StringRemoteConfig(_rewardSettings.TrialPeriodDaysKey, _rewardSettings.DefaultTrialPeriodDays);
+            yield return new WaitUntil(() => trialTask.IsCompleted);
+
+            _rewardSettings.Contruct(countTask.Result, availableTask.Result, priceTask.Result, trialTask.Result);
+        }
+
+        private void OnDisable()
+        {
+            _advertisementController.InitializationFailed -= OnInitializationFailed;
+            _interstitialPlayer.Dispose();
+        }
+
+        private void OnInitializationFailed()
+        {
+
+        }
+    }
+}

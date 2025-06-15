@@ -1,0 +1,125 @@
+using System;
+using UnityEngine;
+using Newtonsoft.Json;
+using UnityEngine.Scripting;
+using System.Threading.Tasks;
+using KinDzaDzaGames.AdvertisementPlugin.DTO;
+
+namespace KinDzaDzaGames.AdvertisementPlugin.Utility
+{
+    [Preserve]
+    public class AdvertisementAPI : MonoBehaviour
+    {
+        private WebClient _webClient;
+        private string _appId;
+
+        public bool Initialized => _webClient != null;
+
+        public static AdvertisementAPI Instance;
+
+        public AdvertisementAPI(string serverPath, string appId)
+        {
+            if (string.IsNullOrEmpty(serverPath))
+                throw new InvalidOperationException(nameof(AdvertisementAPI) + " Ip not entered");
+
+            if (string.IsNullOrEmpty(appId))
+                throw new InvalidOperationException(nameof(AdvertisementAPI) + " appId not entered");
+
+            if (Initialized)
+                throw new InvalidOperationException(nameof(AdvertisementAPI) + " has already been initialized");
+
+            _appId = appId;
+            _webClient = new WebClient(serverPath);
+            Instance = this;
+        }
+
+        public async Task<Response> GetRemoteSettings(string remoteName)
+        {
+            EnsureInitialize();
+            return await _webClient.GetPluginSettings("RemoteConfig", remoteName);
+        }
+
+        public async Task<Response> GetRemoteConfig(string remoteName)
+        {
+            EnsureInitialize();
+            return await _webClient.GetRemote("Remoteconfig", remoteName);
+        }
+
+        public async Task<Response> GetRemoteConfig(string controllerName, string apiName)
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                api_name = controllerName + "/" + apiName,
+            };
+
+            return await _webClient.GetRemote(request);
+        }
+
+        public async Task<Response> GetRemoteConfig(string controllerName, string apiName, AppData data)
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                api_name = controllerName + "/" + apiName,
+                body = JsonConvert.SerializeObject(data),
+            };
+
+            return await _webClient.GetRemote(request);
+        }
+
+        public async Task<Response> GetFilePath(string controllerName, string apiName, AppData data)
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                api_name = controllerName + "/" + apiName,
+                body = JsonConvert.SerializeObject(data),
+            };
+
+            return await _webClient.GetFilePath(request);
+        }
+
+        public async Task<Response> GetAppSettings<T>(string controllerName, string apiName, T data) where T : class
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                api_name = controllerName + "/" + apiName,
+                body = JsonConvert.SerializeObject(data),
+            };
+
+            return await _webClient.GetAppSettings(request);
+        }
+
+        /// <summary>
+        /// Send ftp request to get bytes data
+        /// </summary>
+        /// <param name="host">Need data ftp server name/login/pass</param>
+        /// <returns></returns>
+        public async Task<Response> GetBytesData(string host, string filePath, string login, string password)
+        {
+            EnsureInitialize();
+            string path = host + "/" + filePath;
+
+            var request = new Request()
+            {
+                api_name = path,
+                login = login,
+                password = password,
+            };
+
+            return await _webClient.GetBytesData(request);
+        }
+
+        private void EnsureInitialize()
+        {
+            if (Initialized == false)
+                throw new InvalidOperationException(nameof(AdvertisementAPI) + " is not initialized");
+        }
+    }
+}

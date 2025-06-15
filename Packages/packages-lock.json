@@ -39,6 +39,16 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.kindzadzagames.advertisementplugin": {
+      "version": "file:com.kindzadzagames.advertisementplugin",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.183",
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.textmeshpro": "3.0.9"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "9.1.0",
       "depth": 1,
