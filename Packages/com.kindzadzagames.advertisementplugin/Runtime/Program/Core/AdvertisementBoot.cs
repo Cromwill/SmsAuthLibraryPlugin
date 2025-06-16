@@ -72,7 +72,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
                 yield return new WaitUntil(() => _advertisementController.Initialized);
 
-                _interstitialPlayer.Construct(_advertisementController.InterstitialHandler);
+                _interstitialPlayer.Construct(_advertisementController.InterstitialHandler, _preloadService.Settings);
             }
 
 
