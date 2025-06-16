@@ -52,7 +52,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             //StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
         }
 
-
         public IEnumerator Construct(bool vip, int bundleId, string storeName, string appId, string platform)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -74,10 +73,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
                 yield return new WaitUntil(() => _advertisementController.Initialized);
             }
-            else
-            {
-                _rewardSettings.Contruct(_rewardSettings.DefaultRewardCount, _rewardSettings.DefaultRewardAvailable, _rewardSettings.DefaultWinkPrice, _rewardSettings.DefaultTrialPeriodDays);
-            }
+
+
+            Debug.Log($"Advertisement Plugin: constructed. Plugin available = {_preloadService.IsPluginAvailable}");
         }
 
         private IEnumerator GetRewardRemote()
@@ -88,13 +86,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             Task<bool> availableTask = RemoteConfig.BoolRemoteConfig(_rewardSettings.RewardAvailableKey, _rewardSettings.DefaultRewardAvailable);
             yield return new WaitUntil(() => availableTask.IsCompleted);
 
-            Task<string> priceTask = RemoteConfig.StringRemoteConfig(_rewardSettings.WinkPriceKey, _rewardSettings.DefaultWinkPrice);
-            yield return new WaitUntil(() => priceTask.IsCompleted);
-
-            Task<string> trialTask = RemoteConfig.StringRemoteConfig(_rewardSettings.TrialPeriodDaysKey, _rewardSettings.DefaultTrialPeriodDays);
-            yield return new WaitUntil(() => trialTask.IsCompleted);
-
-            _rewardSettings.Contruct(countTask.Result, availableTask.Result, priceTask.Result, trialTask.Result);
+            _rewardSettings.Contruct(countTask.Result, availableTask.Result);
         }
 
         private void OnDisable()

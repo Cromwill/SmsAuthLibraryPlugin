@@ -28,6 +28,8 @@ namespace Agava.Wink
         private int _bundlIdVersion;
         private bool _isEndPrepare = false;
 
+        public string ActualPlatform => Platform;
+
         public PreloadService(WinkSignInHandlerUI winkSignInHandlerUI, int bundlIdVersion, Store storeName)
         {
             Instance ??= this;

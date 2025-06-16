@@ -44,13 +44,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _vip = vip;
             RewardSettings = rewardSettings;
 
-            if (_vip)
-                return;
-
             if (Instance == null)
                 Instance = this;
 
             DontDestroyOnLoad(this);
+
 #if UNITY_EDITOR
             Debug.Log("Advertisement Info: Start AD Service!");
             OnInitializeSuccess();
@@ -64,9 +62,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void OnDestroy()
         {
-            _interstitialHandler.Dispose();
-            _rewardHandler.Dispose();
-            _bannerHandler.Dispose();
+            _interstitialHandler?.Dispose();
+            _rewardHandler?.Dispose();
+            _bannerHandler?.Dispose();
         }
 
         public void OnInitializeSuccess()

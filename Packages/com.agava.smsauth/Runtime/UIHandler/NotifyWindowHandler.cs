@@ -31,6 +31,8 @@ namespace Agava.Wink
         [SerializeField] private List<WindowPresenter> _windows;
 
         private WinkWebViewURLHandler _winkWebViewURLHandler;
+        private GameOrientation _gameOrientation;
+        private ScreenshotProtector _screenshotProtector;
         private bool _subscriptionChecked = false;
 
         private bool _choosedFreeTrial => (_redirectToWebsiteWindow.TryFreeWink || _demoTimerExpiredWindow.TryFreeWink) && _subscriptionChecked == false;
@@ -42,23 +44,28 @@ namespace Agava.Wink
 
         public event Action SunbscriptionBuyed;
 
-        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ICoroutine coroutine, ScreenshotProtector screenshotProtector)
         {
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
+            _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
+            _screenshotProtector = screenshotProtector ?? throw new ArgumentNullException(nameof(screenshotProtector));
 
-            _orientationСhangeWindow.Construct(gameOrientation, _noEnternetWindow);
+            _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
-            _rewardContinueWindowPresenter.Construct(_subscriptionCheckWindow, demoTimer);
+
+            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(demoTimer));
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;
+            _rewardContinueWindowPresenter.RewardSuccessed += OnRewardSuccessed;
         }
 
         internal void Dispose()
         {
             _subscriptionCheckWindow.LoadingStarted -= OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted -= OnLoadingCompleted;
+            _rewardContinueWindowPresenter.RewardSuccessed -= OnRewardSuccessed;
         }
 
         internal void OpenSignInWindow(Action closeCallback = null) => _signInWindow.Enable(closeCallback);
@@ -160,6 +167,16 @@ namespace Agava.Wink
         {
             OpenHelloWindowWOAccess();
             _subscriptionCheckWindow.Disable();
+        }
+
+        private void OnRewardSuccessed()
+        {
+            CloseAllWindows(null);
+
+            if (_gameOrientation.NeedChangeOrientation)
+                _gameOrientation.SetLandscapeOrientation();
+
+            _screenshotProtector.TryEnableScreenshots();
         }
     }
 }

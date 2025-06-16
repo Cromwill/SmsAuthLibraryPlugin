@@ -64,6 +64,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void LoadAD(Action preRewardAction)
         {
+            if(AdIsLoaded())
+            {
+                preRewardAction?.Invoke();
+                return;
+            }
+
             if (CanLoadAd() == false)
                 return;
 
@@ -150,7 +156,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void ShowAd()
         {
-#if YABBI_AD
+#if UNITY_EDITOR
+            ApplyReward();
+            CancelReward();
+#elif YABBI_AD
             Yabbi.ShowAd(GetAdType(), GetPlacementName());
 #elif YANDEX_AD
             _rewardedAd.OnAdClicked += HandleAdClicked;

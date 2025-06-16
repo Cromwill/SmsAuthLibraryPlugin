@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
+using KinDzaDzaGames.AdvertisementPlugin;
 
 namespace Agava.Wink
 {
@@ -60,7 +61,7 @@ namespace Agava.Wink
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, this, _screenshotProtector);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -127,6 +128,11 @@ namespace Agava.Wink
             var textConfigs = FindObjectsOfType<RemoteConfigText>();
 
             while (textConfigs.Any(config => config.Initialized == false))
+                yield return null;
+
+            var rewardWindow = FindObjectOfType<RewardContinueWindowPresenter>();
+
+            while (rewardWindow.Initialized == false)
                 yield return null;
         }
 
@@ -271,7 +277,7 @@ namespace Agava.Wink
         {
             if (_winkAccessManager.Authenficated)
             {
-                _notifyWindowHandler.OpenHelloWindowWOAccess();
+                _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
             }
             else
             {
@@ -398,15 +404,22 @@ namespace Agava.Wink
 
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
 
-            if (_winkAccessManager.Authenficated)
+            if(AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
             {
-                SetPhone();
-                _notifyWindowHandler.OpenHelloWindowWOAccess();
+                _notifyWindowHandler.OpenWindow(WindowType.RewardContinue);
             }
             else
             {
-                AnalyticsWinkService.SendSubscribeOfferWindow();
-                _notifyWindowHandler.OpenDemoExpiredWindow(false);
+                if (_winkAccessManager.Authenficated)
+                {
+                    SetPhone();
+                    _notifyWindowHandler.OpenHelloWindowWOAccess();
+                }
+                else
+                {
+                    AnalyticsWinkService.SendSubscribeOfferWindow();
+                    _notifyWindowHandler.OpenDemoExpiredWindow(false);
+                }
             }
 
             _screenshotProtector.TryDisableScreenshots();

@@ -5,6 +5,7 @@ using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
 using AdsAppView.Utility;
 using SmsAuthAPI.Utility;
+using KinDzaDzaGames.AdvertisementPlugin;
 
 namespace Agava.Wink
 {
@@ -22,6 +23,7 @@ namespace Agava.Wink
         [SerializeField] private SceneLoader _sceneLoader;
         [SerializeField] private LoadingProgressBar _loadingProgressBar;
         [SerializeField] private bool _restartAfterAuth = true;
+        [SerializeField] private AdvertisementBoot _advertisementBoot;
 
         private Coroutine _signInProcess;
         private PreloadService _preloadService;
@@ -100,6 +102,8 @@ namespace Agava.Wink
 
             if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false && WinkAccessManager.Instance.Authenficated == false)
                 _winkSignInHandlerUI.OpenStartWindow();
+
+            yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform);
 
             yield return new WaitUntil(() => (WinkAccessManager.Instance.HasAccess == true || WinkAccessManager.Instance.HasTempAccess == true || _winkSignInHandlerUI.IsAnyWindowEnabled == false));
 
