@@ -69,9 +69,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 yield return GetRewardRemote();
 
                 _advertisementController.Construct(vip, _rewardSettings);
-                _interstitialPlayer.Construct(_advertisementController.InterstitialHandler);
 
                 yield return new WaitUntil(() => _advertisementController.Initialized);
+
+                _interstitialPlayer.Construct(_advertisementController.InterstitialHandler);
             }
 
 

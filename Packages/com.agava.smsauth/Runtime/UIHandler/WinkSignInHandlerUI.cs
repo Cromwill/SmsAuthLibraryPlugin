@@ -404,7 +404,9 @@ namespace Agava.Wink
 
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
 
-            if(AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
+            Debug.Log($"Advertisement Plugin: AdvertisementController.Instance != null = {AdvertisementController.Instance != null}, can reward = {AdvertisementController.Instance.CanShowReward()}");
+
+            if (AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
             {
                 _notifyWindowHandler.OpenWindow(WindowType.RewardContinue);
             }

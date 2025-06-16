@@ -64,9 +64,11 @@ namespace Agava.Wink
 
                 yield return _winkAccessManager.Construct();
                 _winkSignInHandlerUI.StartService(_winkAccessManager);
-                _winkSignInHandlerUI.Construct();
                 yield return SheetRemoteConfigs.Initialize();
                 yield return _winkAccessManager.TryQuickAccess();
+                yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform);
+
+                _winkSignInHandlerUI.Construct();
                 _winkSignInHandlerUI.SetRemoteTexts();
 
                 _signInProcess = StartCoroutine(OnStarted());
@@ -102,8 +104,6 @@ namespace Agava.Wink
 
             if (WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false && WinkAccessManager.Instance.Authenficated == false)
                 _winkSignInHandlerUI.OpenStartWindow();
-
-            yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform);
 
             yield return new WaitUntil(() => (WinkAccessManager.Instance.HasAccess == true || WinkAccessManager.Instance.HasTempAccess == true || _winkSignInHandlerUI.IsAnyWindowEnabled == false));
 

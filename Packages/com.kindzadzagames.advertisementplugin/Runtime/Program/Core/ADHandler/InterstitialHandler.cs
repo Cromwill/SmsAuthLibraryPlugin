@@ -43,7 +43,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _coroutine = coroutine ?? throw new ArgumentNullException(nameof(coroutine));
 
 #if UNITY_EDITOR
-            Debug.Log("Advertisement Info: interstitial handler inited.");
+            Debug.Log("Advertisement Plugin: interstitial handler inited.");
 # elif YABBI_AD
             Yabbi.SetInterstitialCallbacks(this);
 #elif YANDEX_AD

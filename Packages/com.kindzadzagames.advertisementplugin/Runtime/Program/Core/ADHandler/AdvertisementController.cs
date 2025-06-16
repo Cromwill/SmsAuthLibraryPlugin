@@ -50,11 +50,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             DontDestroyOnLoad(this);
 
 #if UNITY_EDITOR
-            Debug.Log("Advertisement Info: Start AD Service!");
             OnInitializeSuccess();
 #elif YABBI_AD
             StartCoroutine(StartYabbiService());
 #elif YANDEX_AD
+            Debug.Log("Advertisement Plugin: start YANDEX service.");
             MobileAds.SetAgeRestrictedUser(true);
             OnInitializeSuccess();
 #endif
@@ -69,6 +69,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void OnInitializeSuccess()
         {
+            Debug.Log("Advertisement Plugin: initialize success!");
             InitADListeners();
             Initialized = true;
         }
@@ -90,6 +91,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private IEnumerator StartYabbiService()
         {
+            Debug.Log("Advertisement Plugin: start YABBI service.");
 #if BUILD_DEBUG
             Yabbi.EnableDebug(true);
 #endif

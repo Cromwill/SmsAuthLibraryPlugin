@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -14,12 +15,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
         private void OnGUI()
         {
-#if YABBI_AD == false && YANDEX_AD == false
-            GUILayout.Label("Set the desired advertisement defines in the project settings", EditorStyles.boldLabel);
-#elif YABBI_AD
-        GUILayout.Label("Create a new ASMDEF files for YABBI", EditorStyles.boldLabel);
+            GUILayout.Label("Create a new ASMDEF files for YABBI", EditorStyles.boldLabel);
 
-        if (GUILayout.Button("Create ASMDEF"))
+            if (GUILayout.Button("Create ASMDEF"))
                 CreateYabbiASMDEFs();
 
             if (GUILayout.Button("Edit ASMDEF"))
@@ -27,9 +25,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
             if (GUILayout.Button("Check plugin ASMDEF"))
                 CheckASMDEF();
-#elif YANDEX_AD
-        GUILayout.Label("Create a new ASMDEF files for YANDEX", EditorStyles.boldLabel);
-#endif
+
+            GUILayout.Label("Create a new ASMDEF files for YANDEX", EditorStyles.boldLabel);
         }
 
         private void CreateYabbiASMDEFs()
@@ -91,7 +88,32 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
         private void CheckASMDEF()
         {
-            string packagesPath = Application.dataPath + "/../Packages/com.kindzadzagames.yabbiadplugin/Runtime/KDDG.YabbyAD.asmdef";
+            string libraryPath = Path.Combine(Application.dataPath, "..", "Library\\PackageCache");
+
+            string[] directories = Directory.GetDirectories(libraryPath, "com.kindzadzagames.advertisementplugin*@*", SearchOption.TopDirectoryOnly);
+
+            if(directories.Length == 0)
+            {
+                Debug.Log($"Directory not found.");
+            }
+            else
+            {
+                string path = Path.Combine(directories[0], "Runtime\\KDDG.Advertisement.asmdef");
+
+                if (File.Exists(path))
+                {
+                    string jsonContent = File.ReadAllText(path);
+                    AssemblyDefinition asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
+
+                    Debug.Log($"File path: {path}.");
+                }
+                else
+                {
+                    Debug.Log($"The file was not found on the way - {path}.");
+                }
+            }
+
+            /*string packagesPath = Application.dataPath + "\\..\\Packages\\com.kindzadzagames.advertisementplugin\\Runtime\\KDDG.Advertisement.asmdef";
 
             if (File.Exists(packagesPath))
             {
@@ -102,12 +124,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
             }
             else
             {
-                Debug.Log("Файл не найден.");
-            }
+                Debug.Log($"Файл не найден по пути - {packagesPath}.");
+            }*/
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class AssemblyDefinition
     {
         public string name;

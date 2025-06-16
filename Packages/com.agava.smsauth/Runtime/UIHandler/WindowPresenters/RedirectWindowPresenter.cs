@@ -58,7 +58,7 @@ namespace Agava.Wink
 
         public void TryShowRewardButton(bool enabled)
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             if (enabled == false)
                 _rewardButton.gameObject.SetActive(true);
 #else

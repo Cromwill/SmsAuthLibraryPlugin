@@ -41,7 +41,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _rewardsCount = PlayerPrefs.GetInt(ViewedAds, 0);
 
 #if UNITY_EDITOR
-            Debug.Log("Advertisement Info: reward handler inited.");
+            Debug.Log("Advertisement Plugin: reward handler inited.");
 # elif YABBI_AD
             Yabbi.SetRewardedCallbacks(this);
 #elif YANDEX_AD

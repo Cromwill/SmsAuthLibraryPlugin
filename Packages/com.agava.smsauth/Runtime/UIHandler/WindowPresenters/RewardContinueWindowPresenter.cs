@@ -114,7 +114,7 @@ namespace Agava.Wink
 
         private void AddDemoTime()
         {
-            _demoTimer.AddDemoTime(_rewardMinutes * OneMinute);
+            _demoTimer.AddDemoTime(_rewardMinutes * 10/* * OneMinute*/);
             RewardSuccessed?.Invoke();
         }
 
@@ -134,7 +134,6 @@ namespace Agava.Wink
 
         private void ReloadReward()
         {
-            Debug.Log("RELOAD");
             _reloadAd ??= StartCoroutine(ReloadAD());
 
             IEnumerator ReloadAD()

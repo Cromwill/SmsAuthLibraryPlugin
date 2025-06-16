@@ -50,7 +50,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _placeOnScreen = bannerPlace;
 
 #if UNITY_EDITOR
-            Debug.Log("Advertisement Info: banner handler inited.");
+            Debug.Log("Advertisement Plugin: banner handler inited.");
 # elif YABBI_AD
             Yabbi.SetBannerCallbacks(this);
 #endif
@@ -176,7 +176,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private void SetBannerSettings()
         {
 #if UNITY_EDITOR
-            Debug.Log("Advertisement Info: banner settings setted.");
+            Debug.Log("Advertisement Plugin: banner settings setted.");
 #elif YABBI_AD
             Yabbi.SetBannerCustomSettings(new BannerSettings().SetRefreshIntervalSeconds(_switchADTime).SetShowCloseButton(_bannerCloseButtonVisibility).SetBannerPosition(DeterminePosition()));
 #elif YANDEX_AD

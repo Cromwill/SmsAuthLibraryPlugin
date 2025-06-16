@@ -20,7 +20,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             RewardCount = rewardCount;
             RewardAvailable = rewardAvailable;
 
-            Debug.Log($"Reward Remote: reward count = {RewardCount}, reward available = {RewardAvailable}.");
+            Debug.Log($"Advertisement Plugin: remote config, reward count = {RewardCount}, reward available = {RewardAvailable}.");
         }
     }
 }
