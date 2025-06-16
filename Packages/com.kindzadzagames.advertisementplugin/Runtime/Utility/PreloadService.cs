@@ -20,6 +20,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         private readonly bool _isVip = true;
         private bool _isEndPrepare = false;
 
+        public AdsSdkSettingsData Settings { get; private set; }
+
         public PreloadService(AdvertisementAPI api, int bundlIdVersion, bool vip, AppData appData)
         {
             _api = api;
@@ -65,28 +67,28 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                 }
                 else
                 {
-                    AdsSdkSettingsData settings = JsonConvert.DeserializeObject<AdsSdkSettingsData>(response.body);
+                    Settings = JsonConvert.DeserializeObject<AdsSdkSettingsData>(response.body);
 
-                    Debug.Log($"#PreloadService# Plugin settings: State - {settings.released_state}, release - {settings.released_version}, vip state - {settings.vip_state}\n" +
-                        $"---->Review: state - {settings.review_state}, version - {settings.review_version}\n" +
-                        $"---->Review: first ad timer - {settings.first_timer}, regular ad timer - {settings.regular_timer}");
+                    Debug.Log($"#PreloadService# Plugin settings: State - {Settings.released_state}, release - {Settings.released_version}, vip state - {Settings.vip_state}\n" +
+                        $"---->Review: state - {Settings.review_state}, version - {Settings.review_version}\n" +
+                        $"---->Review: first ad timer - {Settings.first_timer}, regular ad timer - {Settings.regular_timer}");
 
-                    if (settings.review_state && _bundlIdVersion == settings.review_version)
+                    if (Settings.review_state && _bundlIdVersion == Settings.review_version)
                     {
                         return true;
                     }
-                    else if (settings.review_state == false && _bundlIdVersion == settings.review_version)
+                    else if (Settings.review_state == false && _bundlIdVersion == Settings.review_version)
                     {
                         return false;
                     }
-                    else if (settings.released_state && _bundlIdVersion <= settings.released_version)
+                    else if (Settings.released_state && _bundlIdVersion <= Settings.released_version)
                     {
                         if (_isVip)
-                            return settings.vip_state;
+                            return Settings.vip_state;
                         else
                             return true;
                     }
-                    else if (settings.released_state == false && _bundlIdVersion <= settings.released_version)
+                    else if (Settings.released_state == false && _bundlIdVersion <= Settings.released_version)
                     {
                         return false;
                     }

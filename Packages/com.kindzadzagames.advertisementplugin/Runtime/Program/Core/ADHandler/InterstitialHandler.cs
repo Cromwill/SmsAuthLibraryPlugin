@@ -84,6 +84,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private IEnumerator PreloadAd()
         {
+            if(AdIsLoaded())
+                DestroyAd();
+
             while (CanLoadAd() == false)
                 yield return new WaitForSeconds(RetryLoadAdDelay);
 
@@ -111,6 +114,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private void ReportClosure()
         {
             _interstitialCloseAction?.Invoke();
+            _interstitialCloseAction = null;
             InterstitialClosed?.Invoke();
         }
 
