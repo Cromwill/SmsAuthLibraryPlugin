@@ -13,7 +13,7 @@ namespace Agava.Wink
     ///     Handler UI. Input data and view auth process.
     /// </summary>
     [Preserve]
-    public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine
+    public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine, IAdBlocker
     {
         private const float ChangeOrientationDelay = 1.0f;
 
@@ -53,15 +53,16 @@ namespace Agava.Wink
         public static WinkSignInHandlerUI Instance { get; private set; }
 
         public bool IsAnyWindowEnabled => _notifyWindowHandler.IsAnyWindowEnabled;
+        public bool DisplayBlocked => IsAnyWindowEnabled;
 
         public event Action AllWindowsClosed;
 
-        private void Awake()
+        public void Construct(string storeName)
         {
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, this, _screenshotProtector);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, storeName);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -130,23 +131,16 @@ namespace Agava.Wink
             while (textConfigs.Any(config => config.Initialized == false))
                 yield return null;
 
-            var rewardWindow = FindObjectOfType<RewardContinueWindowPresenter>();
+            RewardContinueWindowPresenter rewardConfigs = FindObjectOfType<RewardContinueWindowPresenter>();
 
-            while (rewardWindow.Initialized == false)
+            while (rewardConfigs.Initialized == false)
                 yield return null;
         }
 
-        public void OpenProcessOnWindow()
-        {
-            _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
-        }
+        public void OpenProcessOnWindow() => _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+        public void CloseProcessOnWindow() => _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
 
-        public void CloseProcessOnWindow()
-        {
-            _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
-        }
-
-        public void Construct()
+        public void DownloadRemoteSettings()
         {
             StartCoroutine(EnternetChecking());
             _signInFuctionsUI.SetRemoteConfig();
@@ -227,6 +221,7 @@ namespace Agava.Wink
 
         public void OnWinkButtonClick()
         {
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
             _screenshotProtector.TryDisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
@@ -290,6 +285,7 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
             _screenshotProtector.TryDisableScreenshots();
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
@@ -399,12 +395,12 @@ namespace Agava.Wink
                     return;
             }
 
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
+
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
 
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
-
-            Debug.Log($"Advertisement Plugin: AdvertisementController.Instance != null = {AdvertisementController.Instance != null}, can reward = {AdvertisementController.Instance.CanShowReward()}");
 
             if (AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
             {
@@ -466,5 +462,7 @@ namespace Agava.Wink
             action?.Invoke();
             _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
         }
+
+        public void RemoveRestriction() { }
     }
 }

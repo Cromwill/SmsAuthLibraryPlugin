@@ -54,12 +54,11 @@ namespace Agava.Wink
             _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
+            _winkSignInHandlerUI.Construct(_buildVersionHolder.StoreName.ToString());
             yield return _preloadService.Preparing();
 
             if (_preloadService.IsPluginAwailable)
             {
-                yield return _winkSignInHandlerUI.Initialize();
-
                 SmsAuthApi.DownloadCloudSavesProgress += OnDownloadCloudSavesProgress;
 
                 yield return _winkAccessManager.Construct();
@@ -68,7 +67,7 @@ namespace Agava.Wink
                 yield return _winkAccessManager.TryQuickAccess();
                 yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform);
 
-                _winkSignInHandlerUI.Construct();
+                _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();
 
                 _signInProcess = StartCoroutine(OnStarted());
@@ -89,7 +88,6 @@ namespace Agava.Wink
             else
             {
                 _winkSignInHandlerUI.TrySetCorrectOrientation();
-                yield return _winkSignInHandlerUI.Initialize();
                 _loadingProgressBar.Disable();
                 _sceneLoader.LoadGameScene();
             }
@@ -130,6 +128,7 @@ namespace Agava.Wink
             }
 
             _signInProcess = null;
+            AdvertisementController.Instance?.StartInterstitialTimer();
         }
 
         private void OnSuccessfully()

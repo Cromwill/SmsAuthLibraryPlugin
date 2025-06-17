@@ -22,7 +22,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #endif
 
         [SerializeField] private AdvertisementController _advertisementController;
-        [SerializeField] private InterstitialPlayer _interstitialPlayer;
         [Tooltip("Remote reward data")]
         [SerializeField] private RewardSettings _rewardSettings;
         [Tooltip("Server name remote data")]
@@ -68,13 +67,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             {
                 yield return GetRewardRemote();
 
-                _advertisementController.Construct(vip, _rewardSettings);
+                _advertisementController.Construct(vip, _rewardSettings, _preloadService.Settings);
 
                 yield return new WaitUntil(() => _advertisementController.Initialized);
-
-                _interstitialPlayer.Construct(_advertisementController.InterstitialHandler, _preloadService.Settings);
             }
-
 
             Debug.Log($"Advertisement Plugin: constructed. Plugin available = {_preloadService.IsPluginAvailable}");
         }
@@ -93,7 +89,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private void OnDisable()
         {
             _advertisementController.InitializationFailed -= OnInitializationFailed;
-            _interstitialPlayer.Dispose();
         }
 
         private void OnInitializationFailed()

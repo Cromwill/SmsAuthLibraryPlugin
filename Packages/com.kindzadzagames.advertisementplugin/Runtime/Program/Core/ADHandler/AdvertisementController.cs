@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
+using KinDzaDzaGames.AdvertisementPlugin.DTO;
 
 #if YABBI_AD
 using YabbiSDK.Api;
@@ -19,6 +20,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         , IInitializationListener
 #endif
     {
+        [SerializeField] private InterstitialPlayer _interstitialPlayer;
         [SerializeField] private UserConsentScreen _userConsentScreen;
         [SerializeField] private PlaceOnScreen _standartPlace = PlaceOnScreen.BottomCenter;
         [SerializeField] private List<BannerPlace> _bannerPlaces;
@@ -27,22 +29,23 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private RewardHandler _rewardHandler;
         private InterstitialHandler _interstitialHandler;
         private BannerHandler _bannerHandler;
+        private RewardSettings _rewardSettings;
+        private AdsSdkSettingsData _settings;
 #if YABBI_AD
         ConsentManager _consentManager = new ConsentManager();
 #endif
 
         public static AdvertisementController Instance { get; private set; }
 
-        public RewardSettings RewardSettings { get; private set; }
         public bool Initialized { get; private set; } = false;
-        public InterstitialHandler InterstitialHandler => _interstitialHandler;
 
         public event Action InitializationFailed;
 
-        public void Construct(bool vip, RewardSettings rewardSettings)
+        public void Construct(bool vip, RewardSettings rewardSettings, AdsSdkSettingsData settings)
         {
             _vip = vip;
-            RewardSettings = rewardSettings;
+            _rewardSettings = rewardSettings ?? throw new ArgumentNullException(nameof(rewardSettings));
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
             if (Instance == null)
                 Instance = this;
@@ -62,19 +65,35 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void OnDestroy()
         {
-            _interstitialHandler?.Dispose();
-            _rewardHandler?.Dispose();
-            _bannerHandler?.Dispose();
+            if(Initialized)
+            {
+                _interstitialHandler.Dispose();
+                _rewardHandler.Dispose();
+                _bannerHandler.Dispose();
+                _interstitialPlayer.Dispose();
+            }
         }
 
         public void OnInitializeSuccess()
         {
             Debug.Log("Advertisement Plugin: initialize success!");
             InitADListeners();
+            _interstitialPlayer.Construct(_interstitialHandler, _settings, _vip);
             Initialized = true;
         }
 
-        public void ShowInterstitial(Action interstitialCloseAction = null) => _interstitialHandler.Show(interstitialCloseAction);
+        public void ChangeSubscribeStatus(bool vip)
+        {
+            _vip = vip;
+            _interstitialPlayer.ChangeSubscribeStatus(vip);
+
+            if(_vip)
+            {
+                _interstitialHandler.DropAd();
+            }
+        }
+
+        public void StartInterstitialTimer() => _interstitialPlayer.StartTimer();
         public void AddInterstitialBlocker(IAdBlocker adBlocker) => _interstitialHandler.AddBlocker(adBlocker);
 
         public bool CanShowReward() => _rewardHandler.CanShow();
@@ -95,7 +114,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if BUILD_DEBUG
             Yabbi.EnableDebug(true);
 #endif
-            Yabbi.Initialize(AdvertisingSettings.YabbiAds.publisherID, this);
+            if(Yabbi.IsInitialized() == false)
+                Yabbi.Initialize(AdvertisingSettings.YabbiAds.publisherID, this);
 
             yield return new WaitUntil(() => Yabbi.IsInitialized());
 
@@ -121,7 +141,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void InitADListeners()
         {
-            _rewardHandler = new(RewardSettings);
+            _rewardHandler = new(_rewardSettings);
             _interstitialHandler = new(this);
             _bannerHandler = new(this, switchADTime: 30, bannerCloseButtonVisibility: false, _standartPlace);
         }

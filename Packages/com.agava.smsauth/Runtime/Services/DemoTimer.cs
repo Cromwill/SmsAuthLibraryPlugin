@@ -39,8 +39,6 @@ namespace Agava.Wink
             if (remoteCfgSeconds <= 0)
                 remoteCfgSeconds = _defaultTimerSeconds;
 
-            remoteCfgSeconds = 10;
-
             _remoteTempCfgSeconds = remoteTempCfgSeconds <= 0 ? _defaultTimerSeconds : remoteTempCfgSeconds;
 
             if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)

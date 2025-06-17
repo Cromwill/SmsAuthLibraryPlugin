@@ -3,10 +3,11 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.Scripting;
-using KinDzaDzaGames.AdvertisementPlugin;
 using SmsAuthAPI.Program;
+using UnityEngine.Scripting;
 using System.Threading.Tasks;
+using KinDzaDzaGames.AdvertisementPlugin;
+using System.Collections.Generic;
 
 namespace Agava.Wink
 {
@@ -25,25 +26,28 @@ namespace Agava.Wink
         [SerializeField] private string _defaultTrialPeriodDays = "30 дней за 0 руб";
         [SerializeField] private string _winkPriceKey = "wink-price-text";
         [SerializeField] private string _defaultWinkPrice = "Далее 199 р/месяц";
-        [SerializeField] private string _defaultTimerGiftMinutesKey = "demo-overtime-minutes_";
+        //[SerializeField] private string _defaultTimerGiftMinutesKey = "demo-overtime-minutes_";
         [SerializeField, Min(0)] private int _defaultTimerGiftMinutes = 10;
         [Header("Reward button")]
         [SerializeField] private Button _rewardDemoTimeButton;
         [SerializeField] private TMP_Text _rewardButtonLabel;
         [SerializeField] private TMP_Text _rewardButtonDiscription;
-        [SerializeField] private string _rewardButtonDiscriptionPattern = "и играть ещё {0} минут";
+        [SerializeField] private RewardSettings _rewardSettings;
+
+        private Dictionary<int, char> _minutWordEndings = new Dictionary<int, char>
+        { { 1, 'а' }, { 2, 'ы' }, { 3, 'ы' }, { 4, 'ы' }, { 21, 'а' }, { 22, 'ы' }, { 23, 'ы' }, { 24, 'ы' }, { 31, 'а' }, { 32, 'ы' }, { 33, 'ы' }, { 34, 'ы' } };
 
         private DemoTimer _demoTimer;
         private Color _defaultTextColor;
         private Color _blinkTextColor;
         private Coroutine _reloadAd;
-        private int _rewardMinutes = 10;
+        //private int _rewardMinutes = 10;
 
         public bool Initialized { get; private set; } = false;
 
         public event Action RewardSuccessed;
 
-        public IEnumerator Construct(DemoTimer demoTimer)
+        public IEnumerator Construct(DemoTimer demoTimer, string storeName)
         {
             _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
 
@@ -51,7 +55,12 @@ namespace Agava.Wink
             _blinkTextColor.a = 0.5f;
             DeactivateRewardButton();
 
+            if (string.IsNullOrEmpty(storeName))
+                Debug.LogError("Incorrect store name received.");
+
             yield return new WaitUntil(() => SmsAuthApi.Initialized);
+
+            //string remoteRewardTimeKey = _defaultTimerGiftMinutesKey + Application.identifier + $"_{storeName}";
 
             Task<string> trialTask = RemoteConfig.StringRemoteConfig(_trialPeriodDaysKey, string.Empty);
             yield return new WaitUntil(() => trialTask.IsCompleted);
@@ -59,18 +68,21 @@ namespace Agava.Wink
             Task<string> priceTask = RemoteConfig.StringRemoteConfig(_winkPriceKey, string.Empty);
             yield return new WaitUntil(() => priceTask.IsCompleted);
 
-            string trialResult = trialTask.Result;
-            string priceResult = priceTask.Result;
+            /*Task<int> minutesTask = RemoteConfig.IntRemoteConfig(remoteRewardTimeKey, _defaultTimerGiftMinutes);
+            yield return new WaitUntil(() => minutesTask.IsCompleted);*/
 
-            _winkSubsDescription.text = string.Format(_winkSubsDescriptionPattern, string.IsNullOrEmpty(trialResult) ? _defaultTrialPeriodDays : trialResult, string.IsNullOrEmpty(priceResult) ? _defaultWinkPrice : priceResult);
+            _winkSubsDescription.text = string.Format(_winkSubsDescriptionPattern, string.IsNullOrEmpty(trialTask.Result) ? _defaultTrialPeriodDays : trialTask.Result, string.IsNullOrEmpty(priceTask.Result) ? _defaultWinkPrice : priceTask.Result);
 
-            Task<int> minutesTask = RemoteConfig.IntRemoteConfig(_defaultTimerGiftMinutesKey + Application.identifier, _defaultTimerGiftMinutes);
-            yield return new WaitUntil(() => minutesTask.IsCompleted);
+            //_rewardMinutes = minutesTask.Result;
+            _minutWordEndings.TryGetValue(_rewardSettings.demo_overtime_minutes, out char ending);
 
-            _rewardMinutes = minutesTask.Result;
-            _rewardButtonDiscription.text = string.Format(_rewardButtonDiscriptionPattern, _rewardMinutes);
+            //_rewardButtonDiscription.text = string.Format(_rewardButtonDiscriptionPattern + ending, _rewardSettings.demo_overtime_minutes);
+            _rewardButtonLabel.text = _rewardSettings.ads_show_text;
+            _rewardButtonDiscription.text = _rewardSettings.over_time_text.Replace($"{{{"n"}}}", _rewardSettings.demo_overtime_minutes.ToString()) + ending;
+            _rewardButtonDiscription.gameObject.SetActive(_rewardSettings.over_time_bool);
 
-            Debug.Log($"ADS PLUGIN: get reward remote, trialResult = {trialResult}, priceResult = {priceResult}, reward minutes = {_rewardMinutes}");
+            //Debug.Log($"Advertisement Plugin: remote reward time key = {remoteRewardTimeKey}");
+            Debug.Log($"Advertisement Plugin: get reward remote, trialResult = {trialTask.Result}, priceResult = {priceTask.Result}, reward minutes = {_rewardSettings.demo_overtime_minutes}");
 
             Initialized = true;
         }
@@ -103,7 +115,7 @@ namespace Agava.Wink
             if (string.IsNullOrEmpty(text))
                 _rewardButtonDiscription.gameObject.SetActive(false);
             else
-                _rewardButtonDiscription.text = string.Format(text, _rewardMinutes);
+                _rewardButtonDiscription.text = string.Format(text, _rewardSettings.demo_overtime_minutes);
         }
 
         private void ShowReward()
@@ -114,7 +126,7 @@ namespace Agava.Wink
 
         private void AddDemoTime()
         {
-            _demoTimer.AddDemoTime(_rewardMinutes * 10/* * OneMinute*/);
+            _demoTimer.AddDemoTime(_rewardSettings.demo_overtime_minutes * OneMinute);
             RewardSuccessed?.Invoke();
         }
 
@@ -144,5 +156,14 @@ namespace Agava.Wink
                 _reloadAd = null;
             }
         }
+    }
+
+    [Preserve, Serializable]
+    internal class RewardSettings
+    {
+        [field: SerializeField] public bool over_time_bool { get; private set; } = true;
+        [field: SerializeField] public string over_time_text { get; private set; } = "и играть ещё {n} минут";
+        [field: SerializeField] public string ads_show_text { get; private set; } = "Посмотреть рекламу";
+        [field: SerializeField] public int demo_overtime_minutes { get; private set; } = 10;
     }
 }

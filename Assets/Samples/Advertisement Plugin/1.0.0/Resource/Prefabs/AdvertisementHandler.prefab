@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2151755609ac98e4a813c9cbb6cc0166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interstitialPlayer: {fileID: 7527624468263852643}
   _userConsentScreen:
     <NeedShowConsentScreen>k__BackingField: 1
   _standartPlace: 7

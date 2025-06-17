@@ -6,6 +6,7 @@ using SmsAuthAPI.DTO;
 using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
 using System.Threading.Tasks;
+using KinDzaDzaGames.AdvertisementPlugin;
 
 namespace Agava.Wink
 {
@@ -234,6 +235,8 @@ namespace Agava.Wink
                 HasTempAccess = false;
                 Authenficated = false;
                 AccountDeleted?.Invoke();
+                AdsAppView.Program.PopupManager.Instance.AccoundDeleted();
+                AdvertisementController.Instance?.ChangeSubscribeStatus(false);
                 TokenLifeHelper.ClearTokens();
             }
         }
@@ -256,6 +259,7 @@ namespace Agava.Wink
                 {
                     HasTempAccess = true;
                     AdsAppView.Program.PopupManager.Instance.OnSubscribeDetected();
+                    AdvertisementController.Instance?.ChangeSubscribeStatus(HasTempAccess);
                 }
             }
         }
@@ -270,6 +274,7 @@ namespace Agava.Wink
             AuthorizationSuccessfully?.Invoke();
             SendStartData(LoginData.phone);
             AdsAppView.Program.PopupManager.Instance?.OnSubscribeDetected();
+            AdvertisementController.Instance?.ChangeSubscribeStatus(HasAccess);
 
             Debug.Log("Wink access successfully");
         }

@@ -71,6 +71,30 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void AddBlocker(IAdBlocker adBlocker) => _adBlockers.Add(adBlocker);
 
+        public void DropAd()
+        {
+            if(_preloadCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_preloadCoroutine);
+                _preloadCoroutine = null;
+            }
+
+            if(_showCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_showCoroutine);
+                _showCoroutine = null;
+            }
+
+            if(_reloadCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_reloadCoroutine);
+                _reloadCoroutine = null;
+            }
+
+            if (AdIsLoaded())
+                DestroyAd();
+        }
+
         protected override string GetPlacementName()
         {
 #if UNITY_EDITOR
@@ -131,7 +155,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void LoadAd()
         {
-#if YABBI_AD
+#if UNITY_EDITOR
+            Debug.Log("Advertisement Plugin: load interstitial");
+            _showCoroutine ??= _coroutine.StartCoroutine(DisplayAd());
+#elif YABBI_AD
             Yabbi.LoadAd(GetAdType(), GetPlacementName());
 #elif YANDEX_AD
             _interstitialAdLoader.LoadAd(CreateAdRequest(AdvertisingSettings.YandexAds.Release.InterstitialUnitId));
@@ -151,7 +178,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void ShowAd()
         {
-#if YABBI_AD
+#if UNITY_EDITOR
+            Debug.Log("Advertisement Plugin: show interstitial");
+            ReportClosure();
+#elif YABBI_AD
             Yabbi.ShowAd(GetAdType(), GetPlacementName());
 #elif YANDEX_AD
             _interstitial.OnAdClicked += HandleAdClicked;
