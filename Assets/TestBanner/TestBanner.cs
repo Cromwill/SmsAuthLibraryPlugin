@@ -38,7 +38,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         if(_advertisementController != null)
         {
             _advertisementController.BannerDisplayed += OnBannerDisplayed;
-            _advertisementController.BannerHided += OnBannerBannerHided;
+            _advertisementController.BannerHided += OnBannerHided;
         }
     }
 
@@ -52,7 +52,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         if (_advertisementController != null)
         {
             _advertisementController.BannerDisplayed -= OnBannerDisplayed;
-            _advertisementController.BannerHided -= OnBannerBannerHided;
+            _advertisementController.BannerHided -= OnBannerHided;
         }
     }
 
@@ -71,7 +71,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         {
             _bannerSuspendButtonText.text = "Banner suspended";
             DisplayBlocked = true;
-            _advertisementController?.AddInterstitialBlocker(this);
+            _advertisementController?.SuspendDisplayBanner(this);
         }
     }
 
@@ -96,6 +96,15 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         _showWithChangePosition = !_showWithChangePosition;
     }
 
-    private void OnBannerDisplayed() => _bannerIndicator.color = Color.blue;
-    private void OnBannerBannerHided() => _bannerIndicator.color = Color.green;
+    private void OnBannerDisplayed()
+    {
+        Debug.Log("OnBannerDisplayed");
+        _bannerIndicator.color = Color.blue;
+    }
+
+    private void OnBannerHided()
+    {
+        Debug.Log("OnBannerHided");
+        _bannerIndicator.color = Color.green;
+    }
 }
