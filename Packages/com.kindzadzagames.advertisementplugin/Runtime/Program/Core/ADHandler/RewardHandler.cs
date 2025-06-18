@@ -25,6 +25,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private int _rewardsCount = 0;
         private bool _rewardReceived = false;
+        private bool _AdShown = false;
         private Action _preRewardAction;
         private Action _rewardSuccessAction;
         private Action _rewardFailureAction;
@@ -58,6 +59,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _rewardedAdLoader.OnAdFailedToLoad -= HandleAdFailedToLoad;
 #endif
             DestroyAd();
+        }
+
+        public void ChangeFocusState(bool focus)
+        {
+            if(focus && _AdShown)
+            {
+                DestroyAd();
+                CancelReward();
+            }
         }
 
         public bool CanShow() => _canShowRewards && (_rewardsCount < _rewardsMaxCount || _rewardsMaxCount == 0);
@@ -110,6 +120,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _rewardSuccessAction = null;
             _rewardFailureAction = null;
             _rewardReceived = false;
+            _AdShown = false;
         }
 
         protected override string GetPlacementName()
@@ -200,7 +211,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public void OnUserRewarded(AdPayload adPayload) => ApplyReward();
         public void OnRewardedClosed(AdPayload adPayload) => CancelReward();
 
-        public void OnRewardedShown(AdPayload adPayload) { }
+        public void OnRewardedShown(AdPayload adPayload) => _AdShown = true;
         public void OnRewardedVideoStarted(AdPayload adPayload) { }
         public void OnRewardedVideoCompleted(AdPayload adPayload) { }
 

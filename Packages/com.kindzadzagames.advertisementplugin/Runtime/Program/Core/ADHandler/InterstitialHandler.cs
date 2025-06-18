@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
+using TMPro;
 
 #if YABBI_AD
 using YabbiSDK.Api;
@@ -30,6 +31,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private Coroutine _showCoroutine = null;
         private Action _interstitialCloseAction;
         private List<IAdBlocker> _adBlockers = new List<IAdBlocker>();
+        private bool _AdShown = false;
 
 #if YANDEX_AD
         private InterstitialAdLoader _interstitialAdLoader;
@@ -60,6 +62,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _interstitialAdLoader.OnAdFailedToLoad -= HandleAdFailedToLoad;
 #endif
             DestroyAd();
+        }
+
+        public void ChangeFocusState(bool focus)
+        {
+            if (focus && _AdShown)
+            {
+                DestroyAd();
+                ReportClosure();
+            }
         }
 
         public void Show(Action interstitialCloseAction = null)
@@ -140,6 +151,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _interstitialCloseAction?.Invoke();
             _interstitialCloseAction = null;
             InterstitialClosed?.Invoke();
+            _AdShown = false;
         }
 
         protected override bool CanLoadAd()

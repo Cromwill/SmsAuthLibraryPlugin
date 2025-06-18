@@ -74,6 +74,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             }
         }
 
+        private void OnApplicationFocus(bool focus)
+        {
+            if (Initialized)
+            {
+                _interstitialHandler.ChangeFocusState(focus);
+                _rewardHandler.ChangeFocusState(focus);
+            }
+        }
+
         public void OnInitializeSuccess()
         {
             Debug.Log("Advertisement Plugin: initialize success!");
