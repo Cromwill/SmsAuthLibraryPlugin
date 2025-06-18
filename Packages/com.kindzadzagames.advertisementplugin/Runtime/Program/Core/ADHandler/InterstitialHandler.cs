@@ -44,7 +44,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             _coroutine = coroutine ?? throw new ArgumentNullException(nameof(coroutine));
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             Debug.Log("Advertisement Plugin: interstitial handler inited.");
 # elif YABBI_AD
             Yabbi.SetInterstitialCallbacks(this);
@@ -68,6 +68,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             if (focus && _AdShown)
             {
+                Debug.Log("Advertisement Plugin: change focus, need destroy Interstitial.");
                 DestroyAd();
                 ReportClosure();
             }
@@ -108,7 +109,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override string GetPlacementName()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             return AdvertisingSettings.EditorTest.Test;
 #elif YABBI_AD
             return AdvertisingSettings.YabbiAds.yabbiInterstitialUnitID;
@@ -156,7 +157,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override bool CanLoadAd()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             return true;
 #elif YABBI_AD
             return Yabbi.CanLoadAd(GetAdType(), GetPlacementName());
@@ -167,7 +168,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void LoadAd()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             Debug.Log("Advertisement Plugin: load interstitial");
             _showCoroutine ??= _coroutine.StartCoroutine(DisplayAd());
 #elif YABBI_AD
@@ -179,7 +180,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override bool AdIsLoaded()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             return true;
 #elif YABBI_AD
             return Yabbi.IsAdLoaded(GetAdType(), GetPlacementName());
@@ -190,7 +191,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void ShowAd()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             Debug.Log("Advertisement Plugin: show interstitial");
             ReportClosure();
 #elif YABBI_AD

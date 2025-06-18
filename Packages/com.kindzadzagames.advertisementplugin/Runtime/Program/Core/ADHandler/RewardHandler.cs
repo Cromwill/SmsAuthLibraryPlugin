@@ -41,7 +41,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _rewardsMaxCount = rewardSettings.RewardCount;
             _rewardsCount = PlayerPrefs.GetInt(ViewedAds, 0);
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             Debug.Log("Advertisement Plugin: reward handler inited.");
 # elif YABBI_AD
             Yabbi.SetRewardedCallbacks(this);
@@ -65,6 +65,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             if(focus && _AdShown)
             {
+                Debug.Log("Advertisement Plugin: change focus, need destroy Reward.");
                 DestroyAd();
                 CancelReward();
             }
@@ -125,7 +126,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override string GetPlacementName()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             return AdvertisingSettings.EditorTest.Test;
 #elif YABBI_AD
             return AdvertisingSettings.YabbiAds.yabbiRewardedUnitID;
@@ -136,7 +137,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override bool CanLoadAd()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             return true;
 #elif YABBI_AD
             return Yabbi.CanLoadAd(GetAdType(), GetPlacementName());
@@ -156,7 +157,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override bool AdIsLoaded()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             return true;
 #elif YABBI_AD
             return Yabbi.IsAdLoaded(GetAdType(), GetPlacementName());
@@ -167,7 +168,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void ShowAd()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             ApplyReward();
             CancelReward();
 #elif YABBI_AD

@@ -37,6 +37,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
 
         if(_advertisementController != null)
         {
+            Debug.Log($"Advertisement Plugin: try subscribe on bunner");
             _advertisementController.BannerDisplayed += OnBannerDisplayed;
             _advertisementController.BannerHided += OnBannerHided;
         }
@@ -98,13 +99,13 @@ public class TestBanner : MonoBehaviour, IAdBlocker
 
     private void OnBannerDisplayed()
     {
-        Debug.Log("OnBannerDisplayed");
+        Debug.Log("Advertisement Plugin: OnBannerDisplayed");
         _bannerIndicator.color = Color.blue;
     }
 
     private void OnBannerHided()
     {
-        Debug.Log("OnBannerHided");
+        Debug.Log("Advertisement Plugin: OnBannerHided");
         _bannerIndicator.color = Color.green;
     }
 }

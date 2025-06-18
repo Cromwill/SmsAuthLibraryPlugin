@@ -54,7 +54,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             DontDestroyOnLoad(this);
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && YABBI_AD == false
             OnInitializeSuccess();
 #elif YABBI_AD
             StartCoroutine(StartYabbiService());

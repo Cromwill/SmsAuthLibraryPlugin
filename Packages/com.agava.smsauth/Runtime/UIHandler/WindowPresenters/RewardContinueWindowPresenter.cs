@@ -230,6 +230,8 @@ namespace Agava.Wink
 
             this.over_time_text = over_time_text;
             this.ads_show_text = ads_show_text;
+
+            Debug.Log($"Advertisement Plugin: get varioqub settings, demo_overtime_minutes = {demo_overtime_minutes}, over_time_bool = {over_time_bool}, over_time_text = {over_time_text}, ads_show_text = {ads_show_text}");
         }
     }
 }
