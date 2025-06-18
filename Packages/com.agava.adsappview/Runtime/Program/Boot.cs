@@ -88,15 +88,25 @@ namespace AdsAppView.Program
 
             yield return _viewPresenterConfigs.Initialize(_api);
 
-            if (_preloadService.IsPluginAvailable && _advertisementBoot.IsPluginAvailable == false)
-                yield return Initialize(vip);
+            if (_freeApp == false)
+            {
+                if (_preloadService.IsPluginAvailable)
+                    yield return Initialize(vip);
+                else
+                    Debug.Log("#Boot# Popup plugin disabled");
+            }
             else
-                Debug.Log("#Boot# Popup plugin disabled");
-
-            if (_freeApp && _advertisementBoot.IsPluginAvailable)
-                AdvertisementController.Instance.StartInterstitialTimer();
-            else
-                Debug.Log("#Boot# Advertisement plugin disabled");
+            {
+                if(_advertisementBoot.IsPluginAvailable)
+                {
+                    AdvertisementController.Instance.StartInterstitialTimer();
+                }
+                else
+                {
+                    yield return Initialize(vip);
+                    AdvertisementController.Instance?.ChangeSubscribeStatus(vip: true);
+                }
+            }
 
             Constructed = true;
         }
