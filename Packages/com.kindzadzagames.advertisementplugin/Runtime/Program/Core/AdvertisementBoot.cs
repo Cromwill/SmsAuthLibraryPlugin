@@ -28,6 +28,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         [SerializeField] private string _serverPath;
         [SerializeField] private Store _storeName;
         [SerializeField] private int _bundleId;
+        [Tooltip("Application")]
+        [SerializeField] private bool _isFreeApp = false;
 
         private AdvertisementAPI _api;
         private AppData _appData;
@@ -48,7 +50,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void Awake()
         {
-            //StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
+            if(_isFreeApp)
+                StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
         }
 
         public IEnumerator Construct(bool vip, int bundleId, string storeName, string appId, string platform)
@@ -63,14 +66,14 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             yield return _preloadService.Preparing();
 
-            if(_preloadService.IsPluginAvailable)
+            /*if(_preloadService.IsPluginAvailable)
             {
                 yield return GetRewardRemote();
 
                 _advertisementController.Construct(vip, _rewardSettings, _preloadService.Settings);
 
                 yield return new WaitUntil(() => _advertisementController.Initialized);
-            }
+            }*/
 
             Debug.Log($"Advertisement Plugin: constructed. Plugin available = {_preloadService.IsPluginAvailable}");
         }
