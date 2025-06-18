@@ -691,10 +691,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1507891493890396838, guid: 7a7179ead0de7644dbe9e6ba0b993969, type: 3}
-      propertyPath: _gameOrientation._appOrientation
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1532909739293810099, guid: 7a7179ead0de7644dbe9e6ba0b993969, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
