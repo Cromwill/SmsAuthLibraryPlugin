@@ -40,6 +40,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public bool Initialized { get; private set; } = false;
 
         public event Action InitializationFailed;
+        public event Action BannerDisplayed;
+        public event Action BannerHided;
 
         public void Construct(bool vip, RewardSettings rewardSettings, AdsSdkSettingsData settings)
         {
@@ -80,6 +82,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             {
                 _interstitialHandler.ChangeFocusState(focus);
                 _rewardHandler.ChangeFocusState(focus);
+
+                _bannerHandler.BannerDisplayed -= OnBannerDisplayed;
+                _bannerHandler.BannerHided -= OnBannerHided;
             }
         }
 
@@ -89,17 +94,19 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             InitADListeners();
             _interstitialPlayer.Construct(_interstitialHandler, _settings, _vip);
             Initialized = true;
+
+            _bannerHandler.BannerDisplayed += OnBannerDisplayed;
+            _bannerHandler.BannerHided += OnBannerHided;
         }
 
         public void ChangeSubscribeStatus(bool vip)
         {
             _vip = vip;
             _interstitialPlayer.ChangeSubscribeStatus(vip);
+            _bannerHandler.ChangeSubscribeStatus(vip);
 
             if(_vip)
-            {
                 _interstitialHandler.DropAd();
-            }
         }
 
         public void StartInterstitialTimer() => _interstitialPlayer.StartTimer();
@@ -152,7 +159,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             _rewardHandler = new(_rewardSettings);
             _interstitialHandler = new(this);
-            _bannerHandler = new(this, switchADTime: 30, bannerCloseButtonVisibility: false, _standartPlace);
+            _bannerHandler = new(this, switchADTime: 30, bannerCloseButtonVisibility: false, _standartPlace, _vip);
         }
+
+        private void OnBannerDisplayed() => BannerDisplayed?.Invoke();
+        private void OnBannerHided() => BannerHided?.Invoke();
     }
 }

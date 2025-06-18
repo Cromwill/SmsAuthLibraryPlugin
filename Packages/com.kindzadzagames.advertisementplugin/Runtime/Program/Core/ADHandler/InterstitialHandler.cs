@@ -61,7 +61,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _interstitialAdLoader.OnAdLoaded -= HandleAdLoaded;
             _interstitialAdLoader.OnAdFailedToLoad -= HandleAdFailedToLoad;
 #endif
-            DestroyAd();
+            DropAd();
         }
 
         public void ChangeFocusState(bool focus)

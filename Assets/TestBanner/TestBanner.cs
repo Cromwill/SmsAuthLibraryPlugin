@@ -1,0 +1,101 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using KinDzaDzaGames.AdvertisementPlugin;
+
+public class TestBanner : MonoBehaviour, IAdBlocker
+{
+    [SerializeField] private Button _bannerShowButton;
+    [SerializeField] private Button _bannerHideButton;
+    [SerializeField] private Button _bannerSuspendButton;
+    [SerializeField] private TMP_Text _bannerSuspendButtonText;
+    [SerializeField] private Button _bannerChangePositionButton;
+    [SerializeField] private TMP_Text _bannerChangePositionButtonText;
+    [SerializeField] private Image _bannerIndicator;
+
+    private AdvertisementController _advertisementController;
+    private bool _bannerEnabled = true;
+    private bool _bannerPositionBottom = true;
+    private bool _showWithChangePosition = false;
+
+    public bool DisplayBlocked { get; private set; }
+
+    private void Awake()
+    {
+        _bannerSuspendButtonText.text = "Banner enabled";
+        _bannerChangePositionButtonText.text = "Bottom position";
+        DisplayBlocked = false;
+        _advertisementController = AdvertisementController.Instance;
+    }
+
+    private void OnEnable()
+    {
+        _bannerShowButton.onClick.AddListener(ShowBanner);
+        _bannerHideButton.onClick.AddListener(HideBanner);
+        _bannerSuspendButton.onClick.AddListener(SuspendBanner);
+        _bannerChangePositionButton.onClick.AddListener(ChangePosition);
+
+        if(_advertisementController != null)
+        {
+            _advertisementController.BannerDisplayed += OnBannerDisplayed;
+            _advertisementController.BannerHided += OnBannerBannerHided;
+        }
+    }
+
+    private void OnDisable()
+    {
+        _bannerShowButton.onClick.RemoveListener (ShowBanner);
+        _bannerHideButton.onClick.RemoveListener(HideBanner);
+        _bannerSuspendButton.onClick.RemoveListener(SuspendBanner);
+        _bannerChangePositionButton.onClick.RemoveListener(ChangePosition);
+
+        if (_advertisementController != null)
+        {
+            _advertisementController.BannerDisplayed -= OnBannerDisplayed;
+            _advertisementController.BannerHided -= OnBannerBannerHided;
+        }
+    }
+
+    public void RemoveRestriction() => DisplayBlocked = false;
+
+    private void SuspendBanner()
+    {
+        _bannerEnabled = !_bannerEnabled;
+
+        if (_bannerEnabled)
+        {
+            _bannerSuspendButtonText.text = "Banner enabled";
+            RemoveRestriction();
+        }
+        else
+        {
+            _bannerSuspendButtonText.text = "Banner suspended";
+            DisplayBlocked = true;
+            _advertisementController?.AddInterstitialBlocker(this);
+        }
+    }
+
+    private void ShowBanner() => _advertisementController?.ShowBanner();
+    private void HideBanner() => _advertisementController?.HideBanner();
+
+    private void ChangePosition()
+    {
+        _bannerPositionBottom = !_bannerPositionBottom;
+
+        if (_bannerPositionBottom)
+        {
+            _bannerChangePositionButtonText.text = "Bottom position";
+            _advertisementController?.ChangeBannerPosition(PlaceOnScreen.BottomCenter, _showWithChangePosition);
+        }
+        else
+        {
+            _bannerChangePositionButtonText.text = "Top position";
+            _advertisementController?.ChangeBannerPosition(PlaceOnScreen.TopCenter, _showWithChangePosition);
+        }
+
+        _showWithChangePosition = !_showWithChangePosition;
+    }
+
+    private void OnBannerDisplayed() => _bannerIndicator.color = Color.blue;
+    private void OnBannerBannerHided() => _bannerIndicator.color = Color.green;
+}
