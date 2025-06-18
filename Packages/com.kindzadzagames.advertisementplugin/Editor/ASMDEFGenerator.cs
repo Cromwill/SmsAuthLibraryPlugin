@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,18 +16,19 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
         private void OnGUI()
         {
-            GUILayout.Label("Create a new ASMDEF files for YABBI", EditorStyles.boldLabel);
+            GUILayout.Label("Create new ASMDEF files for YABBI", EditorStyles.boldLabel);
 
-            if (GUILayout.Button("Create ASMDEF"))
+            if (GUILayout.Button("Create YABBI ASMDEFs"))
                 CreateYabbiASMDEFs();
 
-            if (GUILayout.Button("Edit ASMDEF"))
+            if (GUILayout.Button("Edit YABBI ASMDEFs"))
                 EditYabbiASMDEFs();
 
-            if (GUILayout.Button("Check plugin ASMDEF"))
+            if (GUILayout.Button("Check advertisement plugin ASMDEF"))
                 CheckASMDEF();
 
-            GUILayout.Label("Create a new ASMDEF files for YANDEX", EditorStyles.boldLabel);
+            if (GUILayout.Button("Add YABBI define"))
+                TryAddYabbiDefine();
         }
 
         private void CreateYabbiASMDEFs()
@@ -88,44 +90,94 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
         private void CheckASMDEF()
         {
+            bool needSave = false;
+            AssemblyDefinition asmdefObject = null;
+            string packagesPath = string.Empty;
+
             string libraryPath = Path.Combine(Application.dataPath, "..", "Library\\PackageCache");
 
             string[] directories = Directory.GetDirectories(libraryPath, "com.kindzadzagames.advertisementplugin*@*", SearchOption.TopDirectoryOnly);
 
             if(directories.Length == 0)
             {
-                Debug.Log($"Directory not found.");
+                Debug.Log($"Directory not found in PackageCache, try find in Packages.");
+
+                packagesPath = Application.dataPath + "\\..\\Packages\\com.kindzadzagames.advertisementplugin\\Runtime\\KDDG.Advertisement.asmdef";
             }
             else
             {
-                string path = Path.Combine(directories[0], "Runtime\\KDDG.Advertisement.asmdef");
+                Debug.Log($"Directory found in PackageCache.");
 
-                if (File.Exists(path))
-                {
-                    string jsonContent = File.ReadAllText(path);
-                    AssemblyDefinition asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
-
-                    Debug.Log($"File path: {path}.");
-                }
-                else
-                {
-                    Debug.Log($"The file was not found on the way - {path}.");
-                }
+                packagesPath = Path.Combine(directories[0], "Runtime\\KDDG.Advertisement.asmdef");
             }
-
-            /*string packagesPath = Application.dataPath + "\\..\\Packages\\com.kindzadzagames.advertisementplugin\\Runtime\\KDDG.Advertisement.asmdef";
 
             if (File.Exists(packagesPath))
             {
                 string jsonContent = File.ReadAllText(packagesPath);
-                AssemblyDefinition asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
+                asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
 
-                Debug.Log("ѕуть к файлу: " + packagesPath);
+                TryAddASMDEF(ref asmdefObject.references, ASMDEFSettings.YabbiAds.FilePathSspnetSDK, ref needSave);
+                TryAddASMDEF(ref asmdefObject.references, ASMDEFSettings.YabbiAds.FilePathYabbiSDK, ref needSave);
+
+                Debug.Log($"File path: {packagesPath}.");
             }
             else
             {
-                Debug.Log($"‘айл не найден по пути - {packagesPath}.");
-            }*/
+                Debug.Log($"The file was not found on the way - {packagesPath}.");
+            }
+
+            if (needSave)
+            {
+                string updatedJson = JsonUtility.ToJson(asmdefObject, true);
+
+                File.WriteAllText(packagesPath, updatedJson);
+                AssetDatabase.Refresh();
+            }
+        }
+
+        private void TryAddASMDEF(ref string[] references, string path, ref bool needSave)
+        {
+            if (CheckContainsASMDEF(references, path) == false)
+            {
+                AddASMDEF(ref references, GetAsmdefGuid(path));
+                needSave = true;
+
+                Debug.Log($"ASMDEF added {GetAsmdefGuid(path)} to references.");
+            }
+            else
+            {
+                Debug.Log($"ASMDEF has {GetAsmdefGuid(path)} in references.");
+            }
+        }
+
+        private bool CheckContainsASMDEF(string[] references, string path) => references.Contains(GetAsmdefGuid(path));
+
+        private void AddASMDEF(ref string[] references, string GUID)
+        {
+            string[] newArray = new string[references.Length + 1];
+
+            for (int i = 0; i < references.Length; i++)
+                newArray[i] = references[i];
+
+            newArray[newArray.Length - 1] = GUID;
+            references = newArray;
+        }
+
+        private void TryAddYabbiDefine()
+        {
+            string currentSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget));
+
+            if (currentSymbols.Contains(ASMDEFSettings.YabbiAds.YabbiDefine) == false)
+            {
+                string newSymbols = currentSymbols + ";" + ASMDEFSettings.YabbiAds.YabbiDefine;
+
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget), newSymbols);
+                Debug.Log($"Added define symbol: {ASMDEFSettings.YabbiAds.YabbiDefine}.");
+            }
+            else
+            {
+                Debug.Log($"Define symbol already exists: {ASMDEFSettings.YabbiAds.YabbiDefine}.");
+            }
         }
     }
 

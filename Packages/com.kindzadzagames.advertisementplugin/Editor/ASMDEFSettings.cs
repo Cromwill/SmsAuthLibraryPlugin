@@ -6,6 +6,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
         public class YabbiAds
         {
+            public const string YabbiDefine = "YABBI_AD";
             public const string SspnetSDK = "SspnetSDK";
             public const string SspnetSDKEditor = "SspnetSDK.Editor";
             public const string YabbiSDK = "YabbiSDK";
