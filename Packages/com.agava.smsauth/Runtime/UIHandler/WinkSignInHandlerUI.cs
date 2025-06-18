@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
 using KinDzaDzaGames.AdvertisementPlugin;
+using AdsAppView.DTO;
 
 namespace Agava.Wink
 {
@@ -57,12 +58,12 @@ namespace Agava.Wink
 
         public event Action AllWindowsClosed;
 
-        public void Construct(string storeName)
+        public void Construct(string storeName, AppMetricaInfo appMetricaInfo)
         {
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, storeName);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, storeName, appMetricaInfo);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 

@@ -24,6 +24,7 @@ namespace Agava.Wink
         [SerializeField] private LoadingProgressBar _loadingProgressBar;
         [SerializeField] private bool _restartAfterAuth = true;
         [SerializeField] private AdvertisementBoot _advertisementBoot;
+        [SerializeField] private AppMetricaInfo _appMetricaInfo;
 
         private Coroutine _signInProcess;
         private PreloadService _preloadService;
@@ -54,7 +55,7 @@ namespace Agava.Wink
             _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
-            _winkSignInHandlerUI.Construct(_buildVersionHolder.StoreName.ToString());
+            _winkSignInHandlerUI.Construct(_buildVersionHolder.StoreName.ToString(), _appMetricaInfo);
             yield return _preloadService.Preparing();
 
             if (_preloadService.IsPluginAwailable)

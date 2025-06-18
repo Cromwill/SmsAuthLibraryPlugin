@@ -45,12 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c1f853478c3984a9e8177feb7af745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bundlIdVersion: 1
+  _buildVersionHolder: {fileID: 0}
   _winkAccessManager: {fileID: 0}
   _winkSignInHandlerUI: {fileID: 0}
   _sceneLoader: {fileID: 0}
   _loadingProgressBar: {fileID: 0}
   _restartAfterAuth: 0
+  _advertisementBoot: {fileID: 0}
+  _appMetricaInfo: {fileID: 11400000, guid: bf724078dbf240f4388015494f10c5af, type: 2}
 --- !u!114 &1593372107193117913
 MonoBehaviour:
   m_ObjectHideFlags: 0
