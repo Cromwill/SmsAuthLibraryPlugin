@@ -73,6 +73,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _rewardHandler.Dispose();
                 _bannerHandler.Dispose();
                 _interstitialPlayer.Dispose();
+
+                _bannerHandler.BannerDisplayed -= OnBannerDisplayed;
+                _bannerHandler.BannerHided -= OnBannerHided;
             }
         }
 
@@ -82,9 +85,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             {
                 _interstitialHandler.ChangeFocusState(focus);
                 _rewardHandler.ChangeFocusState(focus);
-
-                _bannerHandler.BannerDisplayed -= OnBannerDisplayed;
-                _bannerHandler.BannerHided -= OnBannerHided;
             }
         }
 
