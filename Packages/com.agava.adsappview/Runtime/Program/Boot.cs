@@ -5,6 +5,7 @@ using AdsAppView.Utility;
 using AdsAppView.DTO;
 using Newtonsoft.Json;
 using System;
+using KinDzaDzaGames.AdvertisementPlugin;
 
 namespace AdsAppView.Program
 {
@@ -30,6 +31,7 @@ namespace AdsAppView.Program
         [SerializeField] private string _serverPath;
         [Tooltip("Assets settings")]
         [SerializeField] private bool _freeApp = true;
+        [SerializeField] private AdvertisementBoot _advertisementBoot;
         [SerializeField] private bool _useAssetBundles = true;
         [SerializeField] private AssetsBundlesLoader _assetsBundlesLoader;
         [SerializeField] private GameObject _defaultAsset;
@@ -79,14 +81,22 @@ namespace AdsAppView.Program
             yield return _preloadService.Preparing();
 
             if (_freeApp)
+            {
                 yield return _links.Initialize(_api);
+                yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, Platform);
+            }
 
             yield return _viewPresenterConfigs.Initialize(_api);
 
-            if (_preloadService.IsPluginAvailable)
+            if (_preloadService.IsPluginAvailable && _advertisementBoot.IsPluginAvailable == false)
                 yield return Initialize(vip);
             else
                 Debug.Log("#Boot# Popup plugin disabled");
+
+            if (_freeApp && _advertisementBoot.IsPluginAvailable)
+                AdvertisementController.Instance.StartInterstitialTimer();
+            else
+                Debug.Log("#Boot# Advertisement plugin disabled");
 
             Constructed = true;
         }
