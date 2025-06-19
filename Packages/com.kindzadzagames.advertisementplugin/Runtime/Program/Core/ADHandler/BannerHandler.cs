@@ -221,7 +221,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             PlaceOnScreen.TopLeft or PlaceOnScreen.TopCenter or PlaceOnScreen.TopRight => BannerPosition.TOP,
             _ => BannerPosition.BOTTOM,
 #elif YANDEX_AD
-                PlaceOnScreen.TopLeft => AdPosition.TopLeft,
+
+            PlaceOnScreen.TopLeft or PlaceOnScreen.TopCenter or PlaceOnScreen.TopRight => AdPosition.TopCenter,
+            _ => AdPosition.BottomCenter,
+
+                /*PlaceOnScreen.TopLeft => AdPosition.TopLeft,
                 PlaceOnScreen.TopCenter => AdPosition.TopCenter,
                 PlaceOnScreen.TopRight => AdPosition.TopRight,
                 PlaceOnScreen.CenterLeft => AdPosition.CenterLeft,
@@ -229,7 +233,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 PlaceOnScreen.CenterRight => AdPosition.CenterRight,
                 PlaceOnScreen.BottomLeft => AdPosition.BottomLeft,
                 PlaceOnScreen.BottomRight => AdPosition.BottomRight,
-                _ => AdPosition.BottomCenter,
+                _ => AdPosition.BottomCenter,*/
 #endif
         };
 
