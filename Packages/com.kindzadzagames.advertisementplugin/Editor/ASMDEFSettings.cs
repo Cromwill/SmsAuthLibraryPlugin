@@ -19,7 +19,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
 
         public class YandexAds
         {
-            
+            public const string YandexDefine = "YANDEX_AD";
+            public const string YandexSDK = "YandexSDK";
+            public const string YandexSDKEditor = "YandexSDK.Editor";
+            public const string FilePathYandexSDK = "Assets/YandexMobileAds/YandexSDK.asmdef";
+            public const string FilePathYandexSDKEditor = "Assets/YandexMobileAds/Editor/YandexSDK.Editor.asmdef";
         }
 
         public class ExcludePlatforms

@@ -23,6 +23,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
     {
         private const float RetryLoadAdDelay = 1f;
         private const float CheckBlockedDelay = 5f;
+        private const int BannerWidth = 320;
+        private const int BannerHeight = 50;
 
         private readonly int _switchADTime = 30;
         private readonly bool _bannerCloseButtonVisibility = false;
@@ -208,7 +210,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #elif YABBI_AD
         int
 #elif YANDEX_AD
-        PlaceOnScreen
+        AdPosition
 #endif
         DeterminePosition() => _placeOnScreen switch
         {
@@ -238,7 +240,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #elif YABBI_AD
             Yabbi.SetBannerCustomSettings(new BannerSettings().SetRefreshIntervalSeconds(_switchADTime).SetShowCloseButton(_bannerCloseButtonVisibility).SetBannerPosition(DeterminePosition()));
 #elif YANDEX_AD
-            _bannerSize = BannerAdSize.InlineSize((int)_widthSlider.value, (int)_heightSlider.value);
+            _bannerSize = BannerAdSize.InlineSize(BannerWidth, BannerHeight);
 #endif
         }
 
@@ -249,7 +251,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #elif YABBI_AD
             return _advertisingConfigs.BannerUnitID;
 #elif YANDEX_AD
-            return AdvertisingSettings.YandexAds.Release.BannerUnitId;
+            return _advertisingConfigs.BannerUnitID;
 #endif
         }
 
@@ -269,7 +271,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if YABBI_AD
             Yabbi.LoadAd(GetAdType(), GetPlacementName());
 #elif YANDEX_AD
-            _banner = new Banner(AdvertisementSettings.BannerUnitId, _bannerSize, _bannerPosition);
+            _banner = new Banner(GetPlacementName(), _bannerSize, DeterminePosition());
 
             _banner.OnAdLoaded += HandleAdLoaded;
             _banner.OnAdFailedToLoad += HandleAdFailedToLoad;
@@ -353,7 +355,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void HandleImpression(object sender, ImpressionData impressionData)
         {
-            _bannerDisplayed = true;
+            _bannerShown = true;
             BannerDisplayed?.Invoke();
         }
 #endif

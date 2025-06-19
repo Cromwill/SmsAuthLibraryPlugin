@@ -133,7 +133,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #elif YABBI_AD
             return _advertisingConfigs.RewardedUnitID;
 #elif YANDEX_AD
-            return AdvertisingSettings.YandexAds.Release.RewardUnitId;
+            return _advertisingConfigs.RewardedUnitID;
 #endif
         }
 
@@ -153,7 +153,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if YABBI_AD
             Yabbi.LoadAd(GetAdType(), GetPlacementName());
 #elif YANDEX_AD
-            _rewardedAdLoader.LoadAd(CreateAdRequest(AdvertisingSettings.YandexAds.Release.RewardUnitId));
+            _rewardedAdLoader.LoadAd(CreateAdRequest(GetPlacementName()));
 #endif
         }
 

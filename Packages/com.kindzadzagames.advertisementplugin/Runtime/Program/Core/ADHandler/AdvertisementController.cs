@@ -10,6 +10,8 @@ using YabbiSDK.Api;
 using SspnetSDK.Unfiled;
 using YabbiSDK.ConsentManagerSDK.Api;
 using SspnetSDK.ConsentManagerSDK.Unfiled;
+#elif YANDEX_AD
+using YandexMobileAds;
 #endif
 
 namespace KinDzaDzaGames.AdvertisementPlugin
