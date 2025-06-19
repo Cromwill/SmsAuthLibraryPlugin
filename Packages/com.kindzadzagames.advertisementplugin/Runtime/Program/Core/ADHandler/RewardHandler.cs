@@ -209,8 +209,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         #region YABBI_AD
 #if YABBI_AD
         public void OnRewardedLoaded(AdPayload adPayload) => _preRewardAction?.Invoke();
-        public void OnRewardedLoadFailed(AdPayload adPayload, AdException error) => DropRewardActions();
-        public void OnRewardedShowFailed(AdPayload adPayload, AdException error) => DropRewardActions();
+        public void OnRewardedLoadFailed(AdPayload adPayload, AdException error) => CancelReward();
+        public void OnRewardedShowFailed(AdPayload adPayload, AdException error) => CancelReward();
         public void OnUserRewarded(AdPayload adPayload) => ApplyReward();
         public void OnRewardedClosed(AdPayload adPayload) => CancelReward();
 
