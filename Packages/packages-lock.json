@@ -8,7 +8,8 @@
         "com.google.external-dependency-manager": "1.2.183",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
         "com.unity.textmeshpro": "3.0.9",
-        "io.appmetrica.analytics": "6.3.0"
+        "io.appmetrica.analytics": "6.3.0",
+        "com.kindzadzagames.advertisementplugin": "1.0.0"
       }
     },
     "com.agava.smsauthvps": {
@@ -18,7 +19,8 @@
       "dependencies": {
         "com.agava.smsauthwebapi": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.textmeshpro": "3.0.9"
+        "com.unity.textmeshpro": "3.0.9",
+        "com.kindzadzagames.advertisementplugin": "1.0.0"
       }
     },
     "com.agava.smsauthwebapi": {
@@ -302,15 +304,6 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-	"com.yandex.varioqub": {
-      "version": "https://github.com/appmetrica/varioqub-unity-plugin.git#v0.1.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.google.external-dependency-manager": "1.2.177"
-      },
-      "hash": "c3df9f1aa94779f64d8cb613c4d8872949c48e67"
-    },
     "com.unity.visualscripting": {
       "version": "1.9.1",
       "depth": 0,
@@ -320,6 +313,15 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.yandex.varioqub": {
+      "version": "https://github.com/appmetrica/varioqub-unity-plugin.git#v0.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.177"
+      },
+      "hash": "c3df9f1aa94779f64d8cb613c4d8872949c48e67"
     },
     "io.appmetrica.analytics": {
       "version": "https://github.com/appmetrica/appmetrica-unity-plugin.git#v6.1.0",
