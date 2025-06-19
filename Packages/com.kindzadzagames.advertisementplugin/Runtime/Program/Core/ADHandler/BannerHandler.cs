@@ -37,6 +37,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private PlaceOnScreen _placeOnScreen = PlaceOnScreen.BottomCenter;
         private Coroutine _checkBannerBlockCoroutine = null;
         private Coroutine _displayBannerCoroutine = null;
+        private Coroutine _reloadCoroutine = null;
         private List<IBannerBlocker> _adBlockers = new List<IBannerBlocker>();
         private bool _bannerLoaded = false;
 
@@ -168,6 +169,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _displayBannerCoroutine = null;
             }
 
+            if (_reloadCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_reloadCoroutine);
+                _reloadCoroutine = null;
+            }
+
             if (AdIsLoaded())
                 DestroyAd();
         }
@@ -246,6 +253,20 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #elif YANDEX_AD
             _bannerSize = BannerAdSize.InlineSize(BannerWidth, BannerHeight);
 #endif
+        }
+
+        private IEnumerator ReloadAd()
+        {
+            yield return new WaitForSeconds(CheckBlockedDelay);
+
+            if (_displayBannerCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_displayBannerCoroutine);
+                _displayBannerCoroutine = null;
+            }
+
+            Show(_placeOnScreen);
+            _reloadCoroutine = null;
         }
 
         protected override string GetPlacementName()
@@ -333,7 +354,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         #region YABBI_AD
 #if YABBI_AD
         public void OnBannerLoaded(AdPayload adPayload) { }
-        public void OnBannerLoadFailed(AdPayload adPayload, AdException error) { }
+        public void OnBannerLoadFailed(AdPayload adPayload, AdException error) => _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
         public void OnBannerShown(AdPayload adPayload) { }
         public void OnBannerShowFailed(AdPayload adPayload, AdException error) { }
         public void OnBannerClosed(AdPayload adPayload) { }
@@ -351,7 +372,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if YANDEX_AD
         private AdRequest CreateAdRequest() => new AdRequest.Builder().Build();
         private void HandleAdLoaded(object sender, EventArgs args) => _bannerLoaded = true;
-        private void HandleAdFailedToLoad(object sender, AdFailureEventArgs args) { }
+        private void HandleAdFailedToLoad(object sender, AdFailureEventArgs args) => _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
         private void HandleLeftApplication(object sender, EventArgs args) { }
         private void HandleReturnedToApplication(object sender, EventArgs args) { }
         private void HandleAdLeftApplication(object sender, EventArgs args) { }

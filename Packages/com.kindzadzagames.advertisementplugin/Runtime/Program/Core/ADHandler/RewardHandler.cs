@@ -230,12 +230,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _preRewardAction?.Invoke();
         }
 
-        private void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) => DropRewardActions();
+        private void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) => CancelReward();
         private AdRequestConfiguration CreateAdRequest(string adUnitId) => new AdRequestConfiguration.Builder(adUnitId).Build();
         private void HandleAdClicked(object sender, EventArgs args) { }
         private void HandleAdShown(object sender, EventArgs args) { }
         private void HandleImpression(object sender, ImpressionData impressionData) { }
-        private void HandleAdFailedToShow(object sender, AdFailureEventArgs args) => DropRewardActions();
+        private void HandleAdFailedToShow(object sender, AdFailureEventArgs args) => CancelReward();
 
         private void HandleRewarded(object sender, Reward args)
         {

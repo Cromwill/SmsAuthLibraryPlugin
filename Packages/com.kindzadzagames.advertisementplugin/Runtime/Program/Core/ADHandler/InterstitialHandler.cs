@@ -147,6 +147,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             yield return new WaitForSeconds(CheckBlockedDelay);
             Show();
+            _reloadCoroutine = null;
         }
 
         private void ReportClosure()
