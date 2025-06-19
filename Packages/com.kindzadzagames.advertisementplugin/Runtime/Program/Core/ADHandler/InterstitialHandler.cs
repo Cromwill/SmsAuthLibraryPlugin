@@ -32,7 +32,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private Coroutine _reloadCoroutine = null;
         private Coroutine _showCoroutine = null;
         private Action _interstitialCloseAction;
-        private List<IAdBlocker> _adBlockers = new List<IAdBlocker>();
+        private List<IInterstitialBlocker> _adBlockers = new List<IInterstitialBlocker>();
         private bool _AdShown = false;
 
 #if YANDEX_AD
@@ -83,7 +83,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _preloadCoroutine ??= _coroutine.StartCoroutine(PreloadAd());
         }
 
-        public void AddBlocker(IAdBlocker adBlocker) => _adBlockers.Add(adBlocker);
+        public void AddBlocker(IInterstitialBlocker adBlocker) => _adBlockers.Add(adBlocker);
 
         public void DropAd()
         {
@@ -134,7 +134,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private IEnumerator DisplayAd()
         {
-            while (_adBlockers.Any(b => b.DisplayBlocked == true))
+            while (_adBlockers.Any(b => b.InterstitialDisplayBlocked == true))
                 yield return new WaitForSeconds(CheckBlockedDelay);
 
             _adBlockers.Clear();

@@ -3,32 +3,49 @@ using UnityEngine;
 using UnityEngine.UI;
 using KinDzaDzaGames.AdvertisementPlugin;
 
-public class TestBanner : MonoBehaviour, IAdBlocker
+public class TestBanner : MonoBehaviour, IBannerBlocker
 {
     [SerializeField] private Button _bannerShowButton;
     [SerializeField] private Button _bannerHideButton;
     [SerializeField] private Button _bannerSuspendButton;
     [SerializeField] private TMP_Text _bannerSuspendButtonText;
-    [SerializeField] private Button _bannerChangePositionButton;
-    [SerializeField] private TMP_Text _bannerChangePositionButtonText;
     [SerializeField] private Image _bannerIndicator;
-    [SerializeField] private Button _bannerRestartButton;
-    [SerializeField] private TMP_Text _bannerRestartButtonText;
+    [SerializeField] private Button _bannerChangePositionButton;
+    [SerializeField] private Button _bannerChoosePositionButton;
+    [SerializeField] private TMP_Text _bannerChoosePositionButtonText;
 
     private AdvertisementController _advertisementController;
     private bool _bannerEnabled = true;
-    private bool _bannerPositionBottom = true;
-    private bool _showWithChangePosition = false;
+    private bool _isBottom = true;
+    private PlaceOnScreen _placeOnScreen = PlaceOnScreen.BottomCenter;
 
-    public bool DisplayBlocked { get; private set; }
+    public bool BannerDisplayBlocked { get; private set; }
 
     private void Awake()
     {
         _bannerSuspendButtonText.text = "Banner enabled";
-        _bannerChangePositionButtonText.text = "Bottom position";
-        _bannerRestartButtonText.text = "Restart banner: off";
-        DisplayBlocked = false;
+        BannerDisplayBlocked = false;
+
+        if (_isBottom)
+        {
+            _bannerChoosePositionButtonText.text = "Bottom position";
+            _placeOnScreen = PlaceOnScreen.BottomCenter;
+        }
+        else
+        {
+            _bannerChoosePositionButtonText.text = "Top position";
+            _placeOnScreen = PlaceOnScreen.TopCenter;
+        }
+
         _advertisementController = AdvertisementController.Instance;
+
+        if(_advertisementController != null)
+        {
+            if (_advertisementController.BannerShown)
+                OnBannerDisplayed();
+            else
+                OnBannerHided();
+        }  
     }
 
     private void OnEnable()
@@ -37,7 +54,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         _bannerHideButton.onClick.AddListener(HideBanner);
         _bannerSuspendButton.onClick.AddListener(SuspendBanner);
         _bannerChangePositionButton.onClick.AddListener(ChangePosition);
-        _bannerRestartButton.onClick.AddListener(RestartPosition);
+        _bannerChoosePositionButton.onClick.AddListener(ChoosePosition);
 
         if(_advertisementController != null)
         {
@@ -53,7 +70,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         _bannerHideButton.onClick.RemoveListener(HideBanner);
         _bannerSuspendButton.onClick.RemoveListener(SuspendBanner);
         _bannerChangePositionButton.onClick.RemoveListener(ChangePosition);
-        _bannerRestartButton.onClick.RemoveListener(RestartPosition);
+        _bannerChoosePositionButton.onClick.RemoveListener(ChoosePosition);
 
         if (_advertisementController != null)
         {
@@ -62,7 +79,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         }
     }
 
-    public void RemoveRestriction() => DisplayBlocked = false;
+    public void RemoveRestriction() => BannerDisplayBlocked = false;
 
     private void SuspendBanner()
     {
@@ -76,41 +93,28 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         else
         {
             _bannerSuspendButtonText.text = "Banner suspended";
-            DisplayBlocked = true;
+            BannerDisplayBlocked = true;
             _advertisementController?.SuspendDisplayBanner(this);
         }
     }
 
     private void ShowBanner() => _advertisementController?.ShowBanner();
     private void HideBanner() => _advertisementController?.HideBanner();
+    private void ChangePosition() => _advertisementController?.ShowBanner(_placeOnScreen);
 
-    private void ChangePosition()
+    private void ChoosePosition()
     {
-        _bannerPositionBottom = !_bannerPositionBottom;
+        _isBottom = !_isBottom;
 
-        if (_bannerPositionBottom)
+        if (_isBottom)
         {
-            _bannerChangePositionButtonText.text = "Bottom position";
-            _advertisementController?.ChangeBannerPosition(PlaceOnScreen.BottomCenter, _showWithChangePosition);
+            _bannerChoosePositionButtonText.text = "Bottom position";
+            _placeOnScreen = PlaceOnScreen.BottomCenter;
         }
         else
         {
-            _bannerChangePositionButtonText.text = "Top position";
-            _advertisementController?.ChangeBannerPosition(PlaceOnScreen.TopCenter, _showWithChangePosition);
-        }
-    }
-
-    private void RestartPosition()
-    {
-        _showWithChangePosition = !_showWithChangePosition;
-
-        if (_showWithChangePosition)
-        {
-            _bannerRestartButtonText.text = "Restart banner: off";
-        }
-        else
-        {
-            _bannerRestartButtonText.text = "Restart banner: on";
+            _bannerChoosePositionButtonText.text = "Top position";
+            _placeOnScreen = PlaceOnScreen.TopCenter;
         }
     }
 

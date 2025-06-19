@@ -30,18 +30,20 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private readonly ICoroutine _coroutine;
 
         private bool _vip;
-        private bool _bannerDisplayed = false;
+        private bool _bannerShown = false;
         private bool _bannerSuspended = false;
         private PlaceOnScreen _placeOnScreen = PlaceOnScreen.BottomCenter;
         private Coroutine _checkBannerBlockCoroutine = null;
         private Coroutine _displayBannerCoroutine = null;
-        private List<IAdBlocker> _adBlockers = new List<IAdBlocker>();
+        private List<IBannerBlocker> _adBlockers = new List<IBannerBlocker>();
         private bool _bannerLoaded = false;
 
 #if YANDEX_AD
         private Banner _banner;
         private BannerAdSize _bannerSize;
 #endif
+
+        public bool BannerShown => _bannerShown;
 
         public event Action BannerDisplayed;
         public event Action BannerHided;
@@ -79,16 +81,32 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Show(PlaceOnScreen placeOnScreen)
         {
-            if (_vip || _adBlockers.Count > 0)
+            if (_vip)
                 return;
 
             if (_placeOnScreen != placeOnScreen)
             {
                 _placeOnScreen = placeOnScreen;
                 SetBannerSettings();
+
+                DestroyAd();
+
+                if(_displayBannerCoroutine != null)
+                {
+                    _coroutine.StopCoroutine(_displayBannerCoroutine);
+                    _displayBannerCoroutine = null;
+                }
+
+                if (_checkBannerBlockCoroutine != null)
+                {
+                    _coroutine.StopCoroutine(_checkBannerBlockCoroutine);
+                    _checkBannerBlockCoroutine = null;
+                }
+
+                _bannerSuspended = false;
             }
 
-            if (_bannerDisplayed || _bannerSuspended)
+            if (_bannerShown || _bannerSuspended)
                 return;
 
             _displayBannerCoroutine ??= _coroutine.StartCoroutine(DisplayBanner());
@@ -96,16 +114,24 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Hide()
         {
-            if (_bannerDisplayed)
+            DestroyAd();
+
+            if (_displayBannerCoroutine != null)
             {
-                DestroyAd();
-                _bannerDisplayed = false;
+                _coroutine.StopCoroutine(_displayBannerCoroutine);
                 _displayBannerCoroutine = null;
+            }
+
+            if (_checkBannerBlockCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_checkBannerBlockCoroutine);
                 _checkBannerBlockCoroutine = null;
             }
+
+            _bannerSuspended = false;
         }
 
-        public void SuspendBanner(IAdBlocker adBlocker)
+        public void SuspendBanner(IBannerBlocker adBlocker)
         {
             if (_vip)
                 return;
@@ -119,31 +145,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _displayBannerCoroutine = null;
             }
 
-            if(_bannerDisplayed)
+            if(_bannerShown)
             {
                 DestroyAd();
-                _bannerDisplayed = false;
-            }
-
-            _checkBannerBlockCoroutine ??= _coroutine.StartCoroutine(WaitDisplayPermission());
-        }
-
-        public void ChangePosition(PlaceOnScreen bannerPlace, bool reloadBanner = false)
-        {
-            if (_vip || (_placeOnScreen == bannerPlace && reloadBanner == false))
-                return;
-
-            if (reloadBanner && _bannerDisplayed)
-            {
-                DestroyAd();
-                _bannerDisplayed = false;
-            }
-
-            _placeOnScreen = bannerPlace;
-            SetBannerSettings();
-
-            if(reloadBanner)
                 _checkBannerBlockCoroutine ??= _coroutine.StartCoroutine(WaitDisplayPermission());
+            }
         }
 
         private void DropAd()
@@ -162,13 +168,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             if (AdIsLoaded())
                 DestroyAd();
-
-            _bannerDisplayed = false;
         }
 
         private IEnumerator WaitDisplayPermission()
         {
-            while (_adBlockers.Any(b => b.DisplayBlocked == true))
+            while (_adBlockers.Any(b => b.BannerDisplayBlocked == true))
                 yield return new WaitForSeconds(CheckBlockedDelay);
 
             _adBlockers.Clear();
@@ -188,7 +192,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             while (AdIsLoaded() == false)
                 yield return new WaitForSeconds(RetryLoadAdDelay);
 
-            while (_adBlockers.Any(b => b.DisplayBlocked == true))
+            while (_adBlockers.Any(b => b.BannerDisplayBlocked == true))
                 yield return new WaitForSeconds(CheckBlockedDelay);
 
             _adBlockers.Clear();
@@ -316,6 +320,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _bannerLoaded = false;
             }
 #endif
+            _bannerShown = false;
             BannerHided?.Invoke();
         }
 
@@ -328,7 +333,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public void OnBannerClosed(AdPayload adPayload) { }
         public void OnBannerImpression(AdPayload adPayload)
         {
-            _bannerDisplayed = true;
+            _bannerShown = true;
             BannerDisplayed?.Invoke();
         }
 

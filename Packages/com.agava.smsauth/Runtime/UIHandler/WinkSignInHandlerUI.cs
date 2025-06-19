@@ -14,7 +14,7 @@ namespace Agava.Wink
     ///     Handler UI. Input data and view auth process.
     /// </summary>
     [Preserve]
-    public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine, IAdBlocker
+    public class WinkSignInHandlerUI : MonoBehaviour, IWinkSignInHandlerUI, ICoroutine, IInterstitialBlocker, IBannerBlocker
     {
         private const float ChangeOrientationDelay = 1.0f;
 
@@ -54,7 +54,8 @@ namespace Agava.Wink
         public static WinkSignInHandlerUI Instance { get; private set; }
 
         public bool IsAnyWindowEnabled => _notifyWindowHandler.IsAnyWindowEnabled;
-        public bool DisplayBlocked => IsAnyWindowEnabled;
+        public bool InterstitialDisplayBlocked => IsAnyWindowEnabled;
+        public bool BannerDisplayBlocked => IsAnyWindowEnabled;
 
         public event Action AllWindowsClosed;
 
@@ -222,8 +223,6 @@ namespace Agava.Wink
 
         public void OnWinkButtonClick()
         {
-            AdvertisementController.Instance?.AddInterstitialBlocker(this);
-            AdvertisementController.Instance?.SuspendDisplayBanner(this);
             _screenshotProtector.TryDisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
@@ -247,6 +246,9 @@ namespace Agava.Wink
 
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
+
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
         }
 
         private void ContinueGame()
@@ -287,8 +289,6 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
-            AdvertisementController.Instance?.AddInterstitialBlocker(this);
-            AdvertisementController.Instance?.SuspendDisplayBanner(this);
             _screenshotProtector.TryDisableScreenshots();
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
@@ -311,6 +311,9 @@ namespace Agava.Wink
                                 ContinueGame();
                         });
                     })));
+
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
         }
 
         public void SetRemoteTexts()
@@ -398,9 +401,6 @@ namespace Agava.Wink
                     return;
             }
 
-            AdvertisementController.Instance?.AddInterstitialBlocker(this);
-            AdvertisementController.Instance?.SuspendDisplayBanner(this);
-
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
 
@@ -425,6 +425,8 @@ namespace Agava.Wink
             }
 
             _screenshotProtector.TryDisableScreenshots();
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
         }
 
         private void OnTimerFirstChecked() => _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);

@@ -40,6 +40,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public bool Initialized { get; private set; } = false;
         public bool Breaked { get; private set; } = false;
+        public bool BannerShown => _bannerHandler.BannerShown;
 
         public event Action InitializationFailed;
         public event Action BannerDisplayed;
@@ -113,7 +114,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         }
 
         public void StartInterstitialTimer() => _interstitialPlayer.StartTimer();
-        public void AddInterstitialBlocker(IAdBlocker adBlocker) => _interstitialHandler.AddBlocker(adBlocker);
+        public void AddInterstitialBlocker(IInterstitialBlocker adBlocker) => _interstitialHandler.AddBlocker(adBlocker);
 
         public bool CanShowReward() => _rewardHandler.CanShow();
         public void TryPreloadRewardAD(Action preRewardAction = null) => _rewardHandler.LoadAD(preRewardAction);
@@ -121,8 +122,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void ShowBanner(PlaceOnScreen placeOnScreen = PlaceOnScreen.BottomCenter) => _bannerHandler.Show(placeOnScreen);
         public void HideBanner() => _bannerHandler.Hide();
-        public void SuspendDisplayBanner(IAdBlocker adBlocker) => _bannerHandler.SuspendBanner(adBlocker);
-        public void ChangeBannerPosition(PlaceOnScreen placeOnScreen, bool reloadBanner = false) => _bannerHandler.ChangePosition(placeOnScreen, reloadBanner);
+        public void SuspendDisplayBanner(IBannerBlocker adBlocker) => _bannerHandler.SuspendBanner(adBlocker);
 
 #if YABBI_AD
         public void OnInitializeFailed(AdException error)

@@ -435,7 +435,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bottom position
+  m_text: Try change pos
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2009,7 +2009,7 @@ GameObject:
   - component: {fileID: 865595936}
   - component: {fileID: 865595935}
   m_Layer: 5
-  m_Name: BannerRestartButton
+  m_Name: BannerChoosePositionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2788,11 +2788,10 @@ MonoBehaviour:
   _bannerHideButton: {fileID: 1337729701}
   _bannerSuspendButton: {fileID: 1869046154}
   _bannerSuspendButtonText: {fileID: 696019098}
-  _bannerChangePositionButton: {fileID: 1925608540}
-  _bannerChangePositionButtonText: {fileID: 127717484}
   _bannerIndicator: {fileID: 1537541871}
-  _bannerRestartButton: {fileID: 865595935}
-  _bannerRestartButtonText: {fileID: 1667739815}
+  _bannerChangePositionButton: {fileID: 1925608540}
+  _bannerChoosePositionButton: {fileID: 865595935}
+  _bannerChoosePositionButtonText: {fileID: 1667739815}
 --- !u!1 &1337729699
 GameObject:
   m_ObjectHideFlags: 0
@@ -3932,7 +3931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Restart banner: off'
+  m_text: Bottom position
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
