@@ -22,13 +22,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #endif
 
         [SerializeField] private AdvertisementController _advertisementController;
-        [Tooltip("Remote reward data")]
+        [Header("Advertising configs")]
+        [SerializeField] private AdvertisingConfigs _advertisingConfigs;
+        [Header("Remote reward data")]
         [SerializeField] private RewardSettings _rewardSettings;
         [Tooltip("Server name remote data")]
         [SerializeField] private string _serverPath;
         [SerializeField] private Store _storeName;
         [SerializeField] private int _bundleId;
-        [Tooltip("Application")]
+        [Header("Application")]
         [SerializeField] private bool _selfInit = false;
 
         private AdvertisementAPI _api;
@@ -72,12 +74,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             {
                 yield return GetRewardRemote();
 
-                _advertisementController.Construct(vip, _rewardSettings, _preloadService.Settings);
+                _advertisementController.Construct(vip, _rewardSettings, _preloadService.Settings, _advertisingConfigs);
 
-                yield return new WaitUntil(() => _advertisementController.Initialized);
+                yield return new WaitUntil(() => _advertisementController.Initialized || _advertisementController.Breaked);
             }
 
-            Debug.Log($"Advertisement Plugin: constructed. Plugin available = {_preloadService.IsPluginAvailable}");
+            Debug.Log($"Advertisement Plugin: constructed. Plugin available = {_preloadService.IsPluginAvailable}, breaked = {_advertisementController.Breaked}");
         }
 
         private IEnumerator GetRewardRemote()

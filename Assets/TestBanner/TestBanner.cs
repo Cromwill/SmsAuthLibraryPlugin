@@ -12,6 +12,8 @@ public class TestBanner : MonoBehaviour, IAdBlocker
     [SerializeField] private Button _bannerChangePositionButton;
     [SerializeField] private TMP_Text _bannerChangePositionButtonText;
     [SerializeField] private Image _bannerIndicator;
+    [SerializeField] private Button _bannerRestartButton;
+    [SerializeField] private TMP_Text _bannerRestartButtonText;
 
     private AdvertisementController _advertisementController;
     private bool _bannerEnabled = true;
@@ -24,6 +26,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
     {
         _bannerSuspendButtonText.text = "Banner enabled";
         _bannerChangePositionButtonText.text = "Bottom position";
+        _bannerRestartButtonText.text = "Restart banner: off";
         DisplayBlocked = false;
         _advertisementController = AdvertisementController.Instance;
     }
@@ -34,6 +37,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         _bannerHideButton.onClick.AddListener(HideBanner);
         _bannerSuspendButton.onClick.AddListener(SuspendBanner);
         _bannerChangePositionButton.onClick.AddListener(ChangePosition);
+        _bannerRestartButton.onClick.AddListener(RestartPosition);
 
         if(_advertisementController != null)
         {
@@ -49,6 +53,7 @@ public class TestBanner : MonoBehaviour, IAdBlocker
         _bannerHideButton.onClick.RemoveListener(HideBanner);
         _bannerSuspendButton.onClick.RemoveListener(SuspendBanner);
         _bannerChangePositionButton.onClick.RemoveListener(ChangePosition);
+        _bannerRestartButton.onClick.RemoveListener(RestartPosition);
 
         if (_advertisementController != null)
         {
@@ -93,8 +98,20 @@ public class TestBanner : MonoBehaviour, IAdBlocker
             _bannerChangePositionButtonText.text = "Top position";
             _advertisementController?.ChangeBannerPosition(PlaceOnScreen.TopCenter, _showWithChangePosition);
         }
+    }
 
+    private void RestartPosition()
+    {
         _showWithChangePosition = !_showWithChangePosition;
+
+        if (_showWithChangePosition)
+        {
+            _bannerRestartButtonText.text = "Restart banner: off";
+        }
+        else
+        {
+            _bannerRestartButtonText.text = "Restart banner: on";
+        }
     }
 
     private void OnBannerDisplayed()

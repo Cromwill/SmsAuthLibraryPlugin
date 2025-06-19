@@ -25,7 +25,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private const float RetryLoadAdDelay = 1f;
         private const float CheckBlockedDelay = 5f;
 
-        private ICoroutine _coroutine;
+        private readonly AdvertisingConfigs _advertisingConfigs;
+        private readonly ICoroutine _coroutine;
+
         private Coroutine _preloadCoroutine = null;
         private Coroutine _reloadCoroutine = null;
         private Coroutine _showCoroutine = null;
@@ -40,11 +42,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public event Action InterstitialClosed;
 
-        public InterstitialHandler(ICoroutine coroutine)
+        public InterstitialHandler(AdvertisingConfigs advertisingConfigs, ICoroutine coroutine)
         {
+            _advertisingConfigs = advertisingConfigs ?? throw new ArgumentNullException(nameof(advertisingConfigs));
             _coroutine = coroutine ?? throw new ArgumentNullException(nameof(coroutine));
 
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             Debug.Log("Advertisement Plugin: interstitial handler inited.");
 # elif YABBI_AD
             Yabbi.SetInterstitialCallbacks(this);
@@ -68,7 +71,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             if (focus && _AdShown)
             {
-                Debug.Log("Advertisement Plugin: change focus, need destroy Interstitial.");
                 DestroyAd();
                 ReportClosure();
             }
@@ -109,10 +111,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override string GetPlacementName()
         {
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             return AdvertisingSettings.EditorTest.Test;
 #elif YABBI_AD
-            return AdvertisingSettings.YabbiAds.yabbiInterstitialUnitID;
+            return _advertisingConfigs.InterstitialUnitID;
 #elif YANDEX_AD
             return AdvertisingSettings.YandexAds.Release.InterstitialUnitId;
 #endif
@@ -157,7 +159,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override bool CanLoadAd()
         {
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             return true;
 #elif YABBI_AD
             return Yabbi.CanLoadAd(GetAdType(), GetPlacementName());
@@ -168,7 +170,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void LoadAd()
         {
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             Debug.Log("Advertisement Plugin: load interstitial");
             _showCoroutine ??= _coroutine.StartCoroutine(DisplayAd());
 #elif YABBI_AD
@@ -180,7 +182,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override bool AdIsLoaded()
         {
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             return true;
 #elif YABBI_AD
             return Yabbi.IsAdLoaded(GetAdType(), GetPlacementName());
@@ -191,7 +193,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         protected override void ShowAd()
         {
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             Debug.Log("Advertisement Plugin: show interstitial");
             ReportClosure();
 #elif YABBI_AD
@@ -229,7 +231,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if YABBI_AD
         public void OnInterstitialLoaded(AdPayload adPayload) => _showCoroutine ??= _coroutine.StartCoroutine(DisplayAd());
         public void OnInterstitialLoadFailed(AdPayload adPayload, AdException error) => _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
-        public void OnInterstitialShown(AdPayload adPayload) { }
+        public void OnInterstitialShown(AdPayload adPayload) => _AdShown = true;
         public void OnInterstitialShowFailed(AdPayload adPayload, AdException error) => ReportClosure();
         public void OnInterstitialClosed(AdPayload adPayload) => ReportClosure();
 

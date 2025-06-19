@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Scripting;
 using KinDzaDzaGames.AdvertisementPlugin.DTO;
 
 namespace KinDzaDzaGames.AdvertisementPlugin
 {
+    [Preserve]
     public class InterstitialPlayer : MonoBehaviour
     {
         private InterstitialHandler _interstitialHandler;
@@ -58,6 +60,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             _showInterval = _settingsData.regular_timer;
             _elapsedTime = 0;
+
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
 
             _coroutine = StartCoroutine(CountdownTime());
         }

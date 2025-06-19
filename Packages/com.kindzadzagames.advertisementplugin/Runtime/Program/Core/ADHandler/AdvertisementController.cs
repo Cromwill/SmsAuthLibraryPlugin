@@ -31,6 +31,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private BannerHandler _bannerHandler;
         private RewardSettings _rewardSettings;
         private AdsSdkSettingsData _settings;
+        private AdvertisingConfigs _advertisingConfigs;
 #if YABBI_AD
         ConsentManager _consentManager = new ConsentManager();
 #endif
@@ -38,23 +39,25 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public static AdvertisementController Instance { get; private set; }
 
         public bool Initialized { get; private set; } = false;
+        public bool Breaked { get; private set; } = false;
 
         public event Action InitializationFailed;
         public event Action BannerDisplayed;
         public event Action BannerHided;
 
-        public void Construct(bool vip, RewardSettings rewardSettings, AdsSdkSettingsData settings)
+        public void Construct(bool vip, RewardSettings rewardSettings, AdsSdkSettingsData settings, AdvertisingConfigs advertisingConfigs)
         {
             _vip = vip;
             _rewardSettings = rewardSettings ?? throw new ArgumentNullException(nameof(rewardSettings));
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _advertisingConfigs = advertisingConfigs ?? throw new ArgumentNullException(nameof(advertisingConfigs));
 
             if (Instance == null)
                 Instance = this;
 
             DontDestroyOnLoad(this);
 
-#if UNITY_EDITOR && YABBI_AD == false
+#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             OnInitializeSuccess();
 #elif YABBI_AD
             StartCoroutine(StartYabbiService());
@@ -122,7 +125,13 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public void ChangeBannerPosition(PlaceOnScreen placeOnScreen, bool reloadBanner = false) => _bannerHandler.ChangePosition(placeOnScreen, reloadBanner);
 
 #if YABBI_AD
-        public void OnInitializeFailed(AdException error) => InitializationFailed?.Invoke();
+        public void OnInitializeFailed(AdException error)
+        {
+            Debug.Log("Advertisement Plugin: YABBI initialize failed.");
+            InitializationFailed?.Invoke();
+            Breaked = true;
+            Destroy(this.gameObject);
+        }
 
         private IEnumerator StartYabbiService()
         {
@@ -131,14 +140,14 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             Yabbi.EnableDebug(true);
 #endif
             if(Yabbi.IsInitialized() == false)
-                Yabbi.Initialize(AdvertisingSettings.YabbiAds.publisherID, this);
+                Yabbi.Initialize(_advertisingConfigs.PublisherID, this);
 
             yield return new WaitUntil(() => Yabbi.IsInitialized());
 
             if (_userConsentScreen.NeedShowConsentScreen)
             {
                 var builder = new ConsentBuilder()
-                .AppendPolicyURL(AdvertisingSettings.YabbiAds.PrivacyPolicyURL)
+                .AppendPolicyURL(_advertisingConfigs.YabbiPrivacyPolicyURL)
                 .AppendGdpr(true);
                 _consentManager.RegisterCustomVendor(builder);
 
@@ -157,9 +166,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void InitADListeners()
         {
-            _rewardHandler = new(_rewardSettings);
-            _interstitialHandler = new(this);
-            _bannerHandler = new(this, switchADTime: 30, bannerCloseButtonVisibility: false, _standartPlace, _vip);
+            _rewardHandler = new(_advertisingConfigs, _rewardSettings);
+            _interstitialHandler = new(_advertisingConfigs, this);
+            _bannerHandler = new(_advertisingConfigs, this, switchADTime: 30, bannerCloseButtonVisibility: false, _standartPlace, _vip);
         }
 
         private void OnBannerDisplayed() => BannerDisplayed?.Invoke();

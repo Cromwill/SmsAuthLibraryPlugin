@@ -36,7 +36,7 @@ namespace Agava.Wink
         [SerializeField] private RewardSettings _rewardSettings;
 
         private Dictionary<int, char> _minutWordEndings = new Dictionary<int, char>
-        { { 1, 'à' }, { 2, 'û' }, { 3, 'û' }, { 4, 'û' }, { 21, 'à' }, { 22, 'û' }, { 23, 'û' }, { 24, 'û' }, { 31, 'à' }, { 32, 'û' }, { 33, 'û' }, { 34, 'û' } };
+        { { 1, 'ó' }, { 2, 'û' }, { 3, 'û' }, { 4, 'û' }, { 21, 'ó' }, { 22, 'û' }, { 23, 'û' }, { 24, 'û' }, { 31, 'ó' }, { 32, 'û' }, { 33, 'û' }, { 34, 'û' } };
 
         private DemoTimer _demoTimer;
         private Color _defaultTextColor;
@@ -225,7 +225,7 @@ namespace Agava.Wink
             if (int.TryParse(demo_overtime_minutes, out int rewardMitutes))
                 this.demo_overtime_minutes = rewardMitutes;
 
-            if (bool.TryParse(demo_overtime_minutes, out bool overtimeText))
+            if (bool.TryParse(over_time_bool, out bool overtimeText))
                 this.over_time_bool = overtimeText;
 
             this.over_time_text = over_time_text;

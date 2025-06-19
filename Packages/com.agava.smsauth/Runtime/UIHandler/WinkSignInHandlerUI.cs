@@ -223,6 +223,7 @@ namespace Agava.Wink
         public void OnWinkButtonClick()
         {
             AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
             _screenshotProtector.TryDisableScreenshots();
             Action action = null;
             _logInFromSettings = true;
@@ -287,6 +288,7 @@ namespace Agava.Wink
         public void OnDeleteAccountButtonClick()
         {
             AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
             _screenshotProtector.TryDisableScreenshots();
             _logInFromSettings = true;
             _gameOrientation.SaveGameOrientation();
@@ -397,6 +399,7 @@ namespace Agava.Wink
             }
 
             AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
 
             if (_gameOrientation.NeedChangeOrientation)
                 _gameOrientation.SetPortraitOrientation();
