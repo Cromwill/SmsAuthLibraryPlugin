@@ -84,6 +84,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Show(PlaceOnScreen placeOnScreen)
         {
+            AdvertisementAnalyticsService.SendAdsShowRequested(AdvertisementAnalyticsService.AdsType.Banner);
+
             if (_vip)
                 return;
 
@@ -94,7 +96,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
                 DestroyAd();
 
-                if(_displayBannerCoroutine != null)
+                if (_displayBannerCoroutine != null)
                 {
                     _coroutine.StopCoroutine(_displayBannerCoroutine);
                     _displayBannerCoroutine = null;
@@ -148,7 +150,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _displayBannerCoroutine = null;
             }
 
-            if(_bannerShown)
+            if (_bannerShown)
             {
                 DestroyAd();
                 _checkBannerBlockCoroutine ??= _coroutine.StartCoroutine(WaitDisplayPermission());
@@ -353,11 +355,32 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         #region YABBI_AD
 #if YABBI_AD
-        public void OnBannerLoaded(AdPayload adPayload) { }
-        public void OnBannerLoadFailed(AdPayload adPayload, AdException error) => _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
-        public void OnBannerShown(AdPayload adPayload) { }
-        public void OnBannerShowFailed(AdPayload adPayload, AdException error) { }
-        public void OnBannerClosed(AdPayload adPayload) { }
+        public void OnBannerLoaded(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsLoadSuccess(AdvertisementAnalyticsService.AdsType.Banner);
+        }
+
+        public void OnBannerLoadFailed(AdPayload adPayload, AdException error)
+        {
+            AdvertisementAnalyticsService.SendAdsLoadFailed(AdvertisementAnalyticsService.AdsType.Banner);
+            _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
+        }
+
+        public void OnBannerShown(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsShowSuccess(AdvertisementAnalyticsService.AdsType.Banner);
+        }
+
+        public void OnBannerShowFailed(AdPayload adPayload, AdException error)
+        {
+            AdvertisementAnalyticsService.SendAdsShowFailed(AdvertisementAnalyticsService.AdsType.Banner);
+        }
+
+        public void OnBannerClosed(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsClosed(AdvertisementAnalyticsService.AdsType.Banner);
+        }
+
         public void OnBannerImpression(AdPayload adPayload)
         {
             _bannerShown = true;

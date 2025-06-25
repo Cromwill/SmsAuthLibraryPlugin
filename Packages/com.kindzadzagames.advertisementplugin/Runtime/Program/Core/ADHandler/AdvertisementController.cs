@@ -28,9 +28,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         [SerializeField] private List<BannerPlace> _bannerPlaces;
 
         private bool _vip;
+
         private RewardHandler _rewardHandler;
         private InterstitialHandler _interstitialHandler;
         private BannerHandler _bannerHandler;
+
         private RewardSettings _rewardSettings;
         private AdsSdkSettingsData _settings;
         private AdvertisingConfigs _advertisingConfigs;

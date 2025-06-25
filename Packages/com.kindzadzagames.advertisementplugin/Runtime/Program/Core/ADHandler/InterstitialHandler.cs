@@ -78,8 +78,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Show(Action interstitialCloseAction = null)
         {
+            AdvertisementAnalyticsService.SendAdsShowRequested(AdvertisementAnalyticsService.AdsType.Interstitial);
             _interstitialCloseAction = interstitialCloseAction;
-
             _preloadCoroutine ??= _coroutine.StartCoroutine(PreloadAd());
         }
 
@@ -87,19 +87,19 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void DropAd()
         {
-            if(_preloadCoroutine != null)
+            if (_preloadCoroutine != null)
             {
                 _coroutine.StopCoroutine(_preloadCoroutine);
                 _preloadCoroutine = null;
             }
 
-            if(_showCoroutine != null)
+            if (_showCoroutine != null)
             {
                 _coroutine.StopCoroutine(_showCoroutine);
                 _showCoroutine = null;
             }
 
-            if(_reloadCoroutine != null)
+            if (_reloadCoroutine != null)
             {
                 _coroutine.StopCoroutine(_reloadCoroutine);
                 _reloadCoroutine = null;
@@ -122,7 +122,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private IEnumerator PreloadAd()
         {
-            if(AdIsLoaded())
+            if (AdIsLoaded())
                 DestroyAd();
 
             while (CanLoadAd() == false)
@@ -230,11 +230,35 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         #region YABBI_AD
 #if YABBI_AD
-        public void OnInterstitialLoaded(AdPayload adPayload) => _showCoroutine ??= _coroutine.StartCoroutine(DisplayAd());
-        public void OnInterstitialLoadFailed(AdPayload adPayload, AdException error) => _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
-        public void OnInterstitialShown(AdPayload adPayload) => _AdShown = true;
-        public void OnInterstitialShowFailed(AdPayload adPayload, AdException error) => ReportClosure();
-        public void OnInterstitialClosed(AdPayload adPayload) => ReportClosure();
+        public void OnInterstitialLoaded(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsLoadSuccess(AdvertisementAnalyticsService.AdsType.Interstitial);
+            _showCoroutine ??= _coroutine.StartCoroutine(DisplayAd());
+        }
+
+        public void OnInterstitialLoadFailed(AdPayload adPayload, AdException error)
+        {
+            AdvertisementAnalyticsService.SendAdsLoadFailed(AdvertisementAnalyticsService.AdsType.Interstitial);
+            _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
+        }
+
+        public void OnInterstitialShown(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsShowSuccess(AdvertisementAnalyticsService.AdsType.Interstitial);
+            _AdShown = true;
+        }
+
+        public void OnInterstitialShowFailed(AdPayload adPayload, AdException error)
+        {
+            AdvertisementAnalyticsService.SendAdsShowFailed(AdvertisementAnalyticsService.AdsType.Interstitial);
+            ReportClosure();
+        }
+
+        public void OnInterstitialClosed(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsClosed(AdvertisementAnalyticsService.AdsType.Interstitial);
+            ReportClosure();
+        }
 
         private int GetAdType() => Yabbi.Interstitial;
 #endif

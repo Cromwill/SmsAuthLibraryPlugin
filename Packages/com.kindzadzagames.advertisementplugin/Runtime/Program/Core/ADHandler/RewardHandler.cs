@@ -77,7 +77,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void LoadAD(Action preRewardAction)
         {
-            if(AdIsLoaded())
+            if (AdIsLoaded())
             {
                 preRewardAction?.Invoke();
                 return;
@@ -92,6 +92,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Show(Action rewardSuccessAction = null, Action rewardFailureAction = null)
         {
+            AdvertisementAnalyticsService.SendAdsShowRequested(AdvertisementAnalyticsService.AdsType.Reward);
+
             if (AdIsLoaded())
             {
                 _rewardSuccessAction = rewardSuccessAction;
@@ -208,15 +210,47 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         #region YABBI_AD
 #if YABBI_AD
-        public void OnRewardedLoaded(AdPayload adPayload) => _preRewardAction?.Invoke();
-        public void OnRewardedLoadFailed(AdPayload adPayload, AdException error) => CancelReward();
-        public void OnRewardedShowFailed(AdPayload adPayload, AdException error) => CancelReward();
-        public void OnUserRewarded(AdPayload adPayload) => ApplyReward();
-        public void OnRewardedClosed(AdPayload adPayload) => CancelReward();
+        public void OnRewardedLoaded(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsLoadSuccess(AdvertisementAnalyticsService.AdsType.Reward);
+            _preRewardAction?.Invoke();
+        }
+        public void OnRewardedLoadFailed(AdPayload adPayload, AdException error)
+        {
+            AdvertisementAnalyticsService.SendAdsLoadFailed(AdvertisementAnalyticsService.AdsType.Reward);
+            CancelReward();
+        }
 
-        public void OnRewardedShown(AdPayload adPayload) => _AdShown = true;
+        public void OnRewardedShowFailed(AdPayload adPayload, AdException error)
+        {
+            AdvertisementAnalyticsService.SendAdsShowFailed(AdvertisementAnalyticsService.AdsType.Reward);
+            CancelReward();
+        }
+
+        public void OnUserRewarded(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendUserRewarded(AdvertisementAnalyticsService.AdsType.Reward);
+            ApplyReward();
+        }
+
+        public void OnRewardedClosed(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsClosed(AdvertisementAnalyticsService.AdsType.Reward);
+            CancelReward();
+        }
+
+        public void OnRewardedShown(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsShowSuccess(AdvertisementAnalyticsService.AdsType.Reward);
+            _AdShown = true;
+        }
+
         public void OnRewardedVideoStarted(AdPayload adPayload) { }
-        public void OnRewardedVideoCompleted(AdPayload adPayload) { }
+
+        public void OnRewardedVideoCompleted(AdPayload adPayload)
+        {
+            AdvertisementAnalyticsService.SendAdsVideoCompleted(AdvertisementAnalyticsService.AdsType.Reward);
+        }
 
         private int GetAdType() => Yabbi.Rewarded;
 #endif
