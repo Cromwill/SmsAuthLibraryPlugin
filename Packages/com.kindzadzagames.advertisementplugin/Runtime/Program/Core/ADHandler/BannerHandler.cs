@@ -110,6 +110,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 }
 
                 _bannerSuspended = false;
+                _bannerHidden = false;
             }
 
             if (_bannerShown || _bannerSuspended)
@@ -191,6 +192,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             _adBlockers.Clear();
             _bannerSuspended = false;
+            _bannerHidden = false;
 
             Show(_placeOnScreen);
             _checkBannerBlockCoroutine = null;
@@ -211,6 +213,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             _adBlockers.Clear();
             _bannerSuspended = false;
+            _bannerHidden = false;
 
             ShowAd();
             _displayBannerCoroutine = null;
@@ -393,8 +396,16 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void OnBannerImpression(AdPayload adPayload)
         {
-            _bannerShown = true;
-            BannerDisplayed?.Invoke();
+            if (_adBlockers.Any(b => b.BannerDisplayBlocked == true) || _bannerHidden || _bannerSuspended)
+            {
+                DropAd();
+            }
+            else
+            {
+                AdvertisementAnalyticsService.SendAdsShowSuccess(AdvertisementAnalyticsService.AdsType.Banner);
+               _bannerShown = true;
+                BannerDisplayed?.Invoke();
+            }
         }
 
         private int GetAdType() => Yabbi.Banner;
