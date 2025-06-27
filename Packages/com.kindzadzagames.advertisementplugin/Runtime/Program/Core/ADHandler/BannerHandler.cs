@@ -135,6 +135,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _checkBannerBlockCoroutine = null;
             }
 
+            if (_reloadCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_reloadCoroutine);
+                _reloadCoroutine = null;
+            }
+
             _bannerSuspended = false;
             _bannerHidden = true;
         }
@@ -152,6 +158,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             {
                 _coroutine.StopCoroutine(_displayBannerCoroutine);
                 _displayBannerCoroutine = null;
+            }
+
+            if (_reloadCoroutine != null)
+            {
+                _coroutine.StopCoroutine(_reloadCoroutine);
+                _reloadCoroutine = null;
             }
 
             if (_bannerShown)
