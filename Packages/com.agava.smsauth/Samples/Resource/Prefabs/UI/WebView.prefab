@@ -129,6 +129,8 @@ MonoBehaviour:
   _webViewObject: {fileID: 7278687071174772726}
   _container: {fileID: 8279172732374561395}
   _loadingImage: {fileID: 3835593760488192894}
+  _balckUrlList:
+  - https://wink.ru/offer
 --- !u!114 &7278687071174772726
 MonoBehaviour:
   m_ObjectHideFlags: 0
