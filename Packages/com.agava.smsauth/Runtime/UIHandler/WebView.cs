@@ -97,7 +97,7 @@ public class WebView : MonoBehaviour
 #if UNITY_ANDROID
                 _webViewObject.Resume();
 #endif
-                if (IsNotAllowedUrl(msg))
+                if (IsNotAllowedUrl(msg, out string blacklistedUrl))
                 {
                     Debug.LogWarning($"WebView: Check black list");
 
@@ -105,6 +105,7 @@ public class WebView : MonoBehaviour
                     {
                         Debug.LogWarning($"WebView: Redirect and load last url - {_targetUrl}");
                         _webViewObject.LoadURL(_targetUrl);
+                        WebViewPresenter.OpenBrowser(blacklistedUrl);
                     }
                 }
                 else
@@ -167,12 +168,15 @@ public class WebView : MonoBehaviour
         _isLoaded = true;
     }
 
-    private bool IsNotAllowedUrl(string msg)
+    private bool IsNotAllowedUrl(string msg, out string blackListedUrl)
     {
+        blackListedUrl = null;
         bool isNotAllowed = false;
 
         foreach (string url in _balckUrlList)
         {
+            blackListedUrl = url;
+
             if (msg.Contains(url))
             {
                 Application.OpenURL(msg);

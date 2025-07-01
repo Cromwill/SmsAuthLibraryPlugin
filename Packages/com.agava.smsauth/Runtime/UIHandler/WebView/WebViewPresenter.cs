@@ -92,13 +92,13 @@ namespace Agava.Wink
 
             if (instance == null)
             {
-                OpenURL(url);
+                OpenBrowser(url);
                 return;
             }
 
             if (instance._webView == null)
             {
-                OpenURL(url);
+                OpenBrowser(url);
                 return;
             }
 
@@ -121,7 +121,7 @@ namespace Agava.Wink
             instance._webView.WebPageEventReceived -= OnEventReceived;
         }
 
-        public static void OpenURL(string url)
+        public static void OpenBrowser(string url)
         {
             Application.OpenURL(url);
         }
