@@ -18,7 +18,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
         {
             GUIStyle centeredStyle = new GUIStyle(EditorStyles.boldLabel)
             {
-                alignment = TextAnchor.MiddleCenter 
+                alignment = TextAnchor.MiddleCenter
             };
 
             GUILayout.Label("Create new ASMDEF files for YABBI", centeredStyle);
@@ -126,22 +126,21 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
             bool needSave = false;
             AssemblyDefinition asmdefObject = null;
             string packagesPath = string.Empty;
-
-            string libraryPath = Path.Combine(Application.dataPath, "..", "Library\\PackageCache");
+            string libraryPath = Path.Combine(Application.dataPath, "..", $"Library{Path.DirectorySeparatorChar}PackageCache");
 
             string[] directories = Directory.GetDirectories(libraryPath, "com.kindzadzagames.advertisementplugin*@*", SearchOption.TopDirectoryOnly);
 
-            if(directories.Length == 0)
+            if (directories.Length == 0)
             {
                 Debug.Log($"Directory not found in PackageCache, try find in Packages.");
 
-                packagesPath = Application.dataPath + "\\..\\Packages\\com.kindzadzagames.advertisementplugin\\Runtime\\KDDG.Advertisement.asmdef";
+                packagesPath = Application.dataPath + $"{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}Packages{Path.DirectorySeparatorChar}com.kindzadzagames.advertisementplugin{Path.DirectorySeparatorChar}Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef";
             }
             else
             {
                 Debug.Log($"Directory found in PackageCache.");
 
-                packagesPath = Path.Combine(directories[0], "Runtime\\KDDG.Advertisement.asmdef");
+                packagesPath = Path.Combine(directories[0], $"Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef");
             }
 
             if (File.Exists(packagesPath))
@@ -149,7 +148,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
                 string jsonContent = File.ReadAllText(packagesPath);
                 asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
 
-                if(advertisementSDK == AdvertisementSDK.YabbiSDK)
+                if (advertisementSDK == AdvertisementSDK.YabbiSDK)
                 {
                     TryAddASMDEF(ref asmdefObject.references, ASMDEFSettings.YabbiAds.FilePathSspnetSDK, ref needSave);
                     TryAddASMDEF(ref asmdefObject.references, ASMDEFSettings.YabbiAds.FilePathYabbiSDK, ref needSave);
@@ -207,7 +206,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Editor
         {
             string currentSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget));
 
-            if(advertisementSDK == AdvertisementSDK.YabbiSDK)
+            if (advertisementSDK == AdvertisementSDK.YabbiSDK)
             {
                 if (currentSymbols.Contains(ASMDEFSettings.YabbiAds.YabbiDefine) == false)
                 {
