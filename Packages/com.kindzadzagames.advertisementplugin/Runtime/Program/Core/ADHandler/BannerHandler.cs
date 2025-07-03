@@ -383,9 +383,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public void OnBannerLoadFailed(AdPayload adPayload, AdException error)
         {
             AdvertisementAnalyticsService.SendAdsLoadFailed(AdvertisementAnalyticsService.AdsType.Banner);
-
-            if (_cannotShow == false)
-                _reloadCoroutine ??= _coroutine.StartCoroutine(ReloadAd());
         }
 
         public void OnBannerShown(AdPayload adPayload)
