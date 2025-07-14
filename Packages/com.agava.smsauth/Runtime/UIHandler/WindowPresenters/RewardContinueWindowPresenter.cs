@@ -217,8 +217,9 @@ namespace Agava.Wink
 
         [field: SerializeField] public int demo_overtime_minutes { get; private set; } = DefaultRewardMinutes;
         [field: SerializeField] public bool over_time_bool { get; private set; } = DefaultOvertimeText;
-        [field: SerializeField] public string over_time_text { get; private set; } = "и играть ещё {n} минут";
-        [field: SerializeField] public string ads_show_text { get; private set; } = "Посмотреть рекламу";
+
+        public string over_time_text { get; private set; } = "и играть ещё {n} минут";
+        public string ads_show_text { get; private set; } = "Посмотреть рекламу";
 
         internal void SetSettings(string demo_overtime_minutes, string over_time_bool, string over_time_text, string ads_show_text)
         {

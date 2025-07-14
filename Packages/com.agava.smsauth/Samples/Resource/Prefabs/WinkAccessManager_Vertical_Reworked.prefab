@@ -2253,10 +2253,6 @@ MonoBehaviour:
   _rewardSettings:
     <demo_overtime_minutes>k__BackingField: 10
     <over_time_bool>k__BackingField: 1
-    <over_time_text>k__BackingField: "\u0438 \u0438\u0433\u0440\u0430\u0442\u044C
-      \u0435\u0449\u0451 {n} \u043C\u0438\u043D\u0443\u0442"
-    <ads_show_text>k__BackingField: "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C
-      \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
 --- !u!225 &3975051208383422117
 CanvasGroup:
   m_ObjectHideFlags: 0
