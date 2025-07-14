@@ -1,6 +1,7 @@
-using TMPro;
+п»їusing TMPro;
 using System;
 using UnityEngine;
+using System.Text;
 using UnityEngine.UI;
 using System.Collections;
 using SmsAuthAPI.Program;
@@ -24,10 +25,9 @@ namespace Agava.Wink
         [SerializeField] private TMP_Text _winkSubsDescription;
         [SerializeField] private string _winkSubsDescriptionPattern = "{0}. {1}";
         [SerializeField] private string _trialPeriodDaysKey = "trial-period-days-text";
-        [SerializeField] private string _defaultTrialPeriodDays = "30 дней за 0 руб";
+        [SerializeField] private string _defaultTrialPeriodDays = "30 РґРЅРµР№ Р·Р° 0 СЂСѓР±";
         [SerializeField] private string _winkPriceKey = "wink-price-text";
-        [SerializeField] private string _defaultWinkPrice = "Далее 199 р/месяц";
-        //[SerializeField] private string _defaultTimerGiftMinutesKey = "demo-overtime-minutes_";
+        [SerializeField] private string _defaultWinkPrice = "Р”Р°Р»РµРµ 199 СЂ/РјРµСЃСЏС†";
         [SerializeField, Min(0)] private int _defaultTimerGiftMinutes = 10;
         [Header("Reward button")]
         [SerializeField] private Button _rewardDemoTimeButton;
@@ -36,7 +36,7 @@ namespace Agava.Wink
         [SerializeField] private RewardSettings _rewardSettings;
 
         private Dictionary<int, char> _minutWordEndings = new Dictionary<int, char>
-        { { 1, 'у' }, { 2, 'ы' }, { 3, 'ы' }, { 4, 'ы' }, { 21, 'у' }, { 22, 'ы' }, { 23, 'ы' }, { 24, 'ы' }, { 31, 'у' }, { 32, 'ы' }, { 33, 'ы' }, { 34, 'ы' } };
+        { { 1, 'Сѓ' }, { 2, 'С‹' }, { 3, 'С‹' }, { 4, 'С‹' }, { 21, 'Сѓ' }, { 22, 'С‹' }, { 23, 'С‹' }, { 24, 'С‹' }, { 31, 'Сѓ' }, { 32, 'С‹' }, { 33, 'С‹' }, { 34, 'С‹' } };
 
         private DemoTimer _demoTimer;
         private Color _defaultTextColor;
@@ -214,12 +214,14 @@ namespace Agava.Wink
     {
         private const int DefaultRewardMinutes = 10;
         private const bool DefaultOvertimeText = true;
+        private const string DefaultOverTimeText = "Рё РёРіСЂР°С‚СЊ РµС‰С‘ {n} РјРёРЅСѓС‚";
+        private const string DefaultAdsShowText = "РџРѕСЃРјРѕС‚СЂРµС‚СЊ СЂРµРєР»Р°РјСѓ";
 
         [field: SerializeField] public int demo_overtime_minutes { get; private set; } = DefaultRewardMinutes;
         [field: SerializeField] public bool over_time_bool { get; private set; } = DefaultOvertimeText;
 
-        public string over_time_text { get; private set; } = "и играть ещё {n} минут";
-        public string ads_show_text { get; private set; } = "Посмотреть рекламу";
+        public string over_time_text { get; private set; } = DefaultOverTimeText;
+        public string ads_show_text { get; private set; } = DefaultAdsShowText;
 
         internal void SetSettings(string demo_overtime_minutes, string over_time_bool, string over_time_text, string ads_show_text)
         {
@@ -229,10 +231,44 @@ namespace Agava.Wink
             if (bool.TryParse(over_time_bool, out bool overtimeText))
                 this.over_time_bool = overtimeText;
 
-            this.over_time_text = over_time_text;
-            this.ads_show_text = ads_show_text;
+            if (IsValidString(over_time_text))
+            {
+                this.over_time_text = over_time_text;
+                Debug.Log($"Advertisement Plugin: VARIOQUB string ({over_time_text}) correct.");
+            }
+            else
+            {
+                this.over_time_text = DefaultOverTimeText;
+                Debug.Log($"Advertisement Plugin: VARIOQUB the string ({over_time_text}) contains invalid characters.");
+            }
 
-            Debug.Log($"Advertisement Plugin: get varioqub settings, demo_overtime_minutes = {demo_overtime_minutes}, over_time_bool = {over_time_bool}, over_time_text = {over_time_text}, ads_show_text = {ads_show_text}");
+            if (IsValidString(ads_show_text))
+            {
+                this.ads_show_text = ads_show_text;
+                Debug.Log($"Advertisement Plugin: VARIOQUB string ({ads_show_text}) correct.");
+            }
+            else
+            {
+                this.ads_show_text = DefaultAdsShowText;
+                Debug.Log($"Advertisement Plugin: VARIOQUB the string ({ads_show_text}) contains invalid characters.");
+            }
+
+            Debug.Log($"Advertisement Plugin: get varioqub settings, demo_overtime_minutes = {this.demo_overtime_minutes}, over_time_bool = {this.over_time_bool}, over_time_text = {this.over_time_text}, ads_show_text = {this.ads_show_text}");
+        }
+
+        internal bool IsValidString(string input)
+        {
+            try
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(input);
+                string decodedString = Encoding.UTF8.GetString(bytes);
+                return input == decodedString;
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Advertisement Plugin: encoding exception = {ex}");
+                return false;
+            }
         }
     }
 }
