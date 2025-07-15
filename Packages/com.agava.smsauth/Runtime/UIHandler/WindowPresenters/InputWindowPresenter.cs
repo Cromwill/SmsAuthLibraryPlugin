@@ -16,6 +16,7 @@ namespace Agava.Wink
     internal class InputWindowPresenter : WindowPresenter
     {
         private const string CodeExpirationDateKey = nameof(CodeExpirationDateKey);
+        private const float CloseWindowDelay = 1f;
 
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private CodeFormatter _codeFormatter;
@@ -148,7 +149,16 @@ namespace Agava.Wink
             {
                 ResetCodeTimer();
                 _backButton.gameObject.SetActive(false);
-                _continueButton.gameObject.SetActive(true);
+                //_continueButton.gameObject.SetActive(true);
+                AnalyticsWinkService.SendOnEnteredCorrecOtpCodeWindow();
+                StartCoroutine(CloseWithDelay());
+
+                IEnumerator CloseWithDelay()
+                {
+                    yield return new WaitForSeconds(CloseWindowDelay);
+
+                    Disable();
+                }
             }
             else
             {
@@ -212,6 +222,8 @@ namespace Agava.Wink
         private void OnRepeatClicked()
         {
             SetRepeatButtonActive(false);
+
+            AnalyticsWinkService.SendRepeatOtpCodeRequestButtonClick();
 
             StartCoroutine(WaitForResponse());
 

@@ -21,6 +21,8 @@ namespace Agava.Wink
         private readonly ICoroutine _coroutine;
         private readonly IWinkSignInHandlerUI _winkSignInHandlerUI;
 
+        private int _inputOtpCodeCount = 0;
+
         public SignInFuctionsUI(NotifyWindowHandler notifyWindowHandler, DemoTimer demoTimer, WinkAccessManager winkAccessManager,
             IWinkSignInHandlerUI winkSignInHandlerUI, ICoroutine coroutine)
         {
@@ -111,7 +113,13 @@ namespace Agava.Wink
                 onInputDone: (code) =>
                 {
                     _winkAccessManager.SendOtpCode(code);
-                    AnalyticsWinkService.SendOnEnteredOtpCodeWindow();
+
+                    if(_inputOtpCodeCount > 0)
+                        AnalyticsWinkService.SendOnEnteredOtpCodeAgainWindow();
+                    else
+                        AnalyticsWinkService.SendOnEnteredOtpCodeWindow();
+
+                    _inputOtpCodeCount++;
                 },
                 onBackClicked: () =>
                 {
@@ -127,10 +135,7 @@ namespace Agava.Wink
             }
         }
 
-        private void OnOtpCodeAccepted(bool accepted)
-        {
-            _notifyWindowHandler.Response(accepted);
-        }
+        private void OnOtpCodeAccepted(bool accepted) => _notifyWindowHandler.Response(accepted);
 
         internal void OnSignInSuccesfully(bool hasAccess)
         {
