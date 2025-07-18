@@ -45,7 +45,7 @@ namespace Agava.Wink
 
         public event Action SunbscriptionBuyed;
 
-        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ScreenshotProtector screenshotProtector, ICoroutine coroutine, string storeName, AppMetricaInfo appMetricaInfo)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ScreenshotProtector screenshotProtector, ICoroutine coroutine, string storeName, AppMetricaInfo appMetricaInfo, SmsRetrieverManager smsRetrieverManager)
         {
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
             _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
@@ -55,6 +55,7 @@ namespace Agava.Wink
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
             coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(demoTimer, storeName, appMetricaInfo));
+            _enterCodeWindow.Construct(smsRetrieverManager);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted += OnLoadingCompleted;
@@ -63,6 +64,7 @@ namespace Agava.Wink
 
         internal void Dispose()
         {
+            _enterCodeWindow.Dispose();
             _subscriptionCheckWindow.LoadingStarted -= OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted -= OnLoadingCompleted;
             _rewardContinueWindowPresenter.RewardSuccessed -= OnRewardSuccessed;
@@ -71,11 +73,15 @@ namespace Agava.Wink
         internal void OpenSignInWindow(Action closeCallback = null) => _signInWindow.Enable(closeCallback);
         internal void OpenWindow(WindowType type) => GetWindowByType(type).Enable();
         internal void CloseWindow(WindowType type) => GetWindowByType(type).Disable();
-        internal void OpenInputOtpCodeWindow(string phone, Action<string> onInputDone = null, Action onBackClicked = null)
+
+        internal void OpenInputOtpCodeWindow(string phone, string appHash, Action<string> onInputDone = null, Action onBackClicked = null)
         {
-            _enterCodeWindow.Enable(phone, onInputDone, onBackClicked);
+            _enterCodeWindow.Enable(phone, appHash, onInputDone, onBackClicked);
             _signInWindow.Clear();
         }
+
+        internal void ActivateOtpCodeSetter() => _enterCodeWindow.ActivateOtpCodeSetter();
+
         internal void OpenDemoExpiredWindow(bool closeButton)
         {
             _enterCodeWindow.ResetCodeTimer();

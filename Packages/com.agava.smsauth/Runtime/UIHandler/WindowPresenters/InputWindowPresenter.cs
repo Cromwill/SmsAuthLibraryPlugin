@@ -9,6 +9,7 @@ using System.Globalization;
 using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
 namespace Agava.Wink
 {
@@ -32,12 +33,15 @@ namespace Agava.Wink
         [SerializeField] private GameObject _wrongCodeTextTop;
         [SerializeField] private GameObject _wrongCodeTextBottom;
 
+        private SmsRetrieverManager _smsRetrieverManager;
         private Action<string> _onInputDone;
         private Action _onBackClicked;
         private string _phone;
+        private string _appHash = string.Empty;
         private bool _checkedInputDone = false;
         private bool _wrongCodeTextActive = false;
         private bool _repeatCodeButtonActive = false;
+        private bool _canSetCode = true;
 
         public bool ZeroSeconds => _repeatCodeTimer.ZeroSeconds;
         public bool Initialized => _repeatCodeTimer.Initialized;
@@ -57,6 +61,18 @@ namespace Agava.Wink
             _continueButton.onClick.RemoveListener(OnContinue);
             _sendRepeatCodeButton.onClick.RemoveListener(OnRepeatClicked);
             _backButton.onClick.RemoveListener(OnBackClicked);
+        }
+
+        public void Construct(SmsRetrieverManager smsRetrieverManager)
+        {
+            _smsRetrieverManager = smsRetrieverManager ?? throw new ArgumentNullException(nameof(smsRetrieverManager));
+
+            _smsRetrieverManager.SmsReceived += OnSmsReceived;
+        }
+
+        public void Dispose()
+        {
+            _smsRetrieverManager.SmsReceived -= OnSmsReceived;
         }
 
         private void Update()
@@ -96,9 +112,10 @@ namespace Agava.Wink
             }
         }
 
-        public void Enable(string phone, Action<string> onInputDone, Action onBackClicked)
+        public void Enable(string phone, string appHash, Action<string> onInputDone, Action onBackClicked)
         {
             _phone = phone;
+            _appHash = appHash;
             _keyboard.Enable();
             _keyboard.Clicked += OnClicked;
 
@@ -192,6 +209,8 @@ namespace Agava.Wink
             _repeatCodeTimer.ResetSeconds();
         }
 
+        public void ActivateOtpCodeSetter() => _canSetCode = true;
+
         private void OnClicked(KeyCode code)
         {
             if (code == KeyCode.Backspace && _inputField.text.Length > 0)
@@ -222,6 +241,7 @@ namespace Agava.Wink
         private void OnRepeatClicked()
         {
             SetRepeatButtonActive(false);
+            _canSetCode = true;
 
             AnalyticsWinkService.SendRepeatOtpCodeRequestButtonClick();
 
@@ -229,7 +249,19 @@ namespace Agava.Wink
 
             IEnumerator WaitForResponse()
             {
-                Task<Response> task = SmsAuthApi.Regist(_phone);
+                Task<Response> task;
+
+                if (string.IsNullOrEmpty(_appHash))
+                {
+                    task = SmsAuthApi.Regist(_phone);
+                }
+                else
+                {
+                    RequestHashOtpData otpData = new() { phone = _phone, hashText = _appHash };
+                    Debug.Log($"SMS Retriever: repeat send code, phone = {otpData.phone}, hash = {otpData.hashText}");
+
+                    task = SmsAuthApi.Regist(otpData);
+                }
 
                 yield return new WaitUntil(() => task.IsCompleted);
 
@@ -276,6 +308,23 @@ namespace Agava.Wink
         {
             _sendRepeatCodeButton.gameObject.SetActive(active);
             _repeatCodeButtonActive = active;
+        }
+
+        private void OnSmsReceived(string message)
+        {
+            if (_canSetCode == false)
+                return;
+
+            _canSetCode = false;
+            _codeFormatter.SetCode(ExtractOtp(message));
+        }
+
+        private string ExtractOtp(string message)
+        {
+            Debug.Log($"SMS Retriever: catch sms. Message: {message}");
+
+            Match match = Regex.Match(message, @"\b(\d{4}|\d{6})\b");
+            return match.Success ? match.Value : "";
         }
     }
 }

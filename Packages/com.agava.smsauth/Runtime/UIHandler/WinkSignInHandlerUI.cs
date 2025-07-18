@@ -7,6 +7,8 @@ using UnityEngine.Scripting;
 using System.Collections.Generic;
 using KinDzaDzaGames.AdvertisementPlugin;
 using AdsAppView.DTO;
+using SmsAuthAPI.DTO;
+using UnityEngine.Networking;
 
 namespace Agava.Wink
 {
@@ -46,6 +48,8 @@ namespace Agava.Wink
         [SerializeField] private TextPlaceholder[] _phoneNumberPlaceholders;
         [Header("WebView")]
         [SerializeField] private WebViewPresenter _webViewPresenter;
+        [Header("SMS Retriever")]
+        [SerializeField] private SmsRetrieverManager _smsRetrieverManager;
 
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
@@ -64,7 +68,8 @@ namespace Agava.Wink
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, storeName, appMetricaInfo);
+            _smsRetrieverManager.Construct();
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, storeName, appMetricaInfo, _smsRetrieverManager);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         }
 
@@ -329,13 +334,14 @@ namespace Agava.Wink
 
         private void OnSignInContinueClicked()
         {
+            _smsRetrieverManager.ReloadRetriever();
             string number = _numbersInputField.Number;
             string formattedNumber = PhoneNumber.FormatNumber(number);
 
             foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)
                 placeholder.ReplaceValue(formattedNumber);
 
-            _signInFuctionsUI.OnSignInClicked(number, _notifyWindowHandler.ZeroSecondsCodeTimer == false);
+            _signInFuctionsUI.OnSignInClicked(number, _smsRetrieverManager.HashCode, _notifyWindowHandler.ZeroSecondsCodeTimer == false);
         }
 
         private void OnLimitReached(IReadOnlyList<string> devicesList)

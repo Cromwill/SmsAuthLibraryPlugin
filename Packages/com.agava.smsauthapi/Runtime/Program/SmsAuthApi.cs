@@ -52,6 +52,19 @@ namespace SmsAuthAPI.Program
             return await _httpClient.Regist("Registration", phoneNumber);
         }
 
+        public async static Task<Response> Regist(RequestHashOtpData requestHashOtpData)
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                apiName = "registration/otphash",
+                body = System.Text.Json.JsonSerializer.Serialize(requestHashOtpData, typeof(RequestHashOtpData)),
+            };
+
+            return await _httpClient.Regist(request);
+        }
+
         public async static Task<Response> Refresh(string refreshToken)
         {
             EnsureInitialize();

@@ -9,6 +9,7 @@ using SmsAuthAPI.Utility;
 using SmsAuthAPI.Program;
 using UnityEngine.Networking;
 using UnityEngine.Scripting;
+using UnityEngine.Windows;
 
 namespace Agava.Wink
 {
@@ -39,7 +40,7 @@ namespace Agava.Wink
             }
         }
 
-        internal async Task<LoginData> Regist(string phoneNumber, string uniqueId, string appId, Action<bool> otpCodeRequest, bool skipRegistration = false)
+        internal async Task<LoginData> Regist(string phoneNumber, string appHash, string uniqueId, string appId, Action<bool> otpCodeRequest, bool skipRegistration = false)
         {
             LoginData data = new()
             {
@@ -56,7 +57,19 @@ namespace Agava.Wink
             }
             else
             {
-                Response response = await SmsAuthApi.Regist(phoneNumber);
+                Response response;
+
+                if (string.IsNullOrEmpty(appHash))
+                {
+                    response = await SmsAuthApi.Regist(phoneNumber);
+                }
+                else
+                {
+                    RequestHashOtpData otpData = new() { phone = phoneNumber, hashText = appHash };
+                    Debug.Log($"SMS Retriever: create RequestHashOtpData, phone = {otpData.phone}, hash = {otpData.hashText}");
+
+                    response = await SmsAuthApi.Regist(otpData);
+                }
 
                 if (response.statusCode != UnityWebRequest.Result.Success)
                 {

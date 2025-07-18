@@ -2839,6 +2839,7 @@ RectTransform:
   - {fileID: 2435692890748979846}
   - {fileID: 412186426666259362}
   - {fileID: 5181412285461982604}
+  - {fileID: 4142397349998877732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3031,6 +3032,7 @@ MonoBehaviour:
   - {fileID: 1656392231747053308}
   - {fileID: 6177164924590513980}
   _webViewPresenter: {fileID: 1055951554191058541}
+  _smsRetrieverManager: {fileID: 4003122744439104091}
 --- !u!1 &873353247278680094
 GameObject:
   m_ObjectHideFlags: 0
@@ -7777,6 +7779,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 6850661212932450980}
   _enabledObject: {fileID: 7537091020367208247}
+--- !u!1 &2216341662154412589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4142397349998877732}
+  - component: {fileID: 4003122744439104091}
+  m_Layer: 5
+  m_Name: SmsRetrieverManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4142397349998877732
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216341662154412589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7717092136396739014}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4003122744439104091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216341662154412589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c5588a088bbf549a9b3ac2aa3df430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2237685369050785921
 GameObject:
   m_ObjectHideFlags: 0
@@ -8370,6 +8420,7 @@ MonoBehaviour:
   _continueButton: {fileID: 5251672201487640413}
   _wrongCodeTextTop: {fileID: 824354260310910241}
   _wrongCodeTextBottom: {fileID: 1696436473986789895}
+  _code: 
 --- !u!225 &5037344872025833862
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -19022,7 +19073,6 @@ MonoBehaviour:
   - {fileID: 6719653652431108618}
   - {fileID: 8961748007659051604}
   - {fileID: 6199603488037391983}
-  - {fileID: 8738985632562200342}
   - {fileID: 966719246673786655}
   - {fileID: 2550824236209675624}
   - {fileID: 8432121023770643533}

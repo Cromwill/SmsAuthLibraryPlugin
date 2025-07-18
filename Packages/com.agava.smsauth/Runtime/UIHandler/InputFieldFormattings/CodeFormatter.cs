@@ -38,6 +38,11 @@ namespace Agava.Wink
             _textCells[0].SetActive(true);
         }
 
+        public void SetCode(string code)
+        {
+            _inputField.text = code;
+        }
+
         private void OnValueChanged(string newValue)
         {
             if (newValue.Length > _codeLength)

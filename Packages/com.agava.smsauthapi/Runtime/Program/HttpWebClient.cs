@@ -59,6 +59,22 @@ namespace SmsAuthAPI.Program
             }
         }
 
+        public async Task<Response> Regist(Request request)
+        {
+            string path = $"{GetHttpPath(request.apiName)}";
+            OnTryConnecting(path);
+
+            using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST, uploadBody: request.body))
+            {
+                webRequest.SendWebRequest();
+
+                await WaitProccessing(webRequest);
+                TryShowRequestInfo(webRequest, request.apiName);
+
+                return new Response(webRequest.result, webRequest.result.ToString(), webRequest.downloadHandler.text, false);
+            }
+        }
+
         public async Task<Response> Refresh(Request request)
         {
             string path = $"{GetHttpPath(request.apiName)}";

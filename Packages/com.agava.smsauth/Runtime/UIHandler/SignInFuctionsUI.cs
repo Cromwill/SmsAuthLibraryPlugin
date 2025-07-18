@@ -36,17 +36,18 @@ namespace Agava.Wink
         internal void OnAppFocus(bool focus) => _demoTimer.OnAppFocus(focus);
         internal void Update() => _demoTimer?.Update();
 
-        internal void OnSignInClicked(string phone, bool skipRegistration = false)
+        internal void OnSignInClicked(string phone, string appHash, bool skipRegistration = false)
         {
             _notifyWindowHandler.CloseWindow(WindowType.SignIn);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
 
             AnalyticsWinkService.SendOnEnteredPhoneWindow();
+            _notifyWindowHandler.ActivateOtpCodeSetter();
 
-            _winkAccessManager.Regist(phoneNumber: phone,
+            _winkAccessManager.Regist(phoneNumber: phone, appHash: appHash,
             otpCodeRequest: (hasOtpCode) =>
             {
-                OnOtpCodeRequested(phone, hasOtpCode);
+                OnOtpCodeRequested(phone, appHash, hasOtpCode);
             },
             otpCodeAccepted: (accepted) =>
             {
@@ -102,14 +103,14 @@ namespace Agava.Wink
             }
         }
 
-        private void OnOtpCodeRequested(string phone, bool hasOtpCode)
+        private void OnOtpCodeRequested(string phone, string appHash, bool hasOtpCode)
         {
             if (hasOtpCode)
             {
                 AnalyticsWinkService.SendEnterOtpCodeWindow();
 
                 _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
-                _notifyWindowHandler.OpenInputOtpCodeWindow(phone,
+                _notifyWindowHandler.OpenInputOtpCodeWindow(phone, appHash,
                 onInputDone: (code) =>
                 {
                     _winkAccessManager.SendOtpCode(code);
