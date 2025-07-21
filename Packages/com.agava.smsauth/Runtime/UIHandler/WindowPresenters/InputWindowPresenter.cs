@@ -181,6 +181,7 @@ namespace Agava.Wink
             {
                 Clear();
                 SetWrongTextActive(true);
+                AnalyticsWinkService.SendOnEnteredWrongOtpCodeWindow();
                 _wrongCodeTextActive = true;
                 _enterCodeShaking.StartAnimation();
 

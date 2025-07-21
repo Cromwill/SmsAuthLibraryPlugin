@@ -47,6 +47,7 @@ namespace Agava.Wink
         public static void SendOnEnteredOtpCodeAgainWindow() => SendEvent("On Entered Otp Code Again");
         public static void SendRepeatOtpCodeRequestButtonClick() => SendEvent("Repeat Otp Code Request");
         public static void SendOnEnteredCorrecOtpCodeWindow() => SendEvent("On Entered Correct Otp Code");
+        public static void SendOnEnteredWrongOtpCodeWindow() => SendEvent("On Entered Wrong Otp Code");
         public static void SendPayWallWindow() => SendEvent("PayWall Window");
         public static void SendPayWallRedirect() => SendEvent("PayWall Redirect");
         public static void SendFirstOpen() => SendEvent("First Open Game");
