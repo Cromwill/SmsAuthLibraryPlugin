@@ -23,9 +23,6 @@ namespace Agava.Wink
             _smsRetrieverClass = new AndroidJavaClass("com.kddg.smsretrieverplugin.SmsRetrieverPlugin");
             _smsRetrieverClass.CallStatic("getAppHash", gameObject.name, "OnAppHashReceived");
 #endif
-
-            //string hash = "c2U6i8n+XOg";
-            //HashCode = HashCodePattern + UnityWebRequest.EscapeURL(hash);
         }
 
         public void ReloadRetriever()
