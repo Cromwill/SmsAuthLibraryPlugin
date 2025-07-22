@@ -245,6 +245,7 @@ namespace Agava.Wink
             _canSetCode = true;
 
             AnalyticsWinkService.SendRepeatOtpCodeRequestButtonClick();
+            _smsRetrieverManager.ReloadRetriever();
 
             StartCoroutine(WaitForResponse());
 
