@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.Scripting;
+
 #if YABBI_AD
+using YabbiSDK.ConsentManagerSDK.Api;
 using SspnetSDK.ConsentManagerSDK.Unfiled;
 #endif
 
