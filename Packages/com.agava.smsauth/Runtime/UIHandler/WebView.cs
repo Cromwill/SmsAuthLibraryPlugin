@@ -105,6 +105,7 @@ public class WebView : MonoBehaviour
                     {
                         Debug.LogWarning($"WebView: Redirect and load last url - {_targetUrl}");
                         _webViewObject.LoadURL(_targetUrl);
+                        _isOpened = false;
                         WebViewPresenter.OpenBrowser(blacklistedUrl);
                     }
                 }
