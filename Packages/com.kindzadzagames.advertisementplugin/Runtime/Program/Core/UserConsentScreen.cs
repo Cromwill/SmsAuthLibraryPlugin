@@ -16,12 +16,20 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private const string YabbyAgreement = nameof(YabbyAgreement);
         private const int HasAccepted = 1;
         private const int NotAccepted = 0;
-
+#if YABBI_AD
+        private ConsentManager _consentManager;
+#endif
         [field: SerializeField] public bool NeedShowConsentScreen { get; private set; } = false;
 
         public bool AgreementAccepted => PlayerPrefs.HasKey(YabbyAgreement);
+#if YABBI_AD
+        public void Construct(ConsentManager consentManager)
+        {
+            _consentManager = consentManager ?? throw new ArgumentNullException(nameof(consentManager));
+        }
 
-        public void OnConsentManagerLoaded() { }
+        public void OnConsentManagerLoaded() => _consentManager.ShowConsentWindow();
+#endif
         public void OnConsentManagerLoadFailed(string error) { }
         public void OnConsentManagerShownFailed(string error) { }
 

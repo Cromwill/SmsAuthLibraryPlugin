@@ -65,6 +65,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
             OnInitializeSuccess();
 #elif YABBI_AD
+            _userConsentScreen.Construct(_consentManager);
             StartCoroutine(StartYabbiService());
 #elif YANDEX_AD
             Debug.Log("Advertisement Plugin: start YANDEX service.");
@@ -162,7 +163,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                     _consentManager.EnableLog(true);
 #endif
                     _consentManager.LoadManager();
-                    _consentManager.ShowConsentWindow();
                 }
             }
         }
