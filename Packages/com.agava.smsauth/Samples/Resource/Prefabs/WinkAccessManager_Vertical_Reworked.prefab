@@ -8420,7 +8420,6 @@ MonoBehaviour:
   _continueButton: {fileID: 5251672201487640413}
   _wrongCodeTextTop: {fileID: 824354260310910241}
   _wrongCodeTextBottom: {fileID: 1696436473986789895}
-  _code: 
 --- !u!225 &5037344872025833862
 CanvasGroup:
   m_ObjectHideFlags: 0

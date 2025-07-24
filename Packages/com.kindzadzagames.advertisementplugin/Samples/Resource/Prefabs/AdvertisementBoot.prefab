@@ -45,16 +45,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _advertisementController: {fileID: 0}
-  _interstitialPlayer: {fileID: 0}
+  _advertisingConfigs:
+    PublisherID: 65057899-a16a-4877-989b-38c432a7fa15
+    InterstitialUnitID: b8359c60-9bde-47c9-85ff-3c7afd2bd982
+    RewardedUnitID: eaac7a7f-b0b0-46d2-ac95-bd58578e9e29
+    BannerUnitID: 27668678-d138-4af4-84f4-891252086125
+    YabbiPrivacyPolicyURL: https://yabbi.me/policy
   _rewardSettings:
     RewardCountKey: reward-count
     DefaultRewardCount: 0
     RewardAvailableKey: reward-available
     DefaultRewardAvailable: 0
-    WinkPriceKey: wink-price-text
-    DefaultWinkPrice: "\u0414\u0430\u043B\u0435\u0435 199 \u0440/\u043C\u0435\u0441\u044F\u0446"
-    TrialPeriodDaysKey: trial-period-days-text
-    DefaultTrialPeriodDays: "30 \u0434\u043D\u0435\u0439 \u0437\u0430 0 \u0440\u0443\u0431"
   _serverPath: gamesrtkbd.tech
   _storeName: 4
   _bundleId: 1
+  _selfInit: 0

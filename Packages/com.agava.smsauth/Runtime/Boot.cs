@@ -66,7 +66,7 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.StartService(_winkAccessManager);
                 yield return SheetRemoteConfigs.Initialize();
                 yield return _winkAccessManager.TryQuickAccess();
-                yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform);
+                yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Privacy);
 
                 _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();

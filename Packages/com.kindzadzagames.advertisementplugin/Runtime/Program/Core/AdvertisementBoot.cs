@@ -55,14 +55,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private void Awake()
         {
             if(_selfInit)
-                StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform));
+                StartCoroutine(Construct(vip: false, _bundleId, _storeName.ToString(), _appId, Platform, _advertisingConfigs.AppPrivacyPolicyURL));
         }
 
-        public IEnumerator Construct(bool vip, int bundleId, string storeName, string appId, string platform)
+        public IEnumerator Construct(bool vip, int bundleId, string storeName, string appId, string platform, string privacy)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
                 yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
 
+            _advertisingConfigs.AppPrivacyPolicyURL = privacy;
             _api = new(_serverPath, appId);
             _appData = new() { app_id = appId, store_id = storeName, platform = platform };
             _preloadService = new(_api, bundleId, vip, _appData);
