@@ -11,11 +11,16 @@
 	"license": "MIT",
 	"name": "com.kindzadzagames.advertisementplugin",
 	"samples": [
-		{
-			"description": "Contains UI prefab and test scene the SDK.",
-			"displayName": "Resource",
-			"path": "Samples~/Resource"
-		}
+        {
+            "description": "Contains UI prefab and test scene the SDK.",
+            "displayName": "Resource",
+            "path": "Samples~/Resource"
+        },
+        {
+            "description": "Contains a script to fix an error when building a project on iOS.",
+            "displayName": "IOSBuildBugFix",
+            "path": "Samples~/IOSBuildBugFix"
+        }
 	],
 	"type": "library",
 	"unity": "2022.3",
