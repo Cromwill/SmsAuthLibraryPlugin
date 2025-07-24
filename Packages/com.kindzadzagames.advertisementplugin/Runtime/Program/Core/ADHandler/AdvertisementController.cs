@@ -152,7 +152,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             if (_userConsentScreen.NeedShowConsentScreen)
             {
                 var builder = new ConsentBuilder()
-                .AppendPolicyURL(_advertisingConfigs.YabbiPrivacyPolicyURL)
+                .AppendPolicyURL(_advertisingConfigs.AppPrivacyPolicyURL)
                 .AppendGdpr(true);
                 _consentManager.RegisterCustomVendor(builder);
 
