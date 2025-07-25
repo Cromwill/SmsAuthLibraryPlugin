@@ -43,7 +43,7 @@ namespace Agava.Wink
         private Color _blinkTextColor;
         private Coroutine _reloadAd;
         private AppMetricaInfo _appMetricaInfo;
-        private int _fetchCount = 10;
+        private int _fetchCount = 5;
 
         public bool Initialized { get; private set; } = false;
 
