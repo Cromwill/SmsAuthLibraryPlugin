@@ -36,8 +36,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             else if(_advertisementController.WaitConcernPolicy && _advertisementController.PolicyAccepted == false)
                 yield return new WaitUntil(() => _advertisementController.AgreementClosed);
 
+            AdvertisementController.Instance?.StartInterstitialTimer();
             _sceneLoader.LoadGameScene();
-
         }
     }
 }
