@@ -19,11 +19,18 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         [SerializeField] private int _regularTimer = 60;
         [Header("Advertisement controller")]
         [SerializeField] private AdvertisementController _advertisementController;
+        [Header("Internet check")]
+        [SerializeField] private InternetChecker _internetChecker;
 
         private AdsSdkSettingsData _settings;
 
         private IEnumerator Start()
         {
+            StartCoroutine(_internetChecker.EnternetChecking());
+
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+                yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
+
             Debug.Log("#Boot Advertisement# : Self start advertisement plugin initialize");
 
             _settings = new AdsSdkSettingsData() { first_timer = _firstTimer, regular_timer = _regularTimer };
