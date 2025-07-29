@@ -45,6 +45,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public bool Initialized { get; private set; } = false;
         public bool Breaked { get; private set; } = false;
         public bool BannerShown => _bannerHandler.BannerShown;
+        public bool WaitConcernPolicy => _userConsentScreen.NeedShowConsentScreen;
+        public bool PolicyAccepted => _userConsentScreen.AgreementAccepted;
+        public bool AgreementClosed => _userConsentScreen.AgreementClosed;
 
         public event Action InitializationFailed;
         public event Action BannerDisplayed;
@@ -135,7 +138,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             Debug.Log("Advertisement Plugin: YABBI initialize failed.");
             InitializationFailed?.Invoke();
             Breaked = true;
-            Destroy(this.gameObject);
         }
 
         private IEnumerator StartYabbiService()

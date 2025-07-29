@@ -23,6 +23,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #endif
         [field: SerializeField] public bool NeedShowConsentScreen { get; private set; } = false;
 
+        public bool AgreementClosed { get; private set; } = false;
+
         public bool AgreementAccepted => PlayerPrefs.HasKey(YabbyAgreement);
 #if YABBI_AD
         public void Construct(ConsentManager consentManager)
@@ -35,7 +37,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public void OnConsentManagerLoadFailed(string error) { }
         public void OnConsentManagerShownFailed(string error) { }
 
-        public void OnConsentWindowClosed(bool hasConsent) => PlayerPrefs.SetInt(YabbyAgreement, hasConsent ? HasAccepted : NotAccepted);
+        public void OnConsentWindowClosed(bool hasConsent)
+        {
+            PlayerPrefs.SetInt(YabbyAgreement, hasConsent ? HasAccepted : NotAccepted);
+            AgreementClosed = true;
+        }
+
         public void OnConsentWindowShown() => PlayerPrefs.SetInt(YabbyAgreement, NotAccepted);
     }
 }
