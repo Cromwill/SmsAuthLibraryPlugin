@@ -43,6 +43,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             AgreementClosed = true;
         }
 
-        public void OnConsentWindowShown() => PlayerPrefs.SetInt(YabbyAgreement, NotAccepted);
+        public void OnConsentWindowShown()
+        {
+            PlayerPrefs.SetInt(YabbyAgreement, NotAccepted);
+            PlayerPrefs.Save();
+        }
     }
 }
