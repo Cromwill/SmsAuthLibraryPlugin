@@ -58,11 +58,11 @@ namespace SmsAuthAPI.Program
 
             var request = new Request()
             {
-                apiName = $"registration/otphash/{requestHashOtpData.phone}",
+                apiName = $"registration/otphash",
                 body = System.Text.Json.JsonSerializer.Serialize(requestHashOtpData, typeof(RequestHashOtpData)),
             };
 
-            return await _httpClient.Regist(request);
+            return await _httpClient.Regist(request, requestHashOtpData.phone);
         }
 
         public async static Task<Response> Refresh(string refreshToken)

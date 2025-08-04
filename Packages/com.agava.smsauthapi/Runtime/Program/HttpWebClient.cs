@@ -59,9 +59,9 @@ namespace SmsAuthAPI.Program
             }
         }
 
-        public async Task<Response> Regist(Request request)
+        public async Task<Response> Regist(Request request,  string phone)
         {
-            string path = $"{GetHttpPath(request.apiName)}";
+            string path = $"{GetHttpPath(request.apiName, phone)}";
             OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST, uploadBody: request.body))
