@@ -117,7 +117,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             _bannerAtBottom = !_bannerAtBottom;
 #if YABBI_AD
-            Yabbi.SetBannerCustomSettings(new BannerSettings().SetRefreshIntervalSeconds(_switchADTime).SetShowCloseButton(_bannerVisibility).SetBannerPosition(_bannerAtBottom ? BannerPosition.BOTTOM : BannerPosition.TOP));
+            Yabbi.SetBannerCustomSettings(new BannerSettings().SetRefreshIntervalSeconds(_switchADTime).SetShowCloseButton(_bannerVisibility).SetBannerPosition(_bannerAtBottom ? BannerPosition.BOTTOM_CENTER : BannerPosition.TOP_CENTER));
 #endif
             _changeBannerPositionButtonLabel.text = _bannerAtBottom ? string.Format(BannerPositionPattern, BannerBottomPosition) : string.Format(BannerPositionPattern, BannerTopPosition);
         }

@@ -247,8 +247,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             PlaceOnScreen.TopCenter => PlaceOnScreen.TopCenter,
             _ => PlaceOnScreen.BottomCenter,
 #elif YABBI_AD
-            PlaceOnScreen.TopLeft or PlaceOnScreen.TopCenter or PlaceOnScreen.TopRight => BannerPosition.TOP,
-            _ => BannerPosition.BOTTOM,
+            PlaceOnScreen.TopLeft => BannerPosition.TOP_LEFT,
+            PlaceOnScreen.TopCenter => BannerPosition.TOP_CENTER,
+            PlaceOnScreen.TopRight => BannerPosition.TOP_RIGHT,
+            PlaceOnScreen.BottomLeft => BannerPosition.BOTTOM_LEFT,
+            PlaceOnScreen.BottomRight => BannerPosition.BOTTOM_RIGHT,
+            _ => BannerPosition.BOTTOM_CENTER,
 #elif YANDEX_AD
 
             PlaceOnScreen.TopLeft or PlaceOnScreen.TopCenter or PlaceOnScreen.TopRight => AdPosition.TopCenter,
