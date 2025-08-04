@@ -58,7 +58,7 @@ namespace SmsAuthAPI.Program
 
             var request = new Request()
             {
-                apiName = "registration/otphash",
+                apiName = $"registration/otphash/{requestHashOtpData.phone}",
                 body = System.Text.Json.JsonSerializer.Serialize(requestHashOtpData, typeof(RequestHashOtpData)),
             };
 
