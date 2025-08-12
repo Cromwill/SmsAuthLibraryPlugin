@@ -147,9 +147,14 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             Yabbi.EnableDebug(true);
 #endif
             if(Yabbi.IsInitialized() == false)
+            {
                 Yabbi.Initialize(_advertisingConfigs.PublisherID, this);
-
-            yield return new WaitUntil(() => Yabbi.IsInitialized());
+                yield return new WaitUntil(() => Yabbi.IsInitialized());
+            }
+            else
+            {
+                OnInitializeSuccess();
+            }
 
             if (_userConsentScreen.NeedShowConsentScreen)
             {
