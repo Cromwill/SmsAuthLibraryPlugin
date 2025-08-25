@@ -88,6 +88,16 @@ namespace Agava.Wink
             }
             else
             {
+                yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Privacy);
+
+                if (_advertisementBoot.IsPluginAvailable)
+                {
+                    if (_advertisementBoot.AdvertisementController.WaitConcernPolicy && _advertisementBoot.AdvertisementController.PolicyAccepted == false)
+                        yield return new WaitUntil(() => _advertisementBoot.AdvertisementController.AgreementClosed);
+
+                    AdvertisementController.Instance?.StartInterstitialTimer();
+                }
+
                 _winkSignInHandlerUI.TrySetCorrectOrientation();
                 _loadingProgressBar.Disable();
                 _sceneLoader.LoadGameScene();

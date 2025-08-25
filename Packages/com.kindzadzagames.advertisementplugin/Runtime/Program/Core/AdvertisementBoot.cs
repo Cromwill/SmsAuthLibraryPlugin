@@ -45,6 +45,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private string _appId => Application.identifier;
 #endif
 
+        public AdvertisementController AdvertisementController => _advertisementController;
         public bool IsPluginAvailable => _preloadService.IsPluginAvailable;
 
         private void OnEnable()
