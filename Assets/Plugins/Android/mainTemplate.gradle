@@ -3,10 +3,10 @@ apply plugin: 'com.android.library'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+		implementation 'androidx.core:core:1.12.0'
 // Android Resolver Dependencies Start
     implementation 'androidx.annotation:annotation:1.7.1' // Packages/io.appmetrica.analytics/Editor/AppMetricaDependencies.xml:5
     implementation 'io.appmetrica.analytics:analytics:6.5.0' // Packages/io.appmetrica.analytics/Editor/AppMetricaDependencies.xml:4
-	implementation 'androidx.core:core:1.16.0'
 // Android Resolver Dependencies End
 **DEPS**}
 
