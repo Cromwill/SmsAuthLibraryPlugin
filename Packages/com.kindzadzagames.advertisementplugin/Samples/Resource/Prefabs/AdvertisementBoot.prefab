@@ -45,11 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _advertisementController: {fileID: 0}
+  _appName: 0
+  _storeName: 4
   _advertisingConfigs:
     PublisherID: 65057899-a16a-4877-989b-38c432a7fa15
+    BannerUnitID: 27668678-d138-4af4-84f4-891252086125
     InterstitialUnitID: b8359c60-9bde-47c9-85ff-3c7afd2bd982
     RewardedUnitID: eaac7a7f-b0b0-46d2-ac95-bd58578e9e29
-    BannerUnitID: 27668678-d138-4af4-84f4-891252086125
     AppPrivacyPolicyURL: https://mt.media/privacy/
   _rewardSettings:
     RewardCountKey: reward-count
@@ -57,6 +59,5 @@ MonoBehaviour:
     RewardAvailableKey: reward-available
     DefaultRewardAvailable: 0
   _serverPath: gamesrtkbd.tech
-  _storeName: 4
   _bundleId: 1
   _selfInit: 0

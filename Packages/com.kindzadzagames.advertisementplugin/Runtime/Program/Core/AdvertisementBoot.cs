@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin.DTO;
+using KinDzaDzaGames.AdvertisementPlugin.Editor;
 using KinDzaDzaGames.AdvertisementPlugin.Utility;
 
 namespace KinDzaDzaGames.AdvertisementPlugin
@@ -23,14 +24,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         [SerializeField] private AdvertisementController _advertisementController;
         [Header("Advertising configs")]
-        [SerializeField] private AdvertisingConfigs _advertisingConfigs;
+        [SerializeField] private AppName _appName;
+        [SerializeField] private Store _storeName;
+        [SerializeField, ReadOnly] private AdvertisingConfigs _advertisingConfigs;
         [Header("Remote reward data")]
         [SerializeField] private RewardSettings _rewardSettings;
         [Tooltip("Server name remote data")]
         [SerializeField] private string _serverPath;
-        [SerializeField] private Store _storeName;
-        [SerializeField] private int _bundleId;
         [Header("Application")]
+        [SerializeField] private int _bundleId;
         [SerializeField] private bool _selfInit = false;
 
         private AdvertisementAPI _api;
@@ -107,5 +109,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
 
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _advertisingConfigs = AdvertisementID.GetConfig(_appName, _storeName);
+        }
+#endif
     }
 }
