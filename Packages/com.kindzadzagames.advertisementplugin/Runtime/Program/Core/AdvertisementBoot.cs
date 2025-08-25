@@ -26,7 +26,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #endif
 
         [SerializeField] private AdvertisementController _advertisementController;
-        [Header("Advertising configs")]
+        [Header("Advertisement configs")]
         [SerializeField] private AppName _appName;
         [SerializeField] private Store _storeName;
         [SerializeField
@@ -36,7 +36,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             ] private AdvertisingConfigs _advertisingConfigs;
         [Header("Remote reward data")]
         [SerializeField] private RewardSettings _rewardSettings;
-        [Tooltip("Server name remote data")]
+        [Header("Server name remote data")]
         [SerializeField] private string _serverPath;
         [Header("Application")]
         [SerializeField] private int _bundleId;
@@ -73,11 +73,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             if (Application.internetReachability == NetworkReachability.NotReachable)
                 yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
 
+            _advertisingConfigs = AdvertisementID.GetConfig(_appName, _storeName);
             _advertisingConfigs.AppPrivacyPolicyURL = privacy;
             _api = new(_serverPath, appId);
             _appData = new() { app_id = appId, store_id = storeName, platform = platform };
             _preloadService = new(_api, bundleId, vip, _appData);
-            Debug.Log("#Boot# " + JsonConvert.SerializeObject(_appData));
+            Debug.Log("#Advertisement Boot# " + JsonConvert.SerializeObject(_appData));
 
             yield return _preloadService.Preparing();
 
