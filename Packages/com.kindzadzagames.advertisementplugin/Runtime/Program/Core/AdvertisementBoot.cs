@@ -7,7 +7,7 @@ using KinDzaDzaGames.AdvertisementPlugin.DTO;
 using KinDzaDzaGames.AdvertisementPlugin.Utility;
 
 #if UNITY_EDITOR
-using KinDzaDzaGames.AdvertisementPlugin.Editor;
+using KinDzaDzaGames.AdvertisementPlugin.EditorScripts;
 #endif
 
 namespace KinDzaDzaGames.AdvertisementPlugin

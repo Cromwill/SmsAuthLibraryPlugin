@@ -1,4 +1,4 @@
-namespace KinDzaDzaGames.AdvertisementPlugin.Editor
+namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 {
     public static class ASMDEFSettings
     {

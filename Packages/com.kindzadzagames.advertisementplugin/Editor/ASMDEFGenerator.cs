@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace KinDzaDzaGames.AdvertisementPlugin.Editor
+namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 {
     public class ASMDEFGenerator : EditorWindow
     {

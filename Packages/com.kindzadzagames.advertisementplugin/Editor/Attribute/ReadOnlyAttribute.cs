@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KinDzaDzaGames.AdvertisementPlugin.Editor
+namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 {
     public class ReadOnlyAttribute : PropertyAttribute { }
 }

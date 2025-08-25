@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace KinDzaDzaGames.AdvertisementPlugin.Editor
+namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 {
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
