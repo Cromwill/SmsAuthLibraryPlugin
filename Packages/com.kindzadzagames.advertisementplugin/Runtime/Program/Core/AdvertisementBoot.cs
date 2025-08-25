@@ -4,8 +4,11 @@ using System.Collections;
 using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin.DTO;
-using KinDzaDzaGames.AdvertisementPlugin.Editor;
 using KinDzaDzaGames.AdvertisementPlugin.Utility;
+
+#if UNITY_EDITOR
+using KinDzaDzaGames.AdvertisementPlugin.Editor;
+#endif
 
 namespace KinDzaDzaGames.AdvertisementPlugin
 {
@@ -26,7 +29,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         [Header("Advertising configs")]
         [SerializeField] private AppName _appName;
         [SerializeField] private Store _storeName;
-        [SerializeField, ReadOnly] private AdvertisingConfigs _advertisingConfigs;
+        [SerializeField
+#if UNITY_EDITOR
+            , ReadOnly
+#endif
+            ] private AdvertisingConfigs _advertisingConfigs;
         [Header("Remote reward data")]
         [SerializeField] private RewardSettings _rewardSettings;
         [Tooltip("Server name remote data")]

@@ -48,5 +48,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             PlayerPrefs.SetInt(YabbyAgreement, NotAccepted);
             PlayerPrefs.Save();
         }
+
+        public void CloseConcernScreen()
+        {
+            AgreementClosed = true;
+        }
     }
 }

@@ -98,6 +98,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _interstitialHandler.ChangeFocusState(focus);
                 _rewardHandler.ChangeFocusState(focus);
             }
+
+            if(_userConsentScreen.AgreementAccepted && focus && _userConsentScreen.AgreementClosed == false)
+                _userConsentScreen.CloseConcernScreen();
         }
 
         public void OnInitializeSuccess()
