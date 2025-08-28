@@ -91,7 +91,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 yield return new WaitUntil(() => _advertisementController.Initialized || _advertisementController.Breaked);
 
                 if (_advertisementController.Breaked)
+                {
                     Destroy(_advertisementController.gameObject);
+                    _preloadService.DropPlugin();
+                }
             }
 
             Debug.Log($"Advertisement Plugin: constructed. Plugin available = {_preloadService.IsPluginAvailable}, breaked = {_advertisementController.Breaked}");

@@ -43,6 +43,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             Debug.Log("#PreloadService# Prepare is done. Start plugin " + IsPluginAvailable);
         }
 
+        public void DropPlugin() => IsPluginAvailable = false;
+
         private async void SetPluginAwailable()
         {
             IsPluginAvailable = await InitApp();
