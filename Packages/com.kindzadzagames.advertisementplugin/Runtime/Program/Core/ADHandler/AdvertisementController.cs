@@ -97,10 +97,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             {
                 _interstitialHandler.ChangeFocusState(focus);
                 _rewardHandler.ChangeFocusState(focus);
-            }
 
-            if(_userConsentScreen.AgreementAccepted && focus && _userConsentScreen.AgreementClosed == false)
-                _userConsentScreen.CloseConcernScreen();
+#if UNITY_ANDROID
+                if (_userConsentScreen.AgreementAccepted && focus && _userConsentScreen.AgreementClosed == false)
+                    _userConsentScreen.CloseConcernScreen();
+#endif
+            }
         }
 
         public void OnInitializeSuccess()
