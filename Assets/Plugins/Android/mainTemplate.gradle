@@ -1,9 +1,10 @@
 apply plugin: 'com.android.library'
+apply from: '../shared/keepUnitySymbols.gradle'
 **APPLY_PLUGINS**
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-		implementation 'androidx.core:core:1.16.0'
+        implementation 'androidx.core:core:1.16.0'
 // Android Resolver Dependencies Start
     implementation 'androidx.annotation:annotation:1.7.1' // Packages/io.appmetrica.analytics/Editor/AppMetricaDependencies.xml:5
     implementation 'io.appmetrica.analytics:analytics:6.5.0' // Packages/io.appmetrica.analytics/Editor/AppMetricaDependencies.xml:4
@@ -12,6 +13,8 @@ dependencies {
 
 // Android Resolver Exclusions Start
 android {
+    namespace "com.unity3d.player"
+    ndkVersion "**NDKVERSION**"
   packagingOptions {
       exclude ('/lib/armeabi/*' + '*')
       exclude ('/lib/mips/*' + '*')
@@ -33,9 +36,11 @@ android {
     }
 
     defaultConfig {
+**DEFAULT_CONFIG_SETUP**
         minSdkVersion **MINSDKVERSION**
         targetSdkVersion **TARGETSDKVERSION**
         ndk {
+            debugSymbolLevel **DEBUGSYMBOLLEVEL**
             abiFilters **ABIFILTERS**
         }
         versionCode **VERSIONCODE**
