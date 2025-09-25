@@ -441,8 +441,16 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         private void HandleImpression(object sender, ImpressionData impressionData)
         {
-            _bannerShown = true;
-            BannerDisplayed?.Invoke();
+            if (_cannotShow)
+            {
+                DropAd();
+            }
+            else
+            {
+                AdvertisementAnalyticsService.SendAdsImpression(AdvertisementAnalyticsService.AdsType.Banner);
+                _bannerShown = true;
+                BannerDisplayed?.Invoke();
+            }
         }
 #endif
         #endregion

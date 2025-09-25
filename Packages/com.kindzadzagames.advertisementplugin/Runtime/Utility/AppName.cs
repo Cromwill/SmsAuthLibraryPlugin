@@ -18,5 +18,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         Papers,
         FourACube,
         HeroesOfEnvell,
+        TestYandexAD,
     }
 }

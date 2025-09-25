@@ -73,6 +73,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #elif YANDEX_AD
             Debug.Log("Advertisement Plugin: start YANDEX service.");
             MobileAds.SetAgeRestrictedUser(true);
+            MobileAds.SetUserConsent(true);
             OnInitializeSuccess();
 #endif
         }

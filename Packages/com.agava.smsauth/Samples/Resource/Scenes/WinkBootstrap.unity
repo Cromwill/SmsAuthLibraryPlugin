@@ -2102,28 +2102,36 @@ PrefabInstance:
       value: 2213321555
       objectReference: {fileID: 0}
     - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
+      propertyPath: _appName
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: _interstitialPlayer
       value: 
       objectReference: {fileID: 718596061}
+    - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
+      propertyPath: _advertisingProvider
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: _advertisementController
       value: 
       objectReference: {fileID: 718596062}
     - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: _advertisingConfigs.PublisherID
-      value: 65057899-a16a-4877-989b-38c432a7fa15
+      value: not used
       objectReference: {fileID: 0}
     - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: _advertisingConfigs.BannerUnitID
-      value: 27668678-d138-4af4-84f4-891252086125
+      value: demo-banner-yandex
       objectReference: {fileID: 0}
     - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: _advertisingConfigs.RewardedUnitID
-      value: eaac7a7f-b0b0-46d2-ac95-bd58578e9e29
+      value: demo-rewarded-yandex
       objectReference: {fileID: 0}
     - target: {fileID: 2252599704732169061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: _advertisingConfigs.InterstitialUnitID
-      value: b8359c60-9bde-47c9-85ff-3c7afd2bd982
+      value: demo-interstitial-yandex
       objectReference: {fileID: 0}
     - target: {fileID: 5592818978914754061, guid: 5fd51404b12a52641b889cb24aa80c47, type: 3}
       propertyPath: m_LocalPosition.x
