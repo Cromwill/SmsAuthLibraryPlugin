@@ -21,15 +21,16 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
         {
             public const string YandexDefine = "YANDEX_AD";
             public const string YandexSDK = "YandexSDK";
-            public const string YandexSDKEditor = "YandexSDK.Editor";
+            public const string YandexSDKEditor = "YandexSDK.EditorScripts";
             public const string FilePathYandexSDK = "Assets/YandexMobileAds/YandexSDK.asmdef";
-            public const string FilePathYandexSDKEditor = "Assets/YandexMobileAds/Editor/YandexSDK.Editor.asmdef";
+            public const string FilePathYandexSDKEditor = "Assets/YandexMobileAds/Editor/YandexSDK.EditorScripts.asmdef";
         }
 
         public class ExcludePlatforms
         {
             public const string Android = "Android";
             public const string iOS = "iOS";
+            public const string Editor = "Editor";
         }
     }
 }

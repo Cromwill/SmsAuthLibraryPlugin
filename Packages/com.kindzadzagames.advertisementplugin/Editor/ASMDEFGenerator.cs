@@ -29,11 +29,17 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
             if (GUILayout.Button("Edit YABBI ASMDEFs"))
                 EditYabbiASMDEFs();
 
-            if (GUILayout.Button("Check advertisement plugin ASMDEF"))
-                CheckASMDEF(AdvertisementSDK.YabbiSDK);
+            if (GUILayout.Button("Try add YABBI ASMDEFs to ADS plugin"))
+                TryAddASMDEFs(AdvertisementSDK.YabbiSDK);
+
+            if (GUILayout.Button("Try remove YABBI ASMDEFs from ADS plugin"))
+                TryRemoveASMDEFs(AdvertisementSDK.YabbiSDK);
 
             if (GUILayout.Button("Add YABBI define"))
-                TryAddAdDefine(AdvertisementSDK.YabbiSDK);
+                TryAddAdDefine(ASMDEFSettings.YabbiAds.YabbiDefine, ASMDEFSettings.YandexAds.YandexDefine);
+
+            if (GUILayout.Button("Remove YABBI define"))
+                TryRemoveAdDefine(ASMDEFSettings.YabbiAds.YabbiDefine);
 
             GUILayout.Space(50);
 
@@ -45,11 +51,17 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
             if (GUILayout.Button("Edit YANDEX ASMDEFs"))
                 EditYandexASMDEFs();
 
-            if (GUILayout.Button("Check advertisement plugin ASMDEF"))
-                CheckASMDEF(AdvertisementSDK.YandexSDK);
+            if (GUILayout.Button("Try add YANDEX ASMDEF to ADS plugin"))
+                TryAddASMDEFs(AdvertisementSDK.YandexSDK);
+
+            if (GUILayout.Button("Try remove YANDEX ASMDEF from ADS plugin"))
+                TryRemoveASMDEFs(AdvertisementSDK.YandexSDK);
 
             if (GUILayout.Button("Add YANDEX define"))
-                TryAddAdDefine(AdvertisementSDK.YandexSDK);
+                TryAddAdDefine(ASMDEFSettings.YandexAds.YandexDefine, ASMDEFSettings.YabbiAds.YabbiDefine);
+
+            if (GUILayout.Button("Remove YANDEX define"))
+                TryRemoveAdDefine(ASMDEFSettings.YandexAds.YandexDefine);
         }
 
         private void CreateYabbiASMDEFs()
@@ -91,24 +103,25 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 
         private void EditYabbiASMDEFs()
         {
-            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathSspnetSDK, new string[] { GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor) }, new string[] { });
-            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor, new string[] { }, new string[] { ASMDEFSettings.ExcludePlatforms.Android, ASMDEFSettings.ExcludePlatforms.iOS });
-            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathYabbiSDK, new string[] { GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDK), GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor), GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathYabbiSDKEditor) }, new string[] { });
-            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathYabbiSDKEditor, new string[] { GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor) }, new string[] { ASMDEFSettings.ExcludePlatforms.Android, ASMDEFSettings.ExcludePlatforms.iOS });
+            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathSspnetSDK, new string[] { GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor) }, new string[] { }, new string[] { });
+            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor, new string[] { }, new string[] { ASMDEFSettings.ExcludePlatforms.Android, ASMDEFSettings.ExcludePlatforms.iOS }, new string[] { });
+            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathYabbiSDK, new string[] { GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDK), GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor), GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathYabbiSDKEditor) }, new string[] { }, new string[] { });
+            EditASMDEF(ASMDEFSettings.YabbiAds.FilePathYabbiSDKEditor, new string[] { GetAsmdefGuid(ASMDEFSettings.YabbiAds.FilePathSspnetSDKEditor) }, new string[] { ASMDEFSettings.ExcludePlatforms.Android, ASMDEFSettings.ExcludePlatforms.iOS }, new string[] { });
         }
 
         private void EditYandexASMDEFs()
         {
-            EditASMDEF(ASMDEFSettings.YandexAds.FilePathYandexSDKEditor, new string[] { }, new string[] { ASMDEFSettings.ExcludePlatforms.Android, ASMDEFSettings.ExcludePlatforms.iOS });
-            EditASMDEF(ASMDEFSettings.YandexAds.FilePathYandexSDK, new string[] { GetAsmdefGuid(ASMDEFSettings.YandexAds.FilePathYandexSDKEditor) }, new string[] { });
+            EditASMDEF(ASMDEFSettings.YandexAds.FilePathYandexSDK, new string[] { }, new string[] { }, new string[] { });
+            EditASMDEF(ASMDEFSettings.YandexAds.FilePathYandexSDKEditor, new string[] { GetAsmdefGuid(ASMDEFSettings.YandexAds.FilePathYandexSDK) }, new string[] { }, new string[] { ASMDEFSettings.ExcludePlatforms.Editor });
         }
 
-        private void EditASMDEF(string filePath, string[] references, string[] excludePlatforms)
+        private void EditASMDEF(string filePath, string[] references, string[] excludePlatforms, string[] includePlatforms)
         {
             string jsonContent = File.ReadAllText(filePath);
             AssemblyDefinition asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
 
             asmdefObject.references = references;
+            asmdefObject.includePlatforms = includePlatforms;
             asmdefObject.excludePlatforms = excludePlatforms;
 
             string updatedJson = JsonUtility.ToJson(asmdefObject, true);
@@ -121,28 +134,12 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 
         private string GetAsmdefGuid(string filePath) => ASMDEFSettings.GUID + AssetDatabase.AssetPathToGUID(filePath);
 
-        private void CheckASMDEF(AdvertisementSDK advertisementSDK)
+        private void TryAddASMDEFs(AdvertisementSDK advertisementSDK)
         {
             bool needSave = false;
             AssemblyDefinition asmdefObject = null;
-            string packagesPath = string.Empty;
-            string libraryPath = Path.Combine(Application.dataPath, "..", $"Library{Path.DirectorySeparatorChar}PackageCache");
-
-            string[] directories = Directory.GetDirectories(libraryPath, "com.kindzadzagames.advertisementplugin*@*", SearchOption.TopDirectoryOnly);
-
-            if (directories.Length == 0)
-            {
-                Debug.Log($"Directory not found in PackageCache, try find in Packages.");
-
-                packagesPath = Application.dataPath + $"{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}Packages{Path.DirectorySeparatorChar}com.kindzadzagames.advertisementplugin{Path.DirectorySeparatorChar}Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef";
-            }
-            else
-            {
-                Debug.Log($"Directory found in PackageCache.");
-
-                packagesPath = Path.Combine(directories[0], $"Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef");
-            }
-
+            string packagesPath = GetPackagePath();
+            
             if (File.Exists(packagesPath))
             {
                 string jsonContent = File.ReadAllText(packagesPath);
@@ -157,8 +154,41 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
                 {
                     TryAddASMDEF(ref asmdefObject.references, ASMDEFSettings.YandexAds.FilePathYandexSDK, ref needSave);
                 }
+            }
+            else
+            {
+                Debug.Log($"The file was not found on the way - {packagesPath}.");
+            }
 
-                Debug.Log($"File path: {packagesPath}.");
+            if (needSave)
+            {
+                string updatedJson = JsonUtility.ToJson(asmdefObject, true);
+
+                File.WriteAllText(packagesPath, updatedJson);
+                AssetDatabase.Refresh();
+            }
+        }
+
+        private void TryRemoveASMDEFs(AdvertisementSDK advertisementSDK)
+        {
+            bool needSave = false;
+            AssemblyDefinition asmdefObject = null;
+            string packagesPath = GetPackagePath();
+
+            if (File.Exists(packagesPath))
+            {
+                string jsonContent = File.ReadAllText(packagesPath);
+                asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
+
+                if (advertisementSDK == AdvertisementSDK.YabbiSDK)
+                {
+                    TryRemoveASMDEF(ref asmdefObject.references, ASMDEFSettings.YabbiAds.FilePathSspnetSDK, ref needSave);
+                    TryRemoveASMDEF(ref asmdefObject.references, ASMDEFSettings.YabbiAds.FilePathYabbiSDK, ref needSave);
+                }
+                else
+                {
+                    TryRemoveASMDEF(ref asmdefObject.references, ASMDEFSettings.YandexAds.FilePathYandexSDK, ref needSave);
+                }
             }
             else
             {
@@ -189,6 +219,21 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
             }
         }
 
+        private void TryRemoveASMDEF(ref string[] references, string path, ref bool needSave)
+        {
+            if (CheckContainsASMDEF(references, path))
+            {
+                RemoveASMDEF(ref references, GetAsmdefGuid(path));
+                needSave = true;
+
+                Debug.Log($"ASMDEF removed {GetAsmdefGuid(path)} in references.");
+            }
+            else
+            {
+                Debug.Log($"In ASMDEF is no such element in the object: {GetAsmdefGuid(path)}.");
+            }
+        }
+
         private bool CheckContainsASMDEF(string[] references, string path) => references.Contains(GetAsmdefGuid(path));
 
         private void AddASMDEF(ref string[] references, string GUID)
@@ -202,38 +247,73 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
             references = newArray;
         }
 
-        private void TryAddAdDefine(AdvertisementSDK advertisementSDK)
+        private void RemoveASMDEF(ref string[] references, string GUID)
         {
-            string currentSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget));
+            string[] newArray = references.Where(e => e != GUID).ToArray();
+            references = newArray;
+        }
 
-            if (advertisementSDK == AdvertisementSDK.YabbiSDK)
+        private string GetPackagePath()
+        {
+            string packagesPath = string.Empty;
+            string libraryPath = Path.Combine(Application.dataPath, "..", $"Library{Path.DirectorySeparatorChar}PackageCache");
+
+            string[] directories = Directory.GetDirectories(libraryPath, "com.kindzadzagames.advertisementplugin*@*", SearchOption.TopDirectoryOnly);
+
+            if (directories.Length == 0)
             {
-                if (currentSymbols.Contains(ASMDEFSettings.YabbiAds.YabbiDefine) == false)
-                {
-                    string newSymbols = currentSymbols + ";" + ASMDEFSettings.YabbiAds.YabbiDefine;
+                Debug.Log($"Directory not found in PackageCache, try find in Packages.");
 
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget), newSymbols);
-                    Debug.Log($"Added define symbol: {ASMDEFSettings.YabbiAds.YabbiDefine}.");
-                }
-                else
-                {
-                    Debug.Log($"Define symbol already exists: {ASMDEFSettings.YabbiAds.YabbiDefine}.");
-                }
+                packagesPath = Application.dataPath + $"{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}Packages{Path.DirectorySeparatorChar}com.kindzadzagames.advertisementplugin{Path.DirectorySeparatorChar}Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef";
             }
             else
             {
-                if (currentSymbols.Contains(ASMDEFSettings.YandexAds.YandexDefine) == false)
-                {
-                    string newSymbols = currentSymbols + ";" + ASMDEFSettings.YandexAds.YandexDefine;
+                Debug.Log($"Directory found in PackageCache.");
 
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget), newSymbols);
-                    Debug.Log($"Added define symbol: {ASMDEFSettings.YandexAds.YandexDefine}.");
-                }
-                else
-                {
-                    Debug.Log($"Define symbol already exists: {ASMDEFSettings.YandexAds.YandexDefine}.");
-                }
+                packagesPath = Path.Combine(directories[0], $"Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef");
             }
+
+            return packagesPath;
+        }
+
+        private void TryAddAdDefine(string sdkLabel, string deletingSdk)
+        {
+            TryRemoveAdDefine(deletingSdk);
+
+            string currentSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget));
+
+            if (currentSymbols.Contains(sdkLabel) == false)
+            {
+                string newSymbols = currentSymbols + ";" + sdkLabel;
+
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget), newSymbols);
+            }
+            else
+            {
+                Debug.Log($"Define symbol already exists: {sdkLabel}.");
+            }
+        }
+
+        private void TryRemoveAdDefine(string sdkLabel)
+        {
+            string currentSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget));
+            string newSymbols;
+
+            if (currentSymbols.StartsWith($"{sdkLabel}"))
+            {
+                newSymbols = currentSymbols.Substring($"{sdkLabel};".Length);
+            }
+            else if (currentSymbols.Contains(sdkLabel))
+            {
+                newSymbols = currentSymbols.Replace($";{sdkLabel}", "");
+            }
+            else
+            {
+                Debug.Log($"Define not contains: {sdkLabel}.");
+                return;
+            }
+
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget), newSymbols);
         }
     }
 
