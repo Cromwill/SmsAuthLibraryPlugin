@@ -621,7 +621,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         };
         #endregion
 
-        #region Yandex AD IDs
+#region Yandex AD IDs
         private static Dictionary<AppName, AdvertisingConfigs> _testYandexAdvertisementID = new Dictionary<AppName, AdvertisingConfigs>()
         {
             {
