@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
-using KinDzaDzaGames.AdvertisementPlugin.EditorScripts;
 using KinDzaDzaGames.AdvertisementPlugin.ClickableTexts;
+#if UNITY_EDITOR
+using KinDzaDzaGames.AdvertisementPlugin.EditorScripts;
+#endif
 
 #if YABBI_AD
 using YabbiSDK.ConsentManagerSDK.Api;
@@ -32,18 +34,45 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #endif
         [field: SerializeField] public bool NeedShowConsentScreen { get; private set; } = false;
 
-        [SerializeField, ReadOnly] private CanvasGroup _canvasGroup;
-        [SerializeField, ReadOnly] private Image _appImage;
-        [SerializeField
-#if YANDEX_AD == false
-            , ReadOnly
+#if UNITY_EDITOR
+            [ReadOnly]
 #endif
-            ] private Sprite _appIcon;
-        [SerializeField, ReadOnly] private TMP_Text _appLabelText;
-        [SerializeField, ReadOnly] private ClickableText _appPrivacyPolicy;
-        [SerializeField, ReadOnly] private ClickableText _yandexPrivacyPolicy;
-        [SerializeField, ReadOnly] private List<Button> _disagreeButtons;
-        [SerializeField, ReadOnly] private Button _agreeButton;
+        [SerializeField] private CanvasGroup _canvasGroup;
+
+#if UNITY_EDITOR
+        [ReadOnly]
+#endif
+        [SerializeField] private Image _appImage;
+
+#if UNITY_EDITOR && YANDEX_AD == false
+        [ReadOnly]
+#endif
+        [SerializeField] private Sprite _appIcon;
+
+#if UNITY_EDITOR
+        [ReadOnly]
+#endif
+        [SerializeField] private TMP_Text _appLabelText;
+
+#if UNITY_EDITOR
+        [ReadOnly]
+#endif
+        [SerializeField] private ClickableText _appPrivacyPolicy;
+
+#if UNITY_EDITOR
+        [ReadOnly]
+#endif
+        [SerializeField] private ClickableText _yandexPrivacyPolicy;
+
+#if UNITY_EDITOR
+        [ReadOnly]
+#endif
+        [SerializeField] private List<Button> _disagreeButtons;
+
+#if UNITY_EDITOR
+        [ReadOnly]
+#endif
+        [SerializeField] private Button _agreeButton;
 
         public bool AgreementClosed { get; private set; } = false;
 
