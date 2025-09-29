@@ -216,7 +216,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             while (CanLoadAd() == false)
                 yield return new WaitForSeconds(RetryLoadAdDelay);
-
+#if YABBI_AD
             LoadAd();
 
             while (AdIsLoaded() == false)
@@ -231,6 +231,17 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             ShowAd();
             _displayBannerCoroutine = null;
+#elif YANDEX_AD
+            while (_adBlockers.Any(b => b.BannerDisplayBlocked == true))
+                yield return new WaitForSeconds(CheckBlockedDelay);
+
+            _adBlockers.Clear();
+            _bannerSuspended = false;
+            _bannerHidden = false;
+
+            LoadAd();
+            _displayBannerCoroutine = null;
+#endif
         }
 
         private

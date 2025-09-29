@@ -45,14 +45,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public bool Initialized { get; private set; } = false;
         public bool Breaked { get; private set; } = false;
         public bool BannerShown => _bannerHandler.BannerShown;
-
-#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
-            public bool WaitConcernPolicy => _userConsentScreen.NeedShowConsentScreen;
-#elif YABBI_AD
-            public bool WaitConcernPolicy => _userConsentScreen.NeedShowConsentScreen;
-#elif YANDEX_AD
-        public bool WaitConcernPolicy => false;
-#endif
+        public bool WaitConcernPolicy => _userConsentScreen.NeedShowConsentScreen;
         public bool PolicyAccepted => _userConsentScreen.AgreementAccepted;
         public bool AgreementClosed => _userConsentScreen.AgreementClosed;
 
@@ -73,14 +66,14 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             DontDestroyOnLoad(this);
 
 #if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
+            _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL);
             OnInitializeSuccess();
 #elif YABBI_AD
             _userConsentScreen.Construct(_consentManager);
             StartCoroutine(StartYabbiService());
 #elif YANDEX_AD
             Debug.Log("Advertisement Plugin: start YANDEX service.");
-            MobileAds.SetAgeRestrictedUser(true);
-            MobileAds.SetUserConsent(true);
+            _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL);
             OnInitializeSuccess();
 #endif
         }
@@ -93,6 +86,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _rewardHandler.Dispose();
                 _bannerHandler.Dispose();
                 _interstitialPlayer.Dispose();
+                _userConsentScreen.Dispose();
 
                 _bannerHandler.BannerDisplayed -= OnBannerDisplayed;
                 _bannerHandler.BannerHided -= OnBannerHided;
