@@ -240,6 +240,14 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _bannerHidden = false;
 
             LoadAd();
+
+#if UNITY_IOS
+            while (AdIsLoaded() == false)
+                yield return new WaitForSeconds(RetryLoadAdDelay);
+
+            ShowAd();
+#endif
+
             _displayBannerCoroutine = null;
 #endif
         }

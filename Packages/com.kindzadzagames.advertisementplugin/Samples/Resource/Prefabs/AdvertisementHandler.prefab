@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4181535458507401734}
   - component: {fileID: 4346608595671523411}
   - component: {fileID: 1029152034278972167}
-  - component: {fileID: 2406745405549084150}
+  - component: {fileID: 5602085373985624148}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -87,11 +87,11 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2406745405549084150}
+  m_TargetGraphic: {fileID: 5602085373985624148}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2406745405549084150
+--- !u!114 &5602085373985624148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 319643127949411231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ddf190fa9f9a1e4a82ba98e7b496d5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c4d4321b2b6b3e4491e7edf4dba8cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1091,7 +1091,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c2451a8ad4432244d929cbb00ca7c69e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20c4ec7e4cf972f44bd4e14993b2e856, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
