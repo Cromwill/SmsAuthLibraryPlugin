@@ -784,27 +784,27 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             {AppName.LeoAndTig, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416046-1",
+                    InterstitialUnitID = "R-M-17416046-2",
+                    RewardedUnitID = "R-M-17416046-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.MishkiAdventure, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416162-1",
+                    InterstitialUnitID = "R-M-17416162-2",
+                    RewardedUnitID = "R-M-17416162-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.MishkiInSpace, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416125-1",
+                    InterstitialUnitID = "R-M-17416125-2",
+                    RewardedUnitID = "R-M-17416125-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
@@ -820,99 +820,99 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             {AppName.FairytalePatrolCafe, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416204-1",
+                    InterstitialUnitID = "R-M-17416204-2",
+                    RewardedUnitID = "R-M-17416204-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.LeoAndTigTaiga, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416069-1",
+                    InterstitialUnitID = "R-M-17416069-2",
+                    RewardedUnitID = "R-M-17416069-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.MishkiPlanetOfCreativity, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416144-1",
+                    InterstitialUnitID = "R-M-17416144-2",
+                    RewardedUnitID = "R-M-17416144-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.MishkiBigConcert, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416096-1",
+                    InterstitialUnitID = "R-M-17416096-2",
+                    RewardedUnitID = "R-M-17416096-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FairytalePatrol, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416188-1",
+                    InterstitialUnitID = "R-M-17416188-2",
+                    RewardedUnitID = "R-M-17416188-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FairytalePatrolAdventure, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416234-1",
+                    InterstitialUnitID = "R-M-17416234-2",
+                    RewardedUnitID = "R-M-17416234-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.MusicalPatrol, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416183-1",
+                    InterstitialUnitID = "R-M-17416183-2",
+                    RewardedUnitID = "R-M-17416183-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.Multiknowledge, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416146-1",
+                    InterstitialUnitID = "R-M-17416146-2",
+                    RewardedUnitID = "R-M-17416146-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.Papers, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416025-1",
+                    InterstitialUnitID = "R-M-17416025-2",
+                    RewardedUnitID = "R-M-17416025-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.HeroesOfEnvell, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416042-1",
+                    InterstitialUnitID = "R-M-17416042-2",
+                    RewardedUnitID = "R-M-17416042-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FourACube, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17416268-1",
+                    InterstitialUnitID = "R-M-17416268-2",
+                    RewardedUnitID = "R-M-17416268-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             }

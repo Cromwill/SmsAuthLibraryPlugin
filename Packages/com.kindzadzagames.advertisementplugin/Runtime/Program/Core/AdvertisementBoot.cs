@@ -30,9 +30,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         [SerializeField] private AppName _appName;
         [SerializeField] private Store _storeName;
         [SerializeField] private AdvertisingProvider _advertisingProvider;
+        [SerializeField] private bool _useDifferentAdvertisementID = false;
         [SerializeField
 #if UNITY_EDITOR
-            , ReadOnly
+            , ManagedReadOnly("_useDifferentAdvertisementID")
 #endif
             ] private AdvertisingConfigs _advertisingConfigs;
         [Header("Remote reward data")]
@@ -74,7 +75,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             if (Application.internetReachability == NetworkReachability.NotReachable)
                 yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
 
-            _advertisingConfigs = AdvertisementID.GetConfig(_appName, _storeName, _advertisingProvider);
+            if (_useDifferentAdvertisementID == false)
+                _advertisingConfigs = AdvertisementID.GetConfig(_appName, _storeName, _advertisingProvider);
+
             _advertisingConfigs.AppPrivacyPolicyURL = privacy;
             _api = new(_serverPath, appId);
             _appData = new() { app_id = appId, store_id = storeName, platform = platform };
@@ -125,7 +128,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            _advertisingConfigs = AdvertisementID.GetConfig(_appName, _storeName, _advertisingProvider);
+            if(_useDifferentAdvertisementID == false)
+                _advertisingConfigs = AdvertisementID.GetConfig(_appName, _storeName, _advertisingProvider);
         }
 #endif
     }
