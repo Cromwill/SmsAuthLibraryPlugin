@@ -1174,27 +1174,27 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             {AppName.Papers, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "R-M-17447706-1",
-                    InterstitialUnitID = "R-M-17447706-2",
-                    RewardedUnitID = "R-M-17447706-3",
+                    BannerUnitID = "R-M-17480693-1",
+                    InterstitialUnitID = "R-M-17480693-2",
+                    RewardedUnitID = "R-M-17480693-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.HeroesOfEnvell, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "R-M-17447708-1",
-                    InterstitialUnitID = "R-M-17447708-2",
-                    RewardedUnitID = "R-M-17447708-3",
+                    BannerUnitID = "R-M-17480738-1",
+                    InterstitialUnitID = "R-M-17480738-2",
+                    RewardedUnitID = "R-M-17480738-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FourACube, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "R-M-17447809-1",
-                    InterstitialUnitID = "R-M-17447809-2",
-                    RewardedUnitID = "R-M-17447809-3",
+                    BannerUnitID = "R-M-17480767-1",
+                    InterstitialUnitID = "R-M-17480767-2",
+                    RewardedUnitID = "R-M-17480767-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             }
