@@ -924,7 +924,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         {
             {AppName.LeoAndTig, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446186-1",
                     InterstitialUnitID = "R-M-17446186-2",
                     RewardedUnitID = "R-M-17446186-3",
@@ -933,7 +933,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiAdventure, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446200-1",
                     InterstitialUnitID = "R-M-17446200-2",
                     RewardedUnitID = "R-M-17446200-3",
@@ -942,7 +942,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiInSpace, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446269-1",
                     InterstitialUnitID = "R-M-17446269-2",
                     RewardedUnitID = "R-M-17446269-3",
@@ -951,7 +951,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiTrueFriend, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446356-1",
                     InterstitialUnitID = "R-M-17446356-2",
                     RewardedUnitID = "R-M-17446356-3",
@@ -960,7 +960,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FairytalePatrolCafe, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446429-1",
                     InterstitialUnitID = "R-M-17446429-2",
                     RewardedUnitID = "R-M-17446429-3",
@@ -969,7 +969,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.LeoAndTigTaiga, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446461-1",
                     InterstitialUnitID = "R-M-17446461-2",
                     RewardedUnitID = "R-M-17446461-3",
@@ -978,7 +978,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiPlanetOfCreativity, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446482-1",
                     InterstitialUnitID = "R-M-17446482-2",
                     RewardedUnitID = "R-M-17446482-3",
@@ -987,7 +987,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiBigConcert, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446497-1",
                     InterstitialUnitID = "R-M-17446497-2",
                     RewardedUnitID = "R-M-17446497-3",
@@ -996,7 +996,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FairytalePatrol, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446546-1",
                     InterstitialUnitID = "R-M-17446546-2",
                     RewardedUnitID = "R-M-17446546-3",
@@ -1005,7 +1005,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FairytalePatrolAdventure, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446619-1",
                     InterstitialUnitID = "R-M-17446619-2",
                     RewardedUnitID = "R-M-17446619-3",
@@ -1014,7 +1014,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MusicalPatrol, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446647-1",
                     InterstitialUnitID = "R-M-17446647-2",
                     RewardedUnitID = "R-M-17446647-3",
@@ -1023,7 +1023,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.Multiknowledge, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446682-1",
                     InterstitialUnitID = "R-M-17446682-2",
                     RewardedUnitID = "R-M-17446682-3",
@@ -1032,7 +1032,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.Papers, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446691-1",
                     InterstitialUnitID = "R-M-17446691-2",
                     RewardedUnitID = "R-M-17446691-3",
@@ -1041,7 +1041,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.HeroesOfEnvell, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446704-1",
                     InterstitialUnitID = "R-M-17446704-2",
                     RewardedUnitID = "R-M-17446704-3",
@@ -1050,7 +1050,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FourACube, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17446721-1",
                     InterstitialUnitID = "R-M-17446721-2",
                     RewardedUnitID = "R-M-17446721-3",
@@ -1065,7 +1065,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         {
             {AppName.LeoAndTig, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447106-1",
                     InterstitialUnitID = "R-M-17447106-2",
                     RewardedUnitID = "R-M-17447106-3",
@@ -1074,7 +1074,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiAdventure, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447166-1",
                     InterstitialUnitID = "R-M-17447166-2",
                     RewardedUnitID = "R-M-17447166-3",
@@ -1083,7 +1083,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiInSpace, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447207-1",
                     InterstitialUnitID = "R-M-17447207-2",
                     RewardedUnitID = "R-M-17447207-3",
@@ -1092,7 +1092,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiTrueFriend, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447244-1",
                     InterstitialUnitID = "R-M-17447244-2",
                     RewardedUnitID = "R-M-17447244-3",
@@ -1101,7 +1101,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FairytalePatrolCafe, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447441-1",
                     InterstitialUnitID = "R-M-17447441-2",
                     RewardedUnitID = "R-M-17447441-3",
@@ -1110,7 +1110,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.LeoAndTigTaiga, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447446-1",
                     InterstitialUnitID = "R-M-17447446-2",
                     RewardedUnitID = "R-M-17447446-3",
@@ -1119,7 +1119,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiPlanetOfCreativity, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447464-1",
                     InterstitialUnitID = "R-M-17447464-2",
                     RewardedUnitID = "R-M-17447464-3",
@@ -1128,7 +1128,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MishkiBigConcert, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447506-1",
                     InterstitialUnitID = "R-M-17447506-2",
                     RewardedUnitID = "R-M-17447506-3",
@@ -1137,7 +1137,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FairytalePatrol, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447534-1",
                     InterstitialUnitID = "R-M-17447534-2",
                     RewardedUnitID = "R-M-17447534-3",
@@ -1146,7 +1146,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FairytalePatrolAdventure, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447577-1",
                     InterstitialUnitID = "R-M-17447577-2",
                     RewardedUnitID = "R-M-17447577-3",
@@ -1155,7 +1155,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.MusicalPatrol, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447617-1",
                     InterstitialUnitID = "R-M-17447617-2",
                     RewardedUnitID = "R-M-17447617-3",
@@ -1164,7 +1164,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.Multiknowledge, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447665-1",
                     InterstitialUnitID = "R-M-17447665-2",
                     RewardedUnitID = "R-M-17447665-3",
@@ -1173,7 +1173,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.Papers, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447706-1",
                     InterstitialUnitID = "R-M-17447706-2",
                     RewardedUnitID = "R-M-17447706-3",
@@ -1182,7 +1182,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.HeroesOfEnvell, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447708-1",
                     InterstitialUnitID = "R-M-17447708-2",
                     RewardedUnitID = "R-M-17447708-3",
@@ -1191,7 +1191,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.FourACube, new AdvertisingConfigs()
                 {
-                    PublisherID = _publisherID,
+                    PublisherID = _yandexPublisherID,
                     BannerUnitID = "R-M-17447809-1",
                     InterstitialUnitID = "R-M-17447809-2",
                     RewardedUnitID = "R-M-17447809-3",
