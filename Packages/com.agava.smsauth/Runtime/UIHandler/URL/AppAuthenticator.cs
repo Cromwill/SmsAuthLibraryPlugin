@@ -17,5 +17,8 @@ namespace Agava.Wink
         MishkiPlanetOfCreativity,
         MishkiInSpace,
         FairytalePatrol,
+        ThreeCatsAdventure,
+        ThreeCatsRacing,
+        ThreeCatsPuzzles,
     }
 }

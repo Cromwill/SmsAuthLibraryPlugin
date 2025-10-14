@@ -19,5 +19,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         FourACube,
         HeroesOfEnvell,
         TestYandexAD,
+        ThreeCatsAdventure,
+        ThreeCatsRacing,
+        ThreeCatsPuzzles,
     }
 }

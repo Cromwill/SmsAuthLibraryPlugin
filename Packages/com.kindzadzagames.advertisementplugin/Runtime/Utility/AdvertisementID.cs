@@ -194,6 +194,33 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     RewardedUnitID = "5ed9b404-4da2-11f0-af63-f13299712122",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
             }
         };
         #endregion
@@ -333,6 +360,33 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     BannerUnitID = "29e17aec-4db2-11f0-87fe-0d80409d1841",
                     InterstitialUnitID = "63c92304-4db2-11f0-9ebc-3de257842752",
                     RewardedUnitID = "c800912c-4db2-11f0-9181-e5687a0a496f",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             }
@@ -476,6 +530,33 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     RewardedUnitID = "e4b80280-4db4-11f0-97be-db3800574528",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
             }
         };
         #endregion
@@ -617,6 +698,33 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     RewardedUnitID = "3f56a7e2-4db4-11f0-a8ba-8d2241e3dd1d",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
             }
         };
         #endregion
@@ -706,72 +814,99 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             {AppName.MishkiBigConcert, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485277-1",
+                    InterstitialUnitID = "R-M-17485277-2",
+                    RewardedUnitID = "R-M-17485277-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FairytalePatrol, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485292-1",
+                    InterstitialUnitID = "R-M-17485292-2",
+                    RewardedUnitID = "R-M-17485292-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FairytalePatrolAdventure, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485295-1",
+                    InterstitialUnitID = "R-M-17485295-2",
+                    RewardedUnitID = "R-M-17485295-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.MusicalPatrol, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485346-1",
+                    InterstitialUnitID = "R-M-17485346-2",
+                    RewardedUnitID = "R-M-17485346-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.Multiknowledge, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485374-1",
+                    InterstitialUnitID = "R-M-17485374-2",
+                    RewardedUnitID = "R-M-17485374-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.Papers, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485406-1",
+                    InterstitialUnitID = "R-M-17485406-2",
+                    RewardedUnitID = "R-M-17485406-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.HeroesOfEnvell, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485410-1",
+                    InterstitialUnitID = "R-M-17485410-2",
+                    RewardedUnitID = "R-M-17485410-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
             {AppName.FourACube, new AdvertisingConfigs()
                 {
                     PublisherID = _yandexPublisherID,
-                    BannerUnitID = "not inited in table",
-                    InterstitialUnitID = "not inited in table",
-                    RewardedUnitID = "not inited in table",
+                    BannerUnitID = "R-M-17485454-1",
+                    InterstitialUnitID = "R-M-17485454-2",
+                    RewardedUnitID = "R-M-17485454-3",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             }
@@ -915,6 +1050,33 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     RewardedUnitID = "R-M-17416268-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
             }
         };
         #endregion
@@ -1054,6 +1216,33 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     BannerUnitID = "R-M-17446721-1",
                     InterstitialUnitID = "R-M-17446721-2",
                     RewardedUnitID = "R-M-17446721-3",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             }
@@ -1197,9 +1386,35 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
                     RewardedUnitID = "R-M-17480767-3",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
+            },
+            {AppName.ThreeCatsAdventure, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsRacing, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
+            },
+            {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
+                {
+                    PublisherID = "It is required to use manual id input",
+                    BannerUnitID = "It is required to use manual id input",
+                    InterstitialUnitID = "It is required to use manual id input",
+                    RewardedUnitID = "It is required to use manual id input",
+                    AppPrivacyPolicyURL = _appPrivacyPolicyURL
+                }
             }
         };
         #endregion
-
     }
 }
