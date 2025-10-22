@@ -23,7 +23,10 @@ namespace Agava.Wink
         OrientationСhange,
         SubscriptionCheck,
         HelloWOAccess,
-        WinkInfo,
+        WinkInfoVertical,
         RewardContinue,
+        TurnOffAdVertical,
+        TurnOffAdHorizontal,
+        WinkInfoHorizontal,
     }
 }

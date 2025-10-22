@@ -1174,6 +1174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3844185145133753079}
   - component: {fileID: 3072545347909623219}
+  - component: {fileID: 6959030537817898138}
   - component: {fileID: 6698848552266930796}
   m_Layer: 5
   m_Name: TurnOffADInfo_VericalPanel
@@ -1214,6 +1215,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270335398024196850}
   m_CullTransparentMesh: 1
+--- !u!114 &6959030537817898138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270335398024196850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1462e0e2d0b494c8084f1a575d3363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 18
+  _canvasGroup: {fileID: 6698848552266930796}
+  _freeTrialButtons:
+  - {fileID: 5993676097829145713}
+  - {fileID: 8763777240278118524}
+  - {fileID: 4063477620960625533}
+  _closeButton: {fileID: 3204603542502515191}
+  _xmlConfigTexts:
+  - {fileID: 4613458986124122266}
+  - {fileID: 6955298875361077661}
+  - {fileID: 2133630514971316088}
+  - {fileID: 4129047627348814001}
+  - {fileID: 8911378330191513286}
+  - {fileID: 4494899538859686081}
+  - {fileID: 4256841448618032469}
+  - {fileID: 8887503998048962546}
+  - {fileID: 3183819370130574001}
+  - {fileID: 5640079368195162857}
+  - {fileID: 4624459257658053441}
+  - {fileID: 6694738779001023621}
+  - {fileID: 4686833018564761713}
+  - {fileID: 4791221399518898221}
+  - {fileID: 3525225603448116514}
+  - {fileID: 8702095548981161146}
+  - {fileID: 7326036308394748710}
+  - {fileID: 5475242186910454840}
+  - {fileID: 7056129355940342421}
+  - {fileID: 2550056197157246880}
+  - {fileID: 8332600843303344334}
+  - {fileID: 4863932688838853024}
+  - {fileID: 1949024231329466062}
+  - {fileID: 4914723339295672391}
+  - {fileID: 2598115454441613234}
+  - {fileID: 7411044646066492428}
+  - {fileID: 7336203847813974954}
+  - {fileID: 3156655525408728046}
+  - {fileID: 291899384298269174}
+  - {fileID: 1960184772011660253}
+  _xmlConfigSelectableText:
+  - {fileID: 6955298875361077661}
+  - {fileID: 4256841448618032469}
+  - {fileID: 4256841448618032469}
 --- !u!225 &6698848552266930796
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1454,7 +1509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2699434839120668255}
-  _xMLKey: 3
+  _xMLKey: 21
   _xMLValue: 0
   _fallbackText: "\u0418\u0433\u0440\u0430\u0439\u0442\u0435 \u0441 \u0433\u0435\u0440\u043E\u044F\u043C\u0438
     \u043B\u044E\u0431\u0438\u043C\u044B\u0445 \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432"
@@ -1624,7 +1679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4403568471619093642}
-  _xMLKey: 9
+  _xMLKey: 27
   _xMLValue: 2
   _fallbackText: "3-7 \u043B\u0435\u0442"
   _isLink: 0
@@ -2515,7 +2570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 3229349609154532798}
-  _xMLKey: 9
+  _xMLKey: 27
   _xMLValue: 1
   _fallbackText: "\u0423\u0447\u0438\u0442\u0435 \u0431\u0443\u043A\u0432\u044B \u0438
     \u0446\u0438\u0444\u0440\u044B, \u0447\u0438\u0442\u0430\u0439\u0442\u0435 {end}\u043F\u043E
@@ -3093,7 +3148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8450923027853789929}
-  _xMLKey: 8
+  _xMLKey: 26
   _xMLValue: 2
   _fallbackText: "4-9 \u043B\u0435\u0442"
   _isLink: 0
@@ -3930,10 +3985,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5919909843672525344}
-  _xMLKey: 14
+  _xMLKey: 36
   _xMLValue: 0
-  _fallbackText: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C
-    \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \u043D\u0430 30 \u0434\u043D\u0435\u0439"
+  _fallbackText: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
   _isLink: 0
   _linkName: 
 --- !u!1 &763522364806275718
@@ -4752,6 +4806,8 @@ MonoBehaviour:
     _winkProfileWindow: {fileID: 5402912914101674919}
     _deleteAccountWindow: {fileID: 7231918615136910236}
     _winkInfoWindow: {fileID: 5454797565373785630}
+    _winkInfoVericalWindowPresenter: {fileID: 6959030537817898138}
+    _winkInfoHorizontalWindowPresenter: {fileID: 8153210194642102537}
     _subscriptionCheckWindow: {fileID: 80946910351918556}
     _helloWOAccessWindow: {fileID: 7073644282065015737}
     "_orientation\u0421hangeWindow": {fileID: 6394307031704653822}
@@ -4775,6 +4831,8 @@ MonoBehaviour:
     - {fileID: 7073644282065015737}
     - {fileID: 6394307031704653822}
     - {fileID: 6696837986452924468}
+    - {fileID: 6959030537817898138}
+    - {fileID: 8153210194642102537}
   _webViewURLHandler:
     _appAuthenticator: 9
     _remoteConfigName: wink-website-subs
@@ -6206,7 +6264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7257965861577600745}
-  _xMLKey: 9
+  _xMLKey: 27
   _xMLValue: 1
   _fallbackText: "\u0423\u0447\u0438\u0442\u0435 \u0431\u0443\u043A\u0432\u044B \u0438
     \u0446\u0438\u0444\u0440\u044B, \u0447\u0438\u0442\u0430\u0439\u0442\u0435 {end}\u043F\u043E
@@ -7338,7 +7396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8215406169511525709}
-  _xMLKey: 4
+  _xMLKey: 22
   _xMLValue: 0
   _fallbackText: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439\u0442\u0435
     \u0432\u0440\u0435\u043C\u044F \u0443 \u044D\u043A\u0440\u0430\u043D\u0430"
@@ -8841,7 +8899,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "30 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  m_text: "30 \u0414\u041D\u0415\u0419 \u0411\u0415\u0421\u041F\u041B\u0410\u0422\u041D\u041E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
@@ -8925,7 +8983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1233988670481926345}
-  _xMLKey: 17
+  _xMLKey: 35
   _xMLValue: 0
   _fallbackText: "30 \u0414\u041D\u0415\u0419 \u0411\u0415\u0421\u041F\u041B\u0410\u0422\u041D\u041E"
   _isLink: 0
@@ -9310,7 +9368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 3609525553173484249}
-  _xMLKey: 7
+  _xMLKey: 25
   _xMLValue: 1
   _fallbackText: "\u0412\u043A\u043B\u044E\u0447\u0430\u0439\u0442\u0435 \u043B\u044E\u0431\u0438\u043C\u044B\u0435
     {end}\u0434\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
@@ -9905,7 +9963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5640437931055657463}
-  _xMLKey: 14
+  _xMLKey: 36
   _xMLValue: 0
   _fallbackText: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
   _isLink: 0
@@ -10690,7 +10748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2827593344244075788}
-  _xMLKey: 7
+  _xMLKey: 25
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
   _isLink: 0
@@ -10970,10 +11028,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4270003575949774059}
-  _xMLKey: 2
+  _xMLKey: 20
   _xMLValue: 0
-  _fallbackText: "\u0420\u0430\u0437\u0432\u0438\u0432\u0430\u0439\u0442\u0435\u0441\u044C
-    \u0441 \u041A\u0443\u0431\u043E\u043A\u043E\u0442"
+  _fallbackText: "\u0413\u043E\u0442\u043E\u0432\u044C\u0442\u0435\u0441\u044C \u043A
+    \u0448\u043A\u043E\u043B\u0435 \u0441 \u041A\u0443\u0431\u043E\u043A\u043E\u0442\u043E\u043C"
   _isLink: 0
   _linkName: 
 --- !u!114 &7778206245223935692
@@ -11853,9 +11911,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4217416442062886070}
-  _xMLKey: 8
+  _xMLKey: 26
   _xMLValue: 0
-  _fallbackText: "12 \u0438\u0433\u0440\u043E\u0432\u044B\u0445 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0439"
+  _fallbackText: "\u0418\u0433\u0440\u044B \u0434\u043B\u044F \u0434\u0435\u0442\u0435\u0439"
   _isLink: 0
   _linkName: 
 --- !u!114 &7987120080716241701
@@ -12295,7 +12353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7691158991145428315}
-  _xMLKey: 9
+  _xMLKey: 27
   _xMLValue: 0
   _fallbackText: "\u041A\u0443\u0431\u043E\u043A\u043E\u0442"
   _isLink: 0
@@ -12325,7 +12383,7 @@ GameObject:
   - component: {fileID: 4404524769576906563}
   - component: {fileID: 5802581258786793280}
   - component: {fileID: 7733201660782433198}
-  - component: {fileID: 5243235651300077620}
+  - component: {fileID: 291899384298269174}
   m_Layer: 5
   m_Name: Text_FreeOfferDiscription
   m_TagString: Untagged
@@ -12380,7 +12438,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
+  m_text: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E
+    \u043D\u0430 30 \u0434\u043D\u0435\u0439"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
@@ -12451,7 +12510,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5243235651300077620
+--- !u!114 &291899384298269174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12460,15 +12519,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2088375024542297839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 088a5926c75539e4e8919255fe36cf30, type: 3}
+  m_Script: {fileID: 11500000, guid: d8fbb1276b7161f48889cde59195a3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7733201660782433198}
-  _xMLKey: 14
+  _xMLKey: 32
   _xMLValue: 0
-  _fallbackText: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
+  _fallbackText: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C
+    \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \u043D\u0430 30 \u0434\u043D\u0435\u0439"
   _isLink: 0
   _linkName: 
+  _xMLKeyforADVariant: 36
+  _xMLValueforADVariant: 0
+  _fallbackTextforADVariant: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C
+    \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
 --- !u!1 &2119877913729077545
 GameObject:
   m_ObjectHideFlags: 0
@@ -14376,7 +14440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "30 \u0434\u043D\u0435\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  m_text: "30 \u0414\u041D\u0415\u0419 \u0411\u0415\u0421\u041F\u041B\u0410\u0422\u041D\u041E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
@@ -14460,7 +14524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2316381172127177635}
-  _xMLKey: 17
+  _xMLKey: 35
   _xMLValue: 0
   _fallbackText: "30 \u0414\u041D\u0415\u0419 \u0411\u0415\u0421\u041F\u041B\u0410\u0422\u041D\u041E"
   _isLink: 0
@@ -14739,7 +14803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8233774459354536933}
-  _xMLKey: 6
+  _xMLKey: 24
   _xMLValue: 1
   _fallbackText: "\u0421\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u044B\u0439
     \u043A\u043E\u043D\u0442\u0435\u043D\u0442 {end}\u043F\u043E \u0432\u043E\u0437\u0440\u0430\u0441\u0442\u0443
@@ -15654,8 +15718,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F\L\u0434\u043B\u044F
-    \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0431\u0435\u0437 \u0440\u0435\u043A\u043B\u0430\u043C\u044B!"
+  m_text: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F
+    \u0434\u043B\u044F \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0431\u0435\u0437
+    \u0440\u0435\u043A\u043B\u0430\u043C\u044B!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
@@ -15739,11 +15804,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5204818232785918797}
-  _xMLKey: 0
+  _xMLKey: 18
   _xMLValue: 0
   _fallbackText: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F
-    \u0434\u043B\u044F \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0438 \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u043E\u0435
-    \u0432\u0440\u0435\u043C\u044F \u0434\u043B\u044F \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u0435\u0439!"
+    \u0434\u043B\u044F \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0431\u0435\u0437
+    \u0440\u0435\u043A\u043B\u0430\u043C\u044B!"
   _isLink: 0
   _linkName: 
 --- !u!114 &1094980365338632271
@@ -15808,7 +15873,7 @@ GameObject:
   - component: {fileID: 4707368146236728840}
   - component: {fileID: 3239762016105765929}
   - component: {fileID: 2317627757970390674}
-  - component: {fileID: 2311469457595030229}
+  - component: {fileID: 6955298875361077661}
   - component: {fileID: 6133026063331059977}
   m_Layer: 5
   m_Name: Text_PanelLabel
@@ -15864,8 +15929,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F\L\u0434\u043B\u044F
-    \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0431\u0435\u0437 \u0440\u0435\u043A\u043B\u0430\u043C\u044B!"
+  m_text: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F
+    \u0434\u043B\u044F \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0438 \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u043E\u0435
+    \u0432\u0440\u0435\u043C\u044F \u0434\u043B\u044F \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u0435\u0439!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
@@ -15936,7 +16002,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2311469457595030229
+--- !u!114 &6955298875361077661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15945,7 +16011,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2665557065260160386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 088a5926c75539e4e8919255fe36cf30, type: 3}
+  m_Script: {fileID: 11500000, guid: d8fbb1276b7161f48889cde59195a3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2317627757970390674}
@@ -15956,6 +16022,11 @@ MonoBehaviour:
     \u0432\u0440\u0435\u043C\u044F \u0434\u043B\u044F \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u0435\u0439!"
   _isLink: 0
   _linkName: 
+  _xMLKeyforADVariant: 18
+  _xMLValueforADVariant: 0
+  _fallbackTextforADVariant: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0440\u0430\u0437\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F
+    \u0434\u043B\u044F \u0440\u0435\u0431\u0435\u043D\u043A\u0430 \u0431\u0435\u0437
+    \u0440\u0435\u043A\u043B\u0430\u043C\u044B!"
 --- !u!114 &6133026063331059977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16121,10 +16192,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4375248244150621847}
-  _xMLKey: 7
+  _xMLKey: 25
   _xMLValue: 0
-  _fallbackText: "23 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430 {end}\u0434\u043B\u044F
-    \u0434\u0435\u0442\u0435\u0439"
+  _fallbackText: "\u0414\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
   _isLink: 0
   _linkName: 
 --- !u!114 &481519532146696824
@@ -16431,7 +16501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4275117473739650152}
-  _xMLKey: 3
+  _xMLKey: 21
   _xMLValue: 0
   _fallbackText: "\u0418\u0433\u0440\u0430\u0439\u0442\u0435 \u0441 \u0433\u0435\u0440\u043E\u044F\u043C\u0438
     \u043B\u044E\u0431\u0438\u043C\u044B\u0445 \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432"
@@ -17177,10 +17247,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 6363681210405980559}
-  _xMLKey: 6
+  _xMLKey: 24
   _xMLValue: 0
-  _fallbackText: "8000+ \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432 {end}\u0438
-    \u0444\u0438\u043B\u044C\u043C\u043E\u0432 \u0434\u043B\u044F \u0434\u0435\u0442\u0435\u0439"
+  _fallbackText: "\u0414\u0435\u0442\u0441\u043A\u0438\u0439 \u043A\u043E\u043D\u0442\u0435\u043D\u0442"
   _isLink: 0
   _linkName: 
 --- !u!114 &7338182154417850126
@@ -18715,7 +18784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8765144131485761907}
-  _xMLKey: 7
+  _xMLKey: 25
   _xMLValue: 1
   _fallbackText: "\u0412\u043A\u043B\u044E\u0447\u0430\u0439\u0442\u0435 \u043B\u044E\u0431\u0438\u043C\u044B\u0435
     {end}\u0434\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
@@ -19443,7 +19512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4089275117593139138}
-  _xMLKey: 11
+  _xMLKey: 29
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
   _isLink: 0
@@ -20700,7 +20769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2446050375579875465}
-  _xMLKey: 6
+  _xMLKey: 24
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
   _isLink: 0
@@ -21069,7 +21138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2432747680574116381}
-  _xMLKey: 11
+  _xMLKey: 29
   _xMLValue: 0
   _fallbackText: "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439
     \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044C"
@@ -22380,7 +22449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1533824354961983747}
-  _xMLKey: 14
+  _xMLKey: 32
   _xMLValue: 1
   _fallbackText: "\u0434\u0430\u043B\u0435\u0435 \u2013 199 \u20BD/\u043C\u0435\u0441\u044F\u0446"
   _isLink: 0
@@ -22612,10 +22681,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1018235426954435605}
-  _xMLKey: 2
+  _xMLKey: 20
   _xMLValue: 0
-  _fallbackText: "\u0420\u0430\u0437\u0432\u0438\u0432\u0430\u0439\u0442\u0435\u0441\u044C
-    \u0441 \u041A\u0443\u0431\u043E\u043A\u043E\u0442"
+  _fallbackText: "\u0413\u043E\u0442\u043E\u0432\u044C\u0442\u0435\u0441\u044C \u043A
+    \u0448\u043A\u043E\u043B\u0435 \u0441 \u041A\u0443\u0431\u043E\u043A\u043E\u0442\u043E\u043C"
   _isLink: 0
   _linkName: 
 --- !u!114 &487615756433430987
@@ -23035,7 +23104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2294525446797868060}
-  _xMLKey: 9
+  _xMLKey: 27
   _xMLValue: 0
   _fallbackText: "\u041A\u0443\u0431\u043E\u043A\u043E\u0442"
   _isLink: 0
@@ -23955,7 +24024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4432394096021034826}
-  _xMLKey: 14
+  _xMLKey: 32
   _xMLValue: 1
   _fallbackText: "\u0434\u0430\u043B\u0435\u0435 \u2013 199 \u20BD/\u043C\u0435\u0441\u044F\u0446"
   _isLink: 0
@@ -24252,7 +24321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 16631100426190633}
-  _xMLKey: 11
+  _xMLKey: 29
   _xMLValue: 1
   _fallbackText: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440,
     \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 {end}\u0434\u0435\u0442\u0441\u043A\u0438\u0439
@@ -24314,7 +24383,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.000061035156}
-  m_SizeDelta: {x: 0, y: 4000}
+  m_SizeDelta: {x: 0, y: 4100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7682175416388133718
 MonoBehaviour:
@@ -24507,7 +24576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2203575994393651139}
-  _xMLKey: 13
+  _xMLKey: 31
   _xMLValue: 0
   _fallbackText: support@wink.ru
   _isLink: 1
@@ -25704,7 +25773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8556079316334321191}
-  _xMLKey: 14
+  _xMLKey: 32
   _xMLValue: 1
   _fallbackText: "\u0434\u0430\u043B\u0435\u0435 \u2013 199 \u20BD/\u043C\u0435\u0441\u044F\u0446"
   _isLink: 0
@@ -27042,7 +27111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8637056428827148954}
-  _xMLKey: 12
+  _xMLKey: 30
   _xMLValue: 0
   _fallbackText: "\u0422\u0435\u0445\u043D\u0438\u0447\u0435\u0441\u043A\u0430\u044F
     \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430"
@@ -28153,7 +28222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 3855148776291295291}
-  _xMLKey: 8
+  _xMLKey: 26
   _xMLValue: 1
   _fallbackText: "\u041E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0439\u0442\u0435\u0441\u044C
     \u0432 \u0443\u0432\u043B\u0435\u043A\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0435
@@ -29242,7 +29311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8672067270495964917}
-  _xMLKey: 6
+  _xMLKey: 24
   _xMLValue: 1
   _fallbackText: "\u0421\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u044B\u0439
     \u043A\u043E\u043D\u0442\u0435\u043D\u0442 {end}\u043F\u043E \u0432\u043E\u0437\u0440\u0430\u0441\u0442\u0443
@@ -31083,7 +31152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4158859333507271537}
-  _xMLKey: 8
+  _xMLKey: 26
   _xMLValue: 1
   _fallbackText: "\u041E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0439\u0442\u0435\u0441\u044C
     \u0432 \u0443\u0432\u043B\u0435\u043A\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0435
@@ -31837,7 +31906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1990475393929378461}
-  _xMLKey: 5
+  _xMLKey: 23
   _xMLValue: 0
   _fallbackText: "\u0412\u0445\u043E\u0434\u0438\u0442 \u0432 \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0443"
   _isLink: 0
@@ -31929,6 +31998,7 @@ GameObject:
   - component: {fileID: 1133360392336915529}
   - component: {fileID: 3079434145702911248}
   - component: {fileID: 6926844953995833571}
+  - component: {fileID: 7639281314392323995}
   m_Layer: 5
   m_Name: WinkPreviewBlock
   m_TagString: Untagged
@@ -31962,7 +32032,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1025, y: 816}
+  m_SizeDelta: {x: 1025, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1133360392336915529
 CanvasRenderer:
@@ -32018,9 +32088,9 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 0
-    m_Bottom: 20
+    m_Bottom: 40
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -32028,6 +32098,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7639281314392323995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5835397338998878143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &5868459395446038639
 GameObject:
   m_ObjectHideFlags: 0
@@ -32301,7 +32385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7800974851016036807}
-  _xMLKey: 11
+  _xMLKey: 29
   _xMLValue: 0
   _fallbackText: "\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439
     \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044C"
@@ -32414,7 +32498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9133435383562580169
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32496,6 +32580,7 @@ MonoBehaviour:
   - {fileID: 9139466995634291869}
   - {fileID: 3124709534466319550}
   - {fileID: 1514734151795761704}
+  _xmlConfigSelectableText: []
 --- !u!225 &3668519039322588788
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -32856,7 +32941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5620545293729444035}
-  _xMLKey: 12
+  _xMLKey: 30
   _xMLValue: 1
   _fallbackText: "\u041C\u044B \u0441 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u0435\u043C
     \u043E\u0442\u0432\u0435\u0442\u0438\u043C {end}\u043D\u0430 \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u0443\u044E\u0449\u0438\u0435
@@ -32950,6 +33035,7 @@ GameObject:
   - component: {fileID: 178697349924827632}
   - component: {fileID: 7059757375414414222}
   - component: {fileID: 1641895220549325081}
+  - component: {fileID: 4217498916118607668}
   m_Layer: 5
   m_Name: WinkPreviewBlock
   m_TagString: Untagged
@@ -32983,7 +33069,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1025, y: 816}
+  m_SizeDelta: {x: 1025, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &178697349924827632
 CanvasRenderer:
@@ -33039,9 +33125,9 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 0
-    m_Bottom: 20
+    m_Bottom: 40
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -33049,6 +33135,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4217498916118607668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5992614340913860579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &5996598968399427144
 GameObject:
   m_ObjectHideFlags: 0
@@ -33589,6 +33689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 199035339123478684}
   - component: {fileID: 1512219924689734208}
+  - component: {fileID: 8153210194642102537}
   - component: {fileID: 8346231513240558337}
   m_Layer: 5
   m_Name: TurnOffADInfo_HorizontalPanel
@@ -33629,6 +33730,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6083172553671291806}
   m_CullTransparentMesh: 1
+--- !u!114 &8153210194642102537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6083172553671291806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74874b8f6e415449974c72d276fc741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 22
+  _canvasGroup: {fileID: 8346231513240558337}
+  _freeTrialButtons:
+  - {fileID: 1169975096706372386}
+  - {fileID: 2987538466840496521}
+  - {fileID: 1941031025031075162}
+  _closeButton: {fileID: 1386927262825604187}
+  _xmlConfigTexts:
+  - {fileID: 3299978544794616132}
+  - {fileID: 6766159646753044583}
+  - {fileID: 1343030654799124511}
+  - {fileID: 7867173209104003231}
+  - {fileID: 8115678195575999890}
+  - {fileID: 2223610825958836648}
+  - {fileID: 3995872988347134460}
+  - {fileID: 4962302565537064429}
+  - {fileID: 2178422540200811697}
+  - {fileID: 2573874799489976057}
+  - {fileID: 4451596155552810916}
+  - {fileID: 4949203895571595305}
+  - {fileID: 8818522392640764665}
+  - {fileID: 2825423585105779166}
+  - {fileID: 8997716077485212145}
+  - {fileID: 537383990509183479}
+  - {fileID: 2462197370046598166}
+  - {fileID: 5806252188643467077}
+  - {fileID: 6363675863080689185}
+  - {fileID: 7591176462466469392}
+  - {fileID: 6588766293330818619}
+  - {fileID: 891089219516055631}
+  - {fileID: 8214798256299121487}
+  - {fileID: 5531391124258699204}
+  - {fileID: 7518099025918505319}
+  - {fileID: 4655594781039249313}
+  - {fileID: 3010695419529143355}
+  - {fileID: 8197612336924921192}
+  - {fileID: 743443691775768264}
+  - {fileID: 2335771953025607226}
+  _xmlConfigSelectableText: []
 --- !u!225 &8346231513240558337
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -34974,7 +35126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4874324609989910239}
-  _xMLKey: 11
+  _xMLKey: 29
   _xMLValue: 1
   _fallbackText: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u0442\u0435 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440,
     \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 {end}\u0434\u0435\u0442\u0441\u043A\u0438\u0439
@@ -35870,7 +36022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7818082803802233696}
-  _xMLKey: 9
+  _xMLKey: 27
   _xMLValue: 2
   _fallbackText: "3-7 \u043B\u0435\u0442"
   _isLink: 0
@@ -36026,7 +36178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5907080638916310789}
-  _xMLKey: 13
+  _xMLKey: 31
   _xMLValue: 1
   _fallbackText: "2018-2025 \u0412\u0438\u0434\u0435\u043E\u0441\u0435\u0440\u0432\u0438\u0441
     Wink. {end}\u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043D\u044B"
@@ -36326,10 +36478,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5514331348928937603}
-  _xMLKey: 7
+  _xMLKey: 25
   _xMLValue: 0
-  _fallbackText: "23 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430 {end}\u0434\u043B\u044F
-    \u0434\u0435\u0442\u0435\u0439"
+  _fallbackText: "\u0414\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
   _isLink: 0
   _linkName: 
 --- !u!114 &4317793186858467934
@@ -37990,9 +38141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1099051828647386936}
-  _xMLKey: 8
+  _xMLKey: 26
   _xMLValue: 0
-  _fallbackText: "12 \u0438\u0433\u0440\u043E\u0432\u044B\u0445 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0439"
+  _fallbackText: "\u0418\u0433\u0440\u044B \u0434\u043B\u044F \u0434\u0435\u0442\u0435\u0439"
   _isLink: 0
   _linkName: 
 --- !u!114 &7921162090085593321
@@ -38271,7 +38422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 3385082473100337310}
-  _xMLKey: 14
+  _xMLKey: 32
   _xMLValue: 1
   _fallbackText: "\u0434\u0430\u043B\u0435\u0435 \u2013 199 \u20BD/\u043C\u0435\u0441\u044F\u0446"
   _isLink: 0
@@ -40873,7 +41024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8210515422720627009}
-  _xMLKey: 1
+  _xMLKey: 19
   _xMLValue: 0
   _fallbackText: "\u0421\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u0438
     \u0438 \u0434\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
@@ -41180,7 +41331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7036131737766458779}
-  _xMLKey: 5
+  _xMLKey: 23
   _xMLValue: 0
   _fallbackText: "\u0412\u0445\u043E\u0434\u0438\u0442 \u0432 \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0443"
   _isLink: 0
@@ -41799,7 +41950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8320679391374546650}
-  _xMLKey: 13
+  _xMLKey: 31
   _xMLValue: 0
   _fallbackText: support@wink.ru
   _isLink: 1
@@ -42584,7 +42735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4766211506435728303}
-  _xMLKey: 12
+  _xMLKey: 30
   _xMLValue: 0
   _fallbackText: "\u0422\u0435\u0445\u043D\u0438\u0447\u0435\u0441\u043A\u0430\u044F
     \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430"
@@ -44190,7 +44341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5226123230864042277}
-  _xMLKey: 12
+  _xMLKey: 30
   _xMLValue: 1
   _fallbackText: "\u041C\u044B \u0441 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u0435\u043C
     \u043E\u0442\u0432\u0435\u0442\u0438\u043C {end}\u043D\u0430 \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u0443\u044E\u0449\u0438\u0435
@@ -45296,7 +45447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 804560443855190627}
-  _xMLKey: 13
+  _xMLKey: 31
   _xMLValue: 1
   _fallbackText: "2018-2025 \u0412\u0438\u0434\u0435\u043E\u0441\u0435\u0440\u0432\u0438\u0441
     Wink. {end}\u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043D\u044B"
@@ -46161,10 +46312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4300837656802598981}
-  _xMLKey: 6
+  _xMLKey: 24
   _xMLValue: 0
-  _fallbackText: "8000+ \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u043E\u0432 {end}\u0438
-    \u0444\u0438\u043B\u044C\u043C\u043E\u0432 \u0434\u043B\u044F \u0434\u0435\u0442\u0435\u0439"
+  _fallbackText: "\u0414\u0435\u0442\u0441\u043A\u0438\u0439 \u043A\u043E\u043D\u0442\u0435\u043D\u0442"
   _isLink: 0
   _linkName: 
 --- !u!114 &7769424745284678961
@@ -46656,7 +46806,7 @@ GameObject:
   - component: {fileID: 1387452067202255002}
   - component: {fileID: 7644413389332507940}
   - component: {fileID: 5899781597524577719}
-  - component: {fileID: 2111258841133235561}
+  - component: {fileID: 4256841448618032469}
   m_Layer: 5
   m_Name: Text_FreeOfferDiscription
   m_TagString: Untagged
@@ -46711,7 +46861,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
+  m_text: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E
+    \u043D\u0430 30 \u0434\u043D\u0435\u0439"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
@@ -46782,7 +46933,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2111258841133235561
+--- !u!114 &4256841448618032469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46791,16 +46942,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8491786963903783173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 088a5926c75539e4e8919255fe36cf30, type: 3}
+  m_Script: {fileID: 11500000, guid: d8fbb1276b7161f48889cde59195a3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5899781597524577719}
-  _xMLKey: 14
+  _xMLKey: 32
   _xMLValue: 0
   _fallbackText: "\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C
     \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \u043D\u0430 30 \u0434\u043D\u0435\u0439"
   _isLink: 0
   _linkName: 
+  _xMLKeyforADVariant: 36
+  _xMLValueforADVariant: 0
+  _fallbackTextforADVariant: "\u041E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C
+    \u0440\u0435\u043A\u043B\u0430\u043C\u0443"
 --- !u!1 &8495655740001684109
 GameObject:
   m_ObjectHideFlags: 0
@@ -47253,7 +47408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 823015940913946009}
-  _xMLKey: 8
+  _xMLKey: 26
   _xMLValue: 2
   _fallbackText: "4-9 \u043B\u0435\u0442"
   _isLink: 0
@@ -47613,7 +47768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7705890428600805379}
-  _xMLKey: 1
+  _xMLKey: 19
   _xMLValue: 0
   _fallbackText: "\u0421\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u043C\u0443\u043B\u044C\u0442\u0438\u043A\u0438
     \u0438 \u0434\u0435\u0442\u0441\u043A\u0438\u0435 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u044B"
@@ -49295,7 +49450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4266574650842004950}
-  _xMLKey: 6
+  _xMLKey: 24
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
   _isLink: 0
@@ -50214,7 +50369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1841096930638943355}
-  _xMLKey: 11
+  _xMLKey: 29
   _xMLValue: 2
   _fallbackText: "0-12 \u043B\u0435\u0442"
   _isLink: 0
@@ -50839,7 +50994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 574990489637379234}
-  _xMLKey: 4
+  _xMLKey: 22
   _xMLValue: 0
   _fallbackText: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439\u0442\u0435
     \u0432\u0440\u0435\u043C\u044F \u0443 \u044D\u043A\u0440\u0430\u043D\u0430"

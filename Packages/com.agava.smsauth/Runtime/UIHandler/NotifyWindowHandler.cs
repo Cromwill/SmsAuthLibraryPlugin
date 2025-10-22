@@ -23,6 +23,8 @@ namespace Agava.Wink
         [SerializeField] private WinkProfileWindow _winkProfileWindow;
         [SerializeField] private DeleteAccountWindowPresenter _deleteAccountWindow;
         [SerializeField] private WinkInfoWindowPresenter _winkInfoWindow;
+        [SerializeField] private WinkInfoVericalWindowPresenter _winkInfoVericalWindowPresenter;
+        [SerializeField] private WinkInfoHorizontalWindowPresenter _winkInfoHorizontalWindowPresenter;
         [SerializeField] private SubscriptionCheckWindowPresenter _subscriptionCheckWindow;
         [SerializeField] private HelloWOAccessWindowPresenter _helloWOAccessWindow;
         [SerializeField] private OrientationСhangeWindowPresenter _orientationСhangeWindow;
@@ -139,6 +141,8 @@ namespace Agava.Wink
         internal void FillTextFields()
         {
             _winkInfoWindow.FillRemoteTexts();
+            _winkInfoVericalWindowPresenter.FillRemoteTexts();
+            _winkInfoHorizontalWindowPresenter.FillRemoteTexts();
             _helloWOAccessWindow.FillRemoteTexts();
             _redirectToWebsiteWindow.FillRemoteTexts();
             _demoTimerExpiredWindow.FillRemoteTexts();
