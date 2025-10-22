@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using SmsAuthAPI.Utility;
 using System.Collections.Generic;
-using System;
 
 namespace Agava.Wink
 {
