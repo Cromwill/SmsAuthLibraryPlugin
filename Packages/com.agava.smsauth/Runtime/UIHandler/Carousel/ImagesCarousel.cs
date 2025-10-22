@@ -23,6 +23,8 @@ namespace Agava.Wink
         private List<CarouselPosition> _carouselPositions = null;
         private int _headerPositionIndex;
 
+        public event Action<CarouselID> PositionChanged;
+
         private void Awake()
         {
             FillCarouselPositions();
@@ -83,6 +85,8 @@ namespace Agava.Wink
 
                 if (_headerPositionIndex == targetPositionIndex)
                 {
+                    PositionChanged?.Invoke(item.CarouselID);
+
                     if (_header != null)
                         _header.text = LeanLocalization.GetTranslationText(item.Description);
                 }

@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace Agava.Wink
 {
@@ -14,6 +14,7 @@ namespace Agava.Wink
 
         public int Index { get; private set; }
         public string Description { get; private set; }
+        public CarouselID CarouselID { get; private set; }
 
         public void SetPositionIndex(int index)
         {
@@ -24,6 +25,7 @@ namespace Agava.Wink
         {
             _image.sprite = asset.Sprite;
             Description = asset.Description;
+            CarouselID = asset.CarouselID;
         }
 
         public void Hide()

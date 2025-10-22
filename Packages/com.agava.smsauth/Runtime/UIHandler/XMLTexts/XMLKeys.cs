@@ -39,5 +39,8 @@ namespace Agava.Wink
         subs_open_v2,
         days_free_v2,
         ads_off_v1,
+        educational_games_count,
+        cartoons_count,
+        children_channels_count,
     }
 }

@@ -16,7 +16,7 @@ namespace Agava.Wink
         [SerializeField] private Button _rewardButton;
         [SerializeField] private Button _signInButton;
         [SerializeField] private bool _closeOnYesClicked = true;
-        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
+        [SerializeField] private XmlCarouselConfigTexts _xmlCarouselConfigTexts;
 
         public bool TryFreeWink { get; private set; } = false;
 
@@ -37,6 +37,7 @@ namespace Agava.Wink
         public void Enable(bool closeButton)
         {
             TryFreeWink = false;
+            _imagesCarousel.PositionChanged += OnPositionChanged;
             _imagesCarousel.Enable();
             EnableCanvasGroup(_canvasGroup);
         }
@@ -47,9 +48,10 @@ namespace Agava.Wink
         {
             DisableCanvasGroup(_canvasGroup);
             _imagesCarousel.Disable();
+            _imagesCarousel.PositionChanged -= OnPositionChanged;
         }
 
-        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
+        public void FillRemoteTexts() => _xmlCarouselConfigTexts.FillTexts();
 
         public void TryShowCloseButton(bool enabled)
         {
@@ -81,6 +83,12 @@ namespace Agava.Wink
         {
             TryFreeWink = false;
             Disable();
+        }
+
+        private void OnPositionChanged(CarouselID carouselID)
+        {
+            _xmlCarouselConfigTexts.SetText(carouselID);
+            Debug.Log($"Show new id = {carouselID}");
         }
     }
 }

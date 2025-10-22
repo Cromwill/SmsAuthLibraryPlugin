@@ -4902,7 +4902,7 @@ GameObject:
   - component: {fileID: 4690393771099652948}
   - component: {fileID: 8975732564642603637}
   - component: {fileID: 529216666895293866}
-  - component: {fileID: 953544546942942481}
+  - component: {fileID: 5243412109038689948}
   m_Layer: 5
   m_Name: Text_TwelveGames
   m_TagString: Untagged
@@ -5029,7 +5029,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &953544546942942481
+--- !u!114 &5243412109038689948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5038,16 +5038,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 873353247278680094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 088a5926c75539e4e8919255fe36cf30, type: 3}
+  m_Script: {fileID: 11500000, guid: 025f32374732b5d4c870e7463c855c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 529216666895293866}
-  _xMLKey: 15
-  _xMLValue: 0
-  _fallbackText: "12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u0445
+  _gamesKey: 37
+  _gamesValue: 0
+  _gamesFallbackText: "12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u0445
     \u0438\u0433\u0440"
-  _isLink: 0
-  _linkName: 
+  _cartoonsKey: 38
+  _cartoonsValue: 0
+  _cartoonsFallbackText: "8000+ \u043C\u0443\u043B\u044C\u0442\u0444\u0438\u043B\u044C\u043C\u043E\u0432"
+  _channelsKey: 39
+  _channelsValue: 0
+  _channelsFallbackText: "23 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430 \u0434\u043B\u044F
+    \u0434\u0435\u0442\u0435\u0439"
 --- !u!1 &888061810617909682
 GameObject:
   m_ObjectHideFlags: 0
@@ -31187,7 +31192,7 @@ GameObject:
   - component: {fileID: 4151775331990732053}
   - component: {fileID: 2547782879662676244}
   - component: {fileID: 4259185672088818585}
-  - component: {fileID: 273610427362985457}
+  - component: {fileID: 3158016823915237169}
   m_Layer: 5
   m_Name: Text_TwelveGames
   m_TagString: Untagged
@@ -31314,7 +31319,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &273610427362985457
+--- !u!114 &3158016823915237169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31323,16 +31328,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5679270855822900052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 088a5926c75539e4e8919255fe36cf30, type: 3}
+  m_Script: {fileID: 11500000, guid: 025f32374732b5d4c870e7463c855c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 4259185672088818585}
-  _xMLKey: 15
-  _xMLValue: 0
-  _fallbackText: "12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u0445
+  _gamesKey: 37
+  _gamesValue: 0
+  _gamesFallbackText: "12 \u0440\u0430\u0437\u0432\u0438\u0432\u0430\u044E\u0449\u0438\u0445
     \u0438\u0433\u0440"
-  _isLink: 0
-  _linkName: 
+  _cartoonsKey: 38
+  _cartoonsValue: 0
+  _cartoonsFallbackText: "8000+ \u043C\u0443\u043B\u044C\u0442\u0444\u0438\u043B\u044C\u043C\u043E\u0432"
+  _channelsKey: 39
+  _channelsValue: 0
+  _channelsFallbackText: "23 \u0422\u0412-\u043A\u0430\u043D\u0430\u043B\u0430 \u0434\u043B\u044F
+    \u0434\u0435\u0442\u0435\u0439"
 --- !u!1 &5679332213048347902
 GameObject:
   m_ObjectHideFlags: 0
@@ -31490,8 +31500,7 @@ MonoBehaviour:
   _rewardButton: {fileID: 2928187736124577130}
   _signInButton: {fileID: 9137600746122601137}
   _closeOnYesClicked: 0
-  _xmlConfigTexts:
-  - {fileID: 953544546942942481}
+  _xmlCarouselConfigTexts: {fileID: 5243412109038689948}
 --- !u!1 &5706451376101769499
 GameObject:
   m_ObjectHideFlags: 0
@@ -38677,8 +38686,7 @@ MonoBehaviour:
   _rewardButton: {fileID: 1295086223349554715}
   _signInButton: {fileID: 2393517562942920765}
   _closeOnYesClicked: 0
-  _xmlConfigTexts:
-  - {fileID: 273610427362985457}
+  _xmlCarouselConfigTexts: {fileID: 3158016823915237169}
 --- !u!1 &7034919535629474365
 GameObject:
   m_ObjectHideFlags: 0
