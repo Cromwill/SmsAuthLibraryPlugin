@@ -32,7 +32,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         private RewardHandler _rewardHandler;
         private InterstitialHandler _interstitialHandler;
         private BannerHandler _bannerHandler;
-
         private RewardSettings _rewardSettings;
         private AdsSdkSettingsData _settings;
         private AdvertisingConfigs _advertisingConfigs;
@@ -48,6 +47,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         public bool WaitConcernPolicy => _userConsentScreen.NeedShowConsentScreen;
         public bool PolicyAccepted => _userConsentScreen.AgreementAccepted;
         public bool AgreementClosed => _userConsentScreen.AgreementClosed;
+        public InterstitialPlayer InterstitialPlayer => _interstitialPlayer;
 
         public event Action InitializationFailed;
         public event Action BannerDisplayed;

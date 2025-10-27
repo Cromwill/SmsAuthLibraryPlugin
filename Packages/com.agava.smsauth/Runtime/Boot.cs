@@ -63,7 +63,7 @@ namespace Agava.Wink
                 SmsAuthApi.DownloadCloudSavesProgress += OnDownloadCloudSavesProgress;
 
                 yield return _winkAccessManager.Construct();
-                _winkSignInHandlerUI.StartService(_winkAccessManager);
+                _winkSignInHandlerUI.StartService(_winkAccessManager, _advertisementBoot.AdvertisementController.InterstitialPlayer);
                 yield return SheetRemoteConfigs.Initialize();
                 yield return _winkAccessManager.TryQuickAccess();
                 yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Privacy);
