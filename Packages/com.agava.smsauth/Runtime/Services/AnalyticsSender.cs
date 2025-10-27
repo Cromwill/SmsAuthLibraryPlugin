@@ -16,6 +16,8 @@ namespace Agava.Wink
         [SerializeField] private Button _deleteAccountButton;
         [SerializeField] private Button _subscriptionManagementButton;
 
+        private bool _adEvents = false;
+
         public void Construct()
         {
             foreach (var button in _haveSubscriptionButtons)
@@ -50,12 +52,18 @@ namespace Agava.Wink
             _subscriptionManagementButton.onClick.RemoveListener(SendSubscriptionManagementButtonClick);
         }
 
+        public void SetAdInfo(bool adEvents) => _adEvents = adEvents;
+
         private void SendHaveSubscriptionButtonClick() => AnalyticsWinkService.SendHaveWinkButtonClick();
         private void SendTryFreeTrialButtonClick() => AnalyticsWinkService.SendPayWallRedirect();
-        private void SendOfferWinkKidsButtonClick() => AnalyticsWinkService.SendOfferWinkKidsButtonClick();
         private void SendCloseStartWindowButtonClick() => AnalyticsWinkService.SendCloseStartWindow();
         private void SendSubscribeWinkButtonClick() => AnalyticsWinkService.SendSubscribeWinkButtonClick();
         private void SendDeleteAccountButtonClick() => AnalyticsWinkService.SendDeleteAccountButtonClick();
         private void SendSubscriptionManagementButtonClick() => AnalyticsWinkService.SendSubscriptionManagementButtonClick();
+        private void SendOfferWinkKidsButtonClick()
+        {
+            if(_adEvents == false)
+                AnalyticsWinkService.SendOfferWinkKidsButtonClick();
+        }
     }
 }

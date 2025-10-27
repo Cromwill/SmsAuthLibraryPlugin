@@ -13,6 +13,7 @@ namespace Agava.Wink
         [SerializeField] private List<Button> _freeTrialButtons;
         [SerializeField] private Button _closeButton;
         [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
+        [SerializeField] private ScrollRect _scroll;
         [Header("AD variant")]
         [SerializeField] private List<XmlConfigSelectableText> _xmlConfigSelectableText;
 
@@ -38,6 +39,7 @@ namespace Agava.Wink
         public override void Enable()
         {
             _isAdVariant = false;
+            _scroll.verticalNormalizedPosition = 1f;
             EnableCanvasGroup(_canvasGroup);
             AnalyticsWinkService.SendShowOfferWinkKidsWindow();
         }
@@ -47,8 +49,9 @@ namespace Agava.Wink
         public void EnableAdVariant()
         {
             _isAdVariant = true;
+            _scroll.verticalNormalizedPosition = 1f;
 
-            if(_xmlConfigSelectableText.Count > 0)
+            if (_xmlConfigSelectableText.Count > 0)
                 _xmlConfigSelectableText.ForEach(t => t.UseAdVariantText());
 
             EnableCanvasGroup(_canvasGroup);

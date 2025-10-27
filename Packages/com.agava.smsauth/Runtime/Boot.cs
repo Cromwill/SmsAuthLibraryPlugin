@@ -139,7 +139,9 @@ namespace Agava.Wink
             }
 
             _signInProcess = null;
-            AdvertisementController.Instance?.StartInterstitialTimer();
+
+            if(WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false)
+                AdvertisementController.Instance?.StartInterstitialTimer();
         }
 
         private void OnSuccessfully()

@@ -9,12 +9,20 @@ namespace KinDzaDzaGames.AdvertisementPlugin
     [Preserve]
     public class InterstitialPlayer : MonoBehaviour
     {
+        private const int OpenAdOfferCount = 3;
+        private const int FirstOpenAdOffer = 1;
+
         private InterstitialHandler _interstitialHandler;
         private AdsSdkSettingsData _settingsData;
         private bool _vip;
         private float _showInterval;
         private float _elapsedTime = 0;
         private Coroutine _coroutine;
+        private bool _paused;
+        private int _adOfferCount = 0;
+        private int _actualAdOfferOpener = FirstOpenAdOffer;
+
+        public event Action OpenAdOffer;
 
         public void Construct(InterstitialHandler interstitialHandler, AdsSdkSettingsData settingsData, bool vip)
         {
@@ -56,6 +64,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _coroutine ??= StartCoroutine(CountdownTime());
         }
 
+        public void Suspend() => _paused = true;
+        public void Continue() => _paused = false;
+
         private void OnInterstitialClosed()
         {
             _showInterval = _settingsData.regular_timer;
@@ -67,6 +78,15 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 _coroutine = null;
             }
 
+            _adOfferCount++;
+
+            if (_adOfferCount >= _actualAdOfferOpener)
+            {
+                _adOfferCount = 0;
+                _actualAdOfferOpener = OpenAdOfferCount;
+                OpenAdOffer?.Invoke();
+            }
+
             _coroutine = StartCoroutine(CountdownTime());
         }
 
@@ -74,8 +94,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         {
             while (_elapsedTime < _showInterval)
             {
-                _elapsedTime += Time.deltaTime;
+                if(_paused == false)
+                    _elapsedTime += Time.deltaTime;
 
+                Debug.Log($"CountdownTime: elapsed time {_elapsedTime}, pause = {_paused}");
                 yield return null;
             }
 
