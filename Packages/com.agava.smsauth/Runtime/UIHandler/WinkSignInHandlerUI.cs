@@ -354,11 +354,12 @@ namespace Agava.Wink
 
         public void OpenTurnOffAdPanel()
         {
+            _useAdWindows = true;
             _screenshotProtector.TryDisableScreenshots();
             AdvertisementController.Instance?.AddInterstitialBlocker(this);
             _interstitialPlayer?.Suspend();
-            _useAdWindows = true;
             _analyticsSender.SetAdInfo(adEvents: _useAdWindows);
+
 
             StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => _notifyWindowHandler.OpenWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical)));
         }
@@ -448,7 +449,20 @@ namespace Agava.Wink
                 placeholder.ReplaceValue(number);
         }
 
-        private void CheckSubscription() => _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
+        private void CheckSubscription()
+        {
+            if (_winkAccessManager.Authenficated)
+            {
+                _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
+            }
+            else
+            {
+                Debug.Log("AD OFFER OFF: need jpen login with delay");
+
+
+                /*StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => _notifyWindowHandler.OpenWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical)));*/
+            }
+        }
 
         private async void OnTimerExpired()
         {
