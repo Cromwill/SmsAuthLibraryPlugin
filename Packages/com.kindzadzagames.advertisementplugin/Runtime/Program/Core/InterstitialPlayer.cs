@@ -97,7 +97,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 if(_paused == false)
                     _elapsedTime += Time.deltaTime;
 
-                Debug.Log($"CountdownTime: elapsed time {_elapsedTime}, pause = {_paused}");
+                Debug.Log($"Interstitial Player: elapsed time {_elapsedTime}, pause = {_paused}");
                 yield return null;
             }
 

@@ -50,23 +50,24 @@ namespace Agava.Wink
         {
             _isAdVariant = true;
             _scroll.verticalNormalizedPosition = 1f;
+            InstallAdTexts();
+            EnableCanvasGroup(_canvasGroup);
+        }
 
+        public void InstallAdTexts()
+        {
             if (_xmlConfigSelectableText.Count > 0)
                 _xmlConfigSelectableText.ForEach(t => t.UseAdVariantText());
-
-            EnableCanvasGroup(_canvasGroup);
         }
 
         private void CloseButtonClick()
         {
             CloseButtonClicked?.Invoke();
-            Disable();
         }
 
         private void FreeTrialPlay()
         {
             FreeTrialButtonClicked?.Invoke();
-            Disable();
         }
     }
 }

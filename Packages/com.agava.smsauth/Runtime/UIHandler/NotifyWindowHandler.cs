@@ -160,6 +160,14 @@ namespace Agava.Wink
                 _winkInfoVericalWindowPresenter.EnableAdVariant();
         }
 
+        internal void EnableAdOfferInfo()
+        {
+            _subscriptionChecked = false;
+            _redirectToWebsiteWindow.EnableFreeChoise();
+            _demoTimerExpiredWindow.EnableFreeChoise();
+            _winkInfoVericalWindowPresenter.InstallAdTexts();
+        }
+
         internal void CloseAdOffer()
         {
             CloseWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical);

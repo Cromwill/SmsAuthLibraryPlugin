@@ -21,11 +21,11 @@ namespace Agava.Wink
         private float _lastDisplayTime = 0;
         private Action Closed;
 
-        private void OnDestroy() => _closeButton.onClick.RemoveListener(Disable);
+        //private void OnDestroy() => _closeButton.onClick.RemoveListener(Disable);
 
         private void Awake()
         {
-            _closeButton.onClick.AddListener(Disable);
+            //_closeButton.onClick.AddListener(Disable);
 
             if (_keyboard == null)
                 _keyboard = FindObjectOfType<CustomKeyboard>();

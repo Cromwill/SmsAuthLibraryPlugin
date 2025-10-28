@@ -41,7 +41,7 @@ namespace Agava.Wink
         [SerializeField] private Button[] _closeButtonsFromSettings;
         [SerializeField] private Button[] _rewardButtons;
         [SerializeField] private Button _subscribeButtonRewardWindow;
-        [SerializeField] private Button _closeWinkInfoButton;
+        [SerializeField] private Button _closeSignInWindowButton;
         [Header("Analytics buttons")]
         [SerializeField] private AnalyticsSender _analyticsSender;
         [Header("Factory components")]
@@ -58,6 +58,7 @@ namespace Agava.Wink
         private InterstitialPlayer _interstitialPlayer;
         private bool _loginFromSettings = false;
         private bool _useAdWindows = false;
+        private bool _forcedChangeOrientation = false;
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 
@@ -113,6 +114,7 @@ namespace Agava.Wink
                 button.onClick.RemoveListener(OpenRewardWindow);
 
             _subscribeButtonRewardWindow.onClick.RemoveListener(RedirectToSubscribe);
+            _closeSignInWindowButton.onClick.RemoveListener(CloseSignInWindow);
 
             _unlinkDeviceViewContainer.DeviceRemoved -= OnUnlinkButtonClicked;
 
@@ -203,6 +205,7 @@ namespace Agava.Wink
                 button.onClick.AddListener(OpenRewardWindow);
 
             _subscribeButtonRewardWindow.onClick.AddListener(RedirectToSubscribe);
+            _closeSignInWindowButton.onClick.AddListener(CloseSignInWindow);
 
             _unlinkDeviceViewContainer.DeviceRemoved += OnUnlinkButtonClicked;
 
@@ -354,18 +357,21 @@ namespace Agava.Wink
 
         public void OpenTurnOffAdPanel()
         {
+            Debug.Log($"AD OFFER OFF: open turn off ad panel");
             _useAdWindows = true;
+            _gameOrientation.SaveGameOrientation();
             _screenshotProtector.TryDisableScreenshots();
             AdvertisementController.Instance?.AddInterstitialBlocker(this);
             _interstitialPlayer?.Suspend();
             _analyticsSender.SetAdInfo(adEvents: _useAdWindows);
-
+            _notifyWindowHandler.EnableAdOfferInfo();
 
             StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => _notifyWindowHandler.OpenWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical)));
         }
 
         private void OpenAdOfferWindow()
         {
+            Debug.Log($"AD OFFER OFF: open ad offer window");
             _notifyWindowHandler.OpenAdOffOffer(isHorizontal: _gameOrientation.NeedChangeOrientation);
             _notifyWindowHandler.CloseWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical);
         }
@@ -374,6 +380,7 @@ namespace Agava.Wink
         {
             if (_useAdWindows)
             {
+                Debug.Log($"AD OFFER OFF: try close ad offer window");
                 TurnOffAdMode();
             }
             else
@@ -388,11 +395,22 @@ namespace Agava.Wink
 
         private void TurnOffAdMode()
         {
+            Debug.Log("AD OFFER OFF: turn off ad mode");
             _useAdWindows = false;
             _analyticsSender.SetAdInfo(adEvents: _useAdWindows);
             _notifyWindowHandler.CloseAdOffer();
             _interstitialPlayer?.Continue();
             _screenshotProtector.TryEnableScreenshots();
+
+            if(_forcedChangeOrientation && _gameOrientation.NeedChangeOrientation)
+            {
+                Debug.Log("AD OFFER OFF: force to change orientation");
+                _forcedChangeOrientation = false;
+                _gameOrientation.SetLandscapeOrientationPosibility();
+                _gameOrientation.SetSavedOrientation();
+            }
+
+            //TODO: Если игрок не авторизован но прошел дальше и закрыл инфо окно, надо проверять в какой раскладке он был и возвращать нужную
         }
 
         private void OnSignInContinueClicked()
@@ -442,11 +460,36 @@ namespace Agava.Wink
         {
             string number = "N/A";
 
-            if (UnityEngine.PlayerPrefs.HasKey(_winkAccessManager.PhoneNumber))
-                number = PhoneNumber.FormatNumber(UnityEngine.PlayerPrefs.GetString(_winkAccessManager.PhoneNumber));
+            if (PlayerPrefs.HasKey(_winkAccessManager.PhoneNumber))
+                number = PhoneNumber.FormatNumber(PlayerPrefs.GetString(_winkAccessManager.PhoneNumber));
 
             foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)
                 placeholder.ReplaceValue(number);
+        }
+
+        private void CloseSignInWindow()
+        {
+            Debug.Log($"AD OFFER OFF: Close sing in");
+
+            if (_useAdWindows)
+            {
+                _forcedChangeOrientation = false;
+
+                if (_gameOrientation.NeedChangeOrientation)
+                {
+                    Debug.Log($"AD OFFER OFF: сlose sing in for landscape screen");
+                    StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => TurnOffAdMode()));
+                    _gameOrientation.SetLandscapeOrientationPosibility();
+                    _gameOrientation.SetSavedOrientation();
+                }
+                else
+                {
+                    Debug.Log($"AD OFFER OFF: сlose sing in for portrait screen");
+                    TurnOffAdMode();
+                }
+            }
+
+            _notifyWindowHandler.CloseWindow(WindowType.SignIn);
         }
 
         private void CheckSubscription()
@@ -454,11 +497,31 @@ namespace Agava.Wink
             if (_winkAccessManager.Authenficated)
             {
                 _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
+                _notifyWindowHandler.CloseAdOffer();
             }
             else
             {
-                Debug.Log("AD OFFER OFF: need jpen login with delay");
+                Debug.Log("AD OFFER OFF: need open login with delay");
+                
+                if (_gameOrientation.NeedChangeOrientation)
+                {
+                    Debug.Log($"AD OFFER OFF: open sign in window for landscape screen");
+                    _forcedChangeOrientation = true;
 
+                    StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () =>
+                    {
+                        _notifyWindowHandler.OpenSignInWindow();
+                        _notifyWindowHandler.CloseAdOffer();
+                    }));
+
+                    _gameOrientation.SetPortraitOrientation();
+                }
+                else
+                {
+                    Debug.Log($"AD OFFER OFF: open sign in window for portrait screen");
+                    _notifyWindowHandler.OpenSignInWindow();
+                    _notifyWindowHandler.CloseAdOffer();
+                }
 
                 /*StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => _notifyWindowHandler.OpenWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical)));*/
             }

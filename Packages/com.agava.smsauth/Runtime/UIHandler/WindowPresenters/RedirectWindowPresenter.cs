@@ -70,6 +70,7 @@ namespace Agava.Wink
         }
 
         public void ResetFreeChoise() => TryFreeWink = false;
+        public void EnableFreeChoise() => TryFreeWink = true;
 
         private void OnYesClicked()
         {
@@ -88,7 +89,6 @@ namespace Agava.Wink
         private void OnPositionChanged(CarouselID carouselID)
         {
             _xmlCarouselConfigTexts.SetText(carouselID);
-            Debug.Log($"Show new id = {carouselID}");
         }
     }
 }

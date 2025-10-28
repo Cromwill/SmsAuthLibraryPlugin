@@ -4883,7 +4883,7 @@ MonoBehaviour:
   - {fileID: 1295086223349554715}
   - {fileID: 1128064336759008097}
   _subscribeButtonRewardWindow: {fileID: 8181073423533791710}
-  _closeWinkInfoButton: {fileID: 3204603542502515191}
+  _closeSignInWindowButton: {fileID: 445661722451534889}
   _analyticsSender:
     _haveSubscriptionButtons:
     - {fileID: 9137600746122601137}
