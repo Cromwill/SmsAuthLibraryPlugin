@@ -391,6 +391,7 @@ namespace Agava.Wink
                 _notifyWindowHandler.ConfirmPurchaseSubscriptionOnWebView();
 #else
                 _notifyWindowHandler.OpenHelloWindowWOAccess();
+                _notifyWindowHandler.CloseWindow(WindowType.WinkInfoVertical);
 #endif
             }
         }
@@ -404,7 +405,8 @@ namespace Agava.Wink
             _interstitialPlayer?.Continue();
             _screenshotProtector.TryEnableScreenshots();
 
-            if(_forcedChangeOrientation && _gameOrientation.NeedChangeOrientation)
+            Debug.Log($"AD OFFER OFF: after close webview need rotate phone, force rotate = {_forcedChangeOrientation}");
+            if (_forcedChangeOrientation && _gameOrientation.NeedChangeOrientation)
             {
                 Debug.Log("AD OFFER OFF: force to change orientation");
                 _forcedChangeOrientation = false;
@@ -496,11 +498,26 @@ namespace Agava.Wink
 
         private void CheckSubscription()
         {
+            Debug.Log($"AD OFFER OFF: check subs, auth = {_winkAccessManager.Authenficated}");
+
             if (_winkAccessManager.Authenficated)
             {
                 _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
-                _notifyWindowHandler.CloseAdOffer();
-                _notifyWindowHandler.SetAdOption(adOption: true);
+                _notifyWindowHandler.CloseWindow(WindowType.WinkInfoVertical);
+
+                if (_useAdWindows)
+                {
+                    _notifyWindowHandler.CloseAdOffer();
+                    _notifyWindowHandler.SetAdOption(adOption: true);
+
+                    if (_gameOrientation.NeedChangeOrientation)
+                    {
+                        Debug.Log("AD OFFER OFF: open check subs screen on landscape orientation");
+                        _forcedChangeOrientation = true;
+                        _gameOrientation.SaveGameOrientation();
+                        _gameOrientation.SetPortraitOrientation();
+                    }
+                }
             }
             else
             {
@@ -575,6 +592,8 @@ namespace Agava.Wink
 
         private void OnSunbscriptionBuyed()
         {
+            _forcedChangeOrientation = false;
+
             if (_useAdWindows)
                 TurnOffAdMode();
 

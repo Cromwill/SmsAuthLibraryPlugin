@@ -64,17 +64,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _coroutine ??= StartCoroutine(CountdownTime());
         }
 
-        public void Suspend()
-        {
-            _paused = true;
-            Debug.Log($"AD OFFER OFF: suspend inter player = {_paused}");
-        }
+        public void Suspend() => _paused = true;
 
-        public void Continue()
-        {
-            _paused = false;
-            Debug.Log($"AD OFFER OFF: continue inter player = {_paused}");
-        }
+        public void Continue() => _paused = false;
 
         private void OnInterstitialClosed()
         {
@@ -106,7 +98,6 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 if(_paused == false)
                     _elapsedTime += Time.deltaTime;
 
-                Debug.Log($"Interstitial Player: elapsed time {_elapsedTime}, pause = {_paused}");
                 yield return null;
             }
 

@@ -199,7 +199,7 @@ namespace Agava.Wink
 
         public async void ActivateTempSubscription()
         {
-             await _requestHandler.ActivateTempSubscription(LoginData.phone);
+            await _requestHandler.ActivateTempSubscription(LoginData.phone);
             HasTempAccess = true;
             AdsAppView.Program.PopupManager.Instance?.OnSubscribeDetected();
             AdvertisementController.Instance?.ChangeSubscribeStatus(HasTempAccess);

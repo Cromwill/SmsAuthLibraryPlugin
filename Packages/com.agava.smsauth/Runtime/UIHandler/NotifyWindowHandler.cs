@@ -203,11 +203,15 @@ namespace Agava.Wink
             Debug.Log($"AD OFFER OFF: close webview with ad mechanics = {_useAdMechanics}");
 
             if (_useAdMechanics == false)
+            {
                 OpenHelloWindowWOAccess();
+                _subscriptionCheckWindow.Disable();
+            }
             else
+            {
+                _subscriptionCheckWindow.Disable();
                 WebViewClosed?.Invoke();
-
-            _subscriptionCheckWindow.Disable();
+            }
         }
 
         private void ConfirmPurchaseSubscriptionOnWebView()
