@@ -55,6 +55,7 @@ namespace Agava.Wink
             }
 
             string url = _correctLink.Replace($"{{{PlayerPhonePattern}}}", _phoneNumber);
+            Debug.Log($"AD OFFER OFF: get url: {url}");
 
             return url;
         }
