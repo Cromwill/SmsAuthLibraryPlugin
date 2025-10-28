@@ -152,7 +152,7 @@ namespace Agava.Wink
 
         internal void OpenAdOffOffer(bool isHorizontal)
         {
-            _useAdMechanics = true;
+            SetAdOption(adOption: true);
 
             if (isHorizontal)
                 _winkInfoHorizontalWindowPresenter.EnableAdVariant();
@@ -170,10 +170,17 @@ namespace Agava.Wink
 
         internal void CloseAdOffer()
         {
+            Debug.Log($"AD OFFER OFF: close ad offer in handler");
             CloseWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical);
             _winkInfoVericalWindowPresenter.Disable();
             _winkInfoHorizontalWindowPresenter.Disable();
-            _useAdMechanics = false;
+            SetAdOption(adOption: false);
+        }
+
+        internal void SetAdOption(bool adOption)
+        {
+            Debug.Log($"AD OFFER OFF: change ad option = {adOption}");
+            _useAdMechanics = adOption;
         }
 
         private WindowPresenter GetWindowByType(WindowType type)
@@ -193,7 +200,9 @@ namespace Agava.Wink
 
         private void OpenHelloAfterCloseWebView()
         {
-            if(_useAdMechanics == false)
+            Debug.Log($"AD OFFER OFF: close webview with ad mechanics = {_useAdMechanics}");
+
+            if (_useAdMechanics == false)
                 OpenHelloWindowWOAccess();
             else
                 WebViewClosed?.Invoke();
@@ -203,6 +212,8 @@ namespace Agava.Wink
 
         private void ConfirmPurchaseSubscriptionOnWebView()
         {
+            Debug.Log($"AD OFFER OFF: close webview with purchase subscription = {_useAdMechanics}");
+
             OpenHelloWindow(hasAccess: true);
             SunbscriptionBuyed?.Invoke();
             _subscriptionCheckWindow.Disable();

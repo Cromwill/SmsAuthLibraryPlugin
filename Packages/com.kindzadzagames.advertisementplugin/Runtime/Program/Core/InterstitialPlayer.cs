@@ -64,8 +64,17 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             _coroutine ??= StartCoroutine(CountdownTime());
         }
 
-        public void Suspend() => _paused = true;
-        public void Continue() => _paused = false;
+        public void Suspend()
+        {
+            _paused = true;
+            Debug.Log($"AD OFFER OFF: suspend inter player = {_paused}");
+        }
+
+        public void Continue()
+        {
+            _paused = false;
+            Debug.Log($"AD OFFER OFF: continue inter player = {_paused}");
+        }
 
         private void OnInterstitialClosed()
         {

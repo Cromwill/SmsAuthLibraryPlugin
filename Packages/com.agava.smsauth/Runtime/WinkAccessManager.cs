@@ -201,6 +201,8 @@ namespace Agava.Wink
         {
              await _requestHandler.ActivateTempSubscription(LoginData.phone);
             HasTempAccess = true;
+            AdsAppView.Program.PopupManager.Instance?.OnSubscribeDetected();
+            AdvertisementController.Instance?.ChangeSubscribeStatus(HasTempAccess);
         }
 
         private void Login(LoginData data) => _requestHandler.Login(data, LimitReached, _winkSubscriptionAccessRequest, _otpCodeAccepted);
