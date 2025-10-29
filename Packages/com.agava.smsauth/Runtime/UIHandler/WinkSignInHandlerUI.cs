@@ -333,6 +333,7 @@ namespace Agava.Wink
                         onComplete: (resultSuccess) =>
                         {
                             AnalyticsWinkService.SendDeleteWindow();
+                            _interstitialPlayer?.Continue();
 
                             if (resultSuccess == false)
                                 _notifyWindowHandler.OpenWindow(WindowType.Fail);
