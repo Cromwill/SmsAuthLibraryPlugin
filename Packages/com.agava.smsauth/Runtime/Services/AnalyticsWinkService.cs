@@ -71,7 +71,6 @@ namespace Agava.Wink
         public static void SendSupportButtonClickOnSetting() => SendEvent("Support Button On Settings");
         public static void SendSubscriptionPurchaseWasSuccessful() => SendEvent("Subscription Purchase Was Successful");
         public static void SendCancelSubscriptionPurchase() => SendEvent("Cancel Subscription Purchase");
-
         public static void SendRewardWindow() => SendEvent("Reward Window");
         public static void SendSubscriptionManagementOnRewardWindowButtonClick() => SendEvent("Subscribe Button On Reward");
         public static void SendViewingRewardAdButtonClick() => SendEvent("Start Viewing Reward Video");
