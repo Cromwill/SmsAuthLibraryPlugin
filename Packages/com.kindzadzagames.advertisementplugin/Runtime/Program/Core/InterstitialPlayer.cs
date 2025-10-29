@@ -98,6 +98,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
                 if(_paused == false)
                     _elapsedTime += Time.deltaTime;
 
+                Debug.Log($"Inter Player: time = {_elapsedTime}");
                 yield return null;
             }
 

@@ -317,6 +317,7 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
+            Debug.Log($"AD OFFER OFF: try delete account");
             _screenshotProtector.TryDisableScreenshots();
             _loginFromSettings = true;
             _gameOrientation.SaveGameOrientation();
