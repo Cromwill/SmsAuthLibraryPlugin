@@ -156,6 +156,8 @@ namespace Agava.Wink
 
             while (rewardConfigs.Initialized == false)
                 yield return null;
+
+            _notifyWindowHandler.ApplyTurnOffABTests();
         }
 
         public void OpenProcessOnWindow() => _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);

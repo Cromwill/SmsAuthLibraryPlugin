@@ -21,6 +21,8 @@ namespace Agava.Wink
         [SerializeField] private InputWindowPresenter _enterCodeWindow;
         [SerializeField] private WinkProfileWindow _winkProfileWindow;
         [SerializeField] private DeleteAccountWindowPresenter _deleteAccountWindow;
+        [SerializeField] private TurnOffAdWindowPresenter _verticalTurnOffAdWindow;
+        [SerializeField] private TurnOffAdWindowPresenter _horizontalTurnOffAdWindow;
         [SerializeField] private WinkInfoVericalWindowPresenter _winkInfoVericalWindowPresenter;
         [SerializeField] private WinkInfoHorizontalWindowPresenter _winkInfoHorizontalWindowPresenter;
         [SerializeField] private SubscriptionCheckWindowPresenter _subscriptionCheckWindow;
@@ -28,6 +30,7 @@ namespace Agava.Wink
         [SerializeField] private OrientationСhangeWindowPresenter _orientationСhangeWindow;
         [SerializeField] private WebViewPresenter _webViewPresenter;
         [SerializeField] private RewardContinueWindowPresenter _rewardContinueWindowPresenter;
+        [SerializeField] private RewardSettings _rewardSettings;
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
@@ -56,7 +59,7 @@ namespace Agava.Wink
             _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
-            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(demoTimer, storeName, appMetricaInfo));
+            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(demoTimer, storeName, appMetricaInfo, _rewardSettings));
             _enterCodeWindow.Construct(smsRetrieverManager);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
@@ -70,6 +73,12 @@ namespace Agava.Wink
             _subscriptionCheckWindow.LoadingStarted -= OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted -= OnLoadingCompleted;
             _rewardContinueWindowPresenter.RewardSuccessed -= OnRewardSuccessed;
+        }
+
+        internal void ApplyTurnOffABTests()
+        {
+            _verticalTurnOffAdWindow.Construct(_rewardSettings);
+            _horizontalTurnOffAdWindow.Construct(_rewardSettings);
         }
 
         internal void OpenSignInWindow(Action closeCallback = null) => _signInWindow.Enable(closeCallback);

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Agava.Wink
@@ -6,6 +7,9 @@ namespace Agava.Wink
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private ImagesCarousel _imagesCarousel;
+        [SerializeField] private TMP_Text _label;
+
+        public void Construct(RewardSettings rewardSettings) => _label.text = rewardSettings.turn_off_ad_offer_wink_text;
 
         public override void Disable()
         {
@@ -17,6 +21,8 @@ namespace Agava.Wink
         {
             _imagesCarousel.Enable();
             EnableCanvasGroup(_canvasGroup);
+
+            AnalyticsWinkService.SendShowTurnOffAdWindow();
         }
     }
 }

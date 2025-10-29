@@ -72,6 +72,18 @@ namespace Agava.Wink
         public static void SendSubscriptionPurchaseWasSuccessful() => SendEvent("Subscription Purchase Was Successful");
         public static void SendCancelSubscriptionPurchase() => SendEvent("Cancel Subscription Purchase");
 
+        public static void SendRewardWindow() => SendEvent("Reward Window");
+        public static void SendSubscriptionManagementOnRewardWindowButtonClick() => SendEvent("Subscribe Button On Reward");
+        public static void SendViewingRewardAdButtonClick() => SendEvent("Start Viewing Reward Video");
+        public static void SendShowTurnOffAdInfoWindow() => SendEvent("Show Explanation Window For The Suggestion Disable Ads");
+        public static void SendShowTurnOffAdWindow() => SendEvent("Show Ad Deactivation Suggestion Window");
+        public static void SendTurnOffAdOnDisableWindowButtonClick() => SendEvent("Click Turn Off Ad On Offer Window");
+        public static void SendLearnMoreSubsButtonClick() => SendEvent("Click Learn More About Subscription");
+        public static void SendCloseTurnOffAdWindowButtonClick() => SendEvent("Click On Close Turn Off Ad Offer Window");
+        public static void SendTurnOffAdOnInfoWindowButtonClick() => SendEvent("Click Turn Off Ad On Offer Info Window");
+        public static void SendCloseTurnOffAdInfoWindowButtonClick() => SendEvent("Click On Close Turn Off Ad Offer Info Window");
+
+
         private static string GetJson(string name, string value)
         {
             Data data = new Data()

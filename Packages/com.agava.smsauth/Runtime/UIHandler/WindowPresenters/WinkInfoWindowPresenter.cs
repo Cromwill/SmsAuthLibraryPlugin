@@ -52,6 +52,7 @@ namespace Agava.Wink
             _scroll.verticalNormalizedPosition = 1f;
             InstallAdTexts();
             EnableCanvasGroup(_canvasGroup);
+            AnalyticsWinkService.SendShowTurnOffAdInfoWindow();
         }
 
         public void InstallAdTexts()

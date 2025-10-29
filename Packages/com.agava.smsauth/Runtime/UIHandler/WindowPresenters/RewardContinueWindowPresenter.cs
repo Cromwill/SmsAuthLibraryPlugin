@@ -33,11 +33,11 @@ namespace Agava.Wink
         [SerializeField] private Button _rewardDemoTimeButton;
         [SerializeField] private TMP_Text _rewardButtonLabel;
         [SerializeField] private TMP_Text _rewardButtonDiscription;
-        [SerializeField] private RewardSettings _rewardSettings;
 
         private Dictionary<int, char> _minutWordEndings = new Dictionary<int, char>
         { { 1, 'у' }, { 2, 'ы' }, { 3, 'ы' }, { 4, 'ы' }, { 21, 'у' }, { 22, 'ы' }, { 23, 'ы' }, { 24, 'ы' }, { 31, 'у' }, { 32, 'ы' }, { 33, 'ы' }, { 34, 'ы' } };
 
+        private RewardSettings _rewardSettings;
         private DemoTimer _demoTimer;
         private Color _defaultTextColor;
         private Color _blinkTextColor;
@@ -49,10 +49,11 @@ namespace Agava.Wink
 
         public event Action RewardSuccessed;
 
-        public IEnumerator Construct(DemoTimer demoTimer, string storeName, AppMetricaInfo appMetricaInfo)
+        public IEnumerator Construct(DemoTimer demoTimer, string storeName, AppMetricaInfo appMetricaInfo, RewardSettings rewardSettings)
         {
             _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
             _appMetricaInfo = appMetricaInfo ?? throw new ArgumentNullException(nameof(appMetricaInfo));
+            _rewardSettings = rewardSettings ?? throw new ArgumentNullException(nameof(rewardSettings));
 
             _defaultTextColor = _blinkTextColor = _rewardButtonLabel.color;
             _blinkTextColor.a = 0.5f;
@@ -111,8 +112,9 @@ namespace Agava.Wink
                         string over_time_bool = Varioqub.GetString("over_time_bool", $"{_rewardSettings.over_time_bool}");
                         string over_time_text = Varioqub.GetString("over_time_text", _rewardSettings.over_time_text);
                         string ads_show_text = Varioqub.GetString("ads_show_text", _rewardSettings.ads_show_text);
+                        string turn_off_ad_offer_wink_text = Varioqub.GetString("turn_off_ad_offer_wink_text", _rewardSettings.turn_off_ad_offer_wink_text);
 
-                        _rewardSettings.SetSettings(demo_overtime_minutes, over_time_bool, over_time_text, ads_show_text);
+                        _rewardSettings.SetSettings(demo_overtime_minutes, over_time_bool, over_time_text, ads_show_text, turn_off_ad_offer_wink_text);
                     },
                     onErrorDelegate: error =>
                     {
@@ -140,6 +142,7 @@ namespace Agava.Wink
 
         public override void Enable()
         {
+            AnalyticsWinkService.SendRewardWindow();
             _imagesCarousel.Enable();
             _rewardDemoTimeButton.onClick.AddListener(ShowReward);
             EnableCanvasGroup(_canvasGroup);
@@ -210,20 +213,22 @@ namespace Agava.Wink
     }
 
     [Preserve, Serializable]
-    internal class RewardSettings
+    public class RewardSettings
     {
         private const int DefaultRewardMinutes = 10;
         private const bool DefaultOvertimeText = true;
         private const string DefaultOverTimeText = "и играть ещё {n} минут";
         private const string DefaultAdsShowText = "Посмотреть рекламу";
+        private const string DefaultTurnOffAdText = "Наслаждайся игрой без рекламы";
 
         [field: SerializeField] public int demo_overtime_minutes { get; private set; } = DefaultRewardMinutes;
         [field: SerializeField] public bool over_time_bool { get; private set; } = DefaultOvertimeText;
 
         public string over_time_text { get; private set; } = DefaultOverTimeText;
         public string ads_show_text { get; private set; } = DefaultAdsShowText;
+        public string turn_off_ad_offer_wink_text { get; private set; } = DefaultTurnOffAdText;
 
-        internal void SetSettings(string demo_overtime_minutes, string over_time_bool, string over_time_text, string ads_show_text)
+        internal void SetSettings(string demo_overtime_minutes, string over_time_bool, string over_time_text, string ads_show_text, string turn_off_ad_offer_wink_text)
         {
             if (int.TryParse(demo_overtime_minutes, out int rewardMitutes))
                 this.demo_overtime_minutes = rewardMitutes;
@@ -253,7 +258,18 @@ namespace Agava.Wink
                 Debug.Log($"Advertisement Plugin: VARIOQUB the string ({ads_show_text}) contains invalid characters.");
             }
 
-            Debug.Log($"Advertisement Plugin: get varioqub settings, demo_overtime_minutes = {this.demo_overtime_minutes}, over_time_bool = {this.over_time_bool}, over_time_text = {this.over_time_text}, ads_show_text = {this.ads_show_text}");
+            if (IsValidString(turn_off_ad_offer_wink_text))
+            {
+                this.turn_off_ad_offer_wink_text = turn_off_ad_offer_wink_text;
+                Debug.Log($"Advertisement Plugin: VARIOQUB string ({turn_off_ad_offer_wink_text}) correct.");
+            }
+            else
+            {
+                this.turn_off_ad_offer_wink_text = DefaultAdsShowText;
+                Debug.Log($"Advertisement Plugin: VARIOQUB the string ({turn_off_ad_offer_wink_text}) contains invalid characters.");
+            }
+
+            Debug.Log($"Advertisement Plugin: get varioqub settings, demo_overtime_minutes = {this.demo_overtime_minutes}, over_time_bool = {this.over_time_bool}, over_time_text = {this.over_time_text}, ads_show_text = {this.ads_show_text}, turn_off_ad_offer_wink_text = {this.turn_off_ad_offer_wink_text}");
         }
 
         internal bool IsValidString(string input)

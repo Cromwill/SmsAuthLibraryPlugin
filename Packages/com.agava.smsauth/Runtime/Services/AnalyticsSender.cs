@@ -15,6 +15,13 @@ namespace Agava.Wink
         [SerializeField] private Button _subscribeWinkButton;
         [SerializeField] private Button _deleteAccountButton;
         [SerializeField] private Button _subscriptionManagementButton;
+        [SerializeField] private Button _subscribeButtonRewardButton;
+        [SerializeField] private Button _rewardVideoButton;
+        [SerializeField] private Button[] _turnOffAdButtons;
+        [SerializeField] private Button[] _learnMoreAboutSubscriptionButtons;
+        [SerializeField] private Button[] _turnOffAdOnInfoButtons;
+        [SerializeField] private Button[] _closeTurnOffAdWindowButtons;
+        [SerializeField] private Button[] _closeTurnOffAdInfoWindowButtons;
 
         private bool _adEvents = false;
 
@@ -33,6 +40,23 @@ namespace Agava.Wink
             _subscribeWinkButton.onClick.AddListener(SendSubscribeWinkButtonClick);
             _deleteAccountButton.onClick.AddListener(SendDeleteAccountButtonClick);
             _subscriptionManagementButton.onClick.AddListener(SendSubscriptionManagementButtonClick);
+            _subscribeButtonRewardButton.onClick.AddListener(SendSubscriptionManagementOnRewardWindowButtonClick);
+            _rewardVideoButton.onClick.AddListener(SendViewingRewardAdButtonClick);
+
+            foreach (var button in _turnOffAdButtons)
+                button.onClick.AddListener(SendTurnOffAdOnDisableWindowButtonClick);
+
+            foreach (var button in _learnMoreAboutSubscriptionButtons)
+                button.onClick.AddListener(SendLearnMoreSubsButtonClick);
+
+            foreach (var button in _turnOffAdOnInfoButtons)
+                button.onClick.AddListener(SendTurnOffAdOnInfoWindowButtonClick);
+
+            foreach (var button in _closeTurnOffAdWindowButtons)
+                button.onClick.AddListener(SendCloseTurnOffAdWindowButtonClick);
+
+            foreach (var button in _closeTurnOffAdInfoWindowButtons)
+                button.onClick.AddListener(SendCloseTurnOffAdInfoWindowButtonClick);
         }
 
         public void Dispose()
@@ -50,6 +74,23 @@ namespace Agava.Wink
             _subscribeWinkButton.onClick.RemoveListener(SendSubscribeWinkButtonClick);
             _deleteAccountButton.onClick.RemoveListener(SendDeleteAccountButtonClick);
             _subscriptionManagementButton.onClick.RemoveListener(SendSubscriptionManagementButtonClick);
+            _subscribeButtonRewardButton.onClick.RemoveListener(SendSubscriptionManagementOnRewardWindowButtonClick);
+            _rewardVideoButton.onClick.RemoveListener(SendViewingRewardAdButtonClick);
+
+            foreach (var button in _turnOffAdButtons)
+                button.onClick.RemoveListener(SendTurnOffAdOnDisableWindowButtonClick);
+
+            foreach (var button in _learnMoreAboutSubscriptionButtons)
+                button.onClick.RemoveListener(SendLearnMoreSubsButtonClick);
+
+            foreach (var button in _turnOffAdOnInfoButtons)
+                button.onClick.RemoveListener(SendTurnOffAdOnInfoWindowButtonClick);
+
+            foreach (var button in _closeTurnOffAdWindowButtons)
+                button.onClick.RemoveListener(SendCloseTurnOffAdWindowButtonClick);
+
+            foreach (var button in _closeTurnOffAdInfoWindowButtons)
+                button.onClick.RemoveListener(SendCloseTurnOffAdInfoWindowButtonClick);
         }
 
         public void SetAdInfo(bool adEvents) => _adEvents = adEvents;
@@ -60,10 +101,27 @@ namespace Agava.Wink
         private void SendSubscribeWinkButtonClick() => AnalyticsWinkService.SendSubscribeWinkButtonClick();
         private void SendDeleteAccountButtonClick() => AnalyticsWinkService.SendDeleteAccountButtonClick();
         private void SendSubscriptionManagementButtonClick() => AnalyticsWinkService.SendSubscriptionManagementButtonClick();
+        private void SendSubscriptionManagementOnRewardWindowButtonClick() => AnalyticsWinkService.SendSubscriptionManagementOnRewardWindowButtonClick();
+        private void SendViewingRewardAdButtonClick() => AnalyticsWinkService.SendViewingRewardAdButtonClick();
+        private void SendTurnOffAdOnDisableWindowButtonClick() => AnalyticsWinkService.SendTurnOffAdOnDisableWindowButtonClick();
+        private void SendLearnMoreSubsButtonClick() => AnalyticsWinkService.SendLearnMoreSubsButtonClick();
+        private void SendCloseTurnOffAdWindowButtonClick() => AnalyticsWinkService.SendCloseTurnOffAdWindowButtonClick();
         private void SendOfferWinkKidsButtonClick()
         {
             if(_adEvents == false)
                 AnalyticsWinkService.SendOfferWinkKidsButtonClick();
+        }
+
+        private void SendTurnOffAdOnInfoWindowButtonClick()
+        {
+            if (_adEvents)
+                AnalyticsWinkService.SendTurnOffAdOnInfoWindowButtonClick();
+        }
+
+        private void SendCloseTurnOffAdInfoWindowButtonClick()
+        {
+            if (_adEvents)
+                AnalyticsWinkService.SendCloseTurnOffAdInfoWindowButtonClick();
         }
     }
 }
