@@ -503,7 +503,7 @@ namespace Agava.Wink
                     _notifyWindowHandler.CloseAdOffer();
                     _notifyWindowHandler.SetAdOption(adOption: true);
 
-                    if (_gameOrientation.NeedChangeOrientation)
+                    if (_gameOrientation.NeedChangeOrientation && _gameOrientation.ChangedToLandscape)
                     {
                         _forcedChangeOrientation = true;
                         _gameOrientation.SaveGameOrientation();
