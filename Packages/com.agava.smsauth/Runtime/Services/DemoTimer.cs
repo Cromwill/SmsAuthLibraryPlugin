@@ -97,7 +97,7 @@ namespace Agava.Wink
                 return;
             }
 
-            if (_winkSignInHandlerUI.IsAnyWindowEnabled || Expired || SmsAuthApi.Initialized == false)
+            if (_winkSignInHandlerUI == null || _winkSignInHandlerUI.IsAnyWindowEnabled || Expired || SmsAuthApi.Initialized == false)
                 return;
 
             _second -= Time.unscaledDeltaTime;

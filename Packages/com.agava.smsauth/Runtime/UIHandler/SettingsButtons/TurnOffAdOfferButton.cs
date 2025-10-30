@@ -18,7 +18,7 @@ namespace Agava.Wink
             UpdateButton();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             UpdateButton();
         }
