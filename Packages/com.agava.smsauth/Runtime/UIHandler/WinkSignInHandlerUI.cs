@@ -124,7 +124,6 @@ namespace Agava.Wink
             _winkAccessManager.LimitReached -= OnLimitReached;
             _winkAccessManager.SignInSuccessfully -= OnSignInSuccessfully;
             _winkAccessManager.AuthorizationSuccessfully -= OnAuthorizationSuccessfully;
-            _interstitialPlayer.OpenAdOffer -= OpenTurnOffAdPanel;
             _demoTimer.TimerExpired -= OnTimerExpired;
             _demoTimer.FirstChecked -= OnTimerFirstChecked;
             _demoTimer.Dispose();
@@ -132,6 +131,9 @@ namespace Agava.Wink
             _notifyWindowHandler.WebViewClosed -= TurnOffAdMode;
             _notifyWindowHandler.Dispose();
             _analyticsSender.Dispose();
+
+            if (_interstitialPlayer != null)
+                _interstitialPlayer.OpenAdOffer -= OpenTurnOffAdPanel;
         }
 
         public IEnumerator Initialize()
@@ -217,11 +219,13 @@ namespace Agava.Wink
             _winkAccessManager.LimitReached += OnLimitReached;
             _winkAccessManager.SignInSuccessfully += OnSignInSuccessfully;
             _winkAccessManager.AuthorizationSuccessfully += OnAuthorizationSuccessfully;
-            _interstitialPlayer.OpenAdOffer += OpenTurnOffAdPanel;
             _demoTimer.TimerExpired += OnTimerExpired;
             _demoTimer.FirstChecked += OnTimerFirstChecked;
             _notifyWindowHandler.SunbscriptionBuyed += OnSunbscriptionBuyed;
             _notifyWindowHandler.WebViewClosed += TurnOffAdMode;
+
+            if(_interstitialPlayer != null)
+                _interstitialPlayer.OpenAdOffer += OpenTurnOffAdPanel;
         }
 
         public void OpenStartWindow() => OpenSubscriptionWindow();
