@@ -319,7 +319,6 @@ namespace Agava.Wink
 
         public void OnDeleteAccountButtonClick()
         {
-            Debug.Log($"AD OFFER OFF: try delete account");
             _screenshotProtector.TryDisableScreenshots();
             _loginFromSettings = true;
             _gameOrientation.SaveGameOrientation();
@@ -361,7 +360,6 @@ namespace Agava.Wink
 
         public void OpenTurnOffAdPanel()
         {
-            Debug.Log($"AD OFFER OFF: open turn off ad panel");
             _useAdWindows = true;
             _gameOrientation.SaveGameOrientation();
             _screenshotProtector.TryDisableScreenshots();
@@ -377,7 +375,6 @@ namespace Agava.Wink
 
         private void OpenAdOfferWindow()
         {
-            Debug.Log($"AD OFFER OFF: open ad offer window");
             _notifyWindowHandler.OpenAdOffOffer(isHorizontal: _gameOrientation.NeedChangeOrientation);
             _notifyWindowHandler.CloseWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical);
         }
@@ -386,7 +383,6 @@ namespace Agava.Wink
         {
             if (_useAdWindows)
             {
-                Debug.Log($"AD OFFER OFF: try close ad offer window");
                 TurnOffAdMode();
             }
             else
@@ -402,23 +398,18 @@ namespace Agava.Wink
 
         private void TurnOffAdMode()
         {
-            Debug.Log("AD OFFER OFF: turn off ad mode");
             _useAdWindows = false;
             _analyticsSender.SetAdInfo(adEvents: _useAdWindows);
             _notifyWindowHandler.CloseAdOffer();
             _interstitialPlayer?.Continue();
             _screenshotProtector.TryEnableScreenshots();
 
-            Debug.Log($"AD OFFER OFF: after close webview need rotate phone, force rotate = {_forcedChangeOrientation}");
             if (_forcedChangeOrientation && _gameOrientation.NeedChangeOrientation)
             {
-                Debug.Log("AD OFFER OFF: force to change orientation");
                 _forcedChangeOrientation = false;
                 _gameOrientation.SetLandscapeOrientationPosibility();
                 _gameOrientation.SetSavedOrientation();
             }
-
-            //TODO: Если игрок не авторизован но прошел дальше и закрыл инфо окно, надо проверять в какой раскладке он был и возвращать нужную
         }
 
         private void OnSignInContinueClicked()
@@ -477,22 +468,18 @@ namespace Agava.Wink
 
         private void CloseSignInWindow()
         {
-            Debug.Log($"AD OFFER OFF: Close sing in");
-
             if (_useAdWindows)
             {
                 _forcedChangeOrientation = false;
 
                 if (_gameOrientation.NeedChangeOrientation)
                 {
-                    Debug.Log($"AD OFFER OFF: сlose sing in for landscape screen");
                     StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => TurnOffAdMode()));
                     _gameOrientation.SetLandscapeOrientationPosibility();
                     _gameOrientation.SetSavedOrientation();
                 }
                 else
                 {
-                    Debug.Log($"AD OFFER OFF: сlose sing in for portrait screen");
                     TurnOffAdMode();
                 }
             }
@@ -502,8 +489,6 @@ namespace Agava.Wink
 
         private void CheckSubscription()
         {
-            Debug.Log($"AD OFFER OFF: check subs, auth = {_winkAccessManager.Authenficated}");
-
             if (_winkAccessManager.Authenficated)
             {
                 _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
@@ -516,7 +501,6 @@ namespace Agava.Wink
 
                     if (_gameOrientation.NeedChangeOrientation)
                     {
-                        Debug.Log("AD OFFER OFF: open check subs screen on landscape orientation");
                         _forcedChangeOrientation = true;
                         _gameOrientation.SaveGameOrientation();
                         _gameOrientation.SetPortraitOrientation();
@@ -525,11 +509,8 @@ namespace Agava.Wink
             }
             else
             {
-                Debug.Log("AD OFFER OFF: need open login with delay");
-
                 if (_gameOrientation.NeedChangeOrientation)
                 {
-                    Debug.Log($"AD OFFER OFF: open sign in window for landscape screen");
                     _forcedChangeOrientation = true;
 
                     StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () =>
@@ -544,13 +525,10 @@ namespace Agava.Wink
                 }
                 else
                 {
-                    Debug.Log($"AD OFFER OFF: open sign in window for portrait screen");
                     _notifyWindowHandler.OpenSignInWindow();
                     _notifyWindowHandler.CloseAdOffer();
                     _notifyWindowHandler.SetAdOption(adOption: true);
                 }
-
-                /*StartCoroutine(ActionWithDelay(ChangeOrientationDelay, () => _notifyWindowHandler.OpenWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical)));*/
             }
         }
 
