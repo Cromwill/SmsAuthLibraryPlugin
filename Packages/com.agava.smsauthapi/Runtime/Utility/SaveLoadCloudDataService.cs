@@ -14,7 +14,7 @@ namespace SmsAuthAPI.Utility
         ///     Save JSON to cloud. Json recieve only (string).
         /// </summary>
 
-        public static event Action SaveFailed;
+        public static event Action<string> SaveFailed;
 
         public static async void SaveData(string json)
         {
@@ -31,7 +31,7 @@ namespace SmsAuthAPI.Utility
             if (response.statusCode != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("CloudSave -> fail to save: " + response.statusCode + " Message: " + response.body);
-                SaveFailed?.Invoke();
+                SaveFailed?.Invoke(json);
             }
         }
 
