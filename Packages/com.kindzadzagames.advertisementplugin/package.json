@@ -20,6 +20,11 @@
             "description": "Contains a script to fix an error when building a project on iOS.",
             "displayName": "IOSBuildBugFix",
             "path": "Samples~/IOSBuildBugFix"
+        },
+        {
+            "description": "Contains a script to show the app tracking transparency message.",
+            "displayName": "PostBuildStepForATT",
+            "path": "Samples~/PostBuildStepForATT"
         }
 	],
 	"type": "library",

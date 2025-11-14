@@ -66,14 +66,14 @@ namespace KinDzaDzaGames.AdvertisementPlugin
             DontDestroyOnLoad(this);
 
 #if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
-            _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL);
+            _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL, this);
             OnInitializeSuccess();
 #elif YABBI_AD
             _userConsentScreen.Construct(_consentManager);
             StartCoroutine(StartYabbiService());
 #elif YANDEX_AD
             Debug.Log("Advertisement Plugin: start YANDEX service.");
-            _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL);
+            _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL, this);
             OnInitializeSuccess();
 #endif
         }
