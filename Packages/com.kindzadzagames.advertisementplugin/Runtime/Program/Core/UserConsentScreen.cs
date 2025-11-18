@@ -15,6 +15,9 @@ using YabbiSDK.ConsentManagerSDK.Api;
 using SspnetSDK.ConsentManagerSDK.Unfiled;
 #elif YANDEX_AD
 using YandexMobileAds;
+#if UNITY_IOS
+using Unity.Advertisement.IosSupport;
+#endif
 #endif
 
 namespace KinDzaDzaGames.AdvertisementPlugin

@@ -3,6 +3,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
     public static class ASMDEFSettings
     {
         public const string GUID = "GUID:";
+        public const string ASMDEFSIGNATURE = "t:asmdef";
 
         public class YabbiAds
         {
@@ -31,6 +32,11 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
             public const string Android = "Android";
             public const string iOS = "iOS";
             public const string Editor = "Editor";
+        }
+
+        public class IosATT
+        {
+            public const string ATTASMDEF = "Unity.Advertisement.IosSupport.asmdef";
         }
     }
 }

@@ -62,6 +62,16 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 
             if (GUILayout.Button("Remove YANDEX define"))
                 TryRemoveAdDefine(ASMDEFSettings.YandexAds.YandexDefine);
+
+            GUILayout.Space(50);
+
+            GUILayout.Label("Add ATT ASMDEF to AD plugin, ONLY YANDEX in iOS!", centeredStyle);
+
+            if (GUILayout.Button("Try add iOS ASMDEF to ADS plugin"))
+                TryAddIosASMDEF();
+
+            if (GUILayout.Button("Try remove iOS ASMDEF from ADS plugin"))
+                TryRemoveIosASMDEF();
         }
 
         private void CreateYabbiASMDEFs()
@@ -262,18 +272,110 @@ namespace KinDzaDzaGames.AdvertisementPlugin.EditorScripts
 
             if (directories.Length == 0)
             {
-                Debug.Log($"Directory not found in PackageCache, try find in Packages.");
-
                 packagesPath = Application.dataPath + $"{Path.DirectorySeparatorChar}..{Path.DirectorySeparatorChar}Packages{Path.DirectorySeparatorChar}com.kindzadzagames.advertisementplugin{Path.DirectorySeparatorChar}Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef";
+
+                Debug.Log($"AD ASMDEF found in Packages, path: {packagesPath}.");
             }
             else
             {
-                Debug.Log($"Directory found in PackageCache.");
-
                 packagesPath = Path.Combine(directories[0], $"Runtime{Path.DirectorySeparatorChar}KDDG.Advertisement.asmdef");
+
+                Debug.Log($"AD ASMDEF found in PackageCache, path: {packagesPath}.");
             }
 
             return packagesPath;
+        }
+
+        private void TryAddIosASMDEF()
+        {
+            bool finded = false;
+            string[] allASMdefs = AssetDatabase.FindAssets(ASMDEFSettings.ASMDEFSIGNATURE);
+
+            foreach (string guid in allASMdefs)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+
+                if (path.Contains(ASMDEFSettings.IosATT.ATTASMDEF))
+                {
+                    finded = true;
+                    AssemblyDefinition asmdefObject = null;
+                    string packagesPath = GetPackagePath();
+
+                    if (File.Exists(packagesPath))
+                    {
+                        string jsonContent = File.ReadAllText(packagesPath);
+                        asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
+
+                        if (asmdefObject.references.Contains(ASMDEFSettings.GUID + guid) == false)
+                        {
+                            AddASMDEF(ref asmdefObject.references, ASMDEFSettings.GUID + guid);
+
+                            string updatedJson = JsonUtility.ToJson(asmdefObject, true);
+                            File.WriteAllText(packagesPath, updatedJson);
+                            AssetDatabase.Refresh();
+                        }
+                        else
+                        {
+                            Debug.LogError($"AD ASMDEF has iOS ATT guid: {guid}, in references.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"AD ASMDEF was not found on the way - {packagesPath}.");
+                    }
+
+                    break;
+                }
+            }
+
+            if (finded == false)
+                Debug.LogError($"ASMDEF from App Tracking Transparency API was not found, check if the plugin for iOS is installed. If not - install iOS 14 Advertising Support from package manager.");
+        }
+
+        private void TryRemoveIosASMDEF()
+        {
+            bool finded = false;
+            string[] allASMdefs = AssetDatabase.FindAssets(ASMDEFSettings.ASMDEFSIGNATURE);
+
+            foreach (string guid in allASMdefs)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+
+                if (path.Contains(ASMDEFSettings.IosATT.ATTASMDEF))
+                {
+                    finded = true;
+                    AssemblyDefinition asmdefObject = null;
+                    string packagesPath = GetPackagePath();
+
+                    if (File.Exists(packagesPath))
+                    {
+                        string jsonContent = File.ReadAllText(packagesPath);
+                        asmdefObject = JsonUtility.FromJson<AssemblyDefinition>(jsonContent);
+
+                        if (asmdefObject.references.Contains(ASMDEFSettings.GUID + guid))
+                        {
+                            RemoveASMDEF(ref asmdefObject.references, ASMDEFSettings.GUID + guid);
+
+                            string updatedJson = JsonUtility.ToJson(asmdefObject, true);
+                            File.WriteAllText(packagesPath, updatedJson);
+                            AssetDatabase.Refresh();
+                        }
+                        else
+                        {
+                            Debug.LogError($"AD ASMDEF doesn't have iOS ATT guid: {guid}, in references.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"AD ASMDEF was not found on the way - {packagesPath}.");
+                    }
+
+                    break;
+                }
+            }
+
+            if (finded == false)
+                Debug.LogError($"ASMDEF from App Tracking Transparency API was not found, check if the plugin for iOS is installed. If not - install iOS 14 Advertising Support from package manager.");
         }
 
         private void TryAddAdDefine(string sdkLabel, string deletingSdk)
