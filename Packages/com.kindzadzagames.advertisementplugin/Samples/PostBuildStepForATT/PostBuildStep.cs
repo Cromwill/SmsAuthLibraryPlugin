@@ -6,7 +6,7 @@ using System.IO;
 
 public class PostBuildStep {
   // Set the IDFA request description:
-  const string k_TrackingDescription = "Your data will be used to provide you a better and personalized ad experience.";
+  const string k_TrackingDescription = "Ваши данные будут использованы для предоставления вам более качественной и персонализированной рекламы.";
 
   [PostProcessBuild(0)]
   public static void OnPostProcessBuild(BuildTarget buildTarget, string pathToXcode) {
