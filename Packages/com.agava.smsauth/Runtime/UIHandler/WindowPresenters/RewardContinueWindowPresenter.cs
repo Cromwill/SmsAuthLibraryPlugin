@@ -5,7 +5,9 @@ using System.Text;
 using UnityEngine.UI;
 using System.Collections;
 using SmsAuthAPI.Program;
+#if YABBI_AD  || YANDEX_AD 
 using Com.Yandex.Varioqub;
+#endif
 using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin;
@@ -72,7 +74,7 @@ namespace Agava.Wink
 
             _winkSubsDescription.text = string.Format(_winkSubsDescriptionPattern, string.IsNullOrEmpty(trialTask.Result) ? _defaultTrialPeriodDays : trialTask.Result, string.IsNullOrEmpty(priceTask.Result) ? _defaultWinkPrice : priceTask.Result);
 
-
+#if YABBI_AD  || YANDEX_AD 
             string id = $"appmetrica.{_appMetricaInfo.VarioqubId}";
             var settings = new VarioqubSettings(id);
             settings.Logs = true;
@@ -82,6 +84,7 @@ namespace Agava.Wink
             Varioqub.ActivateConfig();
 
             yield return RepeatFetch();
+#endif
 
             _minutWordEndings.TryGetValue(_rewardSettings.demo_overtime_minutes, out char ending);
 
@@ -99,7 +102,7 @@ namespace Agava.Wink
             bool success = false;
             int fetchCount = 0;
             yield return new WaitForSeconds(.5f);
-
+#if YABBI_AD || YANDEX_AD
             while (success == false)
             {
                 Varioqub.Fetch(
@@ -138,6 +141,7 @@ namespace Agava.Wink
                     }
                 }
             }
+#endif
         }
 
         public override void Enable()
