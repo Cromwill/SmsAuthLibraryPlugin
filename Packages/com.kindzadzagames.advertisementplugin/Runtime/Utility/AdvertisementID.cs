@@ -206,10 +206,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.ThreeCatsRacing, new AdvertisingConfigs()
                 {
-                    PublisherID = "It is required to use manual id input",
-                    BannerUnitID = "It is required to use manual id input",
-                    InterstitialUnitID = "It is required to use manual id input",
-                    RewardedUnitID = "It is required to use manual id input",
+                    PublisherID = _publisherID,
+                    BannerUnitID = "d8b7db2a-c5de-11f0-8a42-ed61f5fbcfc2",
+                    InterstitialUnitID = "ca8c81b8-c5de-11f0-aee8-33502acce0ba",
+                    RewardedUnitID = "d2126fba-c5de-11f0-b017-d5cf2255756b",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             },
