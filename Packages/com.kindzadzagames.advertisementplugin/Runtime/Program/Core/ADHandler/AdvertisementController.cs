@@ -65,7 +65,7 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
             DontDestroyOnLoad(this);
 
-#if UNITY_EDITOR && YABBI_AD == false && YANDEX_AD == false
+#if YABBI_AD == false && YANDEX_AD == false
             _userConsentScreen.Construct(advertisingConfigs.AppPrivacyPolicyURL, this);
             OnInitializeSuccess();
 #elif YABBI_AD
