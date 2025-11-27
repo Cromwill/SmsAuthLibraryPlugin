@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Agava.Wink
 {
@@ -8,6 +9,7 @@ namespace Agava.Wink
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private TMP_Text _label;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         public void Construct(RewardSettings rewardSettings) => _label.text = rewardSettings.turn_off_ad_offer_wink_text;
 
@@ -24,5 +26,7 @@ namespace Agava.Wink
 
             AnalyticsWinkService.SendShowTurnOffAdWindow();
         }
+
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
     }
 }

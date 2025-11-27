@@ -154,6 +154,8 @@ namespace Agava.Wink
             _helloWOAccessWindow.FillRemoteTexts();
             _redirectToWebsiteWindow.FillRemoteTexts();
             _demoTimerExpiredWindow.FillRemoteTexts();
+            _verticalTurnOffAdWindow.FillRemoteTexts();
+            _horizontalTurnOffAdWindow.FillRemoteTexts();
         }
 
         internal bool HasOpenedWindow(WindowType type)

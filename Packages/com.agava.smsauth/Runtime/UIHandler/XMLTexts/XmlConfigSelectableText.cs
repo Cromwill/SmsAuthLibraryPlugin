@@ -6,7 +6,7 @@ namespace Agava.Wink
 {
     public class XmlConfigSelectableText : XmlConfigText
     {
-        [Header("123")]
+        [Header("Second variant")]
         [SerializeField] private XMLKeys _xMLKeyforADVariant;
         [SerializeField] private XMLValues _xMLValueforADVariant;
         [SerializeField] private string _fallbackTextforADVariant;

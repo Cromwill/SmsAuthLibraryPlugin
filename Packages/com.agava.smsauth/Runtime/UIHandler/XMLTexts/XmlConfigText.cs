@@ -17,6 +17,11 @@ namespace Agava.Wink
         [SerializeField] private bool _isLink;
         [SerializeField] private string _linkName;
 
+        protected TMP_Text Text => _text;
+        protected XMLKeys XMLKeys => _xMLKey;
+        protected XMLValues XMLValues => _xMLValue;
+        protected string FallbackText => _fallbackText;
+
         public virtual void FillText()
         {
             if (SheetRemoteConfigs.Texts != null)
