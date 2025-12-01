@@ -12,7 +12,7 @@ namespace Agava.Wink
 
         public override void FillText()
         {
-            if (SheetRemoteConfigs.Texts != null && false)
+            if (SheetRemoteConfigs.Texts != null)
             {
                 Text.text = string.Format(_textPattern, SheetRemoteConfigs.Texts.Data[XMLKeys.ToString()][XMLValues.ToString()], SheetRemoteConfigs.Texts.Data[_lineEndXMLKey.ToString()][_lineEndXMLValue.ToString()]);
             }
