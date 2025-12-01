@@ -67,6 +67,7 @@ namespace Agava.Wink
         public bool BannerDisplayBlocked => IsAnyWindowEnabled;
 
         public event Action AllWindowsClosed;
+        public event Action DemoCompleted;
 
         public void Construct(string storeName, AppMetricaInfo appMetricaInfo)
         {
@@ -569,6 +570,7 @@ namespace Agava.Wink
                 }
             }
 
+            DemoCompleted?.Invoke();
             _screenshotProtector.TryDisableScreenshots();
             AdvertisementController.Instance?.AddInterstitialBlocker(this);
             AdvertisementController.Instance?.SuspendDisplayBanner(this);
