@@ -215,10 +215,10 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
             },
             {AppName.ThreeCatsPuzzles, new AdvertisingConfigs()
                 {
-                    PublisherID = "It is required to use manual id input",
-                    BannerUnitID = "It is required to use manual id input",
-                    InterstitialUnitID = "It is required to use manual id input",
-                    RewardedUnitID = "It is required to use manual id input",
+                    PublisherID = _publisherID,
+                    BannerUnitID = "04363b08-cf52-11f0-a3c2-8ba275a750a8",
+                    InterstitialUnitID = "fddc74e8-cf51-11f0-95e1-b3ad3ed53ef0",
+                    RewardedUnitID = "0a185704-cf52-11f0-8c69-9f109c566dd9",
                     AppPrivacyPolicyURL = _appPrivacyPolicyURL
                 }
             }
