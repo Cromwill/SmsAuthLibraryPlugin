@@ -22,6 +22,7 @@ namespace Agava.Wink
             {
                 FirstActivationAsUpdate = !IsFirstLaunch(),
                 LocationTracking = false,
+                Logs = true,
             });
 #if UNITY_EDITOR || TEST
             Debug.Log($"AppMetrica start: {key}");

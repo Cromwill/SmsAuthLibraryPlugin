@@ -146,6 +146,7 @@ namespace Agava.Wink
         {
             try
             {
+                Debug.Log($"ANALYTICS: event - {eventName}, json - {json}");
                 AppMetrica.ReportEvent(eventName, json);
             }
             catch (Exception ex)
