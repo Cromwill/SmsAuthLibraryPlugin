@@ -3472,6 +3472,8 @@ MonoBehaviour:
   _closeSignInWindowButton: {fileID: 445661722451534889}
   _analyticsSender:
     _checkSubscriptionButton: {fileID: 6034233234670848943}
+    _closeOfferWinkKidsButton: {fileID: 3204603542502515191}
+    _closeSubscribeProfileWindowButton: {fileID: 2699411539137173026}
     _offerWinkKidsButtons:
     - {fileID: 5993676097829145713}
     - {fileID: 8763777240278118524}

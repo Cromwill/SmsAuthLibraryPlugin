@@ -81,7 +81,11 @@ namespace Agava.Wink
         public static void SendCloseTurnOffAdWindowButtonClick() => SendEvent("Click On Close Turn Off Ad Offer Window");
         public static void SendTurnOffAdOnInfoWindowButtonClick() => SendEvent("Click Turn Off Ad On Offer Info Window");
         public static void SendCloseTurnOffAdInfoWindowButtonClick() => SendEvent("Click On Close Turn Off Ad Offer Info Window");
-        public static void CheckSubscriptionButtonClick() => SendEvent("Clicked Check Button");
+        public static void SendCheckSubscriptionButtonClick() => SendEvent("Clicked Check Button");
+        public static void SendLoadingStart() => SendEvent("Loading Start");
+        public static void SendLoadingFinish() => SendEvent("Loading Finish");
+        public static void SendCloseSubscribeProfileWindow() => SendEvent("Close Subscribe Profile Window");
+        public static void SendCloseOfferWinkKids() => SendEvent("Close Offer Wink Kids");
 
 
         private static string GetJson(string name, string value)
