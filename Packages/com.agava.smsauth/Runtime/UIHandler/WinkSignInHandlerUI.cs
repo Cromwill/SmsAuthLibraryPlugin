@@ -32,12 +32,14 @@ namespace Agava.Wink
         [Header("UI Buttons")]
         [SerializeField] private Button _signInContinueButton;
         [SerializeField] private Button _enterCodeContinueButton;
-        [SerializeField] private Button[] _signInButtons;
-        [SerializeField] private Button[] _tryWinkButtons;
+        [SerializeField] private Button _signInButton;
+        [SerializeField] private Button _winkInfoButton;
+        //[SerializeField] private Button[] _tryWinkButtons;
         [SerializeField] private Button[] _switchOrientationButtons;
         [SerializeField] private Button[] _openAdOfferButtons;
         [SerializeField] private Button[] _subscriptionCheckButtons;
         [SerializeField] private Button[] _closeAdOfferButtons;
+        [SerializeField] private Button[] _closeAdInfoButtons;
         [SerializeField] private Button[] _closeButtonsFromSettings;
         [SerializeField] private Button[] _rewardButtons;
         [SerializeField] private Button _subscribeButtonRewardWindow;
@@ -89,12 +91,14 @@ namespace Agava.Wink
 
             _enterCodeContinueButton.onClick.RemoveListener(OnEnterCodeContinueClicked);
             _signInContinueButton.onClick.RemoveListener(OnSignInContinueClicked);
+            _signInButton.onClick.RemoveListener(OpenSignWindow);
+            _winkInfoButton.onClick.RemoveListener(OpenWinkInfoWindow);
 
-            foreach (var button in _signInButtons)
+            /*foreach (var button in _signInButtons)
                 button.onClick.RemoveListener(OpenSignWindow);
 
             foreach (var button in _tryWinkButtons)
-                button.onClick.RemoveListener(OpenSignWindow);
+                button.onClick.RemoveListener(OpenSignWindow);*/
 
             foreach (var button in _switchOrientationButtons)
                 button.onClick.RemoveListener(OpenChangeOrientationWindow);
@@ -107,6 +111,9 @@ namespace Agava.Wink
 
             foreach (var button in _closeAdOfferButtons)
                 button.onClick.RemoveListener(CloseAdOfferWindow);
+
+            foreach (var button in _closeAdInfoButtons)
+                button.onClick.RemoveListener(CloseAdInfoWindow);
 
             foreach (var button in _closeButtonsFromSettings)
                 button.onClick.RemoveListener(ContinueGame);
@@ -184,12 +191,14 @@ namespace Agava.Wink
 
             _enterCodeContinueButton.onClick.AddListener(OnEnterCodeContinueClicked);
             _signInContinueButton.onClick.AddListener(OnSignInContinueClicked);
+            _signInButton.onClick.AddListener(OpenSignWindow);
+            _winkInfoButton.onClick.AddListener(OpenWinkInfoWindow);
 
-            foreach (var button in _signInButtons)
+            /*foreach (var button in _signInButtons)
                 button.onClick.AddListener(OpenSignWindow);
 
             foreach (var button in _tryWinkButtons)
-                button.onClick.AddListener(OpenSignWindow);
+                button.onClick.AddListener(OpenSignWindow);*/
 
             foreach (var button in _switchOrientationButtons)
                 button.onClick.AddListener(OpenChangeOrientationWindow);
@@ -202,6 +211,9 @@ namespace Agava.Wink
 
             foreach (var button in _closeAdOfferButtons)
                 button.onClick.AddListener(CloseAdOfferWindow);
+
+            foreach (var button in _closeAdInfoButtons)
+                button.onClick.AddListener(CloseAdInfoWindow);
 
             foreach (var button in _closeButtonsFromSettings)
                 button.onClick.AddListener(ContinueGame);
@@ -235,6 +247,16 @@ namespace Agava.Wink
         {
             _notifyWindowHandler.OpenSignInWindow();
             AnalyticsWinkService.SendEnterPhoneWindow();
+        }
+
+        private void OpenWinkInfoWindow()
+        {
+            _useAdWindows = false;
+            _analyticsSender.SetAdInfo(adEvents: _useAdWindows);
+            _notifyWindowHandler.EnableOriginalOfferInfo(enableClose: _demoTimer.Expired == false);
+            _notifyWindowHandler.SetAdOption(adOption: _useAdWindows);
+            _notifyWindowHandler.OpenWindow(WindowType.WinkInfoVertical);
+            _notifyWindowHandler.CloseWindow(WindowType.HelloWOAccess);
         }
 
         private void OpenChangeOrientationWindow()
@@ -304,7 +326,7 @@ namespace Agava.Wink
         private void OpenRewardWindow()
         {
             _notifyWindowHandler.OpenRewardWindow();
-            _notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
+            //_notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
         }
 
         private void RedirectToSubscribe()
@@ -392,12 +414,22 @@ namespace Agava.Wink
             }
             else
             {
-#if TEST_TEMP_SUBSCRIPTION
-                _notifyWindowHandler.ConfirmPurchaseSubscriptionOnWebView();
-#else
-                _notifyWindowHandler.OpenHelloWindowWOAccess();
+                OpenChangeOrientationWindow();
+                //_notifyWindowHandler.OpenHelloWindowWOAccess();
                 _notifyWindowHandler.CloseWindow(WindowType.WinkInfoVertical);
-#endif
+            }
+        }
+
+        private void CloseAdInfoWindow()
+        {
+            if (_useAdWindows)
+            {
+                TurnOffAdMode();
+            }
+            else
+            {
+                OpenChangeOrientationWindow();
+                _notifyWindowHandler.CloseWindow(WindowType.WinkInfoVertical);
             }
         }
 
@@ -558,7 +590,10 @@ namespace Agava.Wink
             }
             else
             {
-                if (_winkAccessManager.Authenficated)
+                SetPhone();
+                _notifyWindowHandler.OpenHelloWindowWOAccess();
+
+                /*if (_winkAccessManager.Authenficated)
                 {
                     SetPhone();
                     _notifyWindowHandler.OpenHelloWindowWOAccess();
@@ -567,7 +602,7 @@ namespace Agava.Wink
                 {
                     AnalyticsWinkService.SendSubscribeOfferWindow();
                     _notifyWindowHandler.OpenDemoExpiredWindow(false);
-                }
+                }*/
             }
 
             DemoCompleted?.Invoke();

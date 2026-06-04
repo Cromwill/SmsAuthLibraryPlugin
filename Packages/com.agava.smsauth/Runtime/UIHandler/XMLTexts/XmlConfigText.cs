@@ -17,6 +17,8 @@ namespace Agava.Wink
         [SerializeField] private bool _isLink;
         [SerializeField] private string _linkName;
 
+        private string _originalText;
+
         protected TMP_Text Text => _text;
         protected XMLKeys XMLKeys => _xMLKey;
         protected XMLValues XMLValues => _xMLValue;
@@ -29,21 +31,24 @@ namespace Agava.Wink
                 Dictionary<string, string> data = SheetRemoteConfigs.Texts.Data[_xMLKey.ToString()];
 
                 if(_isLink == false)
-                    _text.text = data[_xMLValue.ToString()].Replace($"{{{LineTransitionPattern}}}", "\n");
+                    _originalText = data[_xMLValue.ToString()].Replace($"{{{LineTransitionPattern}}}", "\n");
                 else
-                    _text.text = string.Format(LinkPattern, _linkName, _text.text = data[_xMLValue.ToString()].Replace($"{{{LineTransitionPattern}}}", "\n"));
+                    _originalText = string.Format(LinkPattern, _linkName, _originalText = data[_xMLValue.ToString()].Replace($"{{{LineTransitionPattern}}}", "\n"));
             }
             else
             {
                 Debug.Log($"XML TEXT: download remote failed, used prepared texts for key = {_xMLKey}, value = {_xMLValue}.");
 
                 if (_isLink == false)
-                    _text.text = _fallbackText.Replace($"{{{LineTransitionPattern}}}", "\n");
+                    _originalText = _fallbackText.Replace($"{{{LineTransitionPattern}}}", "\n");
                 else
-                    _text.text = string.Format(LinkPattern, _linkName, _fallbackText.Replace($"{{{LineTransitionPattern}}}", "\n"));
+                    _originalText = string.Format(LinkPattern, _linkName, _fallbackText.Replace($"{{{LineTransitionPattern}}}", "\n"));
             }
+
+            ChangeText(_originalText);
         }
 
         public void ChangeText(string text) => _text.text = text;
+        public void SetOriginalText() => _text.text = _originalText;
     }
 }

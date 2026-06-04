@@ -19,6 +19,8 @@ namespace Agava.Wink
 
         private bool _isAdVariant = false;
 
+        public Button CloseButton => _closeButton;
+
         public event Action CloseButtonClicked;
         public event Action FreeTrialButtonClicked;
 
@@ -46,8 +48,9 @@ namespace Agava.Wink
 
         public override void Disable() => DisableCanvasGroup(_canvasGroup);
 
-        public void EnableAdVariant()
+        public virtual void EnableAdVariant()
         {
+            _closeButton.gameObject.SetActive(true);
             _isAdVariant = true;
             _scroll.verticalNormalizedPosition = 1f;
             InstallAdTexts();
@@ -59,6 +62,12 @@ namespace Agava.Wink
         {
             if (_xmlConfigSelectableText.Count > 0)
                 _xmlConfigSelectableText.ForEach(t => t.UseAdVariantText());
+        }
+
+        public void InstallOriginalTexts()
+        {
+            if (_xmlConfigSelectableText.Count > 0)
+                _xmlConfigSelectableText.ForEach(t => t.SetOriginalText());
         }
 
         private void CloseButtonClick()

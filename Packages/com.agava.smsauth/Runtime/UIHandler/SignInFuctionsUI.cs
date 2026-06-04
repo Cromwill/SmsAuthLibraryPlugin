@@ -143,14 +143,14 @@ namespace Agava.Wink
             if (hasAccess)
                 _demoTimer.Stop();
 
-            _notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
+            //_notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
             _notifyWindowHandler.CloseWindow(WindowType.SignIn);
         }
 
         internal void OnAuthorizationSuccessfully()
         {
             _demoTimer.Stop();
-            _notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
+            //_notifyWindowHandler.CloseWindow(WindowType.DemoTimerExpired);
         }
     }
 }

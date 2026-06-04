@@ -47,6 +47,12 @@ namespace Agava.Wink
 #endif
         }
 
+        public void HideCloseButton()
+        {
+            _closeButton.gameObject.SetActive(false);
+            _rewardButton.gameObject.SetActive(false);
+        }
+
         private void OnSubscribeButtonClick()
         {
             Disable();

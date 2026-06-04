@@ -15,7 +15,7 @@ namespace Agava.Wink
         [SerializeField] private ProcessWindowPresenter _proccesOnWindow;
         [SerializeField] private HelloWindowPresenter _helloWindow;
         [SerializeField] private UnlinkWindowPresenter _unlinkWindow;
-        [SerializeField] private RedirectWindowPresenter _demoTimerExpiredWindow;
+        //[SerializeField] private RedirectWindowPresenter _demoTimerExpiredWindow;
         [SerializeField] private NotifyWindowPresenter _noEnternetWindow;
         [SerializeField] private RedirectWindowPresenter _redirectToWebsiteWindow;
         [SerializeField] private InputWindowPresenter _enterCodeWindow;
@@ -31,6 +31,7 @@ namespace Agava.Wink
         [SerializeField] private WebViewPresenter _webViewPresenter;
         [SerializeField] private RewardContinueWindowPresenter _rewardContinueWindowPresenter;
         [SerializeField] private RewardSettings _rewardSettings;
+        [SerializeField] private bool _hasDemoMode = true;
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
 
@@ -40,7 +41,7 @@ namespace Agava.Wink
         private bool _subscriptionChecked = false;
         private bool _useAdMechanics = false;
 
-        private bool _choosedFreeTrial => (_redirectToWebsiteWindow.TryFreeWink || _demoTimerExpiredWindow.TryFreeWink) && _subscriptionChecked == false;
+        //private bool _choosedFreeTrial => (_redirectToWebsiteWindow.TryFreeWink || _demoTimerExpiredWindow.TryFreeWink) && _subscriptionChecked == false;
 
         public bool IsAnyWindowEnabled => _windows.Any(window => window.Enabled);
         public bool ZeroSecondsCodeTimer => _enterCodeWindow.ZeroSeconds;
@@ -93,18 +94,19 @@ namespace Agava.Wink
 
         internal void ActivateOtpCodeSetter() => _enterCodeWindow.ActivateOtpCodeSetter();
 
-        internal void OpenDemoExpiredWindow(bool closeButton)
+        /*internal void OpenDemoExpiredWindow(bool closeButton)
         {
             _enterCodeWindow.ResetCodeTimer();
             _redirectToWebsiteWindow.ResetFreeChoise();
-            _demoTimerExpiredWindow.Enable(closeButton);
-        }
+            _demoTimerExpiredWindow.Enable();
+        }*/
 
         internal void OpenRewardWindow()
         {
             _rewardContinueWindowPresenter.Enable();
-            _redirectToWebsiteWindow.Disable();
+            //_redirectToWebsiteWindow.Disable();
             _helloWOAccessWindow.Disable();
+            _winkInfoVericalWindowPresenter.Disable();
         }
 
         internal void OpenDeleteAccountWindow(Action onDeleteAccount) => _deleteAccountWindow.Enable(onDeleteAccount);
@@ -118,10 +120,7 @@ namespace Agava.Wink
             }
             else
             {
-                if(_choosedFreeTrial)
-                    _winkInfoVericalWindowPresenter.Enable();
-                else
-                    OpenHelloWindowWOAccess();
+                OpenHelloWindowWOAccess();
             }
         }
 
@@ -133,10 +132,11 @@ namespace Agava.Wink
 
         internal void ChangeDemoModeOption(bool enabled)
         {
-            _redirectToWebsiteWindow.TryShowCloseButton(enabled: enabled);
-            _redirectToWebsiteWindow.TryShowRewardButton(enabled: enabled);
-            _demoTimerExpiredWindow.TryShowRewardButton(enabled: enabled);
-            _helloWOAccessWindow.TryShowCloseButton(enabled: enabled);
+            if(_hasDemoMode == false)
+                _helloWOAccessWindow.HideCloseButton();
+            else
+                _helloWOAccessWindow.TryShowCloseButton(enabled: enabled);
+
         }
 
         internal void Response(bool accepted) => _enterCodeWindow.Response(accepted);
@@ -152,8 +152,6 @@ namespace Agava.Wink
             _winkInfoVericalWindowPresenter.FillRemoteTexts();
             _winkInfoHorizontalWindowPresenter.FillRemoteTexts();
             _helloWOAccessWindow.FillRemoteTexts();
-            _redirectToWebsiteWindow.FillRemoteTexts();
-            _demoTimerExpiredWindow.FillRemoteTexts();
             _verticalTurnOffAdWindow.FillRemoteTexts();
             _horizontalTurnOffAdWindow.FillRemoteTexts();
         }
@@ -174,9 +172,17 @@ namespace Agava.Wink
         internal void EnableAdOfferInfo()
         {
             _subscriptionChecked = false;
-            _redirectToWebsiteWindow.EnableFreeChoise();
-            _demoTimerExpiredWindow.EnableFreeChoise();
             _winkInfoVericalWindowPresenter.InstallAdTexts();
+        }
+
+        internal void EnableOriginalOfferInfo(bool enableClose)
+        {
+            _winkInfoVericalWindowPresenter.InstallOriginalTexts();
+
+            if (_hasDemoMode == false)
+                _winkInfoVericalWindowPresenter.HideCloseButton();
+            else
+                _winkInfoVericalWindowPresenter.TryShowCloseButton(enabled:  enableClose);
         }
 
         internal void CloseAdOffer()
