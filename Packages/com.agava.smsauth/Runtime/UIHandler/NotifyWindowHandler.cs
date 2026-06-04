@@ -38,6 +38,7 @@ namespace Agava.Wink
         private WinkWebViewURLHandler _winkWebViewURLHandler;
         private GameOrientation _gameOrientation;
         private ScreenshotProtector _screenshotProtector;
+        private DemoTimer _demoTimer;
         private bool _subscriptionChecked = false;
         private bool _useAdMechanics = false;
 
@@ -56,11 +57,12 @@ namespace Agava.Wink
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
             _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
             _screenshotProtector = screenshotProtector ?? throw new ArgumentNullException(nameof(screenshotProtector));
+            _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
 
             _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
-            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(demoTimer, storeName, appMetricaInfo, _rewardSettings));
+            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(_demoTimer, storeName, appMetricaInfo, _rewardSettings));
             _enterCodeWindow.Construct(smsRetrieverManager);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
@@ -239,6 +241,15 @@ namespace Agava.Wink
                 _gameOrientation.SetLandscapeOrientation();
 
             _screenshotProtector.TryEnableScreenshots();
+
+            _helloWOAccessWindow.HideCloseButton();
+            _winkInfoVericalWindowPresenter.HideCloseButton();
+
+            if (_hasDemoMode)
+            {
+                _helloWOAccessWindow.TryShowCloseButton(enabled: _demoTimer.Expired == false);
+                _winkInfoVericalWindowPresenter.TryShowCloseButton(enabled: _demoTimer.Expired == false);
+            }
         }
     }
 }
