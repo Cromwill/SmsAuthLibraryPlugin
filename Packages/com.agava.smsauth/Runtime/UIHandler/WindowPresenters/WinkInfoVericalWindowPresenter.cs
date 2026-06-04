@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Scripting;
+using KinDzaDzaGames.AdvertisementPlugin;
 
 namespace Agava.Wink
 {
@@ -17,7 +18,6 @@ namespace Agava.Wink
 
         public void TryShowCloseButton(bool enabled)
         {
-            Debug.Log($"IBRAGIM: TryShowCloseButton in WinkInfoVerical, enabled = {enabled}");
             CloseButton.gameObject.SetActive(enabled);
 
 #if UNITY_EDITOR
