@@ -2,13 +2,13 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using SmsAuthAPI.DTO;
+using SmsAuthAPI.Program;
 using System.Collections;
 using UnityEngine.Scripting;
 using System.Collections.Generic;
 using KinDzaDzaGames.AdvertisementPlugin;
-using AdsAppView.DTO;
-using SmsAuthAPI.DTO;
-using UnityEngine.Networking;
+using PlayerPrefs = UnityEngine.PlayerPrefs;
 
 namespace Agava.Wink
 {
@@ -61,6 +61,7 @@ namespace Agava.Wink
         private bool _loginFromSettings = false;
         private bool _useAdWindows = false;
         private bool _forcedChangeOrientation = false;
+        private bool _tokenRefreshing = false;
 
         public static WinkSignInHandlerUI Instance { get; private set; }
 
@@ -364,9 +365,19 @@ namespace Agava.Wink
                             _interstitialPlayer?.Continue();
 
                             if (resultSuccess == false)
+                            {
                                 _notifyWindowHandler.OpenWindow(WindowType.Fail);
+
+                                if (_tokenRefreshing == false)
+                                    StartCoroutine(RefreshFailedToken());
+                            }
                             else
-                                ContinueGame();
+                            {
+                                _loginFromSettings = false;
+                                _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+
+                                //ContinueGame();
+                            }
                         });
                     })));
 
@@ -654,6 +665,15 @@ namespace Agava.Wink
 
             action?.Invoke();
             _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+        }
+
+        private IEnumerator RefreshFailedToken()
+        {
+            _tokenRefreshing = true;
+
+            yield return SmsAuthApi.Refresh(TokenLifeHelper.GetTokens().refresh);
+
+            _tokenRefreshing = false;
         }
 
         public void RemoveRestriction() { }
