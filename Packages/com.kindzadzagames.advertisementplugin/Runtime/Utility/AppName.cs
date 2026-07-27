@@ -25,6 +25,5 @@ namespace KinDzaDzaGames.AdvertisementPlugin.Utility
         None,
         Kubokot,
         LogicLike,
-
     }
 }
