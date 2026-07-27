@@ -40,6 +40,23 @@ namespace Agava.Wink
             }
         }
 
+        internal async Task SendUserDatas(string phone, string deviceId, string appMetricaId)
+        {
+            UserDatas data = new()
+            {
+                phone = phone,
+                device_id = deviceId,
+                appmetrica_id = appMetricaId,
+            };
+
+            Response response = await SmsAuthApi.SendUserDatas(data);
+
+            if (response.statusCode == UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"#RequestHandler# User Datas send with {response.reasonPhrase}, data {response.body}");
+            }
+        }
+
         internal async Task<LoginData> Regist(string phoneNumber, string appHash, string uniqueId, string appId, Action<bool> otpCodeRequest, bool skipRegistration = false)
         {
             LoginData data = new()

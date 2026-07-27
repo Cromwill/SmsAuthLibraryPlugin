@@ -7,6 +7,7 @@ using SmsAuthAPI.Program;
 using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin;
+using Io.AppMetrica;
 
 namespace Agava.Wink
 {
@@ -158,6 +159,7 @@ namespace Agava.Wink
 
             if (_timespentService == null)
                 StartTimespentAnalytics();
+
         }
 
         public void Unlink(string deviceId, Action onUnlinkDevice = null) => _requestHandler.Unlink(new UnlinkData() { device_id = deviceId, app_id = AppId }, onUnlinkDevice);
@@ -248,6 +250,7 @@ namespace Agava.Wink
             Authenficated = true;
             SignInSuccessfully?.Invoke(hasAccess, hasTempAccess);
             SearchSubscription(LoginData.phone);
+            SendUserDatas(LoginData.phone, _uniqueId);
             Debug.Log("Authentication successfully");
 
             if (hasAccess)
@@ -375,6 +378,25 @@ namespace Agava.Wink
                 SmsAuthApi.SendEventSubscriberData(_sanId, LoginData.phone, DateTime.UtcNow.ToString(), AppId, Application.version, Platform);
                 _sendEventCoroutine = null;
                 _subscriptionEventSent = true;
+            }
+        }
+
+        private void SendUserDatas(string phone, string deviceId)
+        {
+            Debug.Log($"USER DATA: try send user info");
+            string _appmetricaDeviceId = string.Empty;
+            IEnumerable<string> keys = new string[] { StartupParamsKey.AppMetricaDeviceIDHash };
+
+            AppMetrica.RequestStartupParams(StartupParamsDelegateStartupParamsDelegate, keys);
+
+            void StartupParamsDelegateStartupParamsDelegate(StartupParamsResult result, StartupParamsErrorReason errorReason)
+            {
+                if (errorReason != null)
+                    Debug.LogError("Appmetrica ERROR reason: " + errorReason);
+
+                string _appmetricaDeviceId = result.DeviceIdHash;
+                //_requestHandler.SendUserDatas(phone, deviceId, _appmetricaDeviceId);
+                Debug.Log($"USER DATA: phone = {phone}, deviceId = {deviceId}, Appmetrica device id = {_appmetricaDeviceId}");
             }
         }
     }
