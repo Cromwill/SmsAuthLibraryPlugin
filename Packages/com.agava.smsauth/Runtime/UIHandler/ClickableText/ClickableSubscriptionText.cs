@@ -7,9 +7,10 @@ namespace Agava.Wink
     {
         private IEnumerator Start()
         {
-            yield return new WaitUntil(() => Links.Initialized);
+            yield return new WaitUntil(() => Links.Instance != null);
+            yield return new WaitUntil(() => Links.Instance.Initialized);
 
-            Initialize("subscription", Links.Subscription, () => AnalyticsWinkService.SendSubscriptionLink());
+            Initialize("subscription", Links.Instance.Subscription, () => AnalyticsWinkService.SendSubscriptionLink());
         }
     }
 }

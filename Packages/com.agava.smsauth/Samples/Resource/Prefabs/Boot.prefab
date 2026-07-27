@@ -53,6 +53,7 @@ MonoBehaviour:
   _restartAfterAuth: 0
   _advertisementBoot: {fileID: 0}
   _appMetricaInfo: {fileID: 11400000, guid: bf724078dbf240f4388015494f10c5af, type: 2}
+  _links: {fileID: 1593372107193117913}
 --- !u!114 &1593372107193117913
 MonoBehaviour:
   m_ObjectHideFlags: 0

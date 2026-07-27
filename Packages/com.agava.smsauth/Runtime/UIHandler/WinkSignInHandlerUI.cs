@@ -9,6 +9,7 @@ using UnityEngine.Scripting;
 using System.Collections.Generic;
 using KinDzaDzaGames.AdvertisementPlugin;
 using PlayerPrefs = UnityEngine.PlayerPrefs;
+using AdsAppView.Utility;
 
 namespace Agava.Wink
 {
@@ -68,18 +69,20 @@ namespace Agava.Wink
         public bool IsAnyWindowEnabled => _notifyWindowHandler.IsAnyWindowEnabled;
         public bool InterstitialDisplayBlocked => IsAnyWindowEnabled;
         public bool BannerDisplayBlocked => IsAnyWindowEnabled;
+        public AppAuthenticator AppAuthenticator => _webViewURLHandler.AppAuthenticator;
 
         public event Action AllWindowsClosed;
         public event Action DemoCompleted;
 
-        public void Construct(string storeName, AppMetricaInfo appMetricaInfo)
+        public void Construct(BuildVersionHolder buildVersionHolder, AppMetricaInfo appMetricaInfo)
         {
             StartCoroutine(_webViewURLHandler.Construct());
 
             _webViewURLHandler.CheckAvailabilityURL();
             _smsRetrieverManager.Construct();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, storeName, appMetricaInfo, _smsRetrieverManager);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, buildVersionHolder.StoreName.ToString(), appMetricaInfo, _smsRetrieverManager);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+            Links.Instance.SetAppInfo(buildVersionHolder, _webViewURLHandler.AppAuthenticator);
         }
 
         private void OnApplicationFocus(bool focus) => _signInFuctionsUI?.OnAppFocus(focus);

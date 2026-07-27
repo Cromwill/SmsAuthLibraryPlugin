@@ -25,6 +25,7 @@ namespace Agava.Wink
         [SerializeField] private bool _restartAfterAuth = true;
         [SerializeField] private AdvertisementBoot _advertisementBoot;
         [SerializeField] private AppMetricaInfo _appMetricaInfo;
+        [SerializeField] private Links _links;
 
         private Coroutine _signInProcess;
         private PreloadService _preloadService;
@@ -38,6 +39,8 @@ namespace Agava.Wink
         {
             _winkSignInHandlerUI?.Dispose();
         }
+
+        private void Awake() => _links.Construct();
 
         private IEnumerator Start()
         {
@@ -55,7 +58,8 @@ namespace Agava.Wink
             _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize();
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
-            _winkSignInHandlerUI.Construct(_buildVersionHolder.StoreName.ToString(), _appMetricaInfo);
+            yield return new WaitUntil(() => Links.Instance != null);
+            _winkSignInHandlerUI.Construct(_buildVersionHolder, _appMetricaInfo);
             yield return _preloadService.Preparing();
 
             if (_preloadService.IsPluginAwailable)
@@ -66,7 +70,7 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.StartService(_winkAccessManager, _advertisementBoot.AdvertisementController.InterstitialPlayer);
                 yield return SheetRemoteConfigs.Initialize();
                 yield return _winkAccessManager.TryQuickAccess();
-                yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Privacy);
+                yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Instance.Privacy);
 
                 _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();
@@ -88,7 +92,7 @@ namespace Agava.Wink
             }
             else
             {
-                yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Privacy);
+                yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Instance.Privacy);
 
                 if (_advertisementBoot.IsPluginAvailable)
                 {

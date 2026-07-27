@@ -21,6 +21,8 @@ namespace Agava.Wink
         private string _correctLink = string.Empty;
         private bool _inited = false;
 
+        public AppAuthenticator AppAuthenticator => _appAuthenticator;
+
         public IEnumerator Construct()
         {
             yield return new WaitUntil(() => SmsAuthApi.Initialized);

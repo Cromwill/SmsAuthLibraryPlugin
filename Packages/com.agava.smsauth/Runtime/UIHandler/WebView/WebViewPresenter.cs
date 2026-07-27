@@ -78,8 +78,8 @@ namespace Agava.Wink
                 yield return new WaitUntil(() => _webView.Initialized);
             }
 #endif
-
-            yield return new WaitUntil(() => Links.Initialized);
+            yield return new WaitUntil(() => Links.Instance != null);
+            yield return new WaitUntil(() => Links.Instance.Initialized);
 
             Initialized = true;
         }

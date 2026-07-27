@@ -20,5 +20,8 @@ namespace Agava.Wink
         ThreeCatsAdventure,
         ThreeCatsRacing,
         ThreeCatsPuzzles,
+        Pappers,
+        FourInCube,
+        EnvelHeroes,
     }
 }
