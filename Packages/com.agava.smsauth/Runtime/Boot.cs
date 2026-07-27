@@ -57,7 +57,7 @@ namespace Agava.Wink
             if (Instance == null)
                 Instance = this;
 
-            _metrikaDuplicator = new MetrikaDuplicator(_winkAccessManager);
+            _metrikaDuplicator = new MetrikaDuplicator();
             _metrikaDuplicator.SetPlatformAndVersion(_buildVersionHolder.StoreName.ToString(), _buildVersionHolder.Version);
             _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize(_metrikaDuplicator);

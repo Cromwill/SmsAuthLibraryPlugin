@@ -213,11 +213,6 @@ namespace Agava.Wink
             AdvertisementController.Instance?.ChangeSubscribeStatus(HasTempAccess);
         }
 
-        public void SendAnalyticsToBack(string eventName, string phone, string deviceId, string sanId, DateTime eventTime, string platform, string version, string appmetricaDeviceId, string eventJson)
-        {
-            _requestHandler.SendBackendAnalyticsData(eventName, phone, deviceId, sanId, eventTime, platform, version, appmetricaDeviceId, eventJson);
-        }
-
         private void Login(LoginData data) => _requestHandler.Login(data, LimitReached, _winkSubscriptionAccessRequest, _otpCodeAccepted);
 
         public void DeleteAccount(Action<bool> onComplete)

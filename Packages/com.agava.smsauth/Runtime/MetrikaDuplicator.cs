@@ -10,7 +10,7 @@ namespace Agava.Wink
     [Preserve]
     public class MetrikaDuplicator
     {
-        private WinkAccessManager _winkAccessManager;
+        private RequestHandler _requestHandler;
         private LoginData _loginData;
         private string _sanId = string.Empty;
         private string _platform = string.Empty;
@@ -20,9 +20,9 @@ namespace Agava.Wink
 
         public bool AppmetricaDeviceIdGetted { get; private set; } = false;
 
-        public MetrikaDuplicator(WinkAccessManager winkAccessManager)
+        public MetrikaDuplicator()
         {
-            _winkAccessManager = winkAccessManager;
+            _requestHandler = new RequestHandler();
             GetAppmetricaID();
             DateTime.UtcNow.ToString();
 
@@ -46,9 +46,9 @@ namespace Agava.Wink
         private void OnEventSended(string eventName, string eventBody)
         {
             if(_loginData != null)
-                _winkAccessManager.SendAnalyticsToBack(eventName, _loginData.phone, _loginData.device_id, _sanId, DateTime.UtcNow, _platform, _version, AppmetricaDeviceId, eventBody);
+                _requestHandler.SendBackendAnalyticsData(eventName, _loginData.phone, _loginData.device_id, _sanId, DateTime.UtcNow, _platform, _version, AppmetricaDeviceId, eventBody);
             else
-                _winkAccessManager.SendAnalyticsToBack(eventName, string.Empty, string.Empty, _sanId, DateTime.UtcNow, _platform, _version, AppmetricaDeviceId, eventBody);
+                _requestHandler.SendBackendAnalyticsData(eventName, string.Empty, string.Empty, _sanId, DateTime.UtcNow, _platform, _version, AppmetricaDeviceId, eventBody);
 
 #if UNITY_EDITOR
             Debug.Log($"METRIKA DUPLICATOR: send event = {eventName}, event body = {eventBody}");
