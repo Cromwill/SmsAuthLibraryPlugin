@@ -58,6 +58,8 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public AdvertisementController AdvertisementController => _advertisementController;
         public bool IsPluginAvailable => _preloadService.IsPluginAvailable;
+        public AppName AppName => _appName;
+        public Store StoreName => _storeName;
 
         private void OnEnable()
         {

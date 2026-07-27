@@ -18,12 +18,6 @@ public class Links : MonoBehaviour
     public const string PrivacyRmtKey = "privacy";
     public const string SubscriptionRmtKey = "subscription";
 
-    public string Support { get; private set; } = "https://t.me/MTgames_support_bot";
-    public string Agreement { get; private set; } = "https://mt.media/agreement/";
-    public string Privacy { get; private set; } = "https://mt.media/privacy/";
-    public string Subscription { get; private set; } = "https://wink.ru/services/winkkids";
-    public static Links Instance { get; private set; }
-
     private Dictionary<AppAuthenticator, string> _appAuthenticators = new()
         {
             { AppAuthenticator.None, "" },
@@ -58,7 +52,13 @@ public class Links : MonoBehaviour
             { Store.test, "" },
         };
 
+    public string Support { get; private set; } = "https://t.me/MTgames_support_bot";
+    public string Agreement { get; private set; } = "https://mt.media/agreement/";
+    public string Privacy { get; private set; } = "https://mt.media/privacy/";
+    public string Subscription { get; private set; } = "https://wink.ru/services/winkkids";
     public bool Initialized { get; private set; } = false;
+
+    public static Links Instance { get; private set; }
 
     public void Construct()
     {

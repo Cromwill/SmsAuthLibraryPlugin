@@ -83,8 +83,8 @@ namespace AdsAppView.Program
 
             if (_freeApp)
             {
-                yield return _links.Initialize(_api);
-                yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, Platform, Links.Privacy);
+                yield return _links.Initialize(_api, _advertisementBoot.AppName, _advertisementBoot.StoreName);
+                yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, Platform, Links.Instance.Privacy);
             }
 
             yield return _viewPresenterConfigs.Initialize(_api);
