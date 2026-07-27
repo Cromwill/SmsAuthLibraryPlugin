@@ -30,6 +30,7 @@ namespace Agava.Wink
         private Coroutine _signInProcess;
         private PreloadService _preloadService;
         private bool _bootStarted = false;
+        private MetrikaDuplicator _metrikaDuplicator;
 
         public static Boot Instance { get; private set; }
 
@@ -38,6 +39,7 @@ namespace Agava.Wink
         private void OnDestroy()
         {
             _winkSignInHandlerUI?.Dispose();
+            _metrikaDuplicator?.Dispose();
         }
 
         private void Awake() => _links.Construct();
@@ -55,8 +57,10 @@ namespace Agava.Wink
             if (Instance == null)
                 Instance = this;
 
+            _metrikaDuplicator = new MetrikaDuplicator(_winkAccessManager);
+            _metrikaDuplicator.SetPlatformAndVersion(_buildVersionHolder.StoreName.ToString(), _buildVersionHolder.Version);
             _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
-            _winkAccessManager.Initialize();
+            _winkAccessManager.Initialize(_metrikaDuplicator);
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return new WaitUntil(() => Links.Instance != null);
             _winkSignInHandlerUI.Construct(_buildVersionHolder, _appMetricaInfo);

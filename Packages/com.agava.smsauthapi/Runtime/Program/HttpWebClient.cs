@@ -29,7 +29,23 @@ namespace SmsAuthAPI.Program
 
         public async Task<Response> SendUserDatas(Request request)
         {
-            string path = $"{GetHttpPath(request.apiName)}";
+            string path = $"{GetHttpPath(request.apiName, null, api: false)}";
+            OnTryConnecting(path);
+
+            using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST, string.Empty, request.body))
+            {
+                webRequest.SendWebRequest();
+
+                await WaitProccessing(webRequest);
+                TryShowRequestInfo(webRequest, request.apiName);
+
+                return new Response(webRequest.result, webRequest.result.ToString(), webRequest.downloadHandler.text, false);
+            }
+        }
+
+        public async Task<Response> SendBackendAnalyticsData(Request request)
+        {
+            string path = $"{GetHttpPath(request.apiName, null, api: false)}";
             OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST, string.Empty, request.body))

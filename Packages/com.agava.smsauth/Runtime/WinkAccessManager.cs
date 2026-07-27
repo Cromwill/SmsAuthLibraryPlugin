@@ -43,6 +43,7 @@ namespace Agava.Wink
         private RequestHandler _requestHandler;
         private TimespentService _timespentService;
         private SubscriptionSearchSystem _subscribeSearchSystem;
+        private MetrikaDuplicator _metrikaDuplicator;
         private Action<bool, bool> _winkSubscriptionAccessRequest;
         private Action<bool> _otpCodeAccepted;
         private string _uniqueId;
@@ -86,13 +87,15 @@ namespace Agava.Wink
             _subscribeSearchSystem?.Stop();
         }
 
-        public void Initialize()
+        public void Initialize(MetrikaDuplicator metrikaDuplicator)
         {
             if (SmsAuthApi.Initialized == false)
                 SmsAuthApi.Initialize(_ip, AppId);
 
             if (Instance == null)
                 Instance = this;
+
+            _metrikaDuplicator = metrikaDuplicator;
         }
 
         public IEnumerator Construct()
@@ -103,13 +106,16 @@ namespace Agava.Wink
 
             DontDestroyOnLoad(this);
 
-            if (UnityEngine.PlayerPrefs.HasKey(UniqueId) == false)
+            if (PlayerPrefs.HasKey(UniqueId) == false)
                 _uniqueId = SystemInfo.deviceUniqueIdentifier + _additiveId;
             else
-                _uniqueId = UnityEngine.PlayerPrefs.GetString(UniqueId);
+                _uniqueId = PlayerPrefs.GetString(UniqueId);
 
-            if (UnityEngine.PlayerPrefs.HasKey(PhoneNumber))
-                LoginData = new LoginData() { phone = UnityEngine.PlayerPrefs.GetString(PhoneNumber), device_id = _uniqueId, app_id = AppId };
+            if (PlayerPrefs.HasKey(PhoneNumber))
+            {
+                LoginData = new LoginData() { phone = PlayerPrefs.GetString(PhoneNumber), device_id = _uniqueId, app_id = AppId };
+                _metrikaDuplicator.SetLoginData(LoginData);
+            }
 
             if (LoginData != null)
                 StartTimespentAnalytics();
@@ -151,7 +157,7 @@ namespace Agava.Wink
         {
             _winkSubscriptionAccessRequest = OnSignInSuccessfully;
             _otpCodeAccepted = otpCodeAccepted;
-            UnityEngine.PlayerPrefs.SetString(PhoneNumber, phoneNumber);
+            PlayerPrefs.SetString(PhoneNumber, phoneNumber);
             LoginData = await _requestHandler.Regist(phoneNumber, appHash, _uniqueId, AppId, otpCodeRequest, skipRegistration);
 
             if (LoginData == null)
@@ -205,6 +211,11 @@ namespace Agava.Wink
             HasTempAccess = true;
             AdsAppView.Program.PopupManager.Instance?.OnSubscribeDetected();
             AdvertisementController.Instance?.ChangeSubscribeStatus(HasTempAccess);
+        }
+
+        public void SendAnalyticsToBack(string eventName, string phone, string deviceId, string sanId, DateTime eventTime, string platform, string version, string appmetricaDeviceId, string eventJson)
+        {
+            _requestHandler.SendBackendAnalyticsData(eventName, phone, deviceId, sanId, eventTime, platform, version, appmetricaDeviceId, eventJson);
         }
 
         private void Login(LoginData data) => _requestHandler.Login(data, LimitReached, _winkSubscriptionAccessRequest, _otpCodeAccepted);
@@ -313,6 +324,7 @@ namespace Agava.Wink
                     {
                         _sanId = responseGetSanId.body;
 
+                        _metrikaDuplicator.SetdSanId(_sanId);
                         AnalyticsWinkService.SendSanId(_sanId);
                         SmsAuthApi.OnUserAddApp(LoginData.phone, _sanId, AppId);
 
@@ -365,6 +377,7 @@ namespace Agava.Wink
                     if (task.Result.statusCode == UnityEngine.Networking.UnityWebRequest.Result.Success)
                     {
                         _sanId = task.Result.body;
+                        _metrikaDuplicator.SetdSanId(_sanId);
                     }
                     else
                     {
@@ -381,23 +394,6 @@ namespace Agava.Wink
             }
         }
 
-        private void SendUserDatas(string phone, string deviceId)
-        {
-            Debug.Log($"USER DATA: try send user info");
-            string _appmetricaDeviceId = string.Empty;
-            IEnumerable<string> keys = new string[] { StartupParamsKey.AppMetricaDeviceIDHash };
-
-            AppMetrica.RequestStartupParams(StartupParamsDelegateStartupParamsDelegate, keys);
-
-            void StartupParamsDelegateStartupParamsDelegate(StartupParamsResult result, StartupParamsErrorReason errorReason)
-            {
-                if (errorReason != null)
-                    Debug.LogError("Appmetrica ERROR reason: " + errorReason);
-
-                string _appmetricaDeviceId = result.DeviceIdHash;
-                //_requestHandler.SendUserDatas(phone, deviceId, _appmetricaDeviceId);
-                Debug.Log($"USER DATA: phone = {phone}, deviceId = {deviceId}, Appmetrica device id = {_appmetricaDeviceId}");
-            }
-        }
+        private void SendUserDatas(string phone, string deviceId) => _requestHandler.SendUserDatas(phone, deviceId, _metrikaDuplicator.AppmetricaDeviceId);
     }
 }

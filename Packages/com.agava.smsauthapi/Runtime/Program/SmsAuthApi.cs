@@ -251,11 +251,24 @@ namespace SmsAuthAPI.Program
 
             var request = new Request()
             {
-                apiName = "save-user-datas",
+                apiName = "Analytics/save-user-datas",
                 body = JsonConvert.SerializeObject(data),
             };
 
             return await _httpClient.SendUserDatas(request);
+        }
+
+        public static async Task<Response> SendBackendAnalyticsData(BackendAnalyticsData data)
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                apiName = "Analytics/events",
+                body = JsonConvert.SerializeObject(data),
+            };
+
+            return await _httpClient.SendBackendAnalyticsData(request);
         }
 
         private static void EnsureInitialize()

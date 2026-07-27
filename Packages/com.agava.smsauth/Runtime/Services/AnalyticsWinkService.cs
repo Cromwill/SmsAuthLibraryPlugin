@@ -1,8 +1,7 @@
 ﻿using System;
+using UnityEngine;
 using Io.AppMetrica;
 using Newtonsoft.Json;
-using UnityEditor;
-using UnityEngine;
 using UnityEngine.Scripting;
 
 namespace Agava.Wink
@@ -10,11 +9,18 @@ namespace Agava.Wink
     [Preserve]
     public static class AnalyticsWinkService
     {
+        public static event Action<string, string> EventSended;
+
         /// <summary>
         /// Auditory from deeplinks
         /// </summary>
         public static void SendDeeplinkRedirected(string appId, string partnerId, string trackingId)
-            => AppMetrica.ReportEvent("Adv company event", GetDataTrackingJson("Deeplink open", appId, partnerId, trackingId));
+        {
+            string eventBody = GetDataTrackingJson("Deeplink open", appId, partnerId, trackingId);
+
+            AppMetrica.ReportEvent("Adv company event", eventBody);
+            EventSended?.Invoke("Adv company event", eventBody);
+        }
 
         /// <summary>
         /// Auditory from user events
@@ -145,6 +151,7 @@ namespace Agava.Wink
         {
             Debug.Log($"ANALYTICS: event - {eventName}");
             AppMetrica.ReportEvent(eventName);
+            EventSended?.Invoke(eventName, string.Empty);
         }
 
         private static void SendEvent(string eventName, string json)
@@ -153,6 +160,7 @@ namespace Agava.Wink
             {
                 Debug.Log($"ANALYTICS: event - {eventName}, json - {json}");
                 AppMetrica.ReportEvent(eventName, json);
+                EventSended?.Invoke(eventName, json);
             }
             catch (Exception ex)
             {
