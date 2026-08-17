@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -33,6 +32,24 @@ namespace AdsAppView.Utility
             }
 
             return bytes != null;
+        }
+
+        public static async Task<byte[]> TryLoadFileAsync(string filePath)
+        {
+            byte[] bytes = await RunOffMainThread(() => File.Exists(filePath) ? File.ReadAllBytes(filePath) : null);
+
+#if UNITY_EDITOR
+            if (bytes != null)
+                Debug.Log($"#FileUtils# Cache texture loaded from path: {filePath}");
+            else
+                Debug.Log($"#FileUtils# Path {filePath} doesn't exist");
+#endif
+            return bytes;
+        }
+
+        public static async Task<bool> FileExistsAsync(string filePath)
+        {
+            return await RunOffMainThread(() => File.Exists(filePath));
         }
 
         public static async Task TrySaveFile(string filePath, byte[] bytes)
@@ -70,27 +87,32 @@ namespace AdsAppView.Utility
 
         public static Sprite LoadSprite(byte[] bytes)
         {
-            Texture2D texture = new (1, 1, GetCompressedFormatForPlatform(), false)
+            if (bytes == null || bytes.Length == 0)
+                return null;
+
+            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, mipChain: false)
             {
                 wrapMode = TextureWrapMode.Clamp,
                 filterMode = FilterMode.Bilinear
             };
 
-            texture.LoadImage(bytes);
-            texture.Compress(true);
-            texture.Apply();
+            if (texture.LoadImage(bytes) == false)
+            {
+                UnityEngine.Object.Destroy(texture);
+                return null;
+            }
 
-            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.FullRect);
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.FullRect);
+            texture.Apply(updateMipmaps: false, makeNoLongerReadable: true);
+            return sprite;
         }
 
-        public static TextureFormat GetCompressedFormatForPlatform()
+        private static Task<T> RunOffMainThread<T>(Func<T> action)
         {
-#if UNITY_EDITOR
-            return TextureFormat.RGBA32;
-#elif UNITY_ANDROID
-            return TextureFormat.ASTC_6x6;
-#elif UNITY_IOS
-            return TextureFormat.ASTC_6x6;
+#if UNITY_WEBGL && !UNITY_EDITOR
+            return Task.FromResult(action());
+#else
+            return Task.Run(action);
 #endif
         }
     }

@@ -15,7 +15,11 @@ namespace AdsAppView.Program
 
         public override void Show(PopupData popupData)
         {
-            Sprite popupSprite = FileUtils.LoadSprite(popupData.body);
+            Sprite popupSprite = popupData.bodySprite != null ? popupData.bodySprite : FileUtils.LoadSprite(popupData.body);
+
+            if (popupSprite == null)
+                return;
+
             _popupImage.sprite = popupSprite;
             _aspectRatioFitter.aspectRatio = (float)popupSprite.texture.width / popupSprite.texture.height;
             LastPopupName = popupData.name;

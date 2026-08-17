@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -52,107 +51,82 @@ namespace AdsAppView.Program
         {
             Response ftpCredentialResponse = await AdsAppAPI.Instance.GetRemoteConfig(ControllerName, FtpCredsRCName);
 
-            if (ftpCredentialResponse.statusCode == UnityWebRequest.Result.Success)
+            if (ftpCredentialResponse.statusCode != UnityWebRequest.Result.Success)
+                return null;
+
+            FtpCreds creds = JsonConvert.DeserializeObject<FtpCreds>(ftpCredentialResponse.body);
+
+            if (creds == null)
             {
-                FtpCreds creds = JsonConvert.DeserializeObject<FtpCreds>(ftpCredentialResponse.body);
-
-                if (creds == null)
-                {
-                    Debug.LogError("#AssetsBundlesLoader# Fail get creds data");
-                    return null;
-                }
-
-                string cataloPath = $"{_catalogPath}/{Platform}/catalog_1_1.json";
-                Debug.Log("#AssetsBundlesLoader# Try download catalog: " + cataloPath);
-                string pathFile = DownloadConfigFile(cataloPath, creds.login, creds.password);
-
-                AssetPath path = JsonConvert.DeserializeObject<AssetPath>(pathFile);
-                List<string> list = path.m_InternalIds.ToList();
-
-                string assetPath = list.FirstOrDefault(s => s.StartsWith("http"));
-                assetPath = assetPath.Replace("http", "ftp");
-                Debug.Log("#AssetsBundlesLoader# " + assetPath);
-
-                _assetBundle = DownloadAssetBundleFile(assetPath, savePath: Application.persistentDataPath, creds.login, creds.password);
-
-                if (_assetBundle == null)
-                {
-                    Debug.LogError("#AssetsBundlesLoader# Fail load bundle: " + _assetName);
-                    return null;
-                }
-
-                GameObject target = _assetBundle.LoadAsset<GameObject>(_assetName);
-
-                if (target == null)
-                    Debug.LogError("#AssetsBundlesLoader# Fail load obj from asset bundle: " + _assetName);
-
-                return target;
+                Debug.LogError("#AssetsBundlesLoader# Fail get creds data");
+                return null;
             }
-            else
+
+            string cataloPath = $"{_catalogPath}/{Platform}/catalog_1_1.json";
+            Debug.Log("#AssetsBundlesLoader# Try download catalog: " + cataloPath);
+            string pathFile = await DownloadConfigFile(cataloPath, creds.login, creds.password);
+
+            if (string.IsNullOrEmpty(pathFile))
             {
+                Debug.LogError("#AssetsBundlesLoader# Fail download catalog: " + cataloPath);
+                return null;
+            }
+
+            AssetPath path = JsonConvert.DeserializeObject<AssetPath>(pathFile);
+            List<string> list = path.m_InternalIds.ToList();
+
+            string assetPath = list.FirstOrDefault(s => s.StartsWith("http"));
+            assetPath = assetPath.Replace("http", "ftp");
+            Debug.Log("#AssetsBundlesLoader# " + assetPath);
+
+            _assetBundle = await DownloadAssetBundleFile(assetPath, savePath: Application.persistentDataPath, creds.login, creds.password);
+
+            if (_assetBundle == null)
+            {
+                Debug.LogError("#AssetsBundlesLoader# Fail load bundle: " + _assetName);
+                return null;
+            }
+
+            AssetBundleRequest assetRequest = _assetBundle.LoadAssetAsync<GameObject>(_assetName);
+
+            while (assetRequest.isDone == false)
+                await Task.Yield();
+
+            GameObject target = assetRequest.asset as GameObject;
+
+            if (target == null)
+                Debug.LogError("#AssetsBundlesLoader# Fail load obj from asset bundle: " + _assetName);
+
+            return target;
+        }
+
+        private async Task<string> DownloadConfigFile(string ftpUrl, string userName, string password)
+        {
+            try
+            {
+                byte[] bytes = await WebClient.DownloadFtpBytes(ftpUrl, userName, password);
+                return bytes == null ? null : Encoding.Default.GetString(bytes);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError("#AssetsBundlesLoader# Fail to download catalog: " + exception.Message);
                 return null;
             }
         }
 
-        private string DownloadConfigFile(string ftpUrl, string userName, string password)
+        private async Task<AssetBundle> DownloadAssetBundleFile(string ftpUrl, string savePath, string userName, string password)
         {
-            if (Uri.TryCreate(ftpUrl, UriKind.Absolute, out Uri uri) == false)
+            if (Uri.TryCreate(ftpUrl, UriKind.Absolute, out _) == false)
                 throw new NullReferenceException("Cant create uri: " + ftpUrl);
 
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-
-            request.UsePassive = true;
-            request.UseBinary = true;
-            request.KeepAlive = true;
-
-            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
-                request.Credentials = new NetworkCredential(userName, password);
-
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-
-            using (Stream input = request.GetResponse().GetResponseStream())
-            {
-                byte[] buffer = new byte[16 * 1024];
-                using (MemoryStream ms = new())
-                {
-                    int read;
-
-                    while (input.CanRead && (read = input.Read(buffer, 0, buffer.Length)) > 0)
-                        ms.Write(buffer, 0, read);
-
-                    return Encoding.Default.GetString(ms.ToArray());
-                }
-            }
-        }
-
-        private AssetBundle DownloadAssetBundleFile(string ftpUrl, string savePath, string userName, string password)
-        {
-            if (Uri.TryCreate(ftpUrl, UriKind.Absolute, out Uri uri) == false)
-                throw new NullReferenceException("Cant create uri: " + ftpUrl);
-
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-
-            request.UsePassive = true;
-            request.UseBinary = true;
-            request.KeepAlive = true;
-
-            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
-                request.Credentials = new NetworkCredential(userName, password);
-
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-
-            ftpUrl = ftpUrl.Replace("ftp://ftp-p.ctcmedia.ru/mediartk/AssetsBundles/", "");
-            ftpUrl = ftpUrl.Replace("/", "");
-            ftpUrl = ftpUrl.Replace(Platform, "");
-            Debug.Log("#AssetsBundlesLoader# Asset bundle name to load: " + ftpUrl);
-
-            string fileName = ftpUrl;
+            string fileName = ftpUrl.Replace("ftp://ftp-p.ctcmedia.ru/mediartk/AssetsBundles/", "");
+            fileName = fileName.Replace("/", "");
+            fileName = fileName.Replace(Platform, "");
+            Debug.Log("#AssetsBundlesLoader# Asset bundle name to load: " + fileName);
 
             try
             {
-                AssetBundle assetBundle = null;
-                assetBundle = DownloadAndSave(request.GetResponse(), savePath, fileName);
-                return assetBundle;
+                return await DownloadAndSave(ftpUrl, savePath, fileName, userName, password);
             }
             catch
             {
@@ -161,7 +135,7 @@ namespace AdsAppView.Program
             }
         }
 
-        private AssetBundle DownloadAndSave(WebResponse request, string savePath, string name)
+        private async Task<AssetBundle> DownloadAndSave(string ftpUrl, string savePath, string name, string userName, string password)
         {
             savePath += "/Assets";
 
@@ -176,36 +150,20 @@ namespace AdsAppView.Program
             }
 
             string path = string.IsNullOrEmpty(name) ? savePath : savePath + "/" + name;
+            _filePath = path;
 
-            using (Stream reader = request.GetResponseStream())
-            {
-                _filePath = path;
-
-                using (FileStream fileStream = new(path, FileMode.Create))
-                {
-                    int bytesRead = 0;
-                    byte[] buffer = new byte[2048];
-
-                    while (true)
-                    {
-                        bytesRead = reader.Read(buffer, 0, buffer.Length);
-
-                        if (bytesRead == 0)
-                            break;
-
-                        fileStream.Write(buffer, 0, bytesRead);
-                    }
-
-                    fileStream.Close();
-                }
-            }
+            await WebClient.DownloadFtpToFile(ftpUrl, path, userName, password);
 
             Debug.Log($"#AssetsBundlesLoader# Try load resource {name} from: " + savePath);
-            AssetBundle assetBundle = null;
 
             try
             {
-                assetBundle = AssetBundle.LoadFromFile(path);
+                AssetBundleCreateRequest createRequest = AssetBundle.LoadFromFileAsync(path);
+
+                while (createRequest.isDone == false)
+                    await Task.Yield();
+
+                AssetBundle assetBundle = createRequest.assetBundle;
 
                 if (assetBundle == null)
                 {

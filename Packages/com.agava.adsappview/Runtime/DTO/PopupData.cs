@@ -9,6 +9,7 @@ namespace AdsAppView.DTO
     {
         public Sprite background;
         public Sprite play_button;
+        public Sprite bodySprite;
         public byte[] body;
         public string link;
         public string name;

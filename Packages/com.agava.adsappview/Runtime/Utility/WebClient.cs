@@ -18,6 +18,7 @@ namespace AdsAppView.Utility
         private const string AppJson = "application/json";
         private const string ContentType = "Content-Type";
         private const int TimeOut = 59;
+        private const int FtpBufferSize = 64 * 1024;
 
         private readonly string _serverPath;
 
@@ -110,83 +111,121 @@ namespace AdsAppView.Utility
             string address = request.api_name;
             Debug.Log("#WebClient# Web address: " + address);
 
-            byte[] downloaded = await DownloadWithFTP(address, savePath: string.Empty, request.login, request.password);
-
-            async Task<byte[]> DownloadWithFTP(string ftpUrl, string savePath = "", string userName = "", string password = "")
+            try
             {
-                if (Uri.TryCreate(ftpUrl, UriKind.Absolute, out Uri uri) == false)
-                    throw new NullReferenceException("Cant create uri: " + ftpUrl);
-
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
-
-                request.UsePassive = true;
-                request.UseBinary = true;
-                request.KeepAlive = true;
-
-                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
-                    request.Credentials = new NetworkCredential(userName, password);
-
-                request.Method = WebRequestMethods.Ftp.DownloadFile;
-
-                if (!string.IsNullOrEmpty(savePath))
-                {
-                    await DownloadAndSave(request.GetResponse(), savePath);
-                    return null;
-                }
-                else
-                {
-                    return await DownloadAsbyteArray(request.GetResponse());
-                }
+                byte[] downloaded = await DownloadFtpBytes(address, request.login, request.password);
+                UnityWebRequest.Result result = downloaded != null ? UnityWebRequest.Result.Success : UnityWebRequest.Result.DataProcessingError;
+                return new Response(result, result.ToString(), "", false, downloaded);
             }
-
-            async Task<byte[]> DownloadAsbyteArray(WebResponse request)
+            catch (Exception exception)
             {
-                using (Stream input = request.GetResponseStream())
-                {
-                    byte[] buffer = new byte[16 * 1024];
-
-                    await using (MemoryStream ms = new MemoryStream())
-                    {
-                        int read;
-
-                        while (input.CanRead && (read = await input.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                        {
-                            ms.Write(buffer, 0, read);
-                        }
-
-                        return ms.ToArray();
-                    }
-                }
+                Debug.LogError("#WebClient# FTP download fail: " + exception.Message);
+                return new Response(UnityWebRequest.Result.ConnectionError, exception.Message, "", false, null);
             }
+        }
 
-            async Task DownloadAndSave(WebResponse request, string savePath)
+        public async Task<Response> DownloadToFile(string ftpUrl, string savePath, string userName, string password)
+        {
+            Debug.Log("#WebClient# Web address: " + ftpUrl);
+
+            try
             {
-                Stream reader = request.GetResponseStream();
-
-                if (Directory.Exists(Path.GetDirectoryName(savePath)) == false)
-                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
-
-                FileStream fileStream = new FileStream(savePath, FileMode.Create);
-
-                int bytesRead = 0;
-                byte[] buffer = new byte[2048];
-
-                while (true)
-                {
-                    bytesRead = await reader.ReadAsync(buffer, 0, buffer.Length);
-
-                    if (bytesRead == 0)
-                        break;
-
-                    await fileStream.WriteAsync(buffer, 0, bytesRead);
-                }
-
-                fileStream.Close();
+                await DownloadFtpToFile(ftpUrl, savePath, userName, password);
+                UnityWebRequest.Result result = UnityWebRequest.Result.Success;
+                return new Response(result, result.ToString(), "", false, null);
             }
+            catch (Exception exception)
+            {
+                Debug.LogError("#WebClient# FTP download to file fail: " + exception.Message);
+                return new Response(UnityWebRequest.Result.ConnectionError, exception.Message, "", false, null);
+            }
+        }
 
-            UnityWebRequest.Result result = downloaded != null ? UnityWebRequest.Result.Success : UnityWebRequest.Result.DataProcessingError;
+        public static async Task<byte[]> DownloadFtpBytes(string ftpUrl, string userName, string password)
+        {
+            return await RunOffMainThread(async () =>
+            {
+                FtpWebRequest request = CreateFtpRequest(ftpUrl, userName, password);
 
-            return new Response(result, result.ToString(), "", false, downloaded);
+                using (WebResponse response = await request.GetResponseAsync().ConfigureAwait(false))
+                using (Stream input = response.GetResponseStream())
+                await using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    if (input == null)
+                        return null;
+
+                    byte[] buffer = new byte[FtpBufferSize];
+                    int read;
+
+                    while ((read = await input.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
+                        await memoryStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
+
+                    return memoryStream.ToArray();
+                }
+            });
+        }
+
+        public static async Task DownloadFtpToFile(string ftpUrl, string savePath, string userName, string password)
+        {
+            await RunOffMainThread(async () =>
+            {
+                FtpWebRequest request = CreateFtpRequest(ftpUrl, userName, password);
+                string directory = Path.GetDirectoryName(savePath);
+
+                if (string.IsNullOrEmpty(directory) == false && Directory.Exists(directory) == false)
+                    Directory.CreateDirectory(directory);
+
+                using (WebResponse response = await request.GetResponseAsync().ConfigureAwait(false))
+                using (Stream input = response.GetResponseStream())
+                await using (FileStream fileStream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.None, FtpBufferSize, useAsync: true))
+                {
+                    if (input == null)
+                        throw new InvalidOperationException("FTP response stream is null: " + ftpUrl);
+
+                    byte[] buffer = new byte[FtpBufferSize];
+                    int read;
+
+                    while ((read = await input.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) > 0)
+                        await fileStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
+                }
+            });
+        }
+
+        private static FtpWebRequest CreateFtpRequest(string ftpUrl, string userName, string password)
+        {
+            if (Uri.TryCreate(ftpUrl, UriKind.Absolute, out Uri uri) == false)
+                throw new NullReferenceException("Cant create uri: " + ftpUrl);
+
+#pragma warning disable SYSLIB0014
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uri);
+#pragma warning restore SYSLIB0014
+            request.UsePassive = true;
+            request.UseBinary = true;
+            request.KeepAlive = true;
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+            if (string.IsNullOrEmpty(userName) == false && string.IsNullOrEmpty(password) == false)
+                request.Credentials = new NetworkCredential(userName, password);
+
+            return request;
+        }
+
+        private static async Task<T> RunOffMainThread<T>(Func<Task<T>> action)
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            return await action();
+#else
+            return await Task.Run(action);
+#endif
+        }
+
+        private static async Task RunOffMainThread(Func<Task> action)
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            await action();
+#else
+            await Task.Run(action);
+#endif
         }
 
         private string GetHttpPath(string apiName, string apiData = null, bool api = true)

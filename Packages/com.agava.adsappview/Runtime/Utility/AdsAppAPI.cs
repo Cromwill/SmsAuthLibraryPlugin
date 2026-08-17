@@ -115,6 +115,13 @@ namespace AdsAppView.Utility
             return await _webClient.GetBytesData(request);
         }
 
+        public async Task<Response> DownloadToFile(string host, string filePath, string savePath, string login, string password)
+        {
+            EnsureInitialize();
+            string path = host + "/" + filePath;
+            return await _webClient.DownloadToFile(path, savePath, login, password);
+        }
+
         private void EnsureInitialize()
         {
             if (Initialized == false)
