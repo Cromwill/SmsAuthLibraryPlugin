@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lean.Localization;
 using TMPro;
 using UnityEngine;
 
@@ -17,18 +16,20 @@ namespace Agava.Wink
         [Header("Carousel header")]
         [SerializeField] private CarouselItem _headerItem;
         [SerializeField] private TMP_Text _header;
+        [Header("Hide objects")]
+        [SerializeField] private int _firstHideObject;
+        [SerializeField] private int _lastHideObject;
 
         int _assetIndex = 0;
         private Coroutine _cycle;
         private List<CarouselPosition> _carouselPositions = null;
         private int _headerPositionIndex;
 
-        public event Action<CarouselID> PositionChanged;
-
         private void Awake()
         {
             FillCarouselPositions();
             FillItems();
+            _cycle = StartCoroutine(EndlessCycle());
         }
 
         public void Enable()
@@ -84,15 +85,19 @@ namespace Agava.Wink
                 }
 
                 if (_headerPositionIndex == targetPositionIndex)
-                {
-                    PositionChanged?.Invoke(item.CarouselID);
+                    item.ShowBorder(OneCycleSeconds);
+                else if(targetPositionIndex == _headerPositionIndex - 1)
+                    item.HideBorder(OneCycleSeconds);
 
-                    if (_header != null)
-                        _header.text = LeanLocalization.GetTranslationText(item.Description);
-                }
 
-                item.SetPositionIndex(targetPositionIndex);
-                item.OneCycle(_carouselPositions[targetPositionIndex].Position, _carouselPositions[targetPositionIndex].Scale, OneCycleSeconds, onEnd);
+                    item.SetPositionIndex(targetPositionIndex);
+
+                if (targetPositionIndex == _firstHideObject)
+                    item.MakeTransparent(OneCycleSeconds);
+                else if(targetPositionIndex == _lastHideObject - 1)
+                    item.MakeOpaque(OneCycleSeconds);
+
+                item.OneCycle(_carouselPositions[targetPositionIndex].Position, OneCycleSeconds, onEnd);
             }
         }
 
@@ -118,12 +123,19 @@ namespace Agava.Wink
             for (int i = 0; i < _items.Count; i++)
             {
                 item = _items[i];
+                item.Construct();
 
                 if (item == _headerItem)
+                {
                     _headerPositionIndex = i;
+                    item.ShowBorder(0);
+                }
+
+                if (i <= _firstHideObject || i >= _lastHideObject)
+                    _items[i].MakeTransparent(0);
 
                 item.SetPositionIndex(i);
-                _carouselPositions.Add(new CarouselPosition(item.transform.localPosition, item.transform.localScale));
+                _carouselPositions.Add(new CarouselPosition(item.transform.localPosition));
             }
         }
 
@@ -138,12 +150,10 @@ namespace Agava.Wink
         private struct CarouselPosition
         {
             public Vector3 Position { get; private set; }
-            public Vector3 Scale { get; private set; }
 
-            public CarouselPosition(Vector3 position, Vector3 scale)
+            public CarouselPosition(Vector3 position)
             {
                 Position = position;
-                Scale = scale;
             }
         }
     }

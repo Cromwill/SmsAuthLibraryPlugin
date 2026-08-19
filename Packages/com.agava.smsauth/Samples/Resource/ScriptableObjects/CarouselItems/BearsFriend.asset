@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff7fb0c6c202d8747a7ceb3d91de9cf4, type: 3}
-  m_Name: LeoAndTig
+  m_Name: BearsFriend
   m_EditorClassIdentifier: 
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 8d97195f9576f1a4fb567f4b75df56ca, type: 3}
-  <DeafaultLabel>k__BackingField: "\u041B\u0435\u043E \u0438 \u0422\u0438\u0433"
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 1185f2f72ace47d4cb7ee151a22f7f0e, type: 3}
+  <DeafaultLabel>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\r\n\u041D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0439
+    \u0434\u0440\u0443\u0433"
   <CarouselID>k__BackingField: 0

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7fb0c6c202d8747a7ceb3d91de9cf4, type: 3}
   m_Name: Cubocot
   m_EditorClassIdentifier: 
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 4637a770cfa76cb45ac71351e1b20020, type: 3}
-  <Description>k__BackingField: New_TwelveGames
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 28e5b9a32ab11e943907144c392d88bd, type: 3}
+  <DeafaultLabel>k__BackingField: "\u041A\u0443\u0431\u043E\u043A\u043E\u0442"
+  <CarouselID>k__BackingField: 0
