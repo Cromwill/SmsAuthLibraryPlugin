@@ -151,6 +151,10 @@ namespace Agava.Wink
 
         internal void FillTextFields()
         {
+            //_redirectToWebsiteWindow.FillRemoteTexts();
+            //_signInWindow.FillRemoteTexts();
+            //_enterCodeWindow.FillRemoteTexts();
+            //_subscriptionCheckWindow.FillRemoteTexts();
             _winkInfoVericalWindowPresenter.FillRemoteTexts();
             _winkInfoHorizontalWindowPresenter.FillRemoteTexts();
             _helloWOAccessWindow.FillRemoteTexts();

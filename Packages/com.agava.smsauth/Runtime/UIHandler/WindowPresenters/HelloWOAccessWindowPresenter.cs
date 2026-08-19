@@ -10,7 +10,6 @@ namespace Agava.Wink
     internal class HelloWOAccessWindowPresenter : WindowPresenter
     {
         [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _subscribeButton;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _rewardButton;
@@ -18,7 +17,6 @@ namespace Agava.Wink
 
         public override void Enable()
         {
-            _imagesCarousel.Enable();
             _subscribeButton.onClick.AddListener(OnSubscribeButtonClick);
             _closeButton.onClick.AddListener(OnCloseButtonClick);
             EnableCanvasGroup(_canvasGroup);
@@ -27,7 +25,6 @@ namespace Agava.Wink
         public override void Disable()
         {
             DisableCanvasGroup(_canvasGroup);
-            _imagesCarousel.Disable();
             _subscribeButton.onClick.RemoveListener(OnSubscribeButtonClick);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
         }

@@ -42,5 +42,13 @@ namespace Agava.Wink
         educational_games_count,
         cartoons_count,
         children_channels_count,
+        redirect_panel_info,
+        enter_phone_info,
+        otp_code_info,
+        wo_subs_panel_info,
+        subs_check_info,
+        load_bar_texsts,
+        support_text_info,
+        try_wink_button_info,
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Scripting;
+using UnityEngine.UI;
 
 namespace Agava.Wink
 {
@@ -17,6 +18,8 @@ namespace Agava.Wink
         [SerializeField] private CustomKeyboard _keyboard;
         [SerializeField] private float _displayTime = .6f;
         [SerializeField] private Image _cursorIcon;
+        [SerializeField] private TMP_Text _phoneNumberText;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         private float _lastDisplayTime = 0;
         private Action Closed;
@@ -30,6 +33,8 @@ namespace Agava.Wink
             if (_keyboard == null)
                 _keyboard = FindObjectOfType<CustomKeyboard>();
         }
+
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
 
         public override void Enable() => EnableCanvasGroup(_canvasGroup);
 
@@ -57,6 +62,8 @@ namespace Agava.Wink
             {
                 _cursorIcon.enabled = false;
             }
+
+            _phoneNumberText.enabled = _inputField.text.Length == 0;
         }
 
         public void Enable(Action closeCallback)
@@ -71,6 +78,7 @@ namespace Agava.Wink
 
         private void OnClicked(KeyCode code)
         {
+
             if (code == KeyCode.Backspace && _inputField.text.Length > 0)
             {
                 _inputField.text = _inputField.text.Substring(0, _inputField.text.Length - 1);

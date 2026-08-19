@@ -1,15 +1,16 @@
-﻿using TMPro;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using SmsAuthAPI.DTO;
 using SmsAuthAPI.Program;
-using System.Collections;
-using System.Globalization;
-using UnityEngine.Scripting;
-using System.Threading.Tasks;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Networking;
-using System.Text.RegularExpressions;
+using UnityEngine.Scripting;
+using UnityEngine.UI;
 
 namespace Agava.Wink
 {
@@ -24,6 +25,7 @@ namespace Agava.Wink
         [SerializeField] private EnterCodeShaking _enterCodeShaking;
         [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private TextTimer _repeatCodeTimer;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
         [Header("Buttons")]
         [SerializeField] private CustomKeyboard _keyboard;
         [SerializeField] private Button _sendRepeatCodeButton;
@@ -69,6 +71,8 @@ namespace Agava.Wink
 
             _smsRetrieverManager.SmsReceived += OnSmsReceived;
         }
+
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
 
         public void Dispose()
         {

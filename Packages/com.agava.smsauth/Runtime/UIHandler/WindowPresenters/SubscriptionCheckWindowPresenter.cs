@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.Scripting;
+using UnityEngine.UI;
 
 namespace Agava.Wink
 {
@@ -16,6 +17,7 @@ namespace Agava.Wink
         [SerializeField, Min(0)] private float _punchScale = 0.1f;
         [SerializeField, Min(0)] private float _punchTime = 0.3f;
         [SerializeField, Min(0)] private int _vibrato = 1;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         private IInternetChecker _internetChecker;
         private float _lastLoadTime = 0;
@@ -28,6 +30,8 @@ namespace Agava.Wink
         {
             _internetChecker = internetChecker ?? throw new ArgumentNullException(nameof(internetChecker));
         }
+
+        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
 
         public override void Enable()
         {

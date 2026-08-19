@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1185f2f72ace47d4cb7ee151a22f7f0e
+guid: f75117fbb0686c74b897bfca5ebe2b15
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5560619940269639044
-    second: BearsFriend_0
+      213: 2785182185037321980
+    second: Group 2087327008_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -98,7 +98,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: 50
     textureCompression: 1
@@ -111,7 +111,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: iOS
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: 50
     textureCompression: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BearsFriend_0
+      name: Group 2087327008_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 216
-        height: 216
+        width: 434
+        height: 434
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 485c9becf5a4b2d40800000000000000
-      internalID: 5560619940269639044
+      spriteID: cf655e5d074f6a620800000000000000
+      internalID: 2785182185037321980
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BearsFriend_0: 5560619940269639044
+      Group 2087327008_0: 2785182185037321980
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
