@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AdsAppView.Utility;
 using UnityEngine;
 using UnityEngine.Scripting;
-using System.Collections.Generic;
 
 namespace Agava.Wink
 {
@@ -34,6 +35,8 @@ namespace Agava.Wink
         [SerializeField] private bool _hasDemoMode = true;
         [Header("All UI Windows")]
         [SerializeField] private List<WindowPresenter> _windows;
+        [Header("Corousel data")]
+        [SerializeField] private CarouselSettings _carouselSettings;
 
         private WinkWebViewURLHandler _winkWebViewURLHandler;
         private GameOrientation _gameOrientation;
@@ -41,6 +44,7 @@ namespace Agava.Wink
         private DemoTimer _demoTimer;
         private bool _subscriptionChecked = false;
         private bool _useAdMechanics = false;
+        private Store _storeName;
 
         //private bool _choosedFreeTrial => (_redirectToWebsiteWindow.TryFreeWink || _demoTimerExpiredWindow.TryFreeWink) && _subscriptionChecked == false;
 
@@ -52,17 +56,18 @@ namespace Agava.Wink
         public event Action SunbscriptionBuyed;
         public event Action WebViewClosed;
 
-        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ScreenshotProtector screenshotProtector, ICoroutine coroutine, string storeName, AppMetricaInfo appMetricaInfo, SmsRetrieverManager smsRetrieverManager)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ScreenshotProtector screenshotProtector, ICoroutine coroutine, Store storeName, AppMetricaInfo appMetricaInfo, SmsRetrieverManager smsRetrieverManager)
         {
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
             _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
             _screenshotProtector = screenshotProtector ?? throw new ArgumentNullException(nameof(screenshotProtector));
             _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
+            _storeName = storeName;
 
             _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
-            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(_demoTimer, storeName, appMetricaInfo, _rewardSettings));
+            coroutine.StartCoroutine(_rewardContinueWindowPresenter.Construct(_demoTimer, storeName.ToString(), appMetricaInfo, _rewardSettings));
             _enterCodeWindow.Construct(smsRetrieverManager);
 
             _subscriptionCheckWindow.LoadingStarted += OnLoadingStarted;
@@ -151,6 +156,7 @@ namespace Agava.Wink
 
         internal void FillTextFields()
         {
+            _carouselSettings.Construct(_storeName);
             _redirectToWebsiteWindow.FillRemoteTexts();
             _signInWindow.FillRemoteTexts();
             _enterCodeWindow.FillRemoteTexts();
@@ -158,8 +164,11 @@ namespace Agava.Wink
             _winkInfoVericalWindowPresenter.FillRemoteTexts();
             _winkInfoHorizontalWindowPresenter.FillRemoteTexts();
             _helloWOAccessWindow.FillRemoteTexts();
-            _verticalTurnOffAdWindow.FillRemoteTexts();
-            _horizontalTurnOffAdWindow.FillRemoteTexts();
+            _verticalTurnOffAdWindow.FillRemoteTexts(_carouselSettings);
+            _horizontalTurnOffAdWindow.FillRemoteTexts(_carouselSettings);
+            _helloWindow.ConstructCorousel(_carouselSettings);
+            _rewardContinueWindowPresenter.ConstructCorousel(_carouselSettings);
+            _winkProfileWindow.ConstructCorousel(_carouselSettings);
         }
 
         internal bool HasOpenedWindow(WindowType type)

@@ -12,6 +12,8 @@ namespace Agava.Wink
         [SerializeField] private Button _profileButton;
         [SerializeField] private Button _closeButton;
 
+        public void ConstructCorousel(CarouselSettings carouselSettings) => _imagesCarousel.Construct(carouselSettings);
+
         private void OnDestroy()
         {
             _closeButton?.onClick.RemoveListener(Disable);

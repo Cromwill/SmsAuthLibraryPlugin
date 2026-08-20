@@ -11,6 +11,8 @@ namespace Agava.Wink
         [SerializeField] private ImagesCarousel _imagesCarousel;
         [SerializeField] private Button _startButton;
 
+        public void ConstructCorousel(CarouselSettings carouselSettings) => _imagesCarousel.Construct(carouselSettings);
+
         public void Enable(bool hasAccess)
         {
             _imagesCarousel.Enable();

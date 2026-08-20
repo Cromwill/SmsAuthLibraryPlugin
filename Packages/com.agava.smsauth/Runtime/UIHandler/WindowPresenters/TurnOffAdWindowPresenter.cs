@@ -27,6 +27,10 @@ namespace Agava.Wink
             AnalyticsWinkService.SendShowTurnOffAdWindow();
         }
 
-        public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
+        public void FillRemoteTexts(CarouselSettings carouselSettings)
+        {
+            _xmlConfigTexts.ForEach(t => t.FillText());
+            _imagesCarousel.Construct(carouselSettings);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Agava.Wink
         private const float PauseSeconds = 1f;
 
         [SerializeField] private List<CarouselItem> _items;
-        [SerializeField] private List<CarouselItemAsset> _assets;
+        //[SerializeField] private List<CarouselItemAsset> _assets;
         [Header("Carousel header")]
         [SerializeField] private CarouselItem _headerItem;
         [SerializeField] private TMP_Text _header;
@@ -20,16 +20,24 @@ namespace Agava.Wink
         [SerializeField] private int _firstHideObject;
         [SerializeField] private int _lastHideObject;
 
-        int _assetIndex = 0;
+        private CarouselSettings _carouselSettings;
+        private int _assetIndex = 0;
         private Coroutine _cycle;
         private List<CarouselPosition> _carouselPositions = null;
         private int _headerPositionIndex;
 
-        private void Awake()
+        /*private void Awake()
         {
             FillCarouselPositions();
             FillItems();
-            _cycle = StartCoroutine(EndlessCycle());
+        }*/
+
+        public void Construct(CarouselSettings carouselSettings)
+        {
+            _carouselSettings = carouselSettings ?? throw new ArgumentNullException(nameof(carouselSettings));
+
+            FillCarouselPositions();
+            FillItems();
         }
 
         public void Enable()
@@ -103,7 +111,7 @@ namespace Agava.Wink
 
         private void FillItems()
         {
-            if (_assets.Count == 0)
+            if (_carouselSettings.CarouselDatas.Count == 0)
             {
                 Debug.LogError("Fill sprites!");
                 return;
@@ -139,12 +147,12 @@ namespace Agava.Wink
             }
         }
 
-        private CarouselItemAsset NextAsset()
+        private CarouselData NextAsset()
         {
-            if (_assetIndex == _assets.Count)
+            if (_assetIndex == _carouselSettings.CarouselDatas.Count)
                 _assetIndex = 0;
 
-            return _assets[_assetIndex++];
+            return _carouselSettings.CarouselDatas[_assetIndex++];
         }
 
         private struct CarouselPosition

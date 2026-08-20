@@ -80,7 +80,7 @@ namespace Agava.Wink
 
             _webViewURLHandler.CheckAvailabilityURL();
             _smsRetrieverManager.Construct();
-            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, buildVersionHolder.StoreName.ToString(), appMetricaInfo, _smsRetrieverManager);
+            _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, buildVersionHolder.StoreName, appMetricaInfo, _smsRetrieverManager);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
             Links.Instance.SetAppInfo(buildVersionHolder, _webViewURLHandler.AppAuthenticator);
         }

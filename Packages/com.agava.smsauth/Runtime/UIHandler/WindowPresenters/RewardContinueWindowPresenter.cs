@@ -97,6 +97,8 @@ namespace Agava.Wink
             Initialized = true;
         }
 
+        public void ConstructCorousel(CarouselSettings carouselSettings) => _imagesCarousel.Construct(carouselSettings);
+
         private IEnumerator RepeatFetch()
         {
             bool success = false;

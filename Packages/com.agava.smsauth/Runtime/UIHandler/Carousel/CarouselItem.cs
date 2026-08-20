@@ -39,10 +39,10 @@ namespace Agava.Wink
             Index = index;
         }
 
-        public void Initialize(CarouselItemAsset asset)
+        public void Initialize(CarouselData data)
         {
-            _image.sprite = asset.Sprite;
-            _label.text = asset.DeafaultLabel;
+            _image.sprite = data.Sprite;
+            _label.text = data.AppName;
         }
 
         public void Hide()

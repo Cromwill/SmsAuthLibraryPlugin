@@ -1,4 +1,3 @@
-using Lean.Localization;
 using UnityEngine;
 
 namespace Agava.Wink
