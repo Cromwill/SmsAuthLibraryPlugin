@@ -259,7 +259,8 @@ namespace Agava.Wink
             _analyticsSender.SetAdInfo(adEvents: _useAdWindows);
             _notifyWindowHandler.EnableOriginalOfferInfo(enableClose: _demoTimer.Expired == false);
             _notifyWindowHandler.SetAdOption(adOption: _useAdWindows);
-            _notifyWindowHandler.OpenWindow(WindowType.WinkInfoVertical);
+            //_notifyWindowHandler.OpenWindow(WindowType.WinkInfoVertical);
+            _notifyWindowHandler.OpenWindow(WindowType.SubscriptionCheck);
             _notifyWindowHandler.CloseWindow(WindowType.HelloWOAccess);
         }
 
@@ -268,7 +269,10 @@ namespace Agava.Wink
             _screenshotProtector.TryEnableScreenshots();
 
             if (_gameOrientation.NeedChangeOrientation)
-                _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+            {
+                TrySetCorrectOrientation();
+                //_notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+            }
         }
 
         public void OpenSubscriptionWindow()
@@ -486,7 +490,8 @@ namespace Agava.Wink
         private void OnUnlinkButtonClicked(UnlinkDeviceView unlinkDeviceView)
             => _signInFuctionsUI.OnUnlinkClicked(unlinkDeviceView.DeviceId);
 
-        private void OnAuthorizationSuccessfully() => _signInFuctionsUI.OnAuthorizationSuccessfully();
+        private void OnAuthorizationSuccessfully()
+            => _signInFuctionsUI.OnAuthorizationSuccessfully();
 
         private void OnEnterCodeContinueClicked()
         {
@@ -503,7 +508,13 @@ namespace Agava.Wink
             SetPhone();
             _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
-            _notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
+
+            if(hasAccess || (hasTempAccess && _demoTimer.Expired == false))
+                TrySetCorrectOrientation();
+            else
+                _notifyWindowHandler.OpenHelloWindowWOAccess();
+
+            //_notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
         }
 
         private void SetPhone()
@@ -637,6 +648,8 @@ namespace Agava.Wink
             _demoTimer.AddTempSubsDemoTime();
             _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
             _winkAccessManager.ActivateTempSubscription();
+            TrySetCorrectOrientation();
+            _notifyWindowHandler.CloseWindow(WindowType.SubscriptionCheck);
         }
 
         private IEnumerator EnternetChecking()

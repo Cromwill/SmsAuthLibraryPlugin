@@ -10852,7 +10852,12 @@ MonoBehaviour:
   _enterCodeShaking: {fileID: 3142260314045732758}
   _inputField: {fileID: 3866908116080110329}
   _repeatCodeTimer: {fileID: 4078017948902692113}
-  _xmlConfigTexts: []
+  _xmlConfigTexts:
+  - {fileID: 1716638378255609138}
+  - {fileID: 1504927149911177258}
+  - {fileID: 3304631981834602803}
+  - {fileID: 6787679956217479001}
+  - {fileID: 8893782683604611665}
   _keyboard: {fileID: 4702252924789823924}
   _sendRepeatCodeButton: {fileID: 228727257424937922}
   _backButton: {fileID: 1953900427883023891}
@@ -33490,6 +33495,7 @@ MonoBehaviour:
   _subscribeButton: {fileID: 5261758039096890516}
   _closeButton: {fileID: 2699411539137173026}
   _rewardButton: {fileID: 1128064336759008097}
+  _closeButtonDelay: 7.5
   _xmlConfigTexts:
   - {fileID: 3507264333844676855}
   - {fileID: 24852938869449105}
