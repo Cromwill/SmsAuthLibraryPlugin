@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Sprite>k__BackingField: {fileID: 21300000, guid: c0debd8ad5b1e944e82c0758bdbc560a, type: 3}
   <DeafaultLabel>k__BackingField: "\u041C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u044B\u0439\r\n\u043F\u0430\u0442\u0440\u0443\u043B\u044C"
-  <CarouselID>k__BackingField: 0
+  <AppAuthenticator>k__BackingField: 6

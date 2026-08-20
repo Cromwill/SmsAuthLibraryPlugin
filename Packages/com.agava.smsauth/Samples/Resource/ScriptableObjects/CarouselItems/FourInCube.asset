@@ -15,4 +15,4 @@ MonoBehaviour:
   <Sprite>k__BackingField: {fileID: 21300000, guid: 0b9351a8768490a44a301cf109bd16e3, type: 3}
   <DeafaultLabel>k__BackingField: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E\L\u0432
     \u043A\u0443\u0431\u0435"
-  <CarouselID>k__BackingField: 0
+  <AppAuthenticator>k__BackingField: 19
