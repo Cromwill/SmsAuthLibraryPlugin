@@ -145,7 +145,7 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.OpenLoadingCorousel();
                 AnalyticsWinkService.SendLoadingStart();
 
-                yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess);
+                yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, Links.Instance.Support);
 
                 AnalyticsWinkService.SendLoadingFinish();
                 _winkSignInHandlerUI.CloseLoadingCorousel();

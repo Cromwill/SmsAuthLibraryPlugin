@@ -71,7 +71,7 @@ namespace AdsAppView.Program
                 yield return Construct(vip: false);
         }
 
-        public IEnumerator Construct(bool vip)
+        public IEnumerator Construct(bool vip, string supportLink = null)
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
                 yield return new WaitWhile(() => Application.internetReachability == NetworkReachability.NotReachable);
@@ -89,14 +89,14 @@ namespace AdsAppView.Program
             {
                 yield return _links.Initialize(_api, _advertisementBoot.AppName, _advertisementBoot.StoreName);
 
-                _loadingBarPresenter.FiiRemoteTexts();
+                _loadingBarPresenter.FiiRemoteTexts(Links.Instance.Support);
                 _loadingBarPresenter.Activate();
 
                 yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, Platform, Links.Instance.Privacy);
             }
             else
             {
-                _loadingBarPresenter.FiiRemoteTexts();
+                _loadingBarPresenter.FiiRemoteTexts(supportLink);
                 _loadingBarPresenter.Activate();
             }
 
@@ -124,7 +124,6 @@ namespace AdsAppView.Program
                 }
                 else if (_preloadService.IsPluginAvailable)
                 {
-                    AdvertisementController.Instance?.ChangeSubscribeStatus(vip: true);
                     yield return Initialize(vip);
                 }
             }

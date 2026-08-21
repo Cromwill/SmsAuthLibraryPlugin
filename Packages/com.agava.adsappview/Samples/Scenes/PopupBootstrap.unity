@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1857867198623743883, guid: f3c4214cec0b8aa4682d0783b718e21a, type: 3}
       propertyPath: <BundleId>k__BackingField
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4413820536709679428, guid: f3c4214cec0b8aa4682d0783b718e21a, type: 3}
       propertyPath: m_Name
@@ -272,7 +272,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10001
   m_TargetDisplay: 0
 --- !u!224 &473298524
 RectTransform:

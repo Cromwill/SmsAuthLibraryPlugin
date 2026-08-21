@@ -15,13 +15,10 @@ namespace AdsAppView.Program
         private string _link;
         private Action _onClick;
 
-        private IEnumerator Start()
+        public void Construct(string link)
         {
-            yield return new WaitUntil(() => Links.Instance != null);
-            yield return new WaitUntil(() => Links.Instance.Initialized);
-
             _linkId = "support";
-            _link = Links.Instance.Support;
+            _link = link;
             Debug.Log($"_link = {_link}");
             _onClick = AnalyticsService.SendSupportLink;
         }

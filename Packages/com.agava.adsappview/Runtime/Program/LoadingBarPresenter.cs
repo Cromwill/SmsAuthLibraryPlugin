@@ -21,6 +21,7 @@ namespace AdsAppView.Program
         [SerializeField] private List<TMP_Text> _portraitTexts;
         [SerializeField] private List<TMP_Text> _landscapeTexts;
         [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
+        [SerializeField] private List<ClickableSupportText> _clickableSupportTexts;
         [SerializeField, Min(0.1f)] private float _changeTextDelay;
         [SerializeField, Min(1)] private float _forceLoadTime;
         [SerializeField] private List<string> _defaultTexts;
@@ -64,7 +65,11 @@ namespace AdsAppView.Program
             }
         }
 
-        public void FiiRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
+        public void FiiRemoteTexts(string supportLink)
+        {
+            _xmlConfigTexts.ForEach(t => t.FillText());
+            _clickableSupportTexts.ForEach(t => t.Construct(supportLink));
+        }
 
         public void Activate()
         {
