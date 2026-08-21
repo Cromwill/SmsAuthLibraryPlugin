@@ -31,6 +31,8 @@ namespace Agava.Wink
         [SerializeField] private OrientationСhangeWindowPresenter _orientationСhangeWindow;
         [SerializeField] private WebViewPresenter _webViewPresenter;
         [SerializeField] private RewardContinueWindowPresenter _rewardContinueWindowPresenter;
+        [SerializeField] private LoadingWindowPresenter _portraitLoadingWindowPresenter;
+        [SerializeField] private LoadingWindowPresenter _landscapeLoadingWindowPresenter;
         [SerializeField] private RewardSettings _rewardSettings;
         [SerializeField] private bool _hasDemoMode = true;
         [Header("All UI Windows")]
@@ -169,6 +171,8 @@ namespace Agava.Wink
             _helloWindow.ConstructCorousel(_carouselSettings);
             _rewardContinueWindowPresenter.ConstructCorousel(_carouselSettings);
             _winkProfileWindow.ConstructCorousel(_carouselSettings);
+            _portraitLoadingWindowPresenter.ConstructCorousel(_carouselSettings);
+            _landscapeLoadingWindowPresenter.ConstructCorousel(_carouselSettings);
         }
 
         internal bool HasOpenedWindow(WindowType type)

@@ -28,5 +28,7 @@ namespace Agava.Wink
         TurnOffAdVertical,
         TurnOffAdHorizontal,
         WinkInfoHorizontal,
+        PortraitLoadingCorousel,
+        LandscapeLoadingCorousel,
     }
 }

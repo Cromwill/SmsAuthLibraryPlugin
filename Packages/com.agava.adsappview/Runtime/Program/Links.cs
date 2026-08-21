@@ -60,6 +60,7 @@ namespace AdsAppView.Program
         public string Privacy { get; private set; } = "https://mt.media/privacy/";
         public string Subscription { get; private set; } = "https://wink.ru/services/winkkids";
         public static Links Instance { get; private set; }
+        public bool Initialized { get; private set; } = false;
 
         public IEnumerator Initialize(AdsAppAPI api, AppName appName, Store store)
         {
@@ -115,6 +116,8 @@ namespace AdsAppView.Program
 
             if (string.IsNullOrEmpty(linkSubscription) == false)
                 Subscription = linkSubscription;
+
+            Initialized = true;
         }
 
         private async Task<string> GetLink(string key)

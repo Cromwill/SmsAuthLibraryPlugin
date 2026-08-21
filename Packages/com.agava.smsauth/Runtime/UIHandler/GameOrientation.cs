@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
-    [Serializable]
+    [Serializable, Preserve]
     public class GameOrientation
     {
         private const GameScreenOrientation PluginOrientation = GameScreenOrientation.Portrait;
@@ -12,6 +13,7 @@ namespace Agava.Wink
 
         private ScreenOrientation _screenOrientation;
 
+        public GameScreenOrientation AppOrientation => _appOrientation;
         public bool NeedChangeOrientation => PluginOrientation != _appOrientation;
         public bool ChangedToLandscape => Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight;
         public float DeltaToLandscapeLeft { get; private set; } = -0.5f;
@@ -82,13 +84,6 @@ namespace Agava.Wink
             Debug.Log($"<color=yellow>ORIENTATION CHANGER: set saved orientation = {_screenOrientation}</color>");
 #endif
             Screen.orientation = _screenOrientation;
-        }
-
-        private enum GameScreenOrientation
-        {
-            Auto,
-            Portrait,
-            Landscape,
         }
     }
 }

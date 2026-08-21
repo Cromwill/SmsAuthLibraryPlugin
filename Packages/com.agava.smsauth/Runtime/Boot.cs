@@ -6,6 +6,7 @@ using UnityEngine.Scripting;
 using AdsAppView.Utility;
 using SmsAuthAPI.Utility;
 using KinDzaDzaGames.AdvertisementPlugin;
+using SheetRemoteConfigs = SmsAuthAPI.Utility.SheetRemoteConfigs;
 
 namespace Agava.Wink
 {
@@ -141,13 +142,13 @@ namespace Agava.Wink
 
             if (AdsAppView.Program.Boot.Instance != null)
             {
-                _winkSignInHandlerUI.OpenProcessOnWindow();
+                _winkSignInHandlerUI.OpenLoadingCorousel();
                 AnalyticsWinkService.SendLoadingStart();
 
                 yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess);
 
                 AnalyticsWinkService.SendLoadingFinish();
-                _winkSignInHandlerUI.CloseProcessOnWindow();
+                _winkSignInHandlerUI.CloseLoadingCorousel();
             }
 
             _signInProcess = null;

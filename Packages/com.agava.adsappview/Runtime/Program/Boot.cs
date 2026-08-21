@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
-using AdsAppView.Utility;
 using AdsAppView.DTO;
-using Newtonsoft.Json;
-using System;
+using AdsAppView.Utility;
 using KinDzaDzaGames.AdvertisementPlugin;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace AdsAppView.Program
 {
@@ -37,6 +38,7 @@ namespace AdsAppView.Program
         [Tooltip("Content load settings")]
         [SerializeField] private bool _asyncLoadContent = false;
         [SerializeField] private LoadingBarPresenter _loadingBarPresenter;
+        [SerializeField] private AppOrientation _appOrientation;
         [Header("Advertisement")]
         [SerializeField] private AdvertisementBoot _advertisementBoot;
 
@@ -80,14 +82,25 @@ namespace AdsAppView.Program
             Debug.Log("#Boot# " + JsonConvert.SerializeObject(_appData));
 
             yield return _preloadService.Preparing();
+            yield return SheetRemoteConfigs.Initialize(_api);
+            _loadingBarPresenter.Construct(_appOrientation);
 
             if (_freeApp)
             {
                 yield return _links.Initialize(_api, _advertisementBoot.AppName, _advertisementBoot.StoreName);
+
+                _loadingBarPresenter.FiiRemoteTexts();
+                _loadingBarPresenter.Activate();
+
                 yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, Platform, Links.Instance.Privacy);
             }
+            else
+            {
+                _loadingBarPresenter.FiiRemoteTexts();
+                _loadingBarPresenter.Activate();
+            }
 
-            yield return _viewPresenterConfigs.Initialize(_api);
+                yield return _viewPresenterConfigs.Initialize(_api);
 
             if (_freeApp == false)
             {
@@ -103,12 +116,16 @@ namespace AdsAppView.Program
                     if (_advertisementBoot.AdvertisementController.WaitConcernPolicy && _advertisementBoot.AdvertisementController.PolicyAccepted == false)
                         yield return new WaitUntil(() => _advertisementBoot.AdvertisementController.AgreementClosed);
 
+                    _loadingBarPresenter.ForceLoad();
+                    yield return new WaitUntil(() => _loadingBarPresenter.ForceLoaded);
+                    _loadingBarPresenter.Deactivate();
+
                     AdvertisementController.Instance?.StartInterstitialTimer();
                 }
                 else if (_preloadService.IsPluginAvailable)
                 {
-                    yield return Initialize(vip);
                     AdvertisementController.Instance?.ChangeSubscribeStatus(vip: true);
+                    yield return Initialize(vip);
                 }
             }
 
@@ -117,8 +134,6 @@ namespace AdsAppView.Program
 
         private IEnumerator Initialize(bool vip)
         {
-            _loadingBarPresenter.SetActive(true);
-
             AnalyticsService.SendStartApp(_appId);
             GameObject created = null;
             Debug.Log("#Boot# Popup plugin enabled");
@@ -148,7 +163,13 @@ namespace AdsAppView.Program
             }
 
             yield return created.GetComponent<PopupManager>().Construct(_appData, _freeApp, vip, _asyncLoadContent, _loadingBarPresenter);
-            _loadingBarPresenter.SetActive(false);
+            _loadingBarPresenter.Deactivate();
         }
+    }
+
+    public enum AppOrientation
+    {
+        Landscape,
+        Portrait
     }
 }

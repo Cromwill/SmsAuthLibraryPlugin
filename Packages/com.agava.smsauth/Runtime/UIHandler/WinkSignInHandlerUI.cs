@@ -176,6 +176,8 @@ namespace Agava.Wink
 
         public void OpenProcessOnWindow() => _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         public void CloseProcessOnWindow() => _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
+        public void OpenLoadingCorousel() => _notifyWindowHandler.OpenWindow(_gameOrientation.AppOrientation == GameScreenOrientation.Landscape ? WindowType.LandscapeLoadingCorousel : WindowType.PortraitLoadingCorousel);
+        public void CloseLoadingCorousel() => _notifyWindowHandler.CloseWindow(_gameOrientation.AppOrientation == GameScreenOrientation.Landscape ? WindowType.LandscapeLoadingCorousel : WindowType.PortraitLoadingCorousel);
 
         public void DownloadRemoteSettings()
         {
@@ -648,7 +650,7 @@ namespace Agava.Wink
             _demoTimer.AddTempSubsDemoTime();
             _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
             _winkAccessManager.ActivateTempSubscription();
-            TrySetCorrectOrientation();
+            _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
             _notifyWindowHandler.CloseWindow(WindowType.SubscriptionCheck);
         }
 

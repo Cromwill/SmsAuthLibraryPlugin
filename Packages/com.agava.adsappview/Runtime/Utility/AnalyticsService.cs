@@ -1,4 +1,5 @@
-﻿using Io.AppMetrica;
+﻿using CodiceApp.EventTracking;
+using Io.AppMetrica;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -12,6 +13,7 @@ namespace AdsAppView.Utility
         public static void SendPopupView(string popupId) => AppMetrica.ReportEvent("Popup view", GetDataJson("Popup view", popupId));
         public static void SendPopupClosed(string popupId) => AppMetrica.ReportEvent("Popup closed", GetDataJson($"Popup closed", popupId));
         public static void SendGamePushCliсked(string push) => AppMetrica.ReportEvent("Game push cliсked", GetDataJson($"Game push cliсked", push));
+        public static void SendSupportLink() => SendEvent("Support Link");
         public static void SendPopupRedirectClick(string popupId, int count)
         {
             AppMetrica.ReportEvent("Popup redirect click", GetCountedDataJson("Popup redirect click", popupId, count));
@@ -39,6 +41,12 @@ namespace AdsAppView.Utility
             };
 
             return JsonConvert.SerializeObject(data);
+        }
+
+        private static void SendEvent(string eventName)
+        {
+            Debug.Log($"ANALYTICS: event - {eventName}");
+            AppMetrica.ReportEvent(eventName);
         }
 
         internal class Data

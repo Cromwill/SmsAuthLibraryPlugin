@@ -28,6 +28,7 @@ namespace AdsAppView.Utility
         public async Task<Response> GetRemote(string apiName, string key)
         {
             string path = $"{GetHttpPath(apiName, key.ToLower())}";
+            OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.GET))
             {
@@ -44,6 +45,7 @@ namespace AdsAppView.Utility
         public async Task<Response> GetRemote(Request request)
         {
             string path = $"{GetHttpPath(request.api_name)}";
+            OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.GET, uploadBody: request.body))
             {
@@ -57,9 +59,27 @@ namespace AdsAppView.Utility
             }
         }
 
+        public async Task<Response> GetServerRemote(string apiName)
+        {
+            string path = $"{GetHttpPath(apiName)}";
+            OnTryConnecting(path);
+
+            using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST))
+            {
+                webRequest.SendWebRequest();
+
+                await WaitProccessing(webRequest);
+                TryShowRequestInfo(webRequest, apiName);
+
+                var body = webRequest.downloadHandler.text;
+                return new Response(webRequest.result, webRequest.result.ToString(), body, false, null);
+            }
+        }
+
         public async Task<Response> GetFilePath(Request request)
         {
             string path = $"{GetHttpPath(request.api_name)}";
+            OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST, uploadBody: request.body))
             {
@@ -76,6 +96,7 @@ namespace AdsAppView.Utility
         public async Task<Response> GetAppSettings(Request request)
         {
             string path = $"{GetHttpPath(request.api_name)}";
+            OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.POST, uploadBody: request.body))
             {
@@ -92,6 +113,7 @@ namespace AdsAppView.Utility
         public async Task<Response> GetPluginSettings(string apiName, string key)
         {
             string path = $"{GetHttpPath(apiName, key.ToLower())}";
+            OnTryConnecting(path);
 
             using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.GET))
             {
@@ -235,6 +257,13 @@ namespace AdsAppView.Utility
 
             if (webRequest.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"#WebClient# Response {method} fail: {webRequest.error}, {webRequest.result}");
+        }
+
+        private void OnTryConnecting(string path)
+        {
+#if UNITY_EDITOR || TEST
+            Debug.Log(path);
+#endif
         }
     }
 }

@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
-    [Serializable]
+    [Serializable, Preserve]
     public class CarouselData
     {
         [field: SerializeField] public string FieldLabel { get; private set; }

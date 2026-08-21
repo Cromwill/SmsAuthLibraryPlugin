@@ -1,11 +1,13 @@
-using TMPro;
 using System;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Scripting;
+using UnityEngine.UI;
 
 namespace Agava.Wink
 {
+    [Preserve]
     public class CarouselItem : MonoBehaviour
     {
         [SerializeField] private Image _image;

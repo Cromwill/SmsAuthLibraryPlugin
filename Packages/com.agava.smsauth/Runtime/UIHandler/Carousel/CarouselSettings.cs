@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 using AdsAppView.Utility;
-using SmsAuthAPI.Utility;
+using UnityEngine.Scripting;
 using System.Collections.Generic;
+using SheetRemoteConfigs = SmsAuthAPI.Utility.SheetRemoteConfigs;
 
 namespace Agava.Wink
 {
-    [Serializable]
+    [Serializable, Preserve]
     public class CarouselSettings
     {
         private const string LineTransitionPattern = "end";

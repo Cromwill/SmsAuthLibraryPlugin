@@ -1,5 +1,8 @@
+using UnityEngine.Scripting;
+
 namespace Agava.Wink
 {
+    [Preserve]
     public enum AppAuthenticator
     {
         None,

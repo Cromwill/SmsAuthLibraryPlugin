@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using UnityEngine.Scripting;
 using AdsAppView.DTO;
 using Newtonsoft.Json;
+using UnityEngine.Scripting;
 
 namespace AdsAppView.Utility
 {
@@ -54,6 +54,12 @@ namespace AdsAppView.Utility
             };
 
             return await _webClient.GetRemote(request);
+        }
+
+        public async Task<Response> GetRemoteServerConfig()
+        {
+            EnsureInitialize();
+            return await _webClient.GetServerRemote("RemoteConfig/getremote-table");
         }
 
         public async Task<Response> GetRemoteConfig(string controllerName, string apiName, AppData data)
