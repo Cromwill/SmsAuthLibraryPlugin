@@ -37,6 +37,7 @@ namespace Agava.Wink
             }
 
             DisableCanvasGroup(_canvasGroup);
+            HideCloseButton();
             _subscribeButton.onClick.RemoveListener(OnSubscribeButtonClick);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
         }
