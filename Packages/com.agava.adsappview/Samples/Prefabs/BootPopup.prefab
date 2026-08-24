@@ -206,7 +206,7 @@ MonoBehaviour:
   m_text: "<link=\"support\">\u041C\u043D\u0435 \u043D\u0443\u0436\u043D\u0430 \u043F\u043E\u043C\u043E\u0449\u044C 
     ></link>"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cce3cbf973110d34993e22b239ab7bd3, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &5463143938291941759
@@ -700,7 +700,7 @@ MonoBehaviour:
   m_text: "<link=\"support\">\u041C\u043D\u0435 \u043D\u0443\u0436\u043D\u0430 \u043F\u043E\u043C\u043E\u0449\u044C 
     ></link>"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cce3cbf973110d34993e22b239ab7bd3, type: 2}
   m_sharedMaterial: {fileID: -629351319637708721, guid: a494e420e5416c04c8740bbc56928a6b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -766,7 +766,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &583726658036650840
