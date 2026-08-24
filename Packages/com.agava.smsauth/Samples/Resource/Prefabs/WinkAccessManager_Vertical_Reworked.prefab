@@ -3615,7 +3615,7 @@ MonoBehaviour:
           \u0441\u043A\u0430\u0437\u043A\u0430 "
         <AppAuthenticator>k__BackingField: 3
       - <FieldLabel>k__BackingField: Bears Friend
-        <Sprite>k__BackingField: {fileID: 21300000, guid: f75117fbb0686c74b897bfca5ebe2b15, type: 3}
+        <Sprite>k__BackingField: {fileID: 21300000, guid: 3c41c9152d0c8334fb134cfe172f39f3, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\r\n\u041D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0439
           \u0434\u0440\u0443\u0433"
         <AppAuthenticator>k__BackingField: 10
@@ -26349,7 +26349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f75117fbb0686c74b897bfca5ebe2b15, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c41c9152d0c8334fb134cfe172f39f3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

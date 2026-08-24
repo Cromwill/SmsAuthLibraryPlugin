@@ -11,6 +11,9 @@ namespace AdsAppView.Program
     [Preserve]
     public class LoadingBarPresenter : MonoBehaviour
     {
+        private float TextChangeStartValue = 0.75f;
+        private float TextChangeLimit = 0.25f;
+
         [SerializeField] private XMLKeys _xMLKey;
         [SerializeField] private RectTransform _portraitPopup;
         [SerializeField] private RectTransform _landscapePopup;
@@ -30,6 +33,8 @@ namespace AdsAppView.Program
         private List<string> _remoteTexts = new();
         private Coroutine _changeTextCoroutine;
         private int _max;
+        private int _textIterator = 0;
+        private float _textChangeValue = 0;
 
         public int CurrentProgress { get; private set; } = 0;
         public bool ForceLoaded { get; private set; } = false;
@@ -39,6 +44,7 @@ namespace AdsAppView.Program
             _loadingPopup = appOrientation == AppOrientation.Landscape ? _landscapePopup : _portraitPopup;
             _fill = appOrientation == AppOrientation.Landscape ? _landscapeFill : _portraitFill;
             _texts = appOrientation == AppOrientation.Landscape ? _landscapeTexts : _portraitTexts;
+            _textChangeValue = TextChangeStartValue;
 
             if (SheetRemoteConfigs.Texts != null)
             {
@@ -71,18 +77,19 @@ namespace AdsAppView.Program
 
         public void Activate()
         {
+            _textChangeValue = TextChangeStartValue;
             _loadingPopup.gameObject.SetActive(true);
 
-            _changeTextCoroutine = StartCoroutine(ChangeText());
+            //_changeTextCoroutine = StartCoroutine(ChangeText());
         }
 
         public void Deactivate()
         {
-            if(_changeTextCoroutine != null)
+            /*if(_changeTextCoroutine != null)
             {
                 StopCoroutine(_changeTextCoroutine);
                 _changeTextCoroutine = null;
-            }
+            }*/
 
             _loadingPopup.gameObject.SetActive(false);
         }
@@ -91,6 +98,7 @@ namespace AdsAppView.Program
         {
             float value = Mathf.InverseLerp(max, 0, current);
             _fill.fillAmount = Mathf.Lerp(1, 0, value);
+            TryChangeText(value);
         }
 
         public void SetMax(int max) => _max = max;
@@ -103,6 +111,7 @@ namespace AdsAppView.Program
             CurrentProgress++;
             float value = Mathf.InverseLerp(_max, 0, CurrentProgress);
             _fill.fillAmount = Mathf.Lerp(1, 0, value);
+            TryChangeText(value);
         }
 
         public void ForceLoad()
@@ -139,6 +148,20 @@ namespace AdsAppView.Program
 
                 if (iterator == _remoteTexts.Count)
                     iterator = 0;
+            }
+        }
+
+        private void TryChangeText(float value)
+        {
+            if(value < _textChangeValue)
+            {
+                _textChangeValue -= TextChangeLimit;
+                _textIterator++;
+
+                if (_textIterator == _remoteTexts.Count)
+                    _textIterator = 0;
+
+                _texts.ForEach(t => t.text = _remoteTexts[_textIterator]);
             }
         }
     }

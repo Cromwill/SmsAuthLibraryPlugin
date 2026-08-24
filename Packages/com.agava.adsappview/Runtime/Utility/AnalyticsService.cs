@@ -1,5 +1,4 @@
-﻿using CodiceApp.EventTracking;
-using Io.AppMetrica;
+﻿using Io.AppMetrica;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Scripting;

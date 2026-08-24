@@ -100,7 +100,7 @@ namespace AdsAppView.Program
                 _loadingBarPresenter.Activate();
             }
 
-                yield return _viewPresenterConfigs.Initialize(_api);
+            yield return _viewPresenterConfigs.Initialize(_api);
 
             if (_freeApp == false)
             {
