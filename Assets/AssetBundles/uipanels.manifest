@@ -1,0 +1,40 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.60f1
+CRC: 1541167604
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ba2512ed5b7aa505c42558e1a4d6776f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 819da8d0051784640ac131828a17d1dd
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: c7bd5c043da3252048a8e66648dd5bb8
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: c92456a89f9b93945a1e74d9ee92dfe9, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Source/SO/fairytale_patrol_mult.asset
+- Assets/Source/SO/fairytale_patrol_mult_new_2.asset
+- Assets/Source/SO/leo_and_tig_mult.asset
+- Assets/Source/SO/three_cats_popup.asset
+- Assets/Source/SO/fairytale_patrol_mult_2.asset
+- Assets/Source/SO/fairytale_patrol.asset
+- Assets/Source/SO/mishki_mult_new.asset
+- Assets/Source/SO/kubokot.asset
+- Assets/Source/SO/mishki_adventure.asset
+- Assets/Source/SO/fairytale_patrol_mult_new.asset
+- Assets/Source/SO/leo_and_tig.asset
+- Assets/Source/SO/test_image.asset
+- Assets/Source/SO/leo_and_tig_mult_new.asset
+- Assets/Source/SO/mishki_mult.asset
+Dependencies: []

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c92456a89f9b93945a1e74d9ee92dfe9, type: 3}
+  m_Name: fairytale_patrol_mult_new_2
+  m_EditorClassIdentifier: 
+  <Background>k__BackingField: {fileID: 21300000, guid: 50f65cad8ee3ca94199bd5723cec35fe, type: 3}
+  <Logo>k__BackingField: {fileID: 21300000, guid: c6ff8829c600df0479568ed09c1ab713, type: 3}
+  <Button>k__BackingField: {fileID: 21300000, guid: 9f272c6ba415e644da95aba73abc47ed, type: 3}
