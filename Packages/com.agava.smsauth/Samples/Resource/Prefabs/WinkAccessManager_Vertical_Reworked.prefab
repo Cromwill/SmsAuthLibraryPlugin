@@ -3565,87 +3565,106 @@ MonoBehaviour:
         <Sprite>k__BackingField: {fileID: 21300000, guid: 28e5b9a32ab11e943907144c392d88bd, type: 3}
         <AppName>k__BackingField: "\u041A\u0443\u0431\u043E\u043A\u043E\u0442"
         <AppAuthenticator>k__BackingField: 1
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Cats Adventures
         <Sprite>k__BackingField: {fileID: 21300000, guid: ffc1043194c8f214aaf09ed200e28477, type: 3}
         <AppName>k__BackingField: "\u0422\u0440\u0438 \u043A\u043E\u0442\u0430:\L\u041F\u0440\u0438\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F"
         <AppAuthenticator>k__BackingField: 15
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Fantasy Patrol
         <Sprite>k__BackingField: {fileID: 21300000, guid: f640f2fba1fa42e49bfb8b2d0173815b, type: 3}
         <AppName>k__BackingField: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0439\n\u043F\u0430\u0442\u0440\u0443\u043B\u044C"
         <AppAuthenticator>k__BackingField: 14
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Bears Adventures
         <Sprite>k__BackingField: {fileID: 21300000, guid: 1e7ae699043da88428bde85d917000de, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\r\n\u041F\u0440\u0438\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F"
         <AppAuthenticator>k__BackingField: 8
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Leo And Tig
         <Sprite>k__BackingField: {fileID: 21300000, guid: 8d97195f9576f1a4fb567f4b75df56ca, type: 3}
         <AppName>k__BackingField: "\u041B\u0435\u043E \u0438 \u0422\u0438\u0433"
         <AppAuthenticator>k__BackingField: 9
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Fantasy Patrol Adventures
         <Sprite>k__BackingField: {fileID: 21300000, guid: 4fdb2bc9d86430b49adff4e37d78c6b2, type: 3}
         <AppName>k__BackingField: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0439\r\n\u043F\u0430\u0442\u0440\u0443\u043B\u044C:
           \u041F\u0440\u0438.."
         <AppAuthenticator>k__BackingField: 5
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Bears Big Concert
         <Sprite>k__BackingField: {fileID: 21300000, guid: b9990d7e240e05c42892619079ace3c4, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\r\n\u0411\u043E\u043B\u044C\u0448\u043E\u0439
           \u043A\u043E\u043D\u0446\u0435\u0440\u0442"
         <AppAuthenticator>k__BackingField: 4
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Fantasy Patrol Music
         <Sprite>k__BackingField: {fileID: 21300000, guid: c0debd8ad5b1e944e82c0758bdbc560a, type: 3}
         <AppName>k__BackingField: "\u041C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u044B\u0439\r\n\u043F\u0430\u0442\u0440\u0443\u043B\u044C"
         <AppAuthenticator>k__BackingField: 6
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Bears In Space
         <Sprite>k__BackingField: {fileID: 21300000, guid: 59caeb79bd0ad1f4d856585270d0248b, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438\r\n\u0432
           \u043A\u043E\u0441\u043C\u043E\u0441\u0435"
         <AppAuthenticator>k__BackingField: 13
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Fantasy Patrol Cafe
         <Sprite>k__BackingField: {fileID: 21300000, guid: b976ca76d3a8fd34ea7a1d60e1f5ed1f, type: 3}
         <AppName>k__BackingField: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0439\r\n\u043F\u0430\u0442\u0440\u0443\u043B\u044C:
           \u041A\u0430\u0444\u0435"
         <AppAuthenticator>k__BackingField: 11
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Bears Multiznayka
         <Sprite>k__BackingField: {fileID: 21300000, guid: d98d00b57aedf4d42a0d203782e5d75a, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\L\u041C\u0443\u043B\u044C\u0442\u0438\u0437\u043D\u0430\u0439\u043A\u0430"
         <AppAuthenticator>k__BackingField: 7
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Leo And Tig Taiga
         <Sprite>k__BackingField: {fileID: 21300000, guid: 6f8c4df5e0665124798dce1e4b188274, type: 3}
         <AppName>k__BackingField: "\u041B\u0435\u043E \u0438 \u0422\u0438\u0433:\L\u0422\u0430\u0451\u0436\u043D\u0430\u044F
           \u0441\u043A\u0430\u0437\u043A\u0430 "
         <AppAuthenticator>k__BackingField: 3
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Bears Friend
         <Sprite>k__BackingField: {fileID: 21300000, guid: 3c41c9152d0c8334fb134cfe172f39f3, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\r\n\u041D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0439
           \u0434\u0440\u0443\u0433"
         <AppAuthenticator>k__BackingField: 10
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Bears Mir Tvorchestva
         <Sprite>k__BackingField: {fileID: 21300000, guid: 1bd4caf5369c2a94c95c56ed8fc156a1, type: 3}
         <AppName>k__BackingField: "\u041C\u0438-\u043C\u0438-\u043C\u0438\u0448\u043A\u0438:\L\u041C\u0438\u0440
           \u0442\u0432\u043E\u0440\u0447\u0435\u0441\u0442\u0432\u0430"
         <AppAuthenticator>k__BackingField: 12
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Cats Racers
         <Sprite>k__BackingField: {fileID: 21300000, guid: d53c1d2be2f005b458a77fd97ca0320a, type: 3}
         <AppName>k__BackingField: "\u0422\u0440\u0438 \u043A\u043E\u0442\u0430:\L\u0413\u043E\u043D\u043A\u0438
           \u043D\u0430 \u0421\u043A\u0435\u0439\u0442\u0430\u0445"
         <AppAuthenticator>k__BackingField: 16
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Cats Puzzles
         <Sprite>k__BackingField: {fileID: 21300000, guid: 5732831783d53304596b92f89881461f, type: 3}
         <AppName>k__BackingField: "\u0422\u0440\u0438 \u043A\u043E\u0442\u0430:\L\u041F\u0430\u0437\u043B\u044B"
         <AppAuthenticator>k__BackingField: 17
+        <AppMonetizationType>k__BackingField: 0
       - <FieldLabel>k__BackingField: Papers
         <Sprite>k__BackingField: {fileID: 21300000, guid: 50ea9b9a4fbe6e440bd91f2a023baf1d, type: 3}
         <AppName>k__BackingField: "\u0411\u0443\u043C\u0430\u0436\u043A\u0438"
         <AppAuthenticator>k__BackingField: 18
+        <AppMonetizationType>k__BackingField: 1
       - <FieldLabel>k__BackingField: Envell Heroes
         <Sprite>k__BackingField: {fileID: 21300000, guid: 02a3d46ee2643e04ab51e7909cc49e8b, type: 3}
         <AppName>k__BackingField: "\u0413\u0435\u0440\u043E\u0438 \u042D\u043D\u0432\u0435\u043B\u043B\u0430:\L\u0411\u0435\u0441\u0441\u043C\u0435\u0440\u0442\u043D\u044B\u0435"
         <AppAuthenticator>k__BackingField: 20
+        <AppMonetizationType>k__BackingField: 1
       - <FieldLabel>k__BackingField: Four In Cube
         <Sprite>k__BackingField: {fileID: 21300000, guid: 0b9351a8768490a44a301cf109bd16e3, type: 3}
         <AppName>k__BackingField: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E\L\u0432
           \u043A\u0443\u0431\u0435"
         <AppAuthenticator>k__BackingField: 19
+        <AppMonetizationType>k__BackingField: 1
   _webViewURLHandler:
     _appAuthenticator: 9
     _remoteConfigName: wink-website-subs

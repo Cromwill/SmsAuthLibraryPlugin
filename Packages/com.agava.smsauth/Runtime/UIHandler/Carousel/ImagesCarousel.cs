@@ -12,7 +12,6 @@ namespace Agava.Wink
         private const float PauseSeconds = 1f;
 
         [SerializeField] private List<CarouselItem> _items;
-        //[SerializeField] private List<CarouselItemAsset> _assets;
         [Header("Carousel header")]
         [SerializeField] private CarouselItem _headerItem;
         [SerializeField] private TMP_Text _header;
@@ -21,20 +20,20 @@ namespace Agava.Wink
         [SerializeField] private int _lastHideObject;
 
         private CarouselSettings _carouselSettings;
+        private List<CarouselData> _payedAppData;
         private int _assetIndex = 0;
         private Coroutine _cycle;
         private List<CarouselPosition> _carouselPositions = null;
         private int _headerPositionIndex;
 
-        /*private void Awake()
-        {
-            FillCarouselPositions();
-            FillItems();
-        }*/
-
         public void Construct(CarouselSettings carouselSettings)
         {
             _carouselSettings = carouselSettings ?? throw new ArgumentNullException(nameof(carouselSettings));
+            _payedAppData = new();
+
+            foreach (var data in _carouselSettings.CarouselDatas)
+                if(data.AppMonetizationType == AppMonetizationType.PaidApp)
+                    _payedAppData.Add(data);
 
             FillCarouselPositions();
             FillItems();
@@ -111,9 +110,9 @@ namespace Agava.Wink
 
         private void FillItems()
         {
-            if (_carouselSettings.CarouselDatas.Count == 0)
+            if (_payedAppData.Count == 0)
             {
-                Debug.LogError("Fill sprites!");
+                Debug.LogError("Fill popup data!");
                 return;
             }
 
@@ -149,10 +148,10 @@ namespace Agava.Wink
 
         private CarouselData NextAsset()
         {
-            if (_assetIndex == _carouselSettings.CarouselDatas.Count)
+            if (_assetIndex == _payedAppData.Count)
                 _assetIndex = 0;
 
-            return _carouselSettings.CarouselDatas[_assetIndex++];
+            return _payedAppData[_assetIndex++];
         }
 
         private struct CarouselPosition
