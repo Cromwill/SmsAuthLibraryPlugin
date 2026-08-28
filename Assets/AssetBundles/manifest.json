@@ -1,19 +1,19 @@
 {
-  "bundleVersion": 0,
-  "prefabNames": [
-    "fairytale_patrol",
-    "fairytale_patrol_mult",
-    "fairytale_patrol_mult_2",
-    "fairytale_patrol_mult_new",
-    "fairytale_patrol_mult_new_2",
-    "kubokot",
-    "leo_and_tig",
-    "leo_and_tig_mult",
-    "leo_and_tig_mult_new",
-    "mishki_adventure",
-    "mishki_mult",
-    "mishki_mult_new",
-    "test_image",
-    "three_cats_popup"
-  ]
+  "bundleVersion": 1,
+    "prefabNames": [
+        "fairytale_patrol",
+        "fairytale_patrol_mult",
+        "fairytale_patrol_mult_2",
+        "fairytale_patrol_mult_new",
+        "fairytale_patrol_mult_new_2",
+        "kubokot",
+        "leo_and_tig",
+        "leo_and_tig_mult",
+        "leo_and_tig_mult_new",
+        "mishki_adventure",
+        "mishki_mult",
+        "mishki_mult_new",
+        "test_image",
+        "three_cats_popup"
+    ]
 }
