@@ -83,7 +83,7 @@ namespace AdsAppView.Program
 
             yield return _preloadService.Preparing();
             yield return SheetRemoteConfigs.Initialize(_api);
-            _loadingBarPresenter.Construct(_appOrientation);
+            _loadingBarPresenter.Construct(_appOrientation, _buildVersionHolder.StoreName);
 
             if (_freeApp)
             {

@@ -176,8 +176,8 @@ namespace Agava.Wink
 
         public void OpenProcessOnWindow() => _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
         public void CloseProcessOnWindow() => _notifyWindowHandler.CloseWindow(WindowType.ProccessOn);
-        public void OpenLoadingCorousel() => _notifyWindowHandler.OpenWindow(_gameOrientation.AppOrientation == GameScreenOrientation.Landscape ? WindowType.LandscapeLoadingCorousel : WindowType.PortraitLoadingCorousel);
-        public void CloseLoadingCorousel() => _notifyWindowHandler.CloseWindow(_gameOrientation.AppOrientation == GameScreenOrientation.Landscape ? WindowType.LandscapeLoadingCorousel : WindowType.PortraitLoadingCorousel);
+        public void OpenLoadingPopupWindow() => _notifyWindowHandler.OpenWindow(WindowType.Blank);
+        public void CloseLoadingPopupWindow() => _notifyWindowHandler.CloseWindow(WindowType.Blank);
 
         public void DownloadRemoteSettings()
         {

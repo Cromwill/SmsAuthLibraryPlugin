@@ -142,13 +142,13 @@ namespace Agava.Wink
 
             if (AdsAppView.Program.Boot.Instance != null)
             {
-                _winkSignInHandlerUI.OpenLoadingCorousel();
+                _winkSignInHandlerUI.OpenLoadingPopupWindow();
                 AnalyticsWinkService.SendLoadingStart();
 
                 yield return AdsAppView.Program.Boot.Instance.Construct(WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, Links.Instance.Support);
 
                 AnalyticsWinkService.SendLoadingFinish();
-                _winkSignInHandlerUI.CloseLoadingCorousel();
+                _winkSignInHandlerUI.CloseLoadingPopupWindow();
             }
 
             _signInProcess = null;

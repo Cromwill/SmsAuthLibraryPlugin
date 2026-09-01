@@ -15,23 +15,21 @@ namespace AdsAppView.Program
         private float TextChangeLimit = 0.25f;
 
         [SerializeField] private XMLKeys _xMLKey;
-        [SerializeField] private RectTransform _portraitPopup;
-        [SerializeField] private RectTransform _landscapePopup;
+        [SerializeField] private LoadingPopup _portraitPopup;
+        [SerializeField] private LoadingPopup _landscapePopup;
         [SerializeField] private Image _portraitFill;
         [SerializeField] private Image _landscapeFill;
         [SerializeField] private List<TMP_Text> _portraitTexts;
         [SerializeField] private List<TMP_Text> _landscapeTexts;
         [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
         [SerializeField] private List<ClickableSupportText> _clickableSupportTexts;
-        [SerializeField, Min(0.1f)] private float _changeTextDelay;
         [SerializeField, Min(1)] private float _forceLoadTime;
         [SerializeField] private List<string> _defaultTexts;
 
-        private RectTransform _loadingPopup;
+        private LoadingPopup _loadingPopup;
         private Image _fill;
         private List<TMP_Text> _texts = new();
         private List<string> _remoteTexts = new();
-        private Coroutine _changeTextCoroutine;
         private int _max;
         private int _textIterator = 0;
         private float _textChangeValue = 0;
@@ -39,7 +37,7 @@ namespace AdsAppView.Program
         public int CurrentProgress { get; private set; } = 0;
         public bool ForceLoaded { get; private set; } = false;
 
-        public void Construct(AppOrientation appOrientation)
+        public void Construct(AppOrientation appOrientation, Store storeName)
         {
             _loadingPopup = appOrientation == AppOrientation.Landscape ? _landscapePopup : _portraitPopup;
             _fill = appOrientation == AppOrientation.Landscape ? _landscapeFill : _portraitFill;
@@ -60,6 +58,8 @@ namespace AdsAppView.Program
                 {
                     _remoteTexts = _defaultTexts;
                 }
+
+                _loadingPopup.Construct(storeName);
             }
             else
             {
@@ -79,18 +79,10 @@ namespace AdsAppView.Program
         {
             _textChangeValue = TextChangeStartValue;
             _loadingPopup.gameObject.SetActive(true);
-
-            //_changeTextCoroutine = StartCoroutine(ChangeText());
         }
 
         public void Deactivate()
         {
-            /*if(_changeTextCoroutine != null)
-            {
-                StopCoroutine(_changeTextCoroutine);
-                _changeTextCoroutine = null;
-            }*/
-
             _loadingPopup.gameObject.SetActive(false);
         }
 
@@ -132,22 +124,6 @@ namespace AdsAppView.Program
 
                 _fill.fillAmount = 1;
                 ForceLoaded = true;
-            }
-        }
-
-        private IEnumerator ChangeText()
-        {
-            int iterator = 0;
-
-            while (true)
-            {
-                yield return new WaitForSeconds(_changeTextDelay);
-
-                _texts.ForEach(t => t.text = _remoteTexts[iterator]);
-                iterator++;
-
-                if (iterator == _remoteTexts.Count)
-                    iterator = 0;
             }
         }
 
