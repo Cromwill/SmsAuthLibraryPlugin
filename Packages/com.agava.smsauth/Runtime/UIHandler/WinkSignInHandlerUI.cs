@@ -650,8 +650,18 @@ namespace Agava.Wink
             _demoTimer.AddTempSubsDemoTime();
             _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
             _winkAccessManager.ActivateTempSubscription();
-            _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
-            _notifyWindowHandler.CloseWindow(WindowType.SubscriptionCheck);
+
+            if (_gameOrientation.NeedChangeOrientation)
+            {
+                _notifyWindowHandler.OpenWindow(WindowType.OrientationСhange);
+            }
+            else
+            {
+                AnalyticsWinkService.SendChangeOrientationWindow();
+                AnalyticsWinkService.SendPlayerRotateDevice();
+            }
+
+                _notifyWindowHandler.CloseWindow(WindowType.SubscriptionCheck);
         }
 
         private IEnumerator EnternetChecking()
