@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
+using System.Threading.Tasks;
+using AdsAppView.DTO;
+using AdsAppView.Utility;
+using KinDzaDzaGames.AdvertisementPlugin;
 using SmsAuthAPI.DTO;
 using SmsAuthAPI.Program;
-using System.Collections;
+using UnityEngine;
 using UnityEngine.Scripting;
-using System.Collections.Generic;
-using KinDzaDzaGames.AdvertisementPlugin;
+using UnityEngine.UI;
 using PlayerPrefs = UnityEngine.PlayerPrefs;
-using AdsAppView.Utility;
 
 namespace Agava.Wink
 {
@@ -55,10 +57,13 @@ namespace Agava.Wink
         [SerializeField] private WebViewPresenter _webViewPresenter;
         [Header("SMS Retriever")]
         [SerializeField] private SmsRetrieverManager _smsRetrieverManager;
+        [SerializeField] private PhoneService _phoneService;
 
         private SignInFuctionsUI _signInFuctionsUI;
         private WinkAccessManager _winkAccessManager;
         private InterstitialPlayer _interstitialPlayer;
+        private PaywallService _paywallService;
+        private AppMetricaInfo _appMetricaInfo;
         private bool _loginFromSettings = false;
         private bool _useAdWindows = false;
         private bool _forcedChangeOrientation = false;
@@ -82,6 +87,9 @@ namespace Agava.Wink
             _smsRetrieverManager.Construct();
             _notifyWindowHandler.Construct(_gameOrientation, _webViewURLHandler, _demoTimer, _screenshotProtector, this, buildVersionHolder.StoreName, appMetricaInfo, _smsRetrieverManager);
             _notifyWindowHandler.OpenWindow(WindowType.ProccessOn);
+
+            _appMetricaInfo = appMetricaInfo;
+            
             Links.Instance.SetAppInfo(buildVersionHolder, _webViewURLHandler.AppAuthenticator);
         }
 
@@ -136,13 +144,13 @@ namespace Agava.Wink
             _winkAccessManager.LimitReached -= OnLimitReached;
             _winkAccessManager.SignInSuccessfully -= OnSignInSuccessfully;
             _winkAccessManager.AuthorizationSuccessfully -= OnAuthorizationSuccessfully;
-            _demoTimer.TimerExpired -= OnTimerExpired;
             _demoTimer.FirstChecked -= OnTimerFirstChecked;
             _demoTimer.Dispose();
             _notifyWindowHandler.SunbscriptionBuyed -= OnSunbscriptionBuyed;
             _notifyWindowHandler.WebViewClosed -= TurnOffAdMode;
             _notifyWindowHandler.Dispose();
             _analyticsSender.Dispose();
+            _paywallService.Dispose();
 
             if (_interstitialPlayer != null)
                 _interstitialPlayer.OpenAdOffer -= OpenTurnOffAdPanel;
@@ -179,6 +187,11 @@ namespace Agava.Wink
         public void OpenLoadingPopupWindow() => _notifyWindowHandler.OpenWindow(WindowType.Blank);
         public void CloseLoadingPopupWindow() => _notifyWindowHandler.CloseWindow(WindowType.Blank);
 
+        public async Task<bool> TryShowPaywall(PaywallVariants paywallVariant)
+        {
+            return await _paywallService.TryShowPaywall(paywallVariant);
+        }
+
         public void DownloadRemoteSettings()
         {
             StartCoroutine(EnternetChecking());
@@ -193,6 +206,7 @@ namespace Agava.Wink
             _signInFuctionsUI = new(_notifyWindowHandler, _demoTimer, winkAccessManager, this, this);
             _winkAccessManager = winkAccessManager;
             _interstitialPlayer = interstitialPlayer;
+            _paywallService = new PaywallService(_winkAccessManager, _notifyWindowHandler, _gameOrientation, _screenshotProtector, _phoneService, _demoTimerD, this, this);
             _analyticsSender.Construct();
 
             _enterCodeContinueButton.onClick.AddListener(OnEnterCodeContinueClicked);
@@ -238,7 +252,6 @@ namespace Agava.Wink
             _winkAccessManager.LimitReached += OnLimitReached;
             _winkAccessManager.SignInSuccessfully += OnSignInSuccessfully;
             _winkAccessManager.AuthorizationSuccessfully += OnAuthorizationSuccessfully;
-            _demoTimer.TimerExpired += OnTimerExpired;
             _demoTimer.FirstChecked += OnTimerFirstChecked;
             _notifyWindowHandler.SunbscriptionBuyed += OnSunbscriptionBuyed;
             _notifyWindowHandler.WebViewClosed += TurnOffAdMode;
@@ -507,7 +520,7 @@ namespace Agava.Wink
             _numbersInputField.Clear();
             _signInFuctionsUI.OnSignInSuccesfully(hasAccess);
 
-            SetPhone();
+            _phoneService.SetPhone();
             _webViewURLHandler.SetPhone(_winkAccessManager.LoginData.phone);
             _notifyWindowHandler.CloseWindow(WindowType.Redirect);
 
@@ -517,17 +530,6 @@ namespace Agava.Wink
                 _notifyWindowHandler.OpenHelloWindowWOAccess();
 
             //_notifyWindowHandler.OpenHelloWindow(hasAccess || (hasTempAccess && _demoTimer.Expired == false));
-        }
-
-        private void SetPhone()
-        {
-            string number = "N/A";
-
-            if (PlayerPrefs.HasKey(_winkAccessManager.PhoneNumber))
-                number = PhoneNumber.FormatNumber(PlayerPrefs.GetString(_winkAccessManager.PhoneNumber));
-
-            foreach (TextPlaceholder placeholder in _phoneNumberPlaceholders)
-                placeholder.ReplaceValue(number);
         }
 
         private void CloseSignInWindow()
@@ -596,49 +598,10 @@ namespace Agava.Wink
             }
         }
 
-        private async void OnTimerExpired()
+        private void OnTimerFirstChecked()
         {
-            if(_winkAccessManager.Authenficated)
-            {
-                bool hasSubsc = await _winkAccessManager.CheckSubscription();
-
-                if (hasSubsc)
-                    return;
-            }
-
-            if (_gameOrientation.NeedChangeOrientation)
-                _gameOrientation.SetPortraitOrientation();
-
-            _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
-
-            if (AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
-            {
-                _notifyWindowHandler.OpenWindow(WindowType.RewardContinue);
-            }
-            else
-            {
-                SetPhone();
-                _notifyWindowHandler.OpenHelloWindowWOAccess();
-
-                /*if (_winkAccessManager.Authenficated)
-                {
-                    SetPhone();
-                    _notifyWindowHandler.OpenHelloWindowWOAccess();
-                }
-                else
-                {
-                    AnalyticsWinkService.SendSubscribeOfferWindow();
-                    _notifyWindowHandler.OpenDemoExpiredWindow(false);
-                }*/
-            }
-
-            DemoCompleted?.Invoke();
-            _screenshotProtector.TryDisableScreenshots();
-            AdvertisementController.Instance?.AddInterstitialBlocker(this);
-            AdvertisementController.Instance?.SuspendDisplayBanner(this);
+            _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
         }
-
-        private void OnTimerFirstChecked() => _notifyWindowHandler.ChangeDemoModeOption(enabled: _demoTimer.Expired == false);
 
         private void OnSunbscriptionBuyed()
         {

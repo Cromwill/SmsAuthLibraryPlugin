@@ -8,7 +8,7 @@ using UnityEngine.Scripting;
 namespace Agava.Wink
 {
     [Serializable, Preserve]
-    internal class NotifyWindowHandler : IWebViewLoader
+    public class NotifyWindowHandler : IWebViewLoader
     {
         [Header("UI Windows")]
         [SerializeField] private SignInWindowPresenter _signInWindow;
@@ -193,7 +193,7 @@ namespace Agava.Wink
         internal void EnableOriginalOfferInfo(bool enableClose)
         {
             _winkInfoVericalWindowPresenter.InstallOriginalTexts();
-
+            
             if (_hasDemoMode == false)
                 _winkInfoVericalWindowPresenter.HideCloseButton();
             else
@@ -241,9 +241,7 @@ namespace Agava.Wink
 
         private void ConfirmPurchaseSubscriptionOnWebView()
         {
-            //OpenHelloWindow(hasAccess: true);
             SunbscriptionBuyed?.Invoke();
-            //_subscriptionCheckWindow.Disable();
         }
 
         private void OnRewardSuccessed()
