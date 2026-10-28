@@ -10,13 +10,14 @@ namespace Agava.Wink
     [Serializable, Preserve]
     public class NotifyWindowHandler : IWebViewLoader
     {
+        public bool Loaded { get; private set; } = false;
+
         [Header("UI Windows")]
         [SerializeField] private SignInWindowPresenter _signInWindow;
         [SerializeField] private NotifyWindowPresenter _failWindow;
         [SerializeField] private ProcessWindowPresenter _proccesOnWindow;
         [SerializeField] private HelloWindowPresenter _helloWindow;
         [SerializeField] private UnlinkWindowPresenter _unlinkWindow;
-        //[SerializeField] private RedirectWindowPresenter _demoTimerExpiredWindow;
         [SerializeField] private NotifyWindowPresenter _noEnternetWindow;
         [SerializeField] private RedirectWindowPresenter _redirectToWebsiteWindow;
         [SerializeField] private InputWindowPresenter _enterCodeWindow;
@@ -46,12 +47,9 @@ namespace Agava.Wink
         private bool _useAdMechanics = false;
         private Store _storeName;
 
-        //private bool _choosedFreeTrial => (_redirectToWebsiteWindow.TryFreeWink || _demoTimerExpiredWindow.TryFreeWink) && _subscriptionChecked == false;
-
         public bool IsAnyWindowEnabled => _windows.Any(window => window.Enabled);
         public bool ZeroSecondsCodeTimer => _enterCodeWindow.ZeroSeconds;
         public bool EnterCodeWindowInitialized => _enterCodeWindow.Initialized;
-        public bool Loaded { get; private set; } = false;
 
         public event Action SunbscriptionBuyed;
         public event Action WebViewClosed;
@@ -89,9 +87,20 @@ namespace Agava.Wink
             _horizontalTurnOffAdWindow.Construct(_rewardSettings);
         }
 
-        internal void OpenSignInWindow(Action closeCallback = null) => _signInWindow.Enable(closeCallback);
-        internal void OpenWindow(WindowType type) => GetWindowByType(type).Enable();
-        internal void CloseWindow(WindowType type) => GetWindowByType(type).Disable();
+        internal void OpenSignInWindow(Action closeCallback = null)
+        {
+            _signInWindow.Enable(closeCallback);
+        }
+
+        internal void OpenWindow(WindowType type)
+        {
+            GetWindowByType(type).Enable();
+        }
+
+        internal void CloseWindow(WindowType type)
+        {
+            GetWindowByType(type).Disable();
+        }
 
         internal void OpenInputOtpCodeWindow(string phone, string appHash, Action<string> onInputDone = null, Action onBackClicked = null)
         {
@@ -99,24 +108,22 @@ namespace Agava.Wink
             _signInWindow.Clear();
         }
 
-        internal void ActivateOtpCodeSetter() => _enterCodeWindow.ActivateOtpCodeSetter();
-
-        /*internal void OpenDemoExpiredWindow(bool closeButton)
+        internal void ActivateOtpCodeSetter()
         {
-            _enterCodeWindow.ResetCodeTimer();
-            _redirectToWebsiteWindow.ResetFreeChoise();
-            _demoTimerExpiredWindow.Enable();
-        }*/
+            _enterCodeWindow.ActivateOtpCodeSetter();
+        }
 
         internal void OpenRewardWindow()
         {
             _rewardContinueWindowPresenter.Enable();
-            //_redirectToWebsiteWindow.Disable();
             _helloWOAccessWindow.Disable();
             _winkInfoVericalWindowPresenter.Disable();
         }
 
-        internal void OpenDeleteAccountWindow(Action onDeleteAccount) => _deleteAccountWindow.Enable(onDeleteAccount);
+        internal void OpenDeleteAccountWindow(Action onDeleteAccount)
+        {
+            _deleteAccountWindow.Enable(onDeleteAccount);
+        }
 
         internal void OpenHelloWindow(bool hasAccess)
         {
@@ -140,13 +147,19 @@ namespace Agava.Wink
         internal void ChangeDemoModeOption(bool enabled)
         {
             if(_hasDemoMode == false)
+            {
                 _helloWOAccessWindow.HideCloseButton();
+            }
             else
+            {
                 _helloWOAccessWindow.TryShowCloseButton(enabled: enabled);
-
+            }
         }
 
-        internal void Response(bool accepted) => _enterCodeWindow.Response(accepted);
+        internal void Response(bool accepted)
+        {
+            _enterCodeWindow.Response(accepted);
+        }
 
         internal void CloseAllWindows(Action onClosed)
         {
@@ -172,16 +185,22 @@ namespace Agava.Wink
         }
 
         internal bool HasOpenedWindow(WindowType type)
-            => _windows.Any(window => window.Type == type && window.isActiveAndEnabled == true);
+        {
+            return _windows.Any(window => window.Type == type && window.isActiveAndEnabled == true);
+        }
 
         internal void OpenAdOffOffer(bool isHorizontal)
         {
             SetAdOption(adOption: true);
 
             if (isHorizontal)
+            {
                 _winkInfoHorizontalWindowPresenter.EnableAdVariant();
+            }
             else
+            {
                 _winkInfoVericalWindowPresenter.EnableAdVariant();
+            }
         }
 
         internal void EnableAdOfferInfo()
@@ -195,9 +214,13 @@ namespace Agava.Wink
             _winkInfoVericalWindowPresenter.InstallOriginalTexts();
             
             if (_hasDemoMode == false)
+            {
                 _winkInfoVericalWindowPresenter.HideCloseButton();
+            }
             else
+            {
                 _winkInfoVericalWindowPresenter.TryShowCloseButton(enabled:  enableClose);
+            }
         }
 
         internal void CloseAdOffer()
@@ -205,13 +228,19 @@ namespace Agava.Wink
             CloseWindow(_gameOrientation.NeedChangeOrientation ? WindowType.TurnOffAdHorizontal : WindowType.TurnOffAdVertical);
             _winkInfoVericalWindowPresenter.Disable();
             _winkInfoHorizontalWindowPresenter.Disable();
+
             SetAdOption(adOption: false);
         }
 
-        internal void SetAdOption(bool adOption) => _useAdMechanics = adOption;
+        internal void SetAdOption(bool adOption)
+        {
+            _useAdMechanics = adOption;
+        }
 
         private WindowPresenter GetWindowByType(WindowType type)
-            => _windows.FirstOrDefault(window => window.Type == type);
+        {
+            return _windows.FirstOrDefault(window => window.Type == type);
+        }
 
         private void OnLoadingStarted()
         {
@@ -249,7 +278,9 @@ namespace Agava.Wink
             CloseAllWindows(null);
 
             if (_gameOrientation.NeedChangeOrientation)
+            {
                 _gameOrientation.SetLandscapeOrientation();
+            }
 
             _screenshotProtector.TryEnableScreenshots();
 
