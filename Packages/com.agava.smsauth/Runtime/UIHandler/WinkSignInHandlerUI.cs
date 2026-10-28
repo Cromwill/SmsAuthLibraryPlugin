@@ -206,7 +206,7 @@ namespace Agava.Wink
             _signInFuctionsUI = new(_notifyWindowHandler, _demoTimer, winkAccessManager, this, this);
             _winkAccessManager = winkAccessManager;
             _interstitialPlayer = interstitialPlayer;
-            _paywallService = new PaywallService(_winkAccessManager, _notifyWindowHandler, _gameOrientation, _screenshotProtector, _phoneService, _demoTimerD, this, this);
+            _paywallService = new PaywallService(_winkAccessManager, _notifyWindowHandler, _gameOrientation, _screenshotProtector, _phoneService, _demoTimer, this, this);
             _analyticsSender.Construct();
 
             _enterCodeContinueButton.onClick.AddListener(OnEnterCodeContinueClicked);
