@@ -125,6 +125,13 @@ namespace Agava.Wink
             UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }
 
+        internal void ExpireWithoutNotify()
+        {
+            _savedDemoTime = TimeSpan.Zero;
+            Expired = true;
+            PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+        }
+
         internal void CheckOutTime()
         {
             if (_savedDemoTime <= TimeSpan.Zero && WinkAccessManager.Instance.HasAccess == false)
