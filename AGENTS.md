@@ -5,3 +5,4 @@
 - Editor test menu: Tools > Wink Paywall (reset state, reach now, paywall in 30 s, simulate sign in/subscription, log state). Logs are prefixed `#Paywall#`.
 - Editor PlayerPrefs live in registry HKCU\Software\Unity\UnityEditor\Agava\SmsAuthLibraryPlugin.
 - Interstitials don't show in the Editor, only in builds; WebView "not supported on this platform" error in Editor is expected.
+- Test menu also has 'Forget authorization (delete tokens)' and 'Simulate no internet window'. After editing Editor scripts press Ctrl+R in Unity (it did not auto-recompile).
