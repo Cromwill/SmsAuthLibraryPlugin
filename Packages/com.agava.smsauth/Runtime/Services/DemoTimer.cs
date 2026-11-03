@@ -9,7 +9,7 @@ namespace Agava.Wink
     ///     Demo timer Handler. Block app after expired allowed time.
     /// </summary>
     [Serializable, Preserve]
-    public class DemoTimer
+    internal class DemoTimer
     {
         private const string FirstTimeSave = nameof(FirstTimeSave);
 
