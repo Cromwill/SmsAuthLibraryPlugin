@@ -47,6 +47,26 @@ namespace Agava.Wink.EditorScripts
         [MenuItem(Root + "Paywall in 30 seconds of play", true)]
         private static bool ValidateShortTime() => Application.isPlaying && PaywallService.IsPending;
 
+        [MenuItem(Root + "Mode: trigger only (no play time)")]
+        private static void ModeTrigger()
+        {
+            PaywallService.Instance.SetMode(PaywallMode.Trigger);
+            Debug.Log("#Paywall# test: trigger mode, play time is not counted");
+        }
+
+        [MenuItem(Root + "Mode: trigger only (no play time)", true)]
+        private static bool ValidateModeTrigger() => Application.isPlaying && PaywallService.IsPending;
+
+        [MenuItem(Root + "Demo time left = 10 s")]
+        private static void DemoTenSeconds()
+        {
+            WinkSignInHandlerUI.Instance.TestSetDemoTimeLeft(10);
+            Debug.Log("#Paywall# test: demo time left = 10 s");
+        }
+
+        [MenuItem(Root + "Demo time left = 10 s", true)]
+        private static bool ValidateDemoTenSeconds() => Application.isPlaying && WinkSignInHandlerUI.Instance != null;
+
         [MenuItem(Root + "Simulate sign in without subscription")]
         private static void SimulateSignIn()
         {
@@ -88,7 +108,7 @@ namespace Agava.Wink.EditorScripts
             WinkAccessManager access = WinkAccessManager.Instance;
             WinkSignInHandlerUI ui = WinkSignInHandlerUI.Instance;
 
-            Debug.Log($"#Paywall# state: remote = {paywall.RemoteEnabled}, pending = {paywall.Pending}, passed = {PaywallService.IsPassed}, " +
+            Debug.Log($"#Paywall# state: remote = {paywall.RemoteEnabled}, mode = {paywall.Mode}, pending = {paywall.Pending}, passed = {PaywallService.IsPassed}, " +
                 $"reached now = {paywall.ReachedInThisSession}, played = {paywall.PlaySeconds:0}s, left = {paywall.PlaySecondsLeft:0}s, " +
                 $"demo left = {UnityEngine.PlayerPrefs.GetString("FirstTimeSave", "-")}, " +
                 $"authenticated = {access?.Authenficated}, access = {access?.HasAccess}, temp access = {access?.HasTempAccess}, " +

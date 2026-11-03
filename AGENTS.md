@@ -6,3 +6,4 @@
 - Editor PlayerPrefs live in registry HKCU\Software\Unity\UnityEditor\Agava\SmsAuthLibraryPlugin.
 - Interstitials don't show in the Editor, only in builds; WebView "not supported on this platform" error in Editor is expected.
 - Test menu also has 'Forget authorization (delete tokens)' and 'Simulate no internet window'. After editing Editor scripts press Ctrl+R in Unity (it did not auto-recompile).
+- Paywall mode is set on Boot (PaywallService._mode): PlayTime (after _playSecondsBeforePaywall) or Trigger (only PaywallService.Reach()/PaywallTrigger). If the demo time ends before the paywall (WinkSignInHandlerUI.DemoCompleted), the paywall counts as reached and the demo-expired windows are shown. Test menu: 'Mode: trigger only', 'Demo time left = 10 s'. Editing files with PowerShell Get-Content/Set-Content breaks Cyrillic and BOM: use edit_file.

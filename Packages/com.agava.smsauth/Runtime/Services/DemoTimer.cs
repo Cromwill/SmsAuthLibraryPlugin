@@ -136,6 +136,15 @@ namespace Agava.Wink
             UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }
 
+#if UNITY_EDITOR || TEST
+        /// <summary> Test: set the demo time that is left. </summary>
+        internal void TestSetTimeLeft(float seconds)
+        {
+            _savedDemoTime = TimeSpan.FromSeconds(seconds);
+            UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+        }
+#endif
+
         internal void CheckOutTime()
         {
             if (_savedDemoTime <= TimeSpan.Zero && WinkAccessManager.Instance.HasAccess == false)

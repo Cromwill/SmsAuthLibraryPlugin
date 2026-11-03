@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin;
@@ -13,6 +13,14 @@ namespace Agava.Wink
     ///     Until it is reached the Wink start windows are skipped, ads are paused and the ad offer is hidden.
     ///     Works only when the Wink plugin is available and the remote config "paywall_enabled" is true.
     /// </summary>
+    public enum PaywallMode
+    {
+        /// <summary> The paywall appears after N seconds of play. </summary>
+        PlayTime,
+        /// <summary> The paywall is a point in the game: PaywallService.Reach() or PaywallTrigger. </summary>
+        Trigger,
+    }
+
     [Serializable, Preserve]
     public class PaywallService : IInterstitialBlocker, IBannerBlocker
     {
@@ -23,8 +31,9 @@ namespace Agava.Wink
         private const float MaxFrameDelta = 0.5f;
         private const float ReopenWindowDelay = 1f;
 
-        [Tooltip("Show the paywall after this much play time (seconds, saved between launches)")]
-        [SerializeField] private bool _triggerByPlayTime = true;
+        [Tooltip("PlayTime: the paywall appears after the play time below. Trigger: only when the game calls PaywallService.Reach() (or a PaywallTrigger is enabled)")]
+        [SerializeField] private PaywallMode _mode = PaywallMode.PlayTime;
+        [Tooltip("PlayTime mode: play time before the paywall (seconds, saved between launches)")]
         [SerializeField, Min(0)] private float _playSecondsBeforePaywall = 600f;
 
         private MonoBehaviour _coroutineRunner;
@@ -51,6 +60,7 @@ namespace Agava.Wink
         /// <summary> Called when the player has gone through the paywall windows and is back in the game. </summary>
         public static event Action Completed;
 
+        public PaywallMode Mode => _mode;
         public bool RemoteEnabled { get; private set; }
         public bool Pending { get; private set; }
         public bool ReachedInThisSession { get; private set; }
@@ -114,7 +124,9 @@ namespace Agava.Wink
 
             _playSeconds = _lastSavedPlaySeconds = UnityEngine.PlayerPrefs.GetFloat(PlayTimeKey, 0);
             Pending = true;
-            Log($"pending. Played {_playSeconds:0}s of {_playSecondsBeforePaywall:0}s");
+            Log(_mode == PaywallMode.PlayTime
+                ? $"pending (play time mode). Played {_playSeconds:0}s of {_playSecondsBeforePaywall:0}s"
+                : "pending (trigger mode). Waiting for PaywallService.Reach()");
         }
 
         /// <summary>
@@ -156,7 +168,7 @@ namespace Agava.Wink
 
         internal void Update()
         {
-            if (_started == false || Pending == false || _triggerByPlayTime == false || _focus == false)
+            if (_started == false || Pending == false || _mode != PaywallMode.PlayTime || _focus == false)
                 return;
 
             if (_winkSignInHandlerUI.IsAnyWindowEnabled)
@@ -201,7 +213,9 @@ namespace Agava.Wink
             // Demo time ran out before the paywall: the demo windows of the plugin take its place.
             Log("demo time is over before the paywall, paywall counted as passed");
             Pending = false;
+            ReachedInThisSession = true;
             SetPassed();
+            SavePlayTime();
 
             if (_passing == null)
                 _passing = _coroutineRunner.StartCoroutine(Passing(waitAuthorization: false));
@@ -287,6 +301,9 @@ namespace Agava.Wink
 
         /// <summary> Test: change the play time before the paywall. </summary>
         public void SetPlaySecondsBeforePaywall(float seconds) => _playSecondsBeforePaywall = Mathf.Max(0, seconds);
+
+        /// <summary> Test: switch between the play time and the trigger modes. </summary>
+        public void SetMode(PaywallMode mode) => _mode = mode;
 #endif
     }
 }

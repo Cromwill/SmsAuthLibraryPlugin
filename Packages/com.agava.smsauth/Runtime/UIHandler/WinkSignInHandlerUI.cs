@@ -286,6 +286,11 @@ namespace Agava.Wink
 
         public void OpenWindow(WindowType type) => _notifyWindowHandler.OpenWindow(type);
 
+#if UNITY_EDITOR || TEST
+        /// <summary> Test: set the demo time that is left. </summary>
+        public void TestSetDemoTimeLeft(float seconds) => _demoTimer.TestSetTimeLeft(seconds);
+#endif
+
         public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);
 
         /// <summary>
