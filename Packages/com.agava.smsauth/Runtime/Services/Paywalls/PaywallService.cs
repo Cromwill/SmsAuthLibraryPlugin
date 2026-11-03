@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin;
-using SmsAuthAPI.Utility;
 using UnityEngine.Scripting;
 
 namespace Agava.Wink
@@ -51,11 +50,6 @@ namespace Agava.Wink
                 if (isCorrectPaywall && !isUserHasSubscription)
                 {
                     ShowPaywall();
-
-                    if (_paywallVariant != PaywallVariants.DemoTimer || _paywallVariant != PaywallVariants.None)
-                    {
-                        EnableDemoTimerPaywall();
-                    }
                 }
 
                 return isCorrectPaywall && !isUserHasSubscription;
@@ -91,22 +85,7 @@ namespace Agava.Wink
 
         private void InitializePaywallVariants()
         {
-            if (PlayerPrefs.HasKey(PaywallVariantKey))
-            {
-                _paywallVariant = (PaywallVariants)PlayerPrefs.GetInt(PaywallVariantKey);
-            }
-            else
-            {
-                _paywallVariant = PaywallVariants.FirstCustomPlace;
-            }
-        }
-
-        private void EnableDemoTimerPaywall()
-        {
-            _paywallVariant = PaywallVariants.DemoTimer;
-            PlayerPrefs.SetInt(PaywallVariantKey, (int)_paywallVariant);
-
-            _demoTimer.ExpireWithoutNotify();
+            _paywallVariant = PaywallVariants.FirstCustomPlace;
         }
 
         private void OnTimerExpired()
