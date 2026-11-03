@@ -31,6 +31,17 @@ namespace Agava.Wink
 
         public bool Expired { get; private set; }
 
+        /// <summary>
+        ///     True if the saved demo time of a previous session has already run out.
+        /// </summary>
+        internal static bool SavedTimeExpired()
+        {
+            if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)
+                return false;
+
+            return TimeSpan.TryParse(UnityEngine.PlayerPrefs.GetString(FirstTimeSave), out TimeSpan time) && time <= TimeSpan.Zero;
+        }
+
         internal void Construct(IWinkAccessManager winkAccessManager, int remoteCfgSeconds, int remoteTempCfgSeconds, IWinkSignInHandlerUI winkSignInHandlerUI)
         {
             _winkSignInHandlerUI = winkSignInHandlerUI;

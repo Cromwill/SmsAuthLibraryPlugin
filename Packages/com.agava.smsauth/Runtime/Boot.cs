@@ -27,6 +27,8 @@ namespace Agava.Wink
         [SerializeField] private AdvertisementBoot _advertisementBoot;
         [SerializeField] private AppMetricaInfo _appMetricaInfo;
         [SerializeField] private Links _links;
+        [Header("Paywall")]
+        [SerializeField] private PaywallService _paywall = new();
 
         private Coroutine _signInProcess;
         private PreloadService _preloadService;
@@ -39,11 +41,16 @@ namespace Agava.Wink
 
         private void OnDestroy()
         {
+            _paywall?.Dispose();
             _winkSignInHandlerUI?.Dispose();
             _metrikaDuplicator?.Dispose();
         }
 
         private void Awake() => _links.Construct();
+
+        private void Update() => _paywall?.Update();
+
+        private void OnApplicationFocus(bool focus) => _paywall?.OnAppFocus(focus);
 
         private IEnumerator Start()
         {
@@ -69,6 +76,8 @@ namespace Agava.Wink
 
             if (_preloadService.IsPluginAwailable)
             {
+                yield return _paywall.Initialize(this, _winkSignInHandlerUI, _winkAccessManager, ReloadWithCloudSaves);
+
                 SmsAuthApi.DownloadCloudSavesProgress += OnDownloadCloudSavesProgress;
 
                 yield return _winkAccessManager.Construct();
@@ -80,10 +89,11 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();
 
-                _signInProcess = StartCoroutine(OnStarted());
+                _signInProcess = StartCoroutine(_paywall.Pending ? OnStartedBeforePaywall() : OnStarted());
                 yield return _signInProcess;
 
                 _bootStarted = true;
+                _paywall.Start();
 
                 var loadingScene = _sceneLoader.LoadGameScene();
                 SmsAuthApi.DownloadCloudSavesProgress -= OnDownloadCloudSavesProgress;
@@ -155,6 +165,50 @@ namespace Agava.Wink
 
             if(WinkAccessManager.Instance.HasAccess == false && WinkAccessManager.Instance.HasTempAccess == false)
                 AdvertisementController.Instance?.StartInterstitialTimer();
+        }
+
+        /// <summary>
+        ///     Paywall is on and not reached yet: the Wink plugin is skipped,
+        ///     the popup plugin goes first and only loads its popups (they show to subscribers only),
+        ///     ads stay paused until the paywall.
+        /// </summary>
+        private IEnumerator OnStartedBeforePaywall()
+        {
+            yield return new WaitWhile(() => SmsAuthApi.Initialized == false);
+
+#if UNITY_EDITOR || TEST
+            Debug.Log("Boot: App Started before paywall. Wink windows skipped");
+#endif
+
+            if (AdsAppView.Program.Boot.Instance != null)
+            {
+                _winkSignInHandlerUI.OpenLoadingPopupWindow();
+                AnalyticsWinkService.SendLoadingStart();
+
+                yield return AdsAppView.Program.Boot.Instance.Construct(vip: false, Links.Instance.Support);
+
+                AnalyticsWinkService.SendLoadingFinish();
+                _winkSignInHandlerUI.CloseLoadingPopupWindow();
+            }
+
+            _signInProcess = null;
+        }
+
+        private void ReloadWithCloudSaves()
+        {
+            if (_bootStarted == false)
+                return;
+
+            StartCoroutine(Loading());
+            IEnumerator Loading()
+            {
+                yield return null;
+                yield return CloudSavesLoading();
+                Restarted?.Invoke();
+
+                if (_restartAfterAuth)
+                    _sceneLoader.LoadGameScene();
+            }
         }
 
         private void OnSuccessfully()

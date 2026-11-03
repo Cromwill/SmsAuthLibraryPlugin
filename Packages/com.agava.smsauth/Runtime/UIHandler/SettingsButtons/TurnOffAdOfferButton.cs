@@ -37,6 +37,12 @@ namespace Agava.Wink
                 return;
             }
 
+            if (PaywallService.IsPending)
+            {
+                _button.gameObject.SetActive(false);
+                return;
+            }
+
             if(WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess)
             {
                 _button.gameObject.SetActive(false);

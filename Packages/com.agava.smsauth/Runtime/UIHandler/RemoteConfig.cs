@@ -30,6 +30,29 @@ namespace Agava.Wink
             return defaultValue;
         }
 
+        public static async Task<bool> BoolRemoteConfig(string configName, bool defaultValue)
+        {
+            var response = await SmsAuthApi.GetRemoteConfig(configName);
+
+            if (response.statusCode == UnityWebRequest.Result.Success)
+            {
+                if (string.IsNullOrEmpty(response.body) == false)
+                {
+                    return bool.TryParse(response.body.Trim(), out bool value) ? value : defaultValue;
+                }
+                else
+                {
+                    Debug.LogError($"Fail to recieve remote config '{configName}': value is NULL");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Fail to recieve remote config '{configName}': BAD REQUEST");
+            }
+
+            return defaultValue;
+        }
+
         private static int ParseIntConfig(string timeStr, int defaultValue)
         {
             bool success = int.TryParse(timeStr, out int time);

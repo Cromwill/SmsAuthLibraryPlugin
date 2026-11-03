@@ -67,8 +67,8 @@ namespace Agava.Wink
         public static WinkSignInHandlerUI Instance { get; private set; }
 
         public bool IsAnyWindowEnabled => _notifyWindowHandler.IsAnyWindowEnabled;
-        public bool InterstitialDisplayBlocked => IsAnyWindowEnabled;
-        public bool BannerDisplayBlocked => IsAnyWindowEnabled;
+        public bool InterstitialDisplayBlocked => IsAnyWindowEnabled || PaywallService.IsPending;
+        public bool BannerDisplayBlocked => IsAnyWindowEnabled || PaywallService.IsPending;
         public AppAuthenticator AppAuthenticator => _webViewURLHandler.AppAuthenticator;
 
         public event Action AllWindowsClosed;
@@ -288,8 +288,43 @@ namespace Agava.Wink
 
         public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);
 
+        /// <summary>
+        ///     Paywall reached: the first window of the plugin over the game.
+        /// </summary>
+        internal void OpenPaywall(bool firstOpen)
+        {
+            _screenshotProtector.TryDisableScreenshots();
+
+            if (firstOpen)
+                _gameOrientation.SaveGameOrientation();
+
+            StartCoroutine(ActionWithDelay(ChangeOrientationDelay, OpenStartWindow));
+
+            if (_gameOrientation.NeedChangeOrientation)
+                _gameOrientation.SetPortraitOrientation();
+
+            AdvertisementController.Instance?.AddInterstitialBlocker(this);
+            AdvertisementController.Instance?.SuspendDisplayBanner(this);
+        }
+
+        /// <summary>
+        ///     Player is authorized and all windows of the paywall are closed: back to the game.
+        /// </summary>
+        internal void ClosePaywall()
+        {
+            _screenshotProtector.TryEnableScreenshots();
+            TrySetCorrectOrientation();
+        }
+
         public void OnWinkButtonClick()
         {
+            if (PaywallService.IsPending)
+            {
+                // The "sign in" button of the game menu passes the paywall.
+                PaywallService.Instance.ReachFromMenu();
+                return;
+            }
+
             _screenshotProtector.TryDisableScreenshots();
             Action action = null;
             _loginFromSettings = true;
@@ -407,6 +442,9 @@ namespace Agava.Wink
 
         public void OpenTurnOffAdPanel()
         {
+            if (PaywallService.IsPending)
+                return;
+
             _useAdWindows = true;
             _gameOrientation.SaveGameOrientation();
             _screenshotProtector.TryDisableScreenshots();
