@@ -132,7 +132,7 @@ namespace Agava.Wink
 
             if (_winkAccessManager == null) return;
 
-            _winkAccessManager.ResetLogin -= OpenSignWindow;
+            _winkAccessManager.ResetLogin -= OnResetLogin;
             _winkAccessManager.LimitReached -= OnLimitReached;
             _winkAccessManager.SignInSuccessfully -= OnSignInSuccessfully;
             _winkAccessManager.AuthorizationSuccessfully -= OnAuthorizationSuccessfully;
@@ -234,7 +234,7 @@ namespace Agava.Wink
 
             CloseAllWindows();
 
-            _winkAccessManager.ResetLogin += OpenSignWindow;
+            _winkAccessManager.ResetLogin += OnResetLogin;
             _winkAccessManager.LimitReached += OnLimitReached;
             _winkAccessManager.SignInSuccessfully += OnSignInSuccessfully;
             _winkAccessManager.AuthorizationSuccessfully += OnAuthorizationSuccessfully;
@@ -248,6 +248,8 @@ namespace Agava.Wink
         }
 
         public void OpenStartWindow() => OpenSubscriptionWindow();
+
+        public void OnResetLogin() => OpenSignWindow();
 
         public void OpenSignWindow()
         {
@@ -654,26 +656,41 @@ namespace Agava.Wink
 
             _notifyWindowHandler.ChangeDemoModeOption(enabled: false);
 
-            if (AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
+            if (_winkAccessManager.Authenficated)
+            {
+                SetPhone();
+
+                if (AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
+                    _notifyWindowHandler.OpenWindow(WindowType.RewardContinue);
+                else
+                    _notifyWindowHandler.OpenHelloWindowWOAccess();
+            }
+            else
+            {
+                AnalyticsWinkService.SendSubscribeOfferWindow();
+                _notifyWindowHandler.OpenWindow(WindowType.Redirect);
+            }
+
+            /*if (AdvertisementController.Instance != null && AdvertisementController.Instance.CanShowReward())
             {
                 _notifyWindowHandler.OpenWindow(WindowType.RewardContinue);
             }
             else
             {
                 SetPhone();
-                _notifyWindowHandler.OpenHelloWindowWOAccess();
+                _notifyWindowHandler.OpenHelloWindowWOAccess();*/
 
-                /*if (_winkAccessManager.Authenficated)
-                {
-                    SetPhone();
-                    _notifyWindowHandler.OpenHelloWindowWOAccess();
-                }
-                else
-                {
-                    AnalyticsWinkService.SendSubscribeOfferWindow();
-                    _notifyWindowHandler.OpenDemoExpiredWindow(false);
-                }*/
+            /*if (_winkAccessManager.Authenficated)
+            {
+                SetPhone();
+                _notifyWindowHandler.OpenHelloWindowWOAccess();
             }
+            else
+            {
+                AnalyticsWinkService.SendSubscribeOfferWindow();
+                _notifyWindowHandler.OpenDemoExpiredWindow(false);
+            }*/
+            //}
 
             DemoCompleted?.Invoke();
             _screenshotProtector.TryDisableScreenshots();

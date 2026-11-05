@@ -89,6 +89,12 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();
 
+                if (_advertisementBoot.IsPluginAvailable)
+                {
+                    if (_advertisementBoot.AdvertisementController.WaitConcernPolicy && _advertisementBoot.AdvertisementController.PolicyAccepted == false)
+                        yield return new WaitUntil(() => _advertisementBoot.AdvertisementController.AgreementClosed);
+                }
+
                 _signInProcess = StartCoroutine(_paywall.Pending ? OnStartedBeforePaywall() : OnStarted());
                 yield return _signInProcess;
 
@@ -175,6 +181,8 @@ namespace Agava.Wink
         private IEnumerator OnStartedBeforePaywall()
         {
             yield return new WaitWhile(() => SmsAuthApi.Initialized == false);
+
+            _winkSignInHandlerUI.TrySetCorrectOrientation();
 
 #if UNITY_EDITOR || TEST
             Debug.Log("Boot: App Started before paywall. Wink windows skipped");

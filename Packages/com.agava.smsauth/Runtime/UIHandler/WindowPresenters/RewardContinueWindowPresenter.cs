@@ -74,7 +74,7 @@ namespace Agava.Wink
 
             _winkSubsDescription.text = string.Format(_winkSubsDescriptionPattern, string.IsNullOrEmpty(trialTask.Result) ? _defaultTrialPeriodDays : trialTask.Result, string.IsNullOrEmpty(priceTask.Result) ? _defaultWinkPrice : priceTask.Result);
 
-#if YABBI_AD  || YANDEX_AD 
+#if YABBI_AD || YANDEX_AD 
             string id = $"appmetrica.{_appMetricaInfo.VarioqubId}";
             var settings = new VarioqubSettings(id);
             settings.Logs = true;

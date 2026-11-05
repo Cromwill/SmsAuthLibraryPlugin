@@ -1,10 +1,10 @@
 ﻿using System;
+using UnityEngine;
+using SmsAuthAPI.DTO;
 using System.Collections;
+using UnityEngine.Scripting;
 using System.Threading.Tasks;
 using KinDzaDzaGames.AdvertisementPlugin;
-using SmsAuthAPI.DTO;
-using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
@@ -52,7 +52,7 @@ namespace Agava.Wink
         public static bool IsPending => Instance != null && Instance.Pending;
 
         /// <summary> The player has reached the paywall (at any launch). </summary>
-        public static bool IsPassed => UnityEngine.PlayerPrefs.GetInt(PassedKey, 0) == 1;
+        public static bool IsPassed => PlayerPrefs.GetInt(PassedKey, 0) == 1;
 
         /// <summary> Called when the paywall is reached and the Wink window is shown. </summary>
         public static event Action Reached;
@@ -108,7 +108,7 @@ namespace Agava.Wink
                 yield break;
             }
 
-            if (UnityEngine.PlayerPrefs.HasKey(TokenLifeHelper.Tokens))
+            if (PlayerPrefs.HasKey(TokenLifeHelper.Tokens))
             {
                 SetPassed();
                 Log("player is already authorized, paywall skipped");
@@ -122,7 +122,7 @@ namespace Agava.Wink
                 yield break;
             }
 
-            _playSeconds = _lastSavedPlaySeconds = UnityEngine.PlayerPrefs.GetFloat(PlayTimeKey, 0);
+            _playSeconds = _lastSavedPlaySeconds = PlayerPrefs.GetFloat(PlayTimeKey, 0);
             Pending = true;
             Log(_mode == PaywallMode.PlayTime
                 ? $"pending (play time mode). Played {_playSeconds:0}s of {_playSecondsBeforePaywall:0}s"
@@ -275,8 +275,8 @@ namespace Agava.Wink
 
         private void SetPassed()
         {
-            UnityEngine.PlayerPrefs.SetInt(PassedKey, 1);
-            UnityEngine.PlayerPrefs.Save();
+            PlayerPrefs.SetInt(PassedKey, 1);
+            PlayerPrefs.Save();
         }
 
         private void SavePlayTime()
@@ -285,7 +285,7 @@ namespace Agava.Wink
                 return;
 
             _lastSavedPlaySeconds = _playSeconds;
-            UnityEngine.PlayerPrefs.SetFloat(PlayTimeKey, _playSeconds);
+            PlayerPrefs.SetFloat(PlayTimeKey, _playSeconds);
         }
 
         private static void Log(string message) => Debug.Log("#Paywall# " + message);
@@ -294,9 +294,9 @@ namespace Agava.Wink
         /// <summary> Test: forget the paywall state on this device. </summary>
         public static void ResetSavedState()
         {
-            UnityEngine.PlayerPrefs.DeleteKey(PassedKey);
-            UnityEngine.PlayerPrefs.DeleteKey(PlayTimeKey);
-            UnityEngine.PlayerPrefs.Save();
+            PlayerPrefs.DeleteKey(PassedKey);
+            PlayerPrefs.DeleteKey(PlayTimeKey);
+            PlayerPrefs.Save();
         }
 
         /// <summary> Test: change the play time before the paywall. </summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Scripting;
 using SmsAuthAPI.Program;
+using UnityEngine.Scripting;
 
 namespace Agava.Wink
 {
@@ -36,10 +36,10 @@ namespace Agava.Wink
         /// </summary>
         internal static bool SavedTimeExpired()
         {
-            if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)
+            if (PlayerPrefs.HasKey(FirstTimeSave) == false)
                 return false;
 
-            return TimeSpan.TryParse(UnityEngine.PlayerPrefs.GetString(FirstTimeSave), out TimeSpan time) && time <= TimeSpan.Zero;
+            return TimeSpan.TryParse(PlayerPrefs.GetString(FirstTimeSave), out TimeSpan time) && time <= TimeSpan.Zero;
         }
 
         internal void Construct(IWinkAccessManager winkAccessManager, int remoteCfgSeconds, int remoteTempCfgSeconds, IWinkSignInHandlerUI winkSignInHandlerUI)
@@ -52,14 +52,14 @@ namespace Agava.Wink
 
             _remoteTempCfgSeconds = remoteTempCfgSeconds <= 0 ? _defaultTimerSeconds : remoteTempCfgSeconds;
 
-            if (UnityEngine.PlayerPrefs.HasKey(FirstTimeSave) == false)
+            if (PlayerPrefs.HasKey(FirstTimeSave) == false)
             {
                 _savedDemoTime = TimeSpan.FromSeconds(remoteCfgSeconds);
-                UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+                PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
             }
             else
             {
-                string time = UnityEngine.PlayerPrefs.GetString(FirstTimeSave);
+                string time = PlayerPrefs.GetString(FirstTimeSave);
                 _savedDemoTime = TimeSpan.Parse(time);
             }
 
@@ -122,7 +122,7 @@ namespace Agava.Wink
                 }
 
                 _savedDemoTime = _savedDemoTime.Subtract(TimeSpan.FromSeconds(1f));
-                UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+                PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
                 _second = 1;
             }
         }
@@ -133,7 +133,7 @@ namespace Agava.Wink
         {
             _savedDemoTime += TimeSpan.FromSeconds(time);
             Expired = false;
-            UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+            PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }
 
 #if UNITY_EDITOR || TEST
@@ -141,7 +141,7 @@ namespace Agava.Wink
         internal void TestSetTimeLeft(float seconds)
         {
             _savedDemoTime = TimeSpan.FromSeconds(seconds);
-            UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+            PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
         }
 #endif
 
@@ -150,7 +150,7 @@ namespace Agava.Wink
             if (_savedDemoTime <= TimeSpan.Zero && WinkAccessManager.Instance.HasAccess == false)
             {
                 Expired = true;
-                UnityEngine.PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
+                PlayerPrefs.SetString(FirstTimeSave, _savedDemoTime.ToString());
             }
 
             FirstChecked?.Invoke();

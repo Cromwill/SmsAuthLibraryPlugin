@@ -28,6 +28,14 @@ namespace Agava.Wink.EditorScripts
             Debug.Log("#Paywall# test: tokens deleted, the player is not authorized");
         }
 
+        [MenuItem(Root + "Forget paywall passed")]
+        private static void ForgetPassed()
+        {
+            UnityEngine.PlayerPrefs.DeleteKey("WinkPaywallPassed");
+            UnityEngine.PlayerPrefs.Save();
+            Debug.Log("#Paywall# test: pass key deleted, the player is authorized before");
+        }
+
         [MenuItem(Root + "Forget authorization (delete tokens)", true)]
         private static bool ValidateForgetAuthorization() => Application.isPlaying == false;
 
