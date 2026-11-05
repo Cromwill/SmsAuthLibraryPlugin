@@ -56,7 +56,7 @@ namespace Agava.Wink
         public event Action SunbscriptionBuyed;
         public event Action WebViewClosed;
 
-        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ScreenshotProtector screenshotProtector, ICoroutine coroutine, Store storeName, AppMetricaInfo appMetricaInfo, SmsRetrieverManager smsRetrieverManager)
+        internal void Construct(GameOrientation gameOrientation, WinkWebViewURLHandler winkWebViewURLHandler, DemoTimer demoTimer, ScreenshotProtector screenshotProtector, ICoroutine coroutine, Store storeName, AppMetricaInfo appMetricaInfo, SmsRetrieverManager smsRetrieverManager, AppAuthenticator AppAuthenticator)
         {
             _winkWebViewURLHandler = winkWebViewURLHandler ?? throw new ArgumentNullException(nameof(winkWebViewURLHandler));
             _gameOrientation = gameOrientation ?? throw new ArgumentNullException(nameof(gameOrientation));
@@ -64,6 +64,7 @@ namespace Agava.Wink
             _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
             _storeName = storeName;
 
+            _redirectToWebsiteWindow.Construct(AppAuthenticator);
             _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
             _webViewPresenter.Construct(this, OpenHelloAfterCloseWebView, ConfirmPurchaseSubscriptionOnWebView);
