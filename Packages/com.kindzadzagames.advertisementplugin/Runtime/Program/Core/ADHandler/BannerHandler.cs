@@ -87,6 +87,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Show(PlaceOnScreen placeOnScreen)
         {
+#if UNITY_EDITOR
+            Debug.Log($"<color=cyan>AD SYSTEM: try show banner, have blockers = {_adBlockers.Count}, have prohibiting = {_adBlockers.Any(b => b.BannerDisplayBlocked == true)}</color>");
+#endif
             AdvertisementAnalyticsService.SendAdsShowRequested(AdvertisementAnalyticsService.AdsType.Banner);
 
             if (_vip)

@@ -131,7 +131,13 @@ namespace KinDzaDzaGames.AdvertisementPlugin
         }
 
         public void StartInterstitialTimer() => _interstitialPlayer.StartTimer();
-        public void AddInterstitialBlocker(IInterstitialBlocker adBlocker) => _interstitialHandler.AddBlocker(adBlocker);
+        public void AddInterstitialBlocker(IInterstitialBlocker adBlocker)
+        {
+#if UNITY_EDITOR
+            Debug.Log($"<color=cyan>AD SYSTEM: try set interstitial blocker</color>");
+#endif
+            _interstitialHandler.AddBlocker(adBlocker);
+        }
 
         public bool CanShowReward() => _rewardHandler.CanShow();
         public void TryPreloadRewardAD(Action preRewardAction = null) => _rewardHandler.LoadAD(preRewardAction);
@@ -139,7 +145,13 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void ShowBanner(PlaceOnScreen placeOnScreen = PlaceOnScreen.BottomCenter) => _bannerHandler.Show(placeOnScreen);
         public void HideBanner() => _bannerHandler.Hide();
-        public void SuspendDisplayBanner(IBannerBlocker adBlocker) => _bannerHandler.SuspendBanner(adBlocker);
+        public void SuspendDisplayBanner(IBannerBlocker adBlocker)
+        {
+#if UNITY_EDITOR
+            Debug.Log($"<color=cyan>AD SYSTEM: try set banner syspender</color>");
+#endif
+            _bannerHandler.SuspendBanner(adBlocker);
+        }
 
 #if YABBI_AD
         public void OnInitializeFailed(AdException error)

@@ -78,6 +78,9 @@ namespace KinDzaDzaGames.AdvertisementPlugin
 
         public void Show(Action interstitialCloseAction = null)
         {
+#if UNITY_EDITOR
+            Debug.Log($"<color=cyan>AD SYSTEM: try show interstitial, have blockers = {_adBlockers.Count}</color>");
+#endif
             AdvertisementAnalyticsService.SendAdsShowRequested(AdvertisementAnalyticsService.AdsType.Interstitial);
             _interstitialCloseAction = interstitialCloseAction;
             _preloadCoroutine ??= _coroutine.StartCoroutine(PreloadAd());
