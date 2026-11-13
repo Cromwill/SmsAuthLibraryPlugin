@@ -78,7 +78,12 @@ namespace Agava.Wink
         public static void Reach()
         {
             if (Instance != null)
+            {
+                if (IsPassed == false)
+                    AnalyticsWinkService.ReachPayWallByTrigger();
+
                 Instance.ReachPaywall();
+            }
         }
 
         /// <summary>
@@ -186,7 +191,13 @@ namespace Agava.Wink
         /// <summary>
         ///     The "sign in" button of the game menu was pressed while the paywall is pending.
         /// </summary>
-        internal void ReachFromMenu() => ReachPaywall();
+        internal void ReachFromMenu()
+        {
+            if (IsPassed == false)
+                AnalyticsWinkService.ReachPayWallFromSignInButton();
+
+            ReachPaywall();
+        }
 
         private void ReachPaywall()
         {
@@ -209,6 +220,9 @@ namespace Agava.Wink
         {
             if (Pending == false)
                 return;
+
+            if (IsPassed == false)
+                AnalyticsWinkService.ReachPayWallByEndDemoTime();
 
             // Demo time ran out before the paywall: the demo windows of the plugin take its place.
             Log("demo time is over before the paywall, paywall counted as passed");

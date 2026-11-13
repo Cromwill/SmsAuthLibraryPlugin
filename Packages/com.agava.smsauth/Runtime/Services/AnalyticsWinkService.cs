@@ -92,7 +92,10 @@ namespace Agava.Wink
         public static void SendLoadingFinish() => SendEvent("Loading Finish");
         public static void SendCloseSubscribeProfileWindow() => SendEvent("Close Subscribe Profile Window");
         public static void SendCloseOfferWinkKids() => SendEvent("Close Offer Wink Kids");
-
+        public static void ReachPayWallFromSignInButton() => SendEvent("Reach Paywall From Sign In Button");
+        public static void ReachPayWallByTrigger() => SendEvent("Reach Paywall By Trigger");
+        public static void ReachPayWallByEndDemoTime() => SendEvent("Reach Paywall By End Demo Time");
+        public static void SendProgressEvent(string param1) => SendEvent("Game Progress", JsonUtility.ToJson(new OneParameterData { param_1 = param1 }));
 
         private static string GetJson(string name, string value)
         {
@@ -167,6 +170,12 @@ namespace Agava.Wink
                 Debug.Log("AppMetrica error:");
                 Debug.Log(ex.Message);
             }
+        }
+
+        [Serializable]
+        private class OneParameterData
+        {
+            public string param_1;
         }
     }
 }
