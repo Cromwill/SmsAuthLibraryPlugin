@@ -77,7 +77,7 @@ namespace Agava.Wink
         /// </summary>
         public static void Reach()
         {
-            if (Instance != null)
+            if (Instance != null && Instance.RemoteEnabled)
             {
                 if (IsPassed == false)
                     AnalyticsWinkService.ReachPayWallByTrigger();
@@ -193,6 +193,9 @@ namespace Agava.Wink
         /// </summary>
         internal void ReachFromMenu()
         {
+            if (RemoteEnabled == false)
+                return;
+
             if (IsPassed == false)
                 AnalyticsWinkService.ReachPayWallFromSignInButton();
 
@@ -218,7 +221,7 @@ namespace Agava.Wink
 
         private void OnDemoCompleted()
         {
-            if (Pending == false)
+            if (Pending == false || RemoteEnabled == false)
                 return;
 
             if (IsPassed == false)
