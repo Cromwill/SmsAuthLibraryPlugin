@@ -86,6 +86,17 @@ namespace Agava.Wink
             }
         }
 
+        public static void ReachBySwitchLocation()
+        {
+            if (Instance != null && Instance.RemoteEnabled)
+            {
+                if (IsPassed == false)
+                    AnalyticsWinkService.ReachPayWallBySwitchLocation();
+
+                Instance.ReachPaywall();
+            }
+        }
+
         /// <summary>
         ///     Decides at boot whether the paywall mode is on. Call after the Wink plugin is found available.
         /// </summary>
