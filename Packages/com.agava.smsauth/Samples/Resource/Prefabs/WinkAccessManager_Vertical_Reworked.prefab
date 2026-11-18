@@ -3591,6 +3591,8 @@ MonoBehaviour:
     - {fileID: 4063477620960625533}
     - {fileID: 2987538466840496521}
     - {fileID: 1941031025031075162}
+    - {fileID: 1169975096706372386}
+    - {fileID: 5993676097829145713}
     _closeTurnOffAdWindowButtons:
     - {fileID: 3521504344202479333}
     - {fileID: 3300904829846919247}
