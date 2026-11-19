@@ -80,6 +80,12 @@ namespace Agava.Wink
                 _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();
 
+                if (_preloadService.NeedUpdateApp)
+                {
+                    _winkSignInHandlerUI.OpenWindow(WindowType.AppUpdate);
+                    yield break;
+                }
+
                 _signInProcess = StartCoroutine(OnStarted());
                 yield return _signInProcess;
 

@@ -29,6 +29,7 @@ namespace Agava.Wink
         private bool _isEndPrepare = false;
 
         public string ActualPlatform => Platform;
+        public bool NeedUpdateApp { get; private set; } = false;
 
         public PreloadService(WinkSignInHandlerUI winkSignInHandlerUI, int bundlIdVersion, Store storeName)
         {
@@ -83,6 +84,8 @@ namespace Agava.Wink
                         IsPluginAwailable = false;
                     else
                         IsPluginAwailable = false;
+
+                    NeedUpdateApp = _bundlIdVersion < remotePluginSettings.released_version;
                 }
             }
             else

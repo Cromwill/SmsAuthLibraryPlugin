@@ -11,6 +11,7 @@ namespace Agava.Wink
     internal class NotifyWindowHandler : IWebViewLoader
     {
         [Header("UI Windows")]
+        [SerializeField] private AppUpdatePresenter _appUpdatePresenter;
         [SerializeField] private SignInWindowPresenter _signInWindow;
         [SerializeField] private NotifyWindowPresenter _failWindow;
         [SerializeField] private ProcessWindowPresenter _proccesOnWindow;
@@ -64,6 +65,7 @@ namespace Agava.Wink
             _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
             _storeName = storeName;
 
+            _appUpdatePresenter.Construct(AppAuthenticator);
             _redirectToWebsiteWindow.Construct(AppAuthenticator);
             _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
@@ -158,6 +160,7 @@ namespace Agava.Wink
         internal void FillTextFields()
         {
             _carouselSettings.Construct(_storeName);
+            _appUpdatePresenter.FillRemoteTexts();
             _redirectToWebsiteWindow.FillRemoteTexts();
             _signInWindow.FillRemoteTexts();
             _enterCodeWindow.FillRemoteTexts();

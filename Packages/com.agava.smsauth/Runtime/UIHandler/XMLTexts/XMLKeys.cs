@@ -69,5 +69,7 @@ namespace Agava.Wink
         Pappers,
         FourInCube,
         EnvelHeroes,
+        app_update_button,
+        app_update_info,
     }
 }
