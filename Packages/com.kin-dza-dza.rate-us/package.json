@@ -1,0 +1,32 @@
+{
+  "name": "com.kin-dza-dza.rate-us",
+  "version": "1.0.2",
+  "displayName": "Rate Us",
+  "type": "library",
+  "unity": "2022.3",
+  "description": "Wink multiplatform rate us plugin",
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "com.unity.textmeshpro": "3.0.9",
+    "io.appmetrica.analytics": "6.3.0"
+  },
+  "samples": [
+    {
+      "displayName": "Art",
+      "description": "Rate us popup art",
+      "path": "Samples~/Art"
+    },
+    {
+      "displayName": "Fonts",
+      "description": "Wink fonts",
+      "path": "Samples~/Fonts"
+    },
+    {
+      "displayName": "Prefabs",
+      "description": "Rate us prefabs",
+      "path": "Samples~/Prefabs"
+    }
+  ],
+  "author": "https://github.com/Svarbo"
+}

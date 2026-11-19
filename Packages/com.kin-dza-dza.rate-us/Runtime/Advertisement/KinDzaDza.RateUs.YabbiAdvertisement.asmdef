@@ -1,0 +1,27 @@
+{
+    "name": "KinDzaDza.RateUs.Advertisement",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c841549b30a2eec4a8fdcea0e4ad2155",
+        "GUID:8fcbe49b0dfd9a44ea7bc22c1a7db038"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": ["ADVERTISEMENT"],
+    "versionDefines": [
+        {
+            "name": "com.kindzadzagames.advertisementplugin",
+            "expression": "",
+            "define": "ADVERTISEMENT"
+        }
+    ],
+    "noEngineReferences": false
+}

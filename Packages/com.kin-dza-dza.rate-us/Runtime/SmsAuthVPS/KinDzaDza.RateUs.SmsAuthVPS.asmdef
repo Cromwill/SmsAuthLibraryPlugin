@@ -1,0 +1,27 @@
+{
+    "name": "KinDzaDza.RateUs.SmsAuthVPS",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c841549b30a2eec4a8fdcea0e4ad2155",
+        "GUID:a8f23aeb14cd2c5469bccb6037c66d3b"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": ["SMS_AUTH_VPS"],
+    "versionDefines": [
+        {
+            "name": "com.agava.smsauthvps",
+            "expression": "",
+            "define": "SMS_AUTH_VPS"
+        }
+    ],
+    "noEngineReferences": false
+}

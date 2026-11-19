@@ -1,0 +1,27 @@
+{
+    "name": "KinDzaDza.RateUs.RuStore",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c841549b30a2eec4a8fdcea0e4ad2155",
+        "GUID:29301b485c425694cb87434522b58d58",
+        "GUID:135ec983926c11f42b0fa332de9fc366"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": ["RU_STORE"],
+    "versionDefines": [
+        {
+            "name": "ru.rustore.review",
+            "expression": "",
+            "define": "RU_STORE"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,27 @@
+{
+    "name": "KinDzaDza.RateUs.GooglePlay",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c841549b30a2eec4a8fdcea0e4ad2155",
+        "GUID:4139e191aa32f459e9eb2e331225ad7e",
+        "GUID:b4318b6f3695442c4983c360248781db"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": ["GOOGLE_PLAY"],
+    "versionDefines": [
+        {
+            "name": "com.google.play.review",
+            "expression": "",
+            "define": "GOOGLE_PLAY"
+        }
+    ],
+    "noEngineReferences": false
+}

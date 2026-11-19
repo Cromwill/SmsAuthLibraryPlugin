@@ -1,0 +1,27 @@
+{
+    "name": "KinDzaDza.RateUs.AdsAppView",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c841549b30a2eec4a8fdcea0e4ad2155",
+        "GUID:700bc1f8708d8b8439f675250599d66d"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": ["ADS_APP_VIEW"],
+    "versionDefines": [
+        {
+            "name": "com.agava.adsappview",
+            "expression": "",
+            "define": "ADS_APP_VIEW"
+        }
+    ],
+    "noEngineReferences": false
+}
