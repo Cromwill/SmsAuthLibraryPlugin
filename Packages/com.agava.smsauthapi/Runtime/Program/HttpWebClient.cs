@@ -206,6 +206,23 @@ namespace SmsAuthAPI.Program
             }
         }
 
+        public async Task<Response> GetUpdatePopupInfo(Request request)
+        {
+            string path = $"{GetHttpPath(request.apiName, api: true)}";
+            OnTryConnecting(path);
+
+            using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.GET, null, request.body))
+            {
+                webRequest.SendWebRequest();
+
+                await WaitProccessing(webRequest);
+                TryShowRequestInfo(webRequest, request.apiName);
+
+                string body = webRequest.downloadHandler.text;
+                return new Response(webRequest.result, webRequest.result.ToString(), body, false);
+            }
+        }
+
         public async Task<Response> SetCloudData(Request request, string key)
         {
             string path = $"{GetHttpPath(request.apiName, key)}";

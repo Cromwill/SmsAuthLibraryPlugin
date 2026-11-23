@@ -81,6 +81,7 @@ namespace Agava.Wink
         internal void Dispose()
         {
             _enterCodeWindow.Dispose();
+            _appUpdatePresenter.Dispose();
             _subscriptionCheckWindow.LoadingStarted -= OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted -= OnLoadingCompleted;
             _rewardContinueWindowPresenter.RewardSuccessed -= OnRewardSuccessed;
@@ -103,6 +104,7 @@ namespace Agava.Wink
         }
 
         internal void ActivateOtpCodeSetter() => _enterCodeWindow.ActivateOtpCodeSetter();
+        internal void OpenUpdateAppWindow(string appLink) => _appUpdatePresenter.Open(appLink);
 
         /*internal void OpenDemoExpiredWindow(bool closeButton)
         {

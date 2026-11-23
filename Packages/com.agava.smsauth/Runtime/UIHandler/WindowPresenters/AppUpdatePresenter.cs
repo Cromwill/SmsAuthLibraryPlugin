@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Scripting;
@@ -16,9 +17,14 @@ namespace Agava.Wink
         [SerializeField] private Sprite _leoAndTig;
         [SerializeField] private Sprite _kubokot;
         [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
+        [SerializeField] private Button _downloadButton;
+
+        private string _appLink;
 
         public void Construct(AppAuthenticator AppAuthenticator)
         {
+            _downloadButton.onClick.AddListener(OpenLink);
+
             switch (AppAuthenticator)
             {
                 default:
@@ -50,10 +56,24 @@ namespace Agava.Wink
             }
         }
 
+        public void Dispose() => _downloadButton.onClick.RemoveListener(OpenLink);
+
         public void FillRemoteTexts() => _xmlConfigTexts.ForEach(t => t.FillText());
 
-        public override void Enable() => EnableCanvasGroup(_canvasGroup);
+        public void Open(string appLink)
+        {
+            AnalyticsWinkService.SendUpdateWindow();
+            _appLink = appLink;
+            Enable();
+        }
 
+        public override void Enable() => EnableCanvasGroup(_canvasGroup);
         public override void Disable() => DisableCanvasGroup(_canvasGroup);
+
+        private void OpenLink()
+        {
+            AnalyticsWinkService.SendUpdateButtonClick();
+            Application.OpenURL(_appLink);
+        }
     }
 }

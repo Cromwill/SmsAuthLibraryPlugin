@@ -5174,6 +5174,7 @@ MonoBehaviour:
   - {fileID: 4732493256393835901}
   - {fileID: 807079287092405913}
   - {fileID: 310121274567592653}
+  _downloadButton: {fileID: 5934759905816647778}
 --- !u!1 &1147940065028642081
 GameObject:
   m_ObjectHideFlags: 0
@@ -5496,7 +5497,7 @@ GameObject:
   - component: {fileID: 6383193599759123517}
   - component: {fileID: 5934759905816647778}
   m_Layer: 5
-  m_Name: Btn_CheckWink
+  m_Name: UpdateAppButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

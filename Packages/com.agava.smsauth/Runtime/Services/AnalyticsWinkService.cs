@@ -92,6 +92,8 @@ namespace Agava.Wink
         public static void SendLoadingFinish() => SendEvent("Loading Finish");
         public static void SendCloseSubscribeProfileWindow() => SendEvent("Close Subscribe Profile Window");
         public static void SendCloseOfferWinkKids() => SendEvent("Close Offer Wink Kids");
+        public static void SendUpdateWindow() => SendEvent("Update Window");
+        public static void SendUpdateButtonClick() => SendEvent("Clicked Update Button");
 
 
         private static string GetJson(string name, string value)
