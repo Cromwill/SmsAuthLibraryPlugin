@@ -15,7 +15,7 @@ namespace KinDzaDza.RateUs
 
         public static Func<bool> IsPaused;
         public static Func<bool> IsPopupPaused;
-        public static Func<bool> IsAdvertisementBannerPaused;
+        public static Func<bool> IsAcceptWindowPaused;
 
         private void OnApplicationPause(bool pause)
         {
@@ -94,7 +94,7 @@ namespace KinDzaDza.RateUs
 
         private void SaveRemainingTime()
         {
-            Debug.LogError($"SaveRemainingTime: {_remainingSeconds}");
+            Debug.Log($"[{nameof(RateUsPopupTimer)}]: remaining time: {_remainingSeconds}");
             PlayerPrefs.SetFloat(Constants.RateUsRemainingTimeKey, Mathf.Max(0f, _remainingSeconds));
         }
 
@@ -110,7 +110,7 @@ namespace KinDzaDza.RateUs
 
         private bool IsAdvertisementPaused()
         {
-            return IsAdvertisementBannerPaused != null && IsAdvertisementBannerPaused.Invoke();
+            return IsAcceptWindowPaused != null && IsAcceptWindowPaused.Invoke();
         }
     }
 }

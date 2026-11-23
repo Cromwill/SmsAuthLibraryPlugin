@@ -16,12 +16,12 @@ namespace KinDzaDza.RateUs.RuStore
 
         public void TryOpenRuStorePopup()
         {
-            Debug.LogError("TryOpenRuStorePopup");
+            Debug.Log($"[{nameof(RuStoreReviewLauncher)}]: Try open RuStore review popup");
             RuStoreReviewManager manager = RuStoreReviewManager.Instance;
 
             if (manager.IsInitialized == false && manager.Init() == false)
             {
-                Debug.LogError("RuStore Review Init failed");
+                Debug.LogError($"[{nameof(RuStoreReviewLauncher)}]: RuStore review initializing failed!");
                 CompleteOpening?.Invoke(false);
 
                 return;
@@ -30,7 +30,7 @@ namespace KinDzaDza.RateUs.RuStore
             manager.RequestReviewFlow(
                 onFailure: error =>
                 {
-                    Debug.LogError($"RuStore RequestReviewFlow: {error.name} {error.description}");
+                    Debug.LogError($"[{nameof(RuStoreReviewLauncher)}]: RuStore RequestReviewFlow: {error.name} {error.description}");
                     CompleteOpening?.Invoke(false);
                 },
                 onSuccess: () =>
@@ -38,12 +38,12 @@ namespace KinDzaDza.RateUs.RuStore
                     manager.LaunchReviewFlow(
                         onFailure: error =>
                         {
-                            Debug.LogError($"RuStore LaunchReviewFlow: {error.name} {error.description}");
+                            Debug.LogError($"[{nameof(RuStoreReviewLauncher)}]: RuStore LaunchReviewFlow: {error.name} {error.description}");
                             CompleteOpening?.Invoke(false);
                         },
                         onSuccess: () =>
                         {
-                            Debug.LogError($"RuStore LaunchReviewFlow TRUE");
+                            Debug.Log($"[{nameof(RuStoreReviewLauncher)}]: RuStore review window successfully opened");
                             CompleteOpening?.Invoke(true);
                         });
                 });
@@ -53,7 +53,8 @@ namespace KinDzaDza.RateUs.RuStore
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Register()
         {
-            Debug.LogError("Register");
+            Debug.Log($"[{nameof(RuStoreReviewLauncher)}]: registred");
+
             RateUsPopup.LaunchRuStore = popup =>
             {
                 RuStoreReviewLauncher launcher = new RuStoreReviewLauncher();
@@ -63,11 +64,9 @@ namespace KinDzaDza.RateUs.RuStore
                     if (opened)
                     {
                         popup.Hide();
-                        Debug.LogError("Hide");
                     }
                     else
                     {
-                        Debug.LogError("OpenStorePage");
                         popup.OpenStorePage();
                     }
                 };

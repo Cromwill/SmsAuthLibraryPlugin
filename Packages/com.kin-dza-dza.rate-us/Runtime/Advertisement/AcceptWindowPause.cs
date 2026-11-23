@@ -9,13 +9,15 @@ using UnityEngine.Scripting;
 namespace KinDzaDza.RateUs.Advertisement
 {
     [Preserve]
-    public class AdvertisementBannerPause
+    public class AcceptWindowPause
     {
         [Preserve]
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Register()
         {
-            RateUsPopupTimer.IsAdvertisementBannerPaused = () =>
+            Debug.Log($"[{nameof(AcceptWindowPause)}]: registred");
+
+            RateUsPopupTimer.IsAcceptWindowPaused = () =>
             {
                 AdvertisementController advertisement = AdvertisementController.Instance;
 

@@ -15,6 +15,8 @@ namespace KinDzaDza.RateUs.SmsAuthVPS
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Register()
         {
+            Debug.Log($"[{nameof(WinkAuthVPSPause)}]: registred");
+
             RateUsPopupTimer.IsPaused = () =>
             {
                 WinkSignInHandlerUI wink = WinkSignInHandlerUI.Instance;

@@ -24,6 +24,7 @@ namespace KinDzaDza.RateUs
             {
                 return _config;
             }
+
             string json = JsonConvert.SerializeObject(new
             {
                 app_id = Application.identifier,
@@ -50,7 +51,7 @@ namespace KinDzaDza.RateUs
 
             if (request.result != UnityWebRequest.Result.Success || string.IsNullOrEmpty(request.downloadHandler.text))
             {
-                Debug.LogError($"#RateUs# Fail to receive {Constants.RateUsConfigName}: {request.responseCode} {request.error} {request.downloadHandler.text}");
+                Debug.LogError($"[{nameof(RateUsConfigProvider)}]: Fail to receive {Constants.RateUsConfigName}: {request.responseCode} {request.error} {request.downloadHandler.text}");
                 return null;
             }
 

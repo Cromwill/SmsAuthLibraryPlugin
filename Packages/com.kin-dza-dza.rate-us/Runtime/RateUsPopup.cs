@@ -21,8 +21,8 @@ namespace KinDzaDza.RateUs
         public static Action<RateUsPopup> LaunchGoogle;
         public static Action<RateUsPopup> LaunchRuStore;
 
-        public event Action Shown;
-        public event Action Closed;
+        public static event Action Shown;
+        public static event Action Closed;
 
         private void Awake()
         {
@@ -78,7 +78,6 @@ namespace KinDzaDza.RateUs
         public void Hide()
         {
             DisableCanvasGroup(_windowCanvasGroup);
-
             Closed?.Invoke();
         }
 
@@ -109,7 +108,7 @@ namespace KinDzaDza.RateUs
 
         private void OnRateUsTimerExpired()
         {
-            Debug.LogError("OnRateUsTimerExpired");
+            Debug.Log($"[{nameof(RateUsPopup)}]: rate us timer expired!");
 
             if (_rateUsPlaceType == RateUsPlaceType.Timer)
             {

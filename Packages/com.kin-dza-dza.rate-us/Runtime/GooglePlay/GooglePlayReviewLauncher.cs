@@ -77,6 +77,8 @@ namespace KinDzaDza.RateUs.GooglePlay
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Register()
         {
+            Debug.Log($"[{nameof(GooglePlayReviewLauncher)}]: registred");
+
             RateUsPopup.LaunchGoogle = popup =>
             {
                 GooglePlayReviewLauncher launcher = new GooglePlayReviewLauncher(popup);
