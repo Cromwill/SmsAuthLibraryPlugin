@@ -69,5 +69,7 @@ namespace AdsAppView.Program
         Pappers,
         FourInCube,
         EnvelHeroes,
+        app_update_button,
+        app_update_info,
     }
 }

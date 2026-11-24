@@ -101,6 +101,19 @@ namespace AdsAppView.Utility
             return await _webClient.GetAppSettings(request);
         }
 
+        public async Task<Response> GetUpdatePopupInfo(string body)
+        {
+            EnsureInitialize();
+
+            var request = new Request()
+            {
+                api_name = "UpdateApp/get-config",
+                body = body,
+            };
+
+            return await _webClient.GetUpdatePopupInfo(request);
+        }
+
         /// <summary>
         /// Send ftp request to get bytes data
         /// </summary>
