@@ -71,5 +71,7 @@ namespace AdsAppView.Program
         EnvelHeroes,
         app_update_button,
         app_update_info,
+        app_update_desc,
+        support_text_info_v2,
     }
 }

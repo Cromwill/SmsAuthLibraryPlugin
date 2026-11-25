@@ -35,6 +35,8 @@ namespace Agava.Wink
         [SerializeField] private Button _rewardDemoTimeButton;
         [SerializeField] private TMP_Text _rewardButtonLabel;
         [SerializeField] private TMP_Text _rewardButtonDiscription;
+        [Header("Support button")]
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         private Dictionary<int, char> _minutWordEndings = new Dictionary<int, char>
         { { 1, 'у' }, { 2, 'ы' }, { 3, 'ы' }, { 4, 'ы' }, { 21, 'у' }, { 22, 'ы' }, { 23, 'ы' }, { 24, 'ы' }, { 31, 'у' }, { 32, 'ы' }, { 33, 'ы' }, { 34, 'ы' } };
@@ -97,7 +99,11 @@ namespace Agava.Wink
             Initialized = true;
         }
 
-        public void ConstructCorousel(CarouselSettings carouselSettings) => _imagesCarousel.Construct(carouselSettings);
+        public void ConstructCorousel(CarouselSettings carouselSettings)
+        {
+            _imagesCarousel.Construct(carouselSettings);
+            _xmlConfigTexts.ForEach(t => t.FillText());
+        }
 
         private IEnumerator RepeatFetch()
         {
