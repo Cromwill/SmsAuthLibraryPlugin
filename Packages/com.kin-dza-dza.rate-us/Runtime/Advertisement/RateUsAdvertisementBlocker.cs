@@ -39,7 +39,6 @@ namespace KinDzaDza.RateUs.Advertisement
                 return;
             }
 
-            advertisement.HideBanner();
             advertisement.AddInterstitialBlocker(this);
             advertisement.InterstitialPlayer.Suspend();
         }
@@ -57,7 +56,6 @@ namespace KinDzaDza.RateUs.Advertisement
             }
 
             advertisement.InterstitialPlayer.Continue();
-            advertisement.ShowBanner();
         }
     }
 }
