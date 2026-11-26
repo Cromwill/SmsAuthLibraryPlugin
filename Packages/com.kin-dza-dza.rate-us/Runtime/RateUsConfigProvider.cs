@@ -1,4 +1,8 @@
+using System;
+using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -58,6 +62,59 @@ namespace KinDzaDza.RateUs
             _config = JsonConvert.DeserializeObject<RateUsConfig>(request.downloadHandler.text);
 
             return _config;
+        }
+
+        public async Task<Response> GetRemoteServerConfig()
+        {
+            string url = $"https://{_serverPath}/api/remoteconfig/getremote-table/";
+
+            using (UnityWebRequest webRequest = CreateWebRequest(url, UnityWebRequest.kHttpVerbPOST, timeOut: true))
+            {
+                webRequest.SendWebRequest();
+
+                await WaitProccessing(webRequest);
+                TryShowRequestInfo(webRequest, "remoteconfig/getremote-table");
+
+                var body = webRequest.downloadHandler.text;
+                return new Response(webRequest.result, webRequest.result.ToString(), body, false);
+            }
+        }
+
+        private async Task WaitProccessing(UnityWebRequest webRequest, Action<float> progress = null)
+        {
+            while (webRequest.result == UnityWebRequest.Result.InProgress)
+            {
+                progress?.Invoke(webRequest.downloadProgress);
+                await Task.Yield();
+            }
+        }
+
+        private void TryShowRequestInfo(UnityWebRequest webRequest, string method)
+        {
+#if UNITY_EDITOR || TEST
+            Debug.Log($"response {method} done {webRequest.result}. Result: {webRequest.downloadHandler.text}");
+#endif
+            if (webRequest.result != UnityWebRequest.Result.Success)
+                Debug.Log($"Response {method} fail: {webRequest.error}, {webRequest.result}");
+        }
+
+        private UnityWebRequest CreateWebRequest(string path, string requestType, string accessToken = null, string uploadBody = null, bool timeOut = true)
+        {
+            var webRequest = new UnityWebRequest(path, requestType);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+
+            if (timeOut)
+                webRequest.timeout = Constants.TimeOut;
+
+            if (string.IsNullOrEmpty(uploadBody) == false)
+                webRequest.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(uploadBody));
+
+            webRequest.SetRequestHeader(Constants.ContentType, Constants.AppJson);
+
+            if (string.IsNullOrEmpty(accessToken) == false)
+                webRequest.SetRequestHeader("Authorization", $"Bearer {accessToken}");
+
+            return webRequest;
         }
     }
 }

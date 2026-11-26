@@ -41,6 +41,16 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "com.kin-dza-dza.rate-us": {
+      "version": "file:com.kin-dza-dza.rate-us",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.textmeshpro": "3.0.9",
+        "io.appmetrica.analytics": "6.3.0"
+      }
+    },
     "com.kindzadzagames.advertisementplugin": {
       "version": "file:com.kindzadzagames.advertisementplugin",
       "depth": 0,

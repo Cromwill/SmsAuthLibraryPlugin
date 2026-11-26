@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace KinDzaDza.RateUs
 {
@@ -8,8 +9,9 @@ namespace KinDzaDza.RateUs
     {
         [SerializeField] private RateUsPlaceType _rateUsPlaceType = RateUsPlaceType.Timer;
         [SerializeField] private Button _confirmButton;
-        [SerializeField] private Button _refuseButton;
+        [SerializeField] private List<Button> _refuseButtons;
         [SerializeField] private CanvasGroup _windowCanvasGroup;
+        [SerializeField] private CanvasGroup _evaluationWindow;
         [SerializeField] private RateUsPopupTimer _rateUsPopupTimer;
         [SerializeField] private string _reserveStoreLink;
 
@@ -35,13 +37,13 @@ namespace KinDzaDza.RateUs
         private void OnEnable()
         {
             _confirmButton.onClick.AddListener(OnConfirmButtonClicked);
-            _refuseButton.onClick.AddListener(OnRefuseButtonClicked);
+            _refuseButtons.ForEach(b => b.onClick.AddListener(OnRefuseButtonClicked));
         }
 
         private void OnDisable()
         {
             _confirmButton.onClick.RemoveListener(OnConfirmButtonClicked);
-            _refuseButton.onClick.RemoveListener(OnRefuseButtonClicked);
+            _refuseButtons.ForEach(b => b.onClick.RemoveListener(OnRefuseButtonClicked));
 
             _rateUsPopupTimer.TimerExpired -= OnRateUsTimerExpired;
         }
@@ -96,6 +98,7 @@ namespace KinDzaDza.RateUs
         private void Show()
         {
             EnableCanvasGroup(_windowCanvasGroup);
+            EnableCanvasGroup(_evaluationWindow);
             PlayerPrefs.SetInt(Constants.RateUsShownKey, Constants.TrueValueInt);
 
             if (_rateUsPopupTimer.IsExpired == false)

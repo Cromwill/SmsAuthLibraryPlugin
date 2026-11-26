@@ -32,6 +32,8 @@ namespace KinDzaDza.RateUs
 
                 RateUsConfig config = getConfigTask.Result;
 
+                yield return SheetRemoteConfigs.Initialize(_rateUsConfigProvider);
+
                 _rateUsPopup.Construct(config.StoreLink, _store, config.TriggerTimeSeconds);
             }
         }
