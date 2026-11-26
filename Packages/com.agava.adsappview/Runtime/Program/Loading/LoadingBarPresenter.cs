@@ -11,8 +11,8 @@ namespace AdsAppView.Program
     [Preserve]
     public class LoadingBarPresenter : MonoBehaviour
     {
-        private float TextChangeStartValue = 0.75f;
-        private float TextChangeLimit = 0.25f;
+        private readonly float TextChangeStartValue = 0.75f;
+        private readonly float TextChangeLimit = 0.25f;
 
         [SerializeField] private XMLKeys _xMLKey;
         [SerializeField] private LoadingPopup _portraitPopup;

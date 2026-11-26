@@ -136,6 +136,18 @@ namespace SmsAuthAPI.Program
             return await _httpClient.GetPluginSettings("RemoteConfig", remoteName);
         }
 
+        public async static Task<Response> GetUpdatePopupInfo(string body)
+        {
+            EnsureInitialize();
+            var request = new Request()
+            {
+                apiName = "UpdateApp/get-config",
+                body = body,
+            };
+
+            return await _httpClient.GetUpdatePopupInfo(request);
+        }
+
         public async static Task<Response> SetSave(string accessToken, string body)
         {
             EnsureInitialize();

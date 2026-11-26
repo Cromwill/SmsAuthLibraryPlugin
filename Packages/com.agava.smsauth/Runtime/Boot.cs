@@ -30,6 +30,7 @@ namespace Agava.Wink
 
         private Coroutine _signInProcess;
         private PreloadService _preloadService;
+        private UpdateService _updateService;
         private bool _bootStarted = false;
         private MetrikaDuplicator _metrikaDuplicator;
 
@@ -61,6 +62,7 @@ namespace Agava.Wink
             _metrikaDuplicator = new MetrikaDuplicator();
             _metrikaDuplicator.SetPlatformAndVersion(_buildVersionHolder.StoreName.ToString(), _buildVersionHolder.Version);
             _preloadService = new(_winkSignInHandlerUI, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
+            _updateService = new(_buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
             _winkAccessManager.Initialize(_metrikaDuplicator);
             _winkAccessManager.AuthorizationSuccessfully += OnSuccessfully;
             yield return new WaitUntil(() => Links.Instance != null);
@@ -76,9 +78,16 @@ namespace Agava.Wink
                 yield return SheetRemoteConfigs.Initialize();
                 yield return _winkAccessManager.TryQuickAccess();
                 yield return _advertisementBoot.Construct(vip: WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, _preloadService.ActualPlatform, Links.Instance.Privacy);
+                yield return _updateService.Preparing();
 
                 _winkSignInHandlerUI.DownloadRemoteSettings();
                 _winkSignInHandlerUI.SetRemoteTexts();
+
+                if (_updateService.NeedUpdateApp)
+                {
+                    _winkSignInHandlerUI.OpenUpdateAppWindow(_updateService.AppLinkInStore);
+                    yield break;
+                }
 
                 _signInProcess = StartCoroutine(OnStarted());
                 yield return _signInProcess;

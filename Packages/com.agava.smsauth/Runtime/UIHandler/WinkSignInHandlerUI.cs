@@ -284,6 +284,8 @@ namespace Agava.Wink
             AnalyticsWinkService.SendSubscribeOfferWindow();
         }
 
+        public void OpenUpdateAppWindow(string appLink) => _notifyWindowHandler.OpenUpdateAppWindow(appLink);
+
         public void OpenWindow(WindowType type) => _notifyWindowHandler.OpenWindow(type);
 
         public void CloseAllWindows() => _notifyWindowHandler.CloseAllWindows(AllWindowsClosed);

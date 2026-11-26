@@ -39,6 +39,7 @@ namespace AdsAppView.Program
         [SerializeField] private bool _asyncLoadContent = false;
         [SerializeField] private LoadingBarPresenter _loadingBarPresenter;
         [SerializeField] private AppOrientation _appOrientation;
+        [SerializeField] private AppUpdatePresenter _appUpdatePresenter;
         [Header("Advertisement")]
         [SerializeField] private AdvertisementBoot _advertisementBoot;
 
@@ -54,6 +55,7 @@ namespace AdsAppView.Program
         private AdsAppAPI _api;
         private AppData _appData;
         private PreloadService _preloadService;
+        private UpdateService _updateService;
 
         public bool Constructed { get; private set; }
 
@@ -84,12 +86,25 @@ namespace AdsAppView.Program
             yield return _preloadService.Preparing();
             yield return SheetRemoteConfigs.Initialize(_api);
             _loadingBarPresenter.Construct(_appOrientation, _buildVersionHolder.StoreName);
+            _appUpdatePresenter.Construct(_appOrientation);
 
             if (_freeApp)
             {
+                _updateService = new(_api, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName);
+
                 yield return _links.Initialize(_api, _advertisementBoot.AppName, _advertisementBoot.StoreName);
 
                 _loadingBarPresenter.FiiRemoteTexts(Links.Instance.Support);
+                _appUpdatePresenter.FiiRemoteTexts(Links.Instance.Support);
+
+                yield return _updateService.Preparing();
+
+                if (_updateService.NeedUpdateApp)
+                {
+                    _appUpdatePresenter.Activate(_updateService.AppLinkInStore);
+                    yield break;
+                }
+
                 _loadingBarPresenter.Activate();
 
                 yield return _advertisementBoot.Construct(vip: false, _buildVersionHolder.BundleId, _buildVersionHolder.StoreName.ToString(), Application.identifier, Platform, Links.Instance.Privacy);
@@ -163,6 +178,11 @@ namespace AdsAppView.Program
 
             yield return created.GetComponent<PopupManager>().Construct(_appData, _freeApp, vip, _asyncLoadContent, _loadingBarPresenter);
             _loadingBarPresenter.Deactivate();
+        }
+
+        private void OnDestroy()
+        {
+            _appUpdatePresenter.Dispose();
         }
     }
 

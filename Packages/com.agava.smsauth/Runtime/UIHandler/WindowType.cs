@@ -29,5 +29,6 @@ namespace Agava.Wink
         TurnOffAdHorizontal,
         WinkInfoHorizontal,
         Blank,
+        AppUpdate,
     }
 }

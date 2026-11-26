@@ -110,6 +110,23 @@ namespace AdsAppView.Utility
             }
         }
 
+        public async Task<Response> GetUpdatePopupInfo(Request request)
+        {
+            string path = $"{GetHttpPath(request.api_name, api: true)}";
+            OnTryConnecting(path);
+
+            using (UnityWebRequest webRequest = CreateWebRequest(path, RequestType.GET, null, request.body))
+            {
+                webRequest.SendWebRequest();
+
+                await WaitProccessing(webRequest);
+                TryShowRequestInfo(webRequest, request.api_name);
+
+                string body = webRequest.downloadHandler.text;
+                return new Response(webRequest.result, webRequest.result.ToString(), body, false, null);
+            }
+        }
+
         public async Task<Response> GetPluginSettings(string apiName, string key)
         {
             string path = $"{GetHttpPath(apiName, key.ToLower())}";

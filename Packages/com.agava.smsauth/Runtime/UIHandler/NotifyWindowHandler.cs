@@ -11,6 +11,7 @@ namespace Agava.Wink
     internal class NotifyWindowHandler : IWebViewLoader
     {
         [Header("UI Windows")]
+        [SerializeField] private AppUpdatePresenter _appUpdatePresenter;
         [SerializeField] private SignInWindowPresenter _signInWindow;
         [SerializeField] private NotifyWindowPresenter _failWindow;
         [SerializeField] private ProcessWindowPresenter _proccesOnWindow;
@@ -64,6 +65,7 @@ namespace Agava.Wink
             _demoTimer = demoTimer ?? throw new ArgumentNullException(nameof(demoTimer));
             _storeName = storeName;
 
+            _appUpdatePresenter.Construct(AppAuthenticator);
             _redirectToWebsiteWindow.Construct(AppAuthenticator);
             _orientationСhangeWindow.Construct(_gameOrientation, _noEnternetWindow);
             _subscriptionCheckWindow.Construct(_noEnternetWindow);
@@ -79,6 +81,7 @@ namespace Agava.Wink
         internal void Dispose()
         {
             _enterCodeWindow.Dispose();
+            _appUpdatePresenter.Dispose();
             _subscriptionCheckWindow.LoadingStarted -= OnLoadingStarted;
             _subscriptionCheckWindow.LoadingCompleted -= OnLoadingCompleted;
             _rewardContinueWindowPresenter.RewardSuccessed -= OnRewardSuccessed;
@@ -101,6 +104,7 @@ namespace Agava.Wink
         }
 
         internal void ActivateOtpCodeSetter() => _enterCodeWindow.ActivateOtpCodeSetter();
+        internal void OpenUpdateAppWindow(string appLink) => _appUpdatePresenter.Open(appLink);
 
         /*internal void OpenDemoExpiredWindow(bool closeButton)
         {
@@ -158,6 +162,7 @@ namespace Agava.Wink
         internal void FillTextFields()
         {
             _carouselSettings.Construct(_storeName);
+            _appUpdatePresenter.FillRemoteTexts();
             _redirectToWebsiteWindow.FillRemoteTexts();
             _signInWindow.FillRemoteTexts();
             _enterCodeWindow.FillRemoteTexts();
