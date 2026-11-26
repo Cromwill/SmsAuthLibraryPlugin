@@ -1172,6 +1172,12 @@ MonoBehaviour:
   _byeWindow: {fileID: 5694550264063984040}
   _rateUsPopupTimer: {fileID: 0}
   _reserveStoreLink: 
+  _xmlConfigTexts:
+  - {fileID: 6084924021239226678}
+  - {fileID: 714882210242156961}
+  - {fileID: 5034041413709944295}
+  - {fileID: 3109735469253985257}
+  - {fileID: 867259263210799117}
 --- !u!1 &4857158466951975181
 GameObject:
   m_ObjectHideFlags: 0
