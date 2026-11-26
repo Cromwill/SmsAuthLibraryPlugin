@@ -69,5 +69,14 @@ namespace KinDzaDza.RateUs
         Pappers,
         FourInCube,
         EnvelHeroes,
+        app_update_button,
+        app_update_info,
+        app_update_desc,
+        support_text_info_v2,
+        rate_us_label,
+        rate_us_yes,
+        rate_us_no,
+        rate_us_bye,
+        rate_us_update,
     }
 }

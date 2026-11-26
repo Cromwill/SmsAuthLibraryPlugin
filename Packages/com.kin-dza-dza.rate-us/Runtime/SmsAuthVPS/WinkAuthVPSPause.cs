@@ -22,6 +22,11 @@ namespace KinDzaDza.RateUs.SmsAuthVPS
                 WinkSignInHandlerUI wink = WinkSignInHandlerUI.Instance;
                 return wink == null || wink.IsAnyWindowEnabled;
             };
+
+            RateUsAnalytics.HasSubscription = () =>
+            {
+                return WinkAccessManager.Instance != null && (WinkAccessManager.Instance.HasAccess || WinkAccessManager.Instance.HasTempAccess);
+            };
         }
     }
 }

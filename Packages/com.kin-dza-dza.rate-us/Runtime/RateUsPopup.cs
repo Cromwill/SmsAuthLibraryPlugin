@@ -1,22 +1,28 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace KinDzaDza.RateUs
 {
     public class RateUsPopup : MonoBehaviour
     {
+        private const float CloseWindowDelay = 3f;
+
         [SerializeField] private RateUsPlaceType _rateUsPlaceType = RateUsPlaceType.Timer;
         [SerializeField] private Button _confirmButton;
         [SerializeField] private List<Button> _refuseButtons;
+        [SerializeField] private Button _closeByeWindowButton;
         [SerializeField] private CanvasGroup _windowCanvasGroup;
         [SerializeField] private CanvasGroup _evaluationWindow;
+        [SerializeField] private CanvasGroup _byeWindow;
         [SerializeField] private RateUsPopupTimer _rateUsPopupTimer;
         [SerializeField] private string _reserveStoreLink;
 
         private string _storeLink;
         private Store _store;
+        private Coroutine _closeCoroutine;
 
         public static RateUsPopup Instance { get; private set; }
 
@@ -38,12 +44,14 @@ namespace KinDzaDza.RateUs
         {
             _confirmButton.onClick.AddListener(OnConfirmButtonClicked);
             _refuseButtons.ForEach(b => b.onClick.AddListener(OnRefuseButtonClicked));
+            _closeByeWindowButton.onClick.AddListener(CloseImmediately);
         }
 
         private void OnDisable()
         {
             _confirmButton.onClick.RemoveListener(OnConfirmButtonClicked);
             _refuseButtons.ForEach(b => b.onClick.RemoveListener(OnRefuseButtonClicked));
+            _closeByeWindowButton.onClick.RemoveListener(CloseImmediately);
 
             _rateUsPopupTimer.TimerExpired -= OnRateUsTimerExpired;
         }
@@ -80,6 +88,8 @@ namespace KinDzaDza.RateUs
         public void Hide()
         {
             DisableCanvasGroup(_windowCanvasGroup);
+            DisableCanvasGroup(_evaluationWindow);
+            DisableCanvasGroup(_byeWindow);
             Closed?.Invoke();
         }
 
@@ -97,6 +107,7 @@ namespace KinDzaDza.RateUs
 
         private void Show()
         {
+            RateUsAnalytics.SendOpenWindow();
             EnableCanvasGroup(_windowCanvasGroup);
             EnableCanvasGroup(_evaluationWindow);
             PlayerPrefs.SetInt(Constants.RateUsShownKey, Constants.TrueValueInt);
@@ -121,7 +132,7 @@ namespace KinDzaDza.RateUs
 
         private void OnConfirmButtonClicked()
         {
-            RateUsAnalytics.SendClicked(true, true);
+            RateUsAnalytics.SendClicked(true);
 
             switch (_store)
             {
@@ -139,7 +150,31 @@ namespace KinDzaDza.RateUs
 
         private void OnRefuseButtonClicked()
         {
-            RateUsAnalytics.SendClicked(false, false);
+            RateUsAnalytics.SendClicked(false);
+
+            DisableCanvasGroup(_evaluationWindow);
+            EnableCanvasGroup(_byeWindow);
+
+            _closeCoroutine = StartCoroutine(DelayClose());
+
+            IEnumerator DelayClose()
+            {
+                yield return new WaitForSeconds(CloseWindowDelay);
+
+                Hide();
+                _closeCoroutine = null;
+            }
+        }
+
+        private void CloseImmediately()
+        {
+            if(_closeCoroutine != null)
+            {
+                StopCoroutine(_closeCoroutine);
+                _closeCoroutine = null;
+            }
+
+            DisableCanvasGroup(_byeWindow);
             Hide();
         }
 

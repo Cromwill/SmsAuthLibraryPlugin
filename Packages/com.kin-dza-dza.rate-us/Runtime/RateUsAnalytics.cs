@@ -1,7 +1,7 @@
 using System;
+using UnityEngine;
 using Io.AppMetrica;
 using Newtonsoft.Json;
-using UnityEngine;
 using UnityEngine.Scripting;
 
 namespace KinDzaDza.RateUs
@@ -9,20 +9,38 @@ namespace KinDzaDza.RateUs
     [Preserve]
     public static class RateUsAnalytics
     {
-        private const string EventName = "Rate Us Clicked";
+        private const string RateUsClicked = "Rate Us Clicked";
+        private const string RateUsWindow = "Rate Us Window";
 
-        public static void SendClicked(bool agreed, bool subscription)
+        public static Func<bool> HasSubscription;
+
+        public static void SendClicked(bool agreed)
         {
+            bool hasSubscription = HasSubscription != null && HasSubscription.Invoke();
+
             string json = JsonConvert.SerializeObject(new RateUsClickData
             {
                 Result = agreed ? "Yes" : "No",
-                Subscription = subscription,
+                Subscription = hasSubscription,
             });
 
             try
             {
-                Debug.Log($"ANALYTICS: event - {EventName}, json - {json}");
-                AppMetrica.ReportEvent(EventName, json);
+                Debug.Log($"ANALYTICS: event - {RateUsClicked}, json - {json}");
+                AppMetrica.ReportEvent(RateUsClicked, json);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception.Message);
+            }
+        }
+
+        public static void SendOpenWindow()
+        {
+            try
+            {
+                Debug.Log($"ANALYTICS: event - {RateUsWindow}");
+                AppMetrica.ReportEvent(RateUsWindow);
             }
             catch (Exception exception)
             {

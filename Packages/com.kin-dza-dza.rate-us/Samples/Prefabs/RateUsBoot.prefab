@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba3d1ef174b3124b8801ff52e8d95f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildVersionHolder: {fileID: 0}
   _rateUsPopup: {fileID: 0}
+  _rateUsPopupTimer: {fileID: 0}
+  _store: 4
   _serverPath: gamesrtkbd.tech
