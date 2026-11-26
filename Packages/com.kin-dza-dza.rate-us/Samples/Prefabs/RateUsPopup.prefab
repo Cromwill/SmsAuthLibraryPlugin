@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 5116611175174223615}
   - component: {fileID: 7117013202934583315}
   - component: {fileID: 2823837050134440066}
+  - component: {fileID: 867259263210799117}
   m_Layer: 5
   m_Name: UpdateText
   m_TagString: Untagged
@@ -310,6 +311,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &867259263210799117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890034751193112344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e205d8f8ba4cc9f489ae42d92c62461d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 2823837050134440066}
+  _xMLKey: 75
+  _xMLValue: 0
+  _fallbackText: "\u041C\u044B \u0440\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u043E
+    \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0435\u043C \u0438\u0433\u0440\u0443"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &1882623702777569382
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +416,7 @@ GameObject:
   - component: {fileID: 3632192185548049388}
   - component: {fileID: 1295747571693302227}
   - component: {fileID: 5935043058452379259}
+  - component: {fileID: 3109735469253985257}
   m_Layer: 5
   m_Name: ByeText
   m_TagString: Untagged
@@ -522,6 +543,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3109735469253985257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133706161459300648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e205d8f8ba4cc9f489ae42d92c62461d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 5935043058452379259}
+  _xMLKey: 74
+  _xMLValue: 0
+  _fallbackText: "\u041E\u0441\u0442\u0430\u0432\u0430\u0439\u0442\u0435\u0441\u044C
+    \u0441 \u043D\u0430\u043C\u0438!"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &2343300096763172104
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +665,7 @@ GameObject:
   - component: {fileID: 1894648184303145971}
   - component: {fileID: 419172815698044372}
   - component: {fileID: 4036639280319033137}
+  - component: {fileID: 714882210242156961}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -750,6 +791,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &714882210242156961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477831120746020621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e205d8f8ba4cc9f489ae42d92c62461d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 4036639280319033137}
+  _xMLKey: 73
+  _xMLValue: 0
+  _fallbackText: "\u041D\u0435 \u043E\u0447\u0435\u043D\u044C"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &3337442181806430500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1281,7 @@ GameObject:
   - component: {fileID: 985016187447623378}
   - component: {fileID: 299348976515178204}
   - component: {fileID: 3978167784170837791}
+  - component: {fileID: 5034041413709944295}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1347,6 +1407,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5034041413709944295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023173279388978314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e205d8f8ba4cc9f489ae42d92c62461d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 3978167784170837791}
+  _xMLKey: 72
+  _xMLValue: 0
+  _fallbackText: "\u0414\u0430!"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &5211642608648132656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1621,7 @@ GameObject:
   - component: {fileID: 8503005721507110483}
   - component: {fileID: 4776592704405533857}
   - component: {fileID: 2726398898293860021}
+  - component: {fileID: 6084924021239226678}
   m_Layer: 5
   m_Name: LabelText
   m_TagString: Untagged
@@ -1669,6 +1748,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6084924021239226678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437700802381190165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e205d8f8ba4cc9f489ae42d92c62461d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 2726398898293860021}
+  _xMLKey: 71
+  _xMLValue: 0
+  _fallbackText: "\u0412\u0430\u043C \u043D\u0440\u0430\u0432\u0438\u0442\u0441\u044F{end}\u043D\u0430\u0448\u0435
+    \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435?"
+  _isLink: 0
+  _linkName: 
 --- !u!1 &6456776690511312150
 GameObject:
   m_ObjectHideFlags: 0

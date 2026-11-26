@@ -19,6 +19,7 @@ namespace KinDzaDza.RateUs
         [SerializeField] private CanvasGroup _byeWindow;
         [SerializeField] private RateUsPopupTimer _rateUsPopupTimer;
         [SerializeField] private string _reserveStoreLink;
+        [SerializeField] private List<XmlConfigText> _xmlConfigTexts;
 
         private string _storeLink;
         private Store _store;
@@ -66,6 +67,8 @@ namespace KinDzaDza.RateUs
                 _rateUsPopupTimer.Construct(triggerTimeSeconds);
                 _rateUsPopupTimer.TimerExpired += OnRateUsTimerExpired;
             }
+
+            _xmlConfigTexts.ForEach(t => t.FillText());
         }
 
         public void OpenStorePage()
