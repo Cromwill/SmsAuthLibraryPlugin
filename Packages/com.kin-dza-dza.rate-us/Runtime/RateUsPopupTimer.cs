@@ -50,7 +50,7 @@ namespace KinDzaDza.RateUs
 
             if (_second <= 0f)
             {
-                SaveRemainingTime();
+                SaveRemainingTime(needSave: false);
                 _second = 1f;
             }
 
@@ -92,10 +92,15 @@ namespace KinDzaDza.RateUs
             SaveRemainingTime();
         }
 
-        private void SaveRemainingTime()
+        private void SaveRemainingTime(bool needSave = true)
         {
+#if UNITY_EDITOR
             Debug.Log($"[{nameof(RateUsPopupTimer)}]: remaining time: {_remainingSeconds}");
+#endif
             PlayerPrefs.SetFloat(Constants.RateUsRemainingTimeKey, Mathf.Max(0f, _remainingSeconds));
+
+            if (needSave)
+                PlayerPrefs.Save();
         }
 
         private bool IsSmsAuthVpsPaused()

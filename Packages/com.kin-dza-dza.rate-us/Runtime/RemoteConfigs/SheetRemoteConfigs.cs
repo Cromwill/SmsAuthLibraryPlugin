@@ -1,8 +1,9 @@
 using System;
-using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;
 using System.Collections.Generic;
+using Io.AppMetrica;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace KinDzaDza.RateUs
 {
@@ -29,18 +30,26 @@ namespace KinDzaDza.RateUs
 
         private static async void LoadText(Action onComplete)
         {
-            var responce = await _api.GetRemoteServerConfig();
+            try
+            {
+                var responce = await _api.GetRemoteServerConfig();
 
-            if (responce.statusCode == UnityWebRequest.Result.Success)
-            {
-                string cvsRawData = responce.body;
-                Texts = GetData(cvsRawData);
-                Debug.Log($"[RateUs SheetRemoteConfigs] Complete to load file");
-                onComplete?.Invoke();
+                if (responce.statusCode == UnityWebRequest.Result.Success)
+                {
+                    string cvsRawData = responce.body;
+                    Texts = GetData(cvsRawData);
+                    Debug.Log($"[RateUs SheetRemoteConfigs] Complete to load file");
+                    onComplete?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError($"[RateUs SheetRemoteConfigs] Fail to load file");
+                    onComplete?.Invoke();
+                }
             }
-            else
+            catch (Exception exception)
             {
-                Debug.LogError($"[RateUs SheetRemoteConfigs] Fail to load file");
+                Debug.LogError($"[RateUs SheetRemoteConfigs] Exception to load file, message: {exception.Message}");
                 onComplete?.Invoke();
             }
         }

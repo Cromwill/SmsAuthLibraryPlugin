@@ -17,6 +17,8 @@ namespace KinDzaDza.RateUs.GooglePlay
     [Preserve]
     public class GooglePlayReviewLauncher
     {
+        private const float RequestTimeOut = 5f;
+
 #if GOOGLE_PLAY
         private Coroutine _waitTimeOutCoroutine;
         private ReviewManager _reviewManager;
@@ -35,6 +37,23 @@ namespace KinDzaDza.RateUs.GooglePlay
         public void TryOpenGoogleStorePopup()
         {
             _coroutineRunner.StartCoroutine(OpenGoogleStorePopupCoroutine());
+
+            _waitTimeOutCoroutine ??= _coroutineRunner.StartCoroutine(WaitRating());
+        }
+
+        private IEnumerator WaitRating()
+        {
+            float timer = 0;
+
+            while (timer < RequestTimeOut)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            Debug.Log($"[{nameof(GooglePlayReviewLauncher)}]: popup didn't load in time {RequestTimeOut} seconds");
+            CompleteOpening?.Invoke(false);
+            _waitTimeOutCoroutine = null;
         }
 
         private IEnumerator OpenGoogleStorePopupCoroutine()
@@ -55,6 +74,7 @@ namespace KinDzaDza.RateUs.GooglePlay
             if (_waitTimeOutCoroutine != null)
             {
                 _coroutineRunner.StopCoroutine(_waitTimeOutCoroutine);
+                _waitTimeOutCoroutine = null;
             }
 
             PlayAsyncOperation<VoidResult, ReviewErrorCode> launchFlowOperation = _reviewManager.LaunchReviewFlow(requestReviewOperation.GetResult());

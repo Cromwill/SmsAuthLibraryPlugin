@@ -33,7 +33,7 @@ namespace KinDzaDza.RateUs
                 platform = "",
             });
 
-            Debug.LogError($"app_id: {Application.identifier}, store_id: {_store.ToString()}");
+            Debug.Log($"[{nameof(RateUsConfigProvider)}]app_id: {Application.identifier}, store_id: {_store}");
 
             string url = $"https://{_serverPath}/api/{Constants.ControllerName}/{Constants.RateUsConfigName}";
             byte[] payload = Encoding.UTF8.GetBytes(json);

@@ -7,7 +7,6 @@ namespace KinDzaDza.RateUs
     public class RateUsBoot : MonoBehaviour
     {
         [SerializeField] private RateUsPopup _rateUsPopup;
-        [SerializeField] private RateUsPopupTimer _rateUsPopupTimer;
         [SerializeField] private Store _store;
         [SerializeField] private string _serverPath = "gamesrtkbd.tech";
 

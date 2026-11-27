@@ -38,7 +38,9 @@ namespace KinDzaDza.RateUs
             Instance = this;
             DontDestroyOnLoad(this);
 
-            Hide();
+            DisableCanvasGroup(_windowCanvasGroup);
+            DisableCanvasGroup(_evaluationWindow);
+            DisableCanvasGroup(_byeWindow);
         }
 
         private void OnEnable()
@@ -114,6 +116,7 @@ namespace KinDzaDza.RateUs
             EnableCanvasGroup(_windowCanvasGroup);
             EnableCanvasGroup(_evaluationWindow);
             PlayerPrefs.SetInt(Constants.RateUsShownKey, Constants.TrueValueInt);
+            PlayerPrefs.Save();
 
             if (_rateUsPopupTimer.IsExpired == false)
             {
